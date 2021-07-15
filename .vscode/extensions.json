@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "redwoodjs.redwood",
+    "dbaeumer.vscode-eslint",
+    "ofhumanbondage.react-proptypes-intellisense",
+    "mgmcdermott.vscode-language-babel",
+    "wix.vscode-import-cost",
+    "editorconfig.editorconfig",
+    "prisma.prisma",
+    "graphql.vscode-graphql"
+  ],
+  "unwantedRecommendations": []
+}
