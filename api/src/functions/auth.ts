@@ -22,6 +22,7 @@ export const handler = async (event, context) => {
           email: username,
           hashedPassword,
           salt,
+          organization: null,
         },
       })
     },
