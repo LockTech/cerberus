@@ -26,7 +26,6 @@ Organizations are free to invite new members, edit those members, remove them, a
 
 To be written
 
-
 ## Dependencies
 
 In addition to the dependencies outlined in [RedwoodJS' introduction](https://redwoodjs.com/docs/introduction#technologies), the following are used by the Cerberus RedwoodJS application.
@@ -67,7 +66,6 @@ Please read through it and the remainder of this `README` before submitting cont
 While most of the terminology used by Cerberus is obvious, common ideas have been explicity defined here to standardize the language used by and when describing the platform.
 
 * Organization - The tenants of this multi-tenant platform. Each organization is independent another; organizations can only manage the identities which belong to them.
-* End-user - In the context of Cerberus, the people in an organization who will make use of Cerberus' web control panel to manage their organization's identities.
 * Identity - A "user" or "account" which contains information identifying an indavidual in a particular organization.
 * Member - The indaviduals of an organization, who use their identity to access various features and services.
   * "Member" is perferred, to "identitiy", when speaking *to* an end-user of the Cerberus platform;
@@ -94,18 +92,12 @@ Identity (a.k.a. "user") management functionality is driven by [RedwoodJS' dbAut
 
 An identity represents an indavidual in an organization, and each identity can only be a member of a single organization.
 
-An organization's first identity is created when one of its members `signs up`. This process will also assign Cerberus' "administrator" permission, granting the identity
-full access to the management of their organization's members. The process is completed when the member `confirms` their identity by clicking a link sent in a confirmation e-mail.
-Once clicked, the member can set their identity's password to gain access to the platform.
+An organization's first identity is created when one of its members `signs up`. This will send them a confirmation e-mail. After clicking it an navigating back to the Cerberus application,
+the user will complete signing up; this will include naming the organization and creating the default, Administrator role and setting its permissions.
 
-> **Warning**: The nature of the "administrator" permission and its implications to the system as a whole, other applications included, means that it can be used
-> as a tool to inadvertently provide access to other application's features.
->
-> In other words, an administrator of Cerberus is an administrator of all applications which rely upon its functionality; the two are, by design, tightly coupled to one another.
+Other members of the organization can be `invited` by an administrator. These identities will have no permissions, and will need to go through a similar confirmation step as described above.
 
-Other members of the organization can be `invited` by an administrator. These identities will have zero permissions, and will need to go through a similar confirmation step as described above.
-
-Administrators may also use Cerberus to manage their identities. This includes:
+Administrators may also use Cerberus to manage invited members:
 * Updating an identity's details, such as its: name, e-mail, and initiating the password-reset process.
 * Removing an identity from the administrator's organization.
 * Adjusting an identity's permissions.
@@ -114,12 +106,12 @@ Administrators may also use Cerberus to manage their identities. This includes:
 
 ## Permission Management
 
-Permissions management is facilitated through [Ory Keto](https://www.ory.sh/keto/docs/next/).
+Permissions are made possible thanks to [Ory Keto](https://www.ory.sh/keto/docs/next/).
 
 > Ory Keto is the first and only open source implementation of "Zanzibar: Google's Consistent, Global Authorization System"...
 
 Cerberus is responsible for [`writing`](https://www.ory.sh/keto/docs/next/reference/rest-api#write) [relation-tuples](https://www.ory.sh/keto/docs/next/concepts/relation-tuples)
-to Keto, based on end-user interaction with the web-side of Cerberus' RedwoodJS application, facilitated by its API-side.
+to Keto, based on end-user interaction with the web-side of Cerberus' RedwoodJS application, facilitated by its API-side; and using information supplied by application-developers.
 
 Other applications can then [`check`](https://www.ory.sh/keto/docs/next/reference/rest-api#check-a-relation-tuple) if a given identity has been assigned an expected permission.
 
@@ -129,17 +121,17 @@ Applications are required to submit their permissions to Cerberus before they ca
 
 #### 1) Creating a Namespace
 
-To better organize relation-tuples, Keto provides the concept of [Namespaces](https://www.ory.sh/keto/docs/next/concepts/namespaces). Applications should take advantage of this feature to better organize their own permissions. These namespaces will be used by Cerberus when `writing` a relation-tuple to Keto.
+To better organize relation-tuples, Keto provides the concept of [Namespaces](https://www.ory.sh/keto/docs/next/concepts/namespaces). Applications should take full advantage of this feature to better organize their own permissions. These namespaces will be used by Cerberus when `writing` a relation-tuple to Keto.
 
 An application **is not** limited to a single namespace. Instead, they may use any number to best represent the permissions of their features. It is recommended that applications prefix their namespace with a unique name used to identify the application. It's best if this name is the same which is used in step 2.
 
-> You are responsible for [configuring](https://www.ory.sh/keto/docs/reference/configuration), [defining](https://github.com/ory/keto/blob/f8af777f0b2040aa00fe65a33ad0269595232124/contrib/cat-videos-example/keto.yml#L6), and [migrating](https://www.ory.sh/keto/docs/next/concepts/namespaces#migrations) namespaces to your running Keto instance prior to them being used by Cerberus.
+> You are responsible for [configuring](https://www.ory.sh/keto/docs/reference/configuration), [defining](https://github.com/ory/keto/blob/f8af777f0b2040aa00fe65a33ad0269595232124/contrib/cat-videos-example/keto.yml#L6), and [migrating](https://www.ory.sh/keto/docs/next/concepts/namespaces#migrations) namespaces to your instance of Keto prior to them being used by Cerberus.
 >
-> A more detailed explanation of how namespaces can be defined will be written at a later date; Keto's documentation provides sufficent information to get started.
+> A more detailed explanation of how namespaces can be defined will be written at a later date; Keto's documentation and [examples](https://github.com/ory/keto/tree/master/contrib) provide sufficent information to get started.
 
 #### 2) `POST` a permission-tuple to Cerberus
 
-Finally, an application (or you, manually) must `POST` what Cerberus refers to as a permission-tuple.
+Finally, an application (or you, manually) must `POST` a permission-tuple.
 
 These objects are used by Cerberus to create the relation-tuples that will ultimately be `written` to Keto. Each permission-tuple has a one to one relationship with an application's permission. Below is an example of what a common permission-tuple may resemble:
 
@@ -158,10 +150,10 @@ Where [`object` and `relation`](https://www.ory.sh/keto/docs/next/concepts/objec
 
 Cerberus makes use of the [i18n](https://www.i18next.com/) framework.
 
-You can make use of this framework yourself, to provide better context and a more human-friendly experience when making use of your application's permissions.
+You can make use of this framework, to provide better context and a more human-friendly experience to users making use of your application's permissions.
 
-[Translations are located on the web-side](web/locales) of the Cerberus application. Your permission's locales should be added to either a new or
-[existing `permissions.json`](web/src/locales/en/permissions.json).
+[Translations are located on the web-side](web/locales) of the application. Your permission's locales should be added to either a new or
+[existing](web/src/locales/en/permissions.json) `permissions.json`.
 
 The structure of these translations should resemble the following, in continuing the example from above:
 
@@ -183,7 +175,6 @@ The structure of these translations should resemble the following, in continuing
 > As you can imagine, permissions which target specific objects may get tricky to localize.
 >
 > This is more a warning, the solution I've imagined is to not provide object-specific permissions to Cerberus, but to manage it at the application-level.
-> Keto's subject sets could be used to
 
 > If you happen to translate `en/common.json` and `en/permissions.json` for your own use, *please* consider submitting a PR to push that addition back to this repository :)
 
