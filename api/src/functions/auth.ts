@@ -20,13 +20,14 @@ export const handler = async (event, context) => {
     // user table. `userAttributes` contains any additional object members that
     // were included in the object given to the `signUp()` function you got
     // from `useAuth()`
-    signupHandler: ({ username, hashedPassword, salt }) => {
-      return db.user.create({
+    signupHandler: async ({ username, hashedPassword, salt }) => {
+      // send confirmation email
+
+      return await db.user.create({
         data: {
           email: username,
           hashedPassword: hashedPassword,
           salt: salt,
-          // name: userAttributes.name
         },
       })
     },
