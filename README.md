@@ -4,14 +4,13 @@
 
 A control panel and platform for self-managed, multi-tenant identity and permission management.
 
-Built using the [RedwoodJS framework](https://redwoodjs.com) and [Ory Keto](https://www.ory.sh/keto/docs/next/).
+Built using the [RedwoodJS framework](https://redwoodjs.com) and [Ory Keto](https://www.ory.sh/keto/docs/next/). This platform is intended for web applications, and has been designed specifically to work well with other RedwoodJS applications.
 
 ## Introduction
 
 The [identity](#identity-management) and [permission](#permission-management) management sections of this `README` provide more detailed information on each respective feature.
 
-These features are designed for the benefit of many, distinct applications.
-These distinct applications are expected to make use of the identities offered by Cerberus, letting the applications focus on their technical goals.
+These features are designed for the benefit of many, distinct applications. These distinct applications are expected to make use of the identities offered by Cerberus, letting the applications focus on their technical goals.
 More information about the nature of an application's relationship to Cerberus can be found under the [applications](#applications) section of this document.
 
 Finally, the "self-managed" portion of Cerberus comes from the fact that it is expected each indavidual organization manage their identities on their own terms.
@@ -131,6 +130,12 @@ Administrators may also use Cerberus to manage invited members:
 * Adjusting an identity's permissions.
 
 ### Authenticating Identities
+
+To be written; requires exploration.
+
+### Using a Session
+
+The `session` cookie sent back to the browser after successful authentication
 
 ## Permission Management
 
