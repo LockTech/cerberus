@@ -1,0 +1,22 @@
+version: '3.9'
+
+networks:
+  default:
+    driver: overlay
+    name: cerberus_network
+  poseidon_network:
+    external: true
+  portunus_network:
+    external: true
+
+services:
+  access:
+    image: oryd/keto:latest
+    networks:
+      - default
+      - portunus_network
+      - poseidon_network # FIXME: remove in production
+    volumes:
+      - type: bind
+        source: ./config/keto
+        target: /home/ory
