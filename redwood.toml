@@ -6,6 +6,7 @@
 # https://redwoodjs.com/docs/app-configuration-redwood-toml
 
 [web]
+  includeEnvironmentVariables = []
   port = 8910
   apiProxyPath = "/.redwood/functions"
 [api]
