@@ -14,4 +14,14 @@ model User {
   //
   hashedPassword                String
   salt                          String
+  //
+  organization_id               String?                           @default("")
+  organization                  Organization?                     @relation(fields: [organization_id], references: [id])
+}
+
+model Organization {
+  id                            String                            @id @default(uuid())
+  name                          String
+  //
+  users                         User[]
 }
