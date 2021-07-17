@@ -15,6 +15,9 @@ model User {
   hashedPassword                String
   salt                          String
   //
+  created_at                    DateTime                          @default(now())
+  updated_at                    DateTime                          @default(now())
+  //
   organization_id               String?                           @default("")
   organization                  Organization?                     @relation(fields: [organization_id], references: [id])
 }
@@ -23,5 +26,29 @@ model Organization {
   id                            String                            @id @default(uuid())
   name                          String
   //
+  created_at                    DateTime                          @default(now())
+  updated_at                    DateTime                          @default(now())
+  //
   users                         User[]
 }
+
+// model Permission {
+//   id                            String                            @id @default(uuid())
+//   application                   String
+//   namespace                     String
+//   object                        String
+//   relation                      String
+//   //
+//   created_at                    DateTime                          @default(now())
+//   updated_at                    DateTime                          @default(now())
+
+//   @@unique([application, namespace, object, relation])
+// }
+
+// model Role {
+//   id                            String                            @id @default(uuid())
+//   name                          String
+//   //
+//   created_at                    DateTime                          @default(now())
+//   updated_at                    DateTime                          @default(now())
+// }
