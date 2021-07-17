@@ -1,0 +1,9 @@
+{
+  "cerberus": {
+    "title": "Cerberus Identity Management",
+    "cerberus_admin::is": {
+      "title": "Administrator",
+      "summary": "Provides full access to manage your organization's members, roles, and their permissions."
+    }
+  }
+}
