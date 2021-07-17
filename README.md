@@ -119,8 +119,7 @@ Identity (a.k.a. "user") management functionality is driven by [RedwoodJS' dbAut
 
 An identity represents an indavidual in an organization, and each identity can only be a member of a single organization. Uniquness is determined using an identities `email`.
 
-An organization's first identity is created when one of its members `signs up`. This will send them a confirmation e-mail. After clicking it an navigating back to the Cerberus application,
-the user will complete signing up; this will include naming the organization and creating the default, Administrator role and setting its permissions.
+An organization's first identity is created when one of its members `signs up`. This will send them a confirmation e-mail. After clicking it and navigating back to the Cerberus application, filling out the given fields, the user will complete sign up; this will include providing the member's name, naming the organization, and creating the default, Administrator role, setting its permissions.
 
 Other members of the organization can be `invited` by an administrator. These identities will have no permissions, and will need to go through a similar confirmation step as described above.
 
@@ -135,7 +134,7 @@ To be written; requires exploration.
 
 ### Using a Session
 
-The `session` cookie sent back to the browser after successful authentication
+To be written; requires exploration.
 
 ## Permission Management
 
