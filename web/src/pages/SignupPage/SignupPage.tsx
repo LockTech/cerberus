@@ -11,6 +11,7 @@ import {
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { toast } from '@redwoodjs/web/toast'
+import { useCallback } from 'react'
 
 interface SignupFormData {
   username: string
@@ -34,18 +35,21 @@ const SignupPage = () => {
     usernameRef.current.focus()
   }, [usernameRef])
 
-  const onSubmit = async (data: SignupFormData) => {
-    const response = await signUp({ ...data })
+  const onSubmit = useCallback(
+    async (data: SignupFormData) => {
+      const response: unknown = await signUp({ ...data })
 
-    console.log('form-data', data)
-    console.log('response', response)
+      const error = response as Error
+      const _id = response as { id: string }
 
-    if (response.message) {
-      toast.error(response.message)
-    } else {
-      toast.success('Welcome!')
-    }
-  }
+      if (error.message) {
+        toast.error(error.message)
+      } else {
+        toast.success(t('Signup.Page.complete'))
+      }
+    },
+    [signUp, t]
+  )
 
   return (
     <>

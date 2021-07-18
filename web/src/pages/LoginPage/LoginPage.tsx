@@ -11,6 +11,7 @@ import {
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { toast } from '@redwoodjs/web/toast'
+import { useCallback } from 'react'
 
 const LoginPage = () => {
   const { t } = useTranslation()
@@ -28,14 +29,21 @@ const LoginPage = () => {
     usernameRef.current.focus()
   }, [])
 
-  const onSubmit = async (data) => {
-    const response = await logIn({ ...data })
-    if (response.message) {
-      toast.error(response.message)
-    } else {
-      toast.success('Welcome back!')
-    }
-  }
+  const onSubmit = useCallback(
+    async (data) => {
+      const response: unknown = await logIn({ ...data })
+
+      const error = response as Error
+      const _id = response as { id: string }
+
+      if (error.message) {
+        toast.error(error.message)
+      } else {
+        toast.success(t('Login.Page.complete'))
+      }
+    },
+    [logIn, t]
+  )
 
   return (
     <>
