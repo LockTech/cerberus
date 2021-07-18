@@ -1,1 +1,46 @@
-{}
+{
+  "Login": {
+    "Page": {
+      "title": "Login",
+      "subtitle": "Enter your account's e-mail address and password to login.",
+      "form": {
+        "username": {
+          "label": "E-Mail Address",
+          "placeholder": "E-Mail Address",
+          "required": "An e-mail address is required to login."
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Password",
+          "required": "A password is required to login."
+        },
+        "submit": "Login"
+      },
+      "account": "Don't have an account?",
+      "signup": "Sign Up"
+    }
+  },
+  "Signup": {
+    "Page": {
+      "title": "Sign Up",
+      "subtitle": "Enter your e-mail address and a password to create an account and continue signing up.",
+      "form": {
+        "username": {
+          "label": "E-Mail Address",
+          "placeholder": "E-Mail Address",
+          "required": "An e-mail address is required to signup."
+        },
+        "password": {
+          "label": "Password",
+          "hint": "Passwords must be longer than eight characters. Secure passwords mix letters, numbers, symbols, and do not contain known phrases or words.",
+          "placeholder": "Password",
+          "minLength": "Your password must be longer than 8 characters.",
+          "required": "A password is required to signup."
+        },
+        "submit": "Sign Up"
+      },
+      "account": "Already have an account?",
+      "login": "Login"
+    }
+  }
+}
