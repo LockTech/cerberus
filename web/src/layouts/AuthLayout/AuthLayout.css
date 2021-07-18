@@ -1,0 +1,3 @@
+.auth-layout {
+  @apply m-auto max-w-md pt-10 space-y-6;
+}
