@@ -21,7 +21,7 @@
       "redirectUnknown": "Redirecting to new host.",
       "redirectHome": "Redirecting to Cerberus' dashboard.",
       "loading": "Logging you into your account.",
-      "success": "Successfully logged into your account."
+      "success": "Successfully logged you into your account."
     }
   },
   "Signup": {
@@ -47,7 +47,8 @@
       },
       "account": "Already have an account?",
       "login": "Login",
-      "complete": "Confirmation e-mail sent to your account."
+      "loading": "Signing up your account.",
+      "success": "Confirmation e-mail sent to your account."
     }
   }
 }
