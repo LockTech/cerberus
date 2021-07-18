@@ -36,12 +36,21 @@ const SignupPage = () => {
   }, [usernameRef])
 
   const onSubmit = useCallback(
-    (data: SignupFormData) => {
-      toast.promise(signUp({ ...data }), {
-        loading: t('Signup.Page.loading'),
-        success: t('Signup.Page.success'),
-        error: (err: Error) => err.message,
-      })
+    async (data: SignupFormData) => {
+      toast.loading(t('Signup.Page.loading'))
+
+      const response: unknown = await signUp({ ...data })
+
+      const error = response as Error
+      const _id = response as { id: string }
+
+      toast.dismiss()
+
+      if (error.message) {
+        toast.error(error.message)
+      } else {
+        toast.success(t('Signup.Page.success'))
+      }
     },
     [signUp, t]
   )

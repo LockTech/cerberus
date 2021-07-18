@@ -42,12 +42,21 @@ const LoginPage = () => {
   }, [])
 
   const onSubmit = useCallback(
-    (data) => {
-      toast.promise(logIn({ ...data }), {
-        loading: t('Login.Page.loading'),
-        success: t('Login.Page.success'),
-        error: (err: Error) => err.message,
-      })
+    async (data) => {
+      toast.loading(t('Login.Page.loading'))
+
+      const response: unknown = await logIn({ ...data })
+
+      const error = response as Error
+      const _id = response as { id: string }
+
+      toast.dismiss()
+
+      if (error.message) {
+        toast.error(error.message)
+      } else {
+        toast.success(t('Login.Page.success'))
+      }
     },
     [logIn, t]
   )
