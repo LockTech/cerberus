@@ -17,7 +17,10 @@
         "submit": "Login"
       },
       "account": "Don't have an account?",
-      "signup": "Sign Up"
+      "signup": "Sign Up",
+      "redirectUnknown": "Redirecting to new host.",
+      "redirectHome": "Redirecting to Cerberus' dashboard.",
+      "complete": "Successfully logged into your account."
     }
   },
   "Signup": {
@@ -37,10 +40,12 @@
           "minLength": "Your password must be longer than 8 characters.",
           "required": "A password is required to signup."
         },
-        "submit": "Sign Up"
+        "submit": "Sign Up",
+        "complete": ""
       },
       "account": "Already have an account?",
-      "login": "Login"
+      "login": "Login",
+      "complete": "Confirmation e-mail sent to your account."
     }
   }
 }
