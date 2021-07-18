@@ -40,10 +40,9 @@ export const handler = async (event, context) => {
         throw new ValidationError('An error occured trying to signup.')
       }
 
-      return {
-        statusCode: 200,
-        body: JSON.stringify(res),
-      }
+      logger.info('Successfully signed up a user.')
+
+      return res
     },
 
     // How long a user will remain logged in, in seconds
