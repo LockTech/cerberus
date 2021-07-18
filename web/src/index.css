@@ -74,22 +74,23 @@ html, body, #redwood-app {
 
   .input {
     @apply focus-blue;
-    @apply focus:bg-blue-100 dark:focus:bg-blue-900 focus:bg-opacity-40 dark:focus:bg-opacity-40;
-    @apply bg-gray-100 border border-gray-200 placeholder-gray-400 text-black;
+    @apply focus:bg-blue-100 focus:bg-opacity-60;
+    @apply dark:focus:bg-blue-900 dark:focus:bg-opacity-30;
+    @apply bg-gray-50 border border-gray-200 placeholder-gray-400 text-black;
     @apply dark:bg-gray-900 dark:bg-opacity-70 dark:border-gray-700 dark:text-white;
     @apply rounded;
     @apply px-4 py-2;
   }
   .input-error {
     @apply input;
-    @apply bg-red-100 bg-opacity-50 border-red-200;
-    @apply text-red-900 placeholder-red-400;
-    @apply dark:bg-red-900 dark:bg-opacity-30 dark:border-red-800;
-    @apply dark:text-red-100 dark:placeholder-red-300;
+    @apply border-red-500;
+    @apply dark:border-red-400;
+    @apply text-red-600 placeholder-red-500;
+    @apply dark:text-red-400 dark:placeholder-red-300;
   }
   .input-error-message {
-    @apply text-red-700;
-    @apply dark:text-red-400;
+    @apply text-red-500;
+    @apply dark:text-red-300;
     @apply text-sm;
   }
   .input-group {
