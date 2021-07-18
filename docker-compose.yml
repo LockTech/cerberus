@@ -20,3 +20,13 @@ services:
       - type: bind
         source: ./config/keto
         target: /home/ory
+
+  # api:
+  #   env_file: ./.env
+  #   image: cerberus_api:jeliasson-alpine
+  #   networks:
+  #     - default
+  #     - portunus_network
+  #     - poseidon_network
+  #   ports:
+  #     - 8910:8911
