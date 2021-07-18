@@ -6,13 +6,18 @@
 # https://redwoodjs.com/docs/app-configuration-redwood-toml
 
 [web]
+  host = "127.0.0.1"
   includeEnvironmentVariables = []
   port = 8910
-  apiProxyPath = "/.redwood/functions"
+  apiProxyPath = "/.redwood/functions" # "/api"
 [api]
+  host = "127.0.0.1"
   port = 8911
 [browser]
   open = true
 [experimental]
   esbuild = false
   useEnvelop = true
+[generate]
+  tests = false
+  stories = false
