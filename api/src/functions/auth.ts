@@ -1,7 +1,13 @@
-import { db } from 'src/lib/db'
+import type { User } from '@prisma/client'
 import { DbAuthHandler } from '@redwoodjs/api'
+import { ValidationError } from '@redwoodjs/graphql-server'
+
+import { db } from 'src/lib/db'
+import { logger } from 'src/lib/logger'
 
 export const handler = async (event, context) => {
+  logger.trace('Invoking auth handler.')
+
   const authHandler = new DbAuthHandler(event, context, {
     db,
 
@@ -15,16 +21,29 @@ export const handler = async (event, context) => {
     },
 
     signupHandler: async ({ username, hashedPassword, salt }) => {
+      logger.debug('Handling user sign up.')
+
       // send confirmation email
 
-      return await db.user.create({
-        data: {
-          email: username,
-          hashedPassword,
-          salt,
-          organization: null,
-        },
-      })
+      let res: User
+
+      try {
+        res = await db.user.create({
+          data: {
+            email: username,
+            hashedPassword,
+            salt,
+          },
+        })
+      } catch (err) {
+        logger.error({ err }, 'Error adding user to database.')
+        throw new ValidationError('An error occured trying to signup.')
+      }
+
+      return {
+        statusCode: 200,
+        body: JSON.stringify(res),
+      }
     },
 
     // How long a user will remain logged in, in seconds
