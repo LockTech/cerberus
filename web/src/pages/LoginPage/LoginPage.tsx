@@ -1,18 +1,20 @@
-import { Link, navigate, routes } from '@redwoodjs/router'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useAuth } from '@redwoodjs/auth'
 import {
+  EmailField,
   Form,
   Label,
-  TextField,
   PasswordField,
   Submit,
   FieldError,
 } from '@redwoodjs/forms'
-import { useAuth } from '@redwoodjs/auth'
-import { toast, Toaster } from '@redwoodjs/web/toast'
-import { useEffect } from 'react'
+import { Link, navigate, routes } from '@redwoodjs/router'
+import { toast } from '@redwoodjs/web/toast'
 
 const LoginPage = () => {
+  const { t } = useTranslation()
+
   const { isAuthenticated, logIn } = useAuth()
 
   useEffect(() => {
@@ -21,7 +23,7 @@ const LoginPage = () => {
     }
   }, [isAuthenticated])
 
-  const usernameRef = useRef()
+  const usernameRef = useRef<HTMLInputElement>()
   useEffect(() => {
     usernameRef.current.focus()
   }, [])
@@ -36,80 +38,67 @@ const LoginPage = () => {
   }
 
   return (
-    <main className="rw-main">
-      <Toaster />
-      <div className="rw-login-container">
-        <div className="rw-segment">
-          <header className="rw-segment-header">
-            <h2 className="rw-heading rw-heading-secondary">Login</h2>
-          </header>
-
-          <div className="rw-segment-main">
-            <div className="rw-form-wrapper">
-              <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                <div className="text-left">
-                  <Label
-                    name="username"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Username
-                  </Label>
-                  <TextField
-                    name="username"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    ref={usernameRef}
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'Username is required',
-                      },
-                    }}
-                  />
-
-                  <FieldError name="username" className="rw-field-error" />
-                </div>
-
-                <div className="text-left">
-                  <Label
-                    name="password"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Password
-                  </Label>
-                  <PasswordField
-                    name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    autoComplete="current-password"
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'Password is required',
-                      },
-                    }}
-                  />
-
-                  <FieldError name="password" className="rw-field-error" />
-                </div>
-
-                <div className="rw-button-group">
-                  <Submit className="rw-button rw-button-blue">Login</Submit>
-                </div>
-              </Form>
-            </div>
+    <>
+      <div className="card card-body space-y-6">
+        <header className="title-group">
+          <h1 className="title">{t('Login.Page.title')}</h1>
+          <p className="hint">{t('Login.Page.subtitle')}</p>
+        </header>
+        <Form onSubmit={onSubmit} className="form">
+          {/* username */}
+          <div className="input-group">
+            <Label name="username" className="input-label">
+              {t('Login.Page.form.username.label')}
+            </Label>
+            <EmailField
+              autoComplete="email"
+              className="input"
+              errorClassName="input-error"
+              name="username"
+              placeholder={t('Login.Page.form.username.placeholder')}
+              ref={usernameRef}
+              validation={{
+                required: {
+                  value: true,
+                  message: t('Login.Page.form.username.required'),
+                },
+              }}
+            />
+            <FieldError name="username" className="input-error-message" />
           </div>
-        </div>
-        <div className="rw-login-link">
-          <span>Don&apos;t have an account?</span>{' '}
-          <Link to={routes.signup()} className="rw-link">
-            Sign up!
-          </Link>
-        </div>
+          {/* password */}
+          <div className="input-group">
+            <Label name="password" className="input-label">
+              {t('Login.Page.form.password.label')}
+            </Label>
+            <PasswordField
+              autoComplete="current-password"
+              className="input"
+              errorClassName="input-error"
+              name="password"
+              placeholder={t('Login.Page.form.password.placeholder')}
+              validation={{
+                required: {
+                  value: true,
+                  message: t('Login.Page.form.password.required'),
+                },
+              }}
+            />
+            <FieldError name="password" className="input-error-message" />
+          </div>
+          {/* submit */}
+          <Submit className="block button-fill-blue">
+            {t('Login.Page.form.submit')}
+          </Submit>
+        </Form>
       </div>
-    </main>
+      <div className="auth-account">
+        <span>{t('Login.Page.account')}</span>{' '}
+        <Link to={routes.signup()} className="link">
+          {t('Login.Page.signup')}
+        </Link>
+      </div>
+    </>
   )
 }
 
