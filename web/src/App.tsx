@@ -1,7 +1,6 @@
-import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
+import { RecoilRoot } from 'recoil'
 import { AuthProvider } from '@redwoodjs/auth'
-
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 
@@ -13,19 +12,17 @@ import './index.css'
 import './i18n'
 
 const App = () => {
-  useEffect(() => {
-    // window.document.body.classList.add('dark')
-  }, [])
-
   return (
     <FatalErrorBoundary page={FatalErrorPage}>
       <RedwoodProvider>
-        <AuthProvider type="dbAuth">
-          <RedwoodApolloProvider>
-            <Toaster position="top-right" />
-            <Routes />
-          </RedwoodApolloProvider>
-        </AuthProvider>
+        <RecoilRoot>
+          <AuthProvider type="dbAuth">
+            <RedwoodApolloProvider>
+              <Toaster position="top-right" />
+              <Routes />
+            </RedwoodApolloProvider>
+          </AuthProvider>
+        </RecoilRoot>
       </RedwoodProvider>
     </FatalErrorBoundary>
   )
