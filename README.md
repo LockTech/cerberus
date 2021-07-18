@@ -2,13 +2,13 @@
 
 > This is a WIP project which is not suitable for production use.
 
-A control panel and platform for self-managed, multi-tenant identity and permission management.
+A control panel and platform for self-managed, multi-tenant account and permission management.
 
 Built using the [RedwoodJS framework](https://redwoodjs.com) and [Ory Keto](https://www.ory.sh/keto/docs/next/). This platform is intended for web applications, and has been designed specifically to work well with other RedwoodJS applications.
 
 ## Introduction
 
-The [identity](#identity-management) and [permission](#permission-management) management sections of this `README` provide more detailed information on each respective feature.
+The [account](#account-management) and [permission](#permission-management) management sections of this `README` provide more detailed information on each respective feature.
 
 These features are designed for the benefit of many, distinct applications. These distinct applications are expected to make use of the identities offered by Cerberus, letting the applications focus on their technical goals.
 More information about the nature of an application's relationship to Cerberus can be found under the [applications](#applications) section of this document.
@@ -16,7 +16,7 @@ More information about the nature of an application's relationship to Cerberus c
 Finally, the "self-managed" portion of Cerberus comes from the fact that it is expected each indavidual organization manage their identities on their own terms.
 Organizations are free to invite new members, edit those members, remove them, and assign permissions to them - all done independent any other organization.
 
-> As described in [Identity Management](#identity-management), this independence is enforced down to an identitiy's `email`.
+> As described in [Account Management](#account-management), this independence is enforced down to an identitiy's `email`.
 
 > To be specific, Cerberus is a multi-tenant application which uses a single, multi-tenant database. Tenant distinguishing is done at table-level.
 >
@@ -93,11 +93,11 @@ Please read through it and the remainder of this `README` before submitting cont
 While most of the terminology used by Cerberus is obvious, common ideas have been explicity defined here to standardize the language used by and when describing the platform.
 
 * Organization - The tenants of this multi-tenant platform. Each organization is independent another; organizations can only manage the identities which belong to them.
-* Identity - A "user" or "account" which contains information identifying an indavidual in a particular organization.
-* Member - The indaviduals of an organization, who use their identity to access various features and services.
+* Account - A "user" or "account" which contains information identifying an indavidual in a particular organization.
+* Member - The indaviduals of an organization, who use their account to access various features and services.
   * "Member" is perferred, to "identitiy", when speaking *to* an end-user of the Cerberus platform;
   "Manage your organization's identities" would become "Manage your organization's members".
-  * A member is a person, an identity is a thing.
+  * A member is a person, an account is a thing.
   * A member could have many identities; so long as they have many emails backing those identities.
 
 ## Applications
@@ -113,20 +113,20 @@ At a minimum, applications can make use of the identities stored by Cerberus; th
 Applications can also make permissions known to Cerberus, letting the platform act as the tool which organizations may use to provide access to their identities concerning what
 features those identities can access.
 
-## Identity Management
+## Account Management
 
-Identity (a.k.a. "user") management functionality is driven by [RedwoodJS' dbAuth](https://redwoodjs.com/docs/authentication#self-hosted-auth-installation-and-setup).
+Account (a.k.a. "user") management functionality is driven by [RedwoodJS' dbAuth](https://redwoodjs.com/docs/authentication#self-hosted-auth-installation-and-setup).
 
-An identity represents an indavidual in an organization, and each identity can only be a member of a single organization. Uniquness is determined using an identities `email`.
+An account represents an indavidual in an organization, and each account can only be a member of a single organization. Uniquness is determined using an identities `email`.
 
-An organization's first identity is created when one of its members `signs up`. This will send them a confirmation e-mail. After clicking it and navigating back to the Cerberus application, filling out the given fields, the user will complete sign up; this will include providing the member's name, naming the organization, and creating the default, Administrator role, setting its permissions.
+An organization's first account is created when one of its members `signs up`. This will send them a confirmation e-mail. After clicking it and navigating back to the Cerberus application, filling out the given fields, the user will complete sign up; this will include providing the member's name, naming the organization, and creating the default, Administrator role, setting its permissions.
 
 Other members of the organization can be `invited` by an administrator. These identities will have no permissions, and will need to go through a similar confirmation step as described above.
 
 Administrators may also use Cerberus to manage invited members:
-* Updating an identity's details, such as its: name, e-mail, and initiating the password-reset process.
-* Removing an identity from the administrator's organization.
-* Adjusting an identity's permissions.
+* Updating an account's details, such as its: name, e-mail, and initiating the password-reset process.
+* Removing an account from the administrator's organization.
+* Adjusting an account's permissions.
 
 ### Authenticating Identities
 
@@ -144,12 +144,12 @@ Permissions are made possible thanks to [Ory Keto](https://www.ory.sh/keto/docs/
 
 > Cerberus takes steps to limit the performance impact of deeply nested relations. If you plan to extend much of Cerberus' permissions functionality, ensure you read through Keto's [performance](https://www.ory.sh/keto/docs/next/performance/) considerations.
 >
-> Cerberus' permission and [roles](#roles) system will always have a depth of 1, [the relation between a permission->role->identity](#relation-tuples-mocked). Assigning permissions directly in your application will, in-fact, improve performance by limiting it to permission->identity.
+> Cerberus' permission and [roles](#roles) system will always have a depth of 1, [the relation between a permission->role->account](#relation-tuples-mocked). Assigning permissions directly in your application will, in-fact, improve performance by limiting it to permission->account.
 
 Cerberus is responsible for [`writing`](https://www.ory.sh/keto/docs/next/reference/rest-api#write) [relation-tuples](https://www.ory.sh/keto/docs/next/concepts/relation-tuples)
 to Keto, based on end-user interaction with the web-side of Cerberus' RedwoodJS application, facilitated by its API-side; and using information supplied by application-developers.
 
-Other applications can then [`check`](https://www.ory.sh/keto/docs/next/reference/rest-api#check-a-relation-tuple) if a given identity has been assigned an expected permission.
+Other applications can then [`check`](https://www.ory.sh/keto/docs/next/reference/rest-api#check-a-relation-tuple) if a given account has been assigned an expected permission.
 
 ### Submitting Permissions
 
@@ -218,9 +218,9 @@ The structure of these translations should resemble the following, in continuing
 
 Identities are not directly assigned permissions. Instead, this association is decoupled into the concept of Roles.
 
-Permissions are assigned to roles, roles are then assigned to identities. Many identities can share the same role, and an identity can be assigned many roles.
+Permissions are assigned to roles, roles are then assigned to identities. Many identities can share the same role, and an account can be assigned many roles.
 
-To an application which depends upon Cerberus' functionality, the distinction between who carries what role is arbitrary: the application can `check` if an identity
+To an application which depends upon Cerberus' functionality, the distinction between who carries what role is arbitrary: the application can `check` if an account
 has been assigned an expected permission without knowing anything about the roles which that user has, or that roles exist at all.
 
 Roles cannot extend the permissions of another role. This choice was made as a [performance](https://www.ory.sh/keto/docs/next/performance) consideration, to limit the depth of `checks`.
@@ -252,18 +252,18 @@ A relation-tuple which would fulfil this subject-set would resemble:
   "namespace": 'cerberus_roles',
   "object": role_id,
   "relation": 'has',
-  "subject": user_id // an identity's UUID
+  "subject": user_id // an account's UUID
 }
 ```
 
-This is the workflow which powers [checking an identity has been assigned an expected permission](#checking-permissions).
+This is the workflow which powers [checking an account has been assigned an expected permission](#checking-permissions).
 
 ## Checking Permissions
 
-An application can [`check`](https://www.ory.sh/keto/docs/next/reference/rest-api#check-a-relation-tuple) a given identity has a permission by sending a request
+An application can [`check`](https://www.ory.sh/keto/docs/next/reference/rest-api#check-a-relation-tuple) a given account has a permission by sending a request
 or using an [API](https://www.ory.sh/keto/docs/next/reference/proto-api).
 
-As stated in the Roles section, an application only needs to know the information given in a permission-tuple and an identity's UUID. The UUID is obtained once a member has been successfully authenticated.
+As stated in the Roles section, an application only needs to know the information given in a permission-tuple and an account's UUID. The UUID is obtained once a member has been successfully authenticated.
 
 Using the example given in Permission Management and Roles, a `check` request may resemble:
 
