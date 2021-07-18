@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@redwoodjs/auth'
 import {
@@ -9,20 +9,32 @@ import {
   Submit,
   FieldError,
 } from '@redwoodjs/forms'
-import { Link, navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
+import { parseSearch } from '@redwoodjs/router/dist/util'
 import { toast } from '@redwoodjs/web/toast'
-import { useCallback } from 'react'
 
 const LoginPage = () => {
   const { t } = useTranslation()
 
   const { isAuthenticated, logIn } = useAuth()
 
+  const location = useLocation()
+
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.home())
+      const redirect =
+        location.search &&
+        (parseSearch(location.search) as { redirectTo: string }).redirectTo
+
+      if (redirect) {
+        window.location.href = redirect
+        toast(t('Login.Page.redirectUnknown'))
+      } else {
+        navigate(routes.home())
+        toast(t('Login.Page.redirectHome'))
+      }
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, location, t])
 
   const usernameRef = useRef<HTMLInputElement>()
   useEffect(() => {
