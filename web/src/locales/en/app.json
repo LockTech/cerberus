@@ -20,7 +20,8 @@
       "signup": "Sign Up",
       "redirectUnknown": "Redirecting to new host.",
       "redirectHome": "Redirecting to Cerberus' dashboard.",
-      "complete": "Successfully logged into your account."
+      "loading": "Logging you into your account.",
+      "success": "Successfully logged into your account."
     }
   },
   "Signup": {
@@ -41,7 +42,8 @@
           "required": "A password is required to signup."
         },
         "submit": "Sign Up",
-        "complete": ""
+        "loading": "Attempting to create your account.",
+        "complete": "Successfully created your account."
       },
       "account": "Already have an account?",
       "login": "Login",
