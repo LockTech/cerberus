@@ -13,3 +13,6 @@ web/types/graphql.d.ts
 api/types/graphql.d.ts
 
 config/*
+
+#Temp
+docker-benchmark-*
