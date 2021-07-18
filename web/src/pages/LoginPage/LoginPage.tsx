@@ -111,7 +111,7 @@ const LoginPage = () => {
             <FieldError name="password" className="input-error-message" />
           </div>
           {/* submit */}
-          <Submit className="block button-fill-blue">
+          <Submit className="block primary-fill-button">
             {t('Login.Page.form.submit')}
           </Submit>
         </Form>

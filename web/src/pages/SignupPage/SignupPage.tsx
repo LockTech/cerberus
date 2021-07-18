@@ -112,7 +112,7 @@ const SignupPage = () => {
             </Label>
           </div>
           {/* submit */}
-          <Submit className="block button-fill-blue">
+          <Submit className="block primary-fill-button">
             {t('Signup.Page.form.submit')}
           </Submit>
         </Form>
