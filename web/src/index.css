@@ -89,7 +89,7 @@ html, body, #redwood-app {
     @apply dark:text-red-400 dark:placeholder-red-300;
   }
   .input-error-message {
-    @apply text-red-500;
+    @apply text-red-600;
     @apply dark:text-red-300;
     @apply text-sm;
   }
