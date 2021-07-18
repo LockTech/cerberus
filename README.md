@@ -10,10 +10,10 @@ Built using the [RedwoodJS framework](https://redwoodjs.com) and [Ory Keto](http
 
 The [account](#account-management) and [permission](#permission-management) management sections of this `README` provide more detailed information on each respective feature.
 
-These features are designed for the benefit of many, distinct applications. These distinct applications are expected to make use of the identities offered by Cerberus, letting the applications focus on their technical goals.
+These features are designed for the benefit of many, distinct applications. These distinct applications are expected to make use of the accounts offered by Cerberus, letting the applications focus on their technical goals.
 More information about the nature of an application's relationship to Cerberus can be found under the [applications](#applications) section of this document.
 
-Finally, the "self-managed" portion of Cerberus comes from the fact that it is expected each indavidual organization manage their identities on their own terms.
+Finally, the "self-managed" portion of Cerberus comes from the fact that it is expected each indavidual organization manage their accounts on their own terms.
 Organizations are free to invite new members, edit those members, remove them, and assign permissions to them - all done independent any other organization.
 
 > As described in [Account Management](#account-management), this independence is enforced down to an identitiy's `email`.
@@ -92,13 +92,13 @@ Please read through it and the remainder of this `README` before submitting cont
 
 While most of the terminology used by Cerberus is obvious, common ideas have been explicity defined here to standardize the language used by and when describing the platform.
 
-* Organization - The tenants of this multi-tenant platform. Each organization is independent another; organizations can only manage the identities which belong to them.
+* Organization - The tenants of this multi-tenant platform. Each organization is independent another; organizations can only manage the accounts which belong to them.
 * Account - A "user" or "account" which contains information identifying an indavidual in a particular organization.
 * Member - The indaviduals of an organization, who use their account to access various features and services.
   * "Member" is perferred, to "identitiy", when speaking *to* an end-user of the Cerberus platform;
-  "Manage your organization's identities" would become "Manage your organization's members".
+  "Manage your organization's accounts" would become "Manage your organization's members".
   * A member is a person, an account is a thing.
-  * A member could have many identities; so long as they have many emails backing those identities.
+  * A member could have many accounts; so long as they have many emails backing those accounts.
 
 ## Applications
 
@@ -108,27 +108,27 @@ As stated above, Cerberus was designed for, among many things, the benefit of ot
 >
 > Cerberus has **not** been designed to act in the interest of single-tenant systems.
 
-At a minimum, applications can make use of the identities stored by Cerberus; this provides them a shared space for implementing personalized content that is dependent upon the concept of an "account".
+At a minimum, applications can make use of the accounts stored by Cerberus; this provides them a shared space for implementing personalized content that is dependent upon the concept of an "account".
 
-Applications can also make permissions known to Cerberus, letting the platform act as the tool which organizations may use to provide access to their identities concerning what
-features those identities can access.
+Applications can also make permissions known to Cerberus, letting the platform act as the tool which organizations may use to provide access to their accounts concerning what
+features those accounts can access.
 
 ## Account Management
 
 Account (a.k.a. "user") management functionality is driven by [RedwoodJS' dbAuth](https://redwoodjs.com/docs/authentication#self-hosted-auth-installation-and-setup).
 
-An account represents an indavidual in an organization, and each account can only be a member of a single organization. Uniquness is determined using an identities `email`.
+An account represents an indavidual in an organization, and each account can only be a member of a single organization. Uniquness is determined using an account's `email`.
 
 An organization's first account is created when one of its members `signs up`. This will send them a confirmation e-mail. After clicking it and navigating back to the Cerberus application, filling out the given fields, the user will complete sign up; this will include providing the member's name, naming the organization, and creating the default, Administrator role, setting its permissions.
 
-Other members of the organization can be `invited` by an administrator. These identities will have no permissions, and will need to go through a similar confirmation step as described above.
+Other members of the organization can be `invited` by an administrator. These accounts will have no permissions, and will need to go through a similar confirmation step as described above.
 
 Administrators may also use Cerberus to manage invited members:
 * Updating an account's details, such as its: name, e-mail, and initiating the password-reset process.
 * Removing an account from the administrator's organization.
 * Adjusting an account's permissions.
 
-### Authenticating Identities
+### Authenticating Accounts
 
 To be written; requires exploration.
 
@@ -216,9 +216,9 @@ The structure of these translations should resemble the following, in continuing
 
 ## Roles
 
-Identities are not directly assigned permissions. Instead, this association is decoupled into the concept of Roles.
+Accounts are not directly assigned permissions. Instead, this association is decoupled into the concept of Roles.
 
-Permissions are assigned to roles, roles are then assigned to identities. Many identities can share the same role, and an account can be assigned many roles.
+Permissions are assigned to roles, roles are then assigned to accounts. Many accounts can share the same role, and an account can be assigned many roles.
 
 To an application which depends upon Cerberus' functionality, the distinction between who carries what role is arbitrary: the application can `check` if an account
 has been assigned an expected permission without knowing anything about the roles which that user has, or that roles exist at all.
