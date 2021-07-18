@@ -6,7 +6,7 @@ const Routes = () => {
   return (
     <Router>
       <Private unauthenticated="login">
-        <Route path="/home" page={HomePage} name="home" />
+        <Route path="/" page={HomePage} name="home" />
       </Private>
       <Set wrap={[AuthLayout]}>
         <Route path="/login" page={LoginPage} name="login" />
