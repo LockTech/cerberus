@@ -17,7 +17,10 @@ const App = () => {
         <RecoilRoot>
           <AuthProvider type="dbAuth">
             <RedwoodApolloProvider>
-              <Toaster position="top-right" />
+              <Toaster
+                toastOptions={{ className: 'toast' }}
+                position="top-right"
+              />
               <Routes />
             </RedwoodApolloProvider>
           </AuthProvider>

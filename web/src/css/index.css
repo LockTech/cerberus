@@ -107,6 +107,15 @@ html, body, #redwood-app {
     @apply hover:underline active:underline;
   }
 
+  /* Toast */
+  .toast {
+    @apply border;
+    @apply bg-white border-gray-200;
+    @apply dark:bg-gray-800 dark:border-gray-700;
+    @apply text-black;
+    @apply dark:text-white;
+  }
+
   .title-group {
     @apply space-y-2;
   }
