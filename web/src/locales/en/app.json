@@ -1,4 +1,11 @@
 {
+  "Home": {
+    "Page": {
+      "Helmet": {
+        "title": "Cerberus • Dashboard"
+      }
+    }
+  },
   "Login": {
     "Page": {
       "Helmet": {
