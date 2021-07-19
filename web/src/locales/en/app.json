@@ -1,6 +1,9 @@
 {
   "Login": {
     "Page": {
+      "Helmet": {
+        "title": "Cerberus • Login"
+      },
       "title": "Login",
       "subtitle": "Enter your account's e-mail address and password to login.",
       "form": {
@@ -19,13 +22,16 @@
       "account": "Don't have an account?",
       "signup": "Sign Up",
       "redirectUnknown": "Redirecting to new host.",
-      "redirectHome": "Redirecting to Cerberus' dashboard.",
+      "redirectHome": "Redirecting to the  dashboard.",
       "loading": "Logging you into your account.",
       "success": "Successfully logged you into your account."
     }
   },
   "Signup": {
     "Page": {
+      "Helmet": {
+        "title": "Cerberus • Sign Up"
+      },
       "title": "Sign Up",
       "subtitle": "Enter your e-mail address and a password to create an account and continue signing up.",
       "form": {
@@ -41,9 +47,7 @@
           "minLength": "Your password must be longer than 8 characters.",
           "required": "A password is required to signup."
         },
-        "submit": "Sign Up",
-        "loading": "Attempting to create your account.",
-        "complete": "Successfully created your account."
+        "submit": "Sign Up"
       },
       "account": "Already have an account?",
       "login": "Login",

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@redwoodjs/auth'
 import {
@@ -10,8 +10,8 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
+import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useCallback } from 'react'
 
 interface SignupFormData {
   username: string
@@ -57,6 +57,9 @@ const SignupPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{t('Signup.Page.Helmet.title')}</title>
+      </Helmet>
       <div className="card card-body space-y-6">
         <header className="title-group">
           <h1 className="title">{t('Signup.Page.title')}</h1>
@@ -70,7 +73,7 @@ const SignupPage = () => {
             </Label>
             <EmailField
               autoComplete="email"
-              className="input"
+              className="input-primary"
               errorClassName="input-error"
               name="username"
               placeholder={t('Signup.Page.form.username.placeholder')}
@@ -91,7 +94,7 @@ const SignupPage = () => {
             </Label>
             <PasswordField
               autoComplete="current-password"
-              className="input"
+              className="input-primary"
               errorClassName="input-error"
               name="password"
               placeholder={t('Signup.Page.form.password.placeholder')}
@@ -112,14 +115,14 @@ const SignupPage = () => {
             </Label>
           </div>
           {/* submit */}
-          <Submit className="block primary-fill-button">
+          <Submit className="block button-primary-fill">
             {t('Signup.Page.form.submit')}
           </Submit>
         </Form>
       </div>
       <div className="auth-account">
         <span>{t('Signup.Page.account')}</span>{' '}
-        <Link to={routes.login()} className="link">
+        <Link to={routes.login()} className="link-primary">
           {t('Signup.Page.login')}
         </Link>
       </div>

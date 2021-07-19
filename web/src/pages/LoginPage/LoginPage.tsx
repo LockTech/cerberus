@@ -11,6 +11,7 @@ import {
 } from '@redwoodjs/forms'
 import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { parseSearch } from '@redwoodjs/router/dist/util'
+import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 const LoginPage = () => {
@@ -63,6 +64,9 @@ const LoginPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{t('Login.Page.Helmet.title')}</title>
+      </Helmet>
       <div className="card card-body space-y-6">
         <header className="title-group">
           <h1 className="title">{t('Login.Page.title')}</h1>
@@ -76,7 +80,7 @@ const LoginPage = () => {
             </Label>
             <EmailField
               autoComplete="email"
-              className="input"
+              className="input-primary"
               errorClassName="input-error"
               name="username"
               placeholder={t('Login.Page.form.username.placeholder')}
@@ -97,7 +101,7 @@ const LoginPage = () => {
             </Label>
             <PasswordField
               autoComplete="current-password"
-              className="input"
+              className="input-primary"
               errorClassName="input-error"
               name="password"
               placeholder={t('Login.Page.form.password.placeholder')}
@@ -111,14 +115,14 @@ const LoginPage = () => {
             <FieldError name="password" className="input-error-message" />
           </div>
           {/* submit */}
-          <Submit className="block primary-fill-button">
+          <Submit className="block button-primary-fill">
             {t('Login.Page.form.submit')}
           </Submit>
         </Form>
       </div>
       <div className="auth-account">
         <span>{t('Login.Page.account')}</span>{' '}
-        <Link to={routes.signup()} className="link">
+        <Link to={routes.signup()} className="link-primary">
           {t('Login.Page.signup')}
         </Link>
       </div>
