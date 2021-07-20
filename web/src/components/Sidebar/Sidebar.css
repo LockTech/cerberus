@@ -14,6 +14,9 @@
   @apply text-gray-50;
   @apply font-semibold tracking-wider text-2xl;
 }
+.sidebar .title .hint {
+  @apply text-gray-400;
+}
 
 .sidebar nav {
   @apply flex flex-col items-start justify-center;
