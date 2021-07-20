@@ -3,8 +3,13 @@
 @import "tailwindcss/utilities";
 
 /* Application agnostic */
+* {
+  font-family: 'Quicksand', sans-serif;
+  @apply tracking-wide;
+}
+
 html, body, #redwood-app {
-  @apply bg-gray-50 dark:bg-gray-900;
+  @apply bg-gray-50 dark:bg-gray-800;
   @apply h-full w-full;
 }
 
@@ -23,7 +28,7 @@ html, body, #redwood-app {
 
   /* Typograph */
   .hint {
-    @apply text-gray-600;
+    @apply text-gray-500;
     @apply dark:text-gray-400;
     @apply text-sm;
   }
@@ -42,6 +47,7 @@ html, body, #redwood-app {
   .button {
     @apply duration-[200ms] ease-in-out transition-all;
     @apply border border-transparent;
+    @apply font-medium uppercase;
     @apply px-4 py-2;
     @apply rounded-md;
   }
@@ -50,7 +56,7 @@ html, body, #redwood-app {
   .card {
     /* Background */
     @apply bg-white;
-    @apply dark:bg-gray-800;
+    @apply dark:bg-gray-900 dark:bg-opacity-80;
     /* Border */
     @apply border rounded-lg;
     @apply border-gray-100;
@@ -70,12 +76,11 @@ html, body, #redwood-app {
   /* Input */
   .input {
     /* Background */
-    @apply bg-gray-50 bg-opacity-80;
-    @apply dark:bg-gray-700 dark:bg-opacity-70;
+    @apply bg-transparent;
     /* Border */
     @apply border-transparent;
-    @apply hover:border-gray-100;
-    @apply dark:hover:border-gray-600;
+    @apply border-gray-200 hover:border-gray-400;
+    @apply dark:border-gray-700 dark:hover:border-gray-500;
     /* Text */
     @apply placeholder-gray-500 text-black;
     @apply dark:placeholder-gray-400 dark:text-white;
@@ -87,8 +92,8 @@ html, body, #redwood-app {
   .input-error {
     @apply input;
     /* Border */
-    @apply border-red-300;
-    @apply dark:border-red-400;
+    @apply border-red-400;
+    @apply dark:border-red-500 !important;
     /* Text */
     @apply placeholder-red-600;
     @apply dark:placeholder-red-300;
@@ -118,15 +123,16 @@ html, body, #redwood-app {
   .link {
     @apply focus;
     @apply duration-150 transition-colors;
-    @apply border border-transparent;
+    @apply border border-transparent rounded;
     @apply hover:underline active:underline;
+    @apply px-1;
   }
 
   /* Toast */
   .toast {
     /* Background */
     @apply bg-white;
-    @apply dark:bg-gray-800;
+    @apply dark:bg-gray-900 dark:bg-opacity-80;
     /* Border */
     @apply border-gray-100;
     @apply dark:border-gray-700;
@@ -147,28 +153,32 @@ html, body, #redwood-app {
 @layer base {
   .focus-primary {
     @apply focus;
-    @apply focus:border-primary-500 ring-primary-600;
+    @apply focus:border-primary-500 ring-primary-700;
     @apply dark:focus:border-primary-300 ring-primary-400;
   }
 }
 
 @layer components {
-  .appbar button {
-    @apply focus-primary focus:border-primary-300;
+  /* Appbar */
+  .appbar .actions button {
+    @apply focus-primary;
   }
 
+  /* Auth */
   .auth-account {
-    @apply flex flex-row items-center justify-center space-x-1 hint w-full;
+    @apply flex flex-row items-center justify-center;
+    @apply hint;
+    @apply w-full;
+    @apply space-x-1.5;
   }
 
   /* Buttons */
   .button-primary-fill {
     /* Background */
-    @apply bg-primary-500 hover:bg-primary-400 active:bg-opacity-90;
-    @apply dark:bg-primary-400 dark:hover:bg-primary-500 dark:active:bg-primary-600;
+    @apply bg-primary-400 hover:bg-primary-500 active:bg-primary-600;
     /* Border */
     /* Text */
-    @apply text-white;
+    @apply text-black hover:text-white active:text-white;
     /* Misc */
     @apply focus-primary;
     @apply button;
@@ -182,13 +192,12 @@ html, body, #redwood-app {
   /* Link */
   .link-primary {
     @apply focus-primary link;
-    @apply text-primary-600 hover:text-primary-500 active:text-primary-400;
+    @apply text-primary-600 hover:text-primary-700 active:text-primary-800;
     @apply dark:text-primary-200 dark:hover:text-primary-300 dark:active:text-primary-400;
   }
 
   /* Sidebar */
   .sidebar nav button {
-    /* Misc */
-    @apply focus-primary focus:border-primary-300;
+    @apply focus-primary focus:border-primary-400;
   }
 }
