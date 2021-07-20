@@ -1,10 +1,11 @@
 .appbar {
   /* Background */
-  @apply bg-transparent;
+  @apply bg-gray-100;
+  @apply dark:bg-gray-700;
   /* Misc */
   @apply flex flex-row items-center justify-end;
   @apply w-full;
-  @apply px-12 py-4 space-x-6;
+  @apply px-12 py-3 space-x-6;
 }
 
 .appbar .actions {
@@ -21,7 +22,7 @@
   @apply dark:text-gray-400 dark:hover:text-gray-200 dark:active:text-gray-50;
   /* Misc */
   @apply duration-[200ms] ease-in-out transition-all;
-  @apply px-2.5 py-2;
+  @apply px-2 py-1.5;
 }
 .appbar .actions button .icon {
   /* Misc */
