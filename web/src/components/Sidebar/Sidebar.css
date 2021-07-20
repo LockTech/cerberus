@@ -32,7 +32,7 @@
   /* Misc */
   @apply duration-[200ms] ease-in-out transition-all;
   @apply flex flex-row items-center;
-  @apply px-4 py-2;
+  @apply px-5 py-3;
   @apply w-full;
 }
 
@@ -40,5 +40,6 @@
   /* Background */
   @apply bg-gray-700;
   /* Text */
-  @apply text-gray-50;
+  @apply font-semibold;
+  @apply text-primary-300;
 }
