@@ -1,0 +1,24 @@
+.appbar {
+  /* Background */
+  @apply bg-gray-700;
+  /* Misc */
+  @apply flex flex-row items-center justify-end;
+  @apply min-h-[3.25rem] w-full;
+  @apply px-4 py-2;
+}
+
+.appbar button {
+  /* Background */
+  @apply bg-transparent active:bg-gray-500;
+  /* Border */
+  @apply border border-transparent rounded;
+  @apply hover:border-gray-500;
+  /* Text */
+  @apply text-gray-400 hover:text-gray-200 active:text-white;
+  /* Misc */
+  @apply p-1.5 px-2;
+}
+
+.appbar-icon {
+  @apply h-6 w-6;
+}
