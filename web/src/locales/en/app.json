@@ -44,7 +44,7 @@
   },
   "Sidebar": {
     "title": "Cerberus",
-    "subtitle": "",
+    "subtitle": "Identity and permission management",
     "nav": {
       "dashboard": "Dashboard",
       "listAccounts": "Accounts"
