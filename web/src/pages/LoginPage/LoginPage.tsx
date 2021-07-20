@@ -29,10 +29,9 @@ const LoginPage = () => {
 
       if (redirect) {
         window.location.href = redirect
-        toast(t('Login.Page.redirectUnknown'))
+        toast(t('Login.Page.redirect'))
       } else {
         navigate(routes.home())
-        toast(t('Login.Page.redirectHome'))
       }
     }
   }, [isAuthenticated, location, t])
@@ -75,7 +74,11 @@ const LoginPage = () => {
         <Form onSubmit={onSubmit} className="form">
           {/* username */}
           <div className="input-group">
-            <Label name="username" className="input-label">
+            <Label
+              className="input-label"
+              errorClassName="input-label-error"
+              name="username"
+            >
               {t('Login.Page.form.username.label')}
             </Label>
             <EmailField
@@ -96,7 +99,11 @@ const LoginPage = () => {
           </div>
           {/* password */}
           <div className="input-group">
-            <Label name="password" className="input-label">
+            <Label
+              className="input-label"
+              errorClassName="input-label-error"
+              name="password"
+            >
               {t('Login.Page.form.password.label')}
             </Label>
             <PasswordField

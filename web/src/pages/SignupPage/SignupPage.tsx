@@ -68,7 +68,11 @@ const SignupPage = () => {
         <Form onSubmit={onSubmit} className="form">
           {/* username */}
           <div className="input-group">
-            <Label className="input-label" name="username">
+            <Label
+              className="input-label"
+              errorClassName="input-label-error"
+              name="username"
+            >
               {t('Signup.Page.form.username.label')}
             </Label>
             <EmailField
@@ -89,7 +93,11 @@ const SignupPage = () => {
           </div>
           {/* password */}
           <div className="input-group">
-            <Label className="input-label" name="password">
+            <Label
+              className="input-label"
+              errorClassName="input-label-error"
+              name="password"
+            >
               {t('Signup.Page.form.password.label')}
             </Label>
             <PasswordField
