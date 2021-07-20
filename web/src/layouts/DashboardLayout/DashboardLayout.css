@@ -1,0 +1,7 @@
+.layout {
+  @apply flex flex-row h-full w-full;
+}
+
+.layout main {
+  @apply px-12 py-2;
+}

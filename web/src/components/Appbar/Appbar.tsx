@@ -1,12 +1,18 @@
+import { useTranslation } from 'react-i18next'
 import { UserCircleIcon } from '@heroicons/react/solid'
+
 import './Appbar.css'
 
 const Appbar = () => {
+  const { t } = useTranslation()
+
   return (
     <div className="appbar">
-      <button>
-        <UserCircleIcon className="appbar-icon" />
-      </button>
+      <div className="actions">
+        <button>
+          <UserCircleIcon className="icon" />
+        </button>
+      </div>
     </div>
   )
 }

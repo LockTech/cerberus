@@ -3,12 +3,6 @@
     "Layout": {
       "appbar": {
         "userProfile": "User Profile"
-      },
-      "sidebar": {
-        "appname": "Cerberus",
-        "links": {
-          "home": "Dashboard"
-        }
       }
     }
   },
@@ -16,7 +10,9 @@
     "Page": {
       "Helmet": {
         "title": "Cerberus • Dashboard"
-      }
+      },
+      "title": "Dashboard",
+      "subtitle": "Your organizations dashboard."
     }
   },
   "Login": {
@@ -44,6 +40,14 @@
       "redirect": "Redirecting your browser.",
       "loading": "Logging you into your account.",
       "success": "Successfully logged you into your account."
+    }
+  },
+  "Sidebar": {
+    "title": "Cerberus",
+    "subtitle": "",
+    "nav": {
+      "dashboard": "Dashboard",
+      "listAccounts": "Accounts"
     }
   },
   "Signup": {

@@ -1,30 +1,44 @@
 .sidebar {
   /* Background */
-  @apply bg-gray-800;
+  @apply bg-gray-900;
   /* Misc */
-  @apply max-w-md min-w-[16rem] w-[18%];
-  @apply space-y-4;
+  @apply max-w-xs min-w-[16rem] w-[18%];
+  @apply hidden lg:block;
+}
+
+.sidebar .title {
+  @apply flex flex-col;
+  @apply p-6 space-y-1.5;
+}
+.sidebar .title h1 {
+  @apply text-gray-50;
+  @apply font-semibold tracking-wider text-2xl;
 }
 
 .sidebar nav {
   @apply flex flex-col items-start justify-center;
-  @apply px-4 space-y-4;
+  @apply px-3 space-y-2;
 }
+
 .sidebar nav button {
   /* Background */
-  @apply bg-transparent;
-  @apply active:bg-gray-700;
-  @apply hover:border-gray-700 active:border-gray-600;
+  @apply bg-transparent hover:bg-gray-800 active:bg-gray-700;
   /* Border */
-  @apply border border-transparent rounded-md;
+  @apply border rounded;
+  @apply border-transparent hover:border-gray-700;
   /* Text */
-  @apply text-gray-400 hover:text-gray-200 active:text-white;
+  @apply tracking-wider;
+  @apply text-gray-400 hover:text-gray-200 active:text-gray-50;
   /* Misc */
   @apply duration-[200ms] ease-in-out transition-all;
-  @apply flex flex-row items-center justify-start;
-  @apply px-4 py-3;
+  @apply flex flex-row items-center;
+  @apply px-4 py-2;
   @apply w-full;
 }
+
 .sidebar nav button.active {
+  /* Background */
   @apply bg-gray-700;
+  /* Text */
+  @apply text-gray-50;
 }

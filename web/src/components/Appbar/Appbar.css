@@ -1,24 +1,29 @@
 .appbar {
   /* Background */
-  @apply bg-gray-700;
+  @apply bg-transparent;
   /* Misc */
   @apply flex flex-row items-center justify-end;
-  @apply min-h-[3.25rem] w-full;
-  @apply px-4 py-2;
+  @apply w-full;
+  @apply px-12 py-4 space-x-6;
 }
 
-.appbar button {
+.appbar .actions {
+}
+.appbar .actions button {
   /* Background */
-  @apply bg-transparent active:bg-gray-500;
+  @apply bg-transparent;
+  @apply dark:active:bg-gray-700;
   /* Border */
   @apply border border-transparent rounded;
-  @apply hover:border-gray-500;
+  @apply dark:hover:border-gray-700;
   /* Text */
-  @apply text-gray-400 hover:text-gray-200 active:text-white;
+  @apply text-gray-500 hover:text-gray-700 active:text-gray-900;
+  @apply dark:text-gray-400 dark:hover:text-gray-200 dark:active:text-gray-50;
   /* Misc */
-  @apply p-1.5 px-2;
+  @apply duration-[200ms] ease-in-out transition-all;
+  @apply px-2.5 py-2;
 }
-
-.appbar-icon {
+.appbar .actions button .icon {
+  /* Misc */
   @apply h-6 w-6;
 }
