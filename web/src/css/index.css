@@ -4,8 +4,7 @@
 
 /* Application agnostic */
 * {
-  font-family: 'Quicksand', sans-serif;
-  @apply tracking-wide;
+  @apply font-quicksand leading-snug tracking-wide;
 }
 
 html, body, #redwood-app {
@@ -70,7 +69,7 @@ html, body, #redwood-app {
 
   /* Form */
   .form {
-    @apply space-y-5;
+    @apply space-y-6;
   }
 
   /* Input */
@@ -132,7 +131,7 @@ html, body, #redwood-app {
   .toast {
     /* Background */
     @apply bg-white;
-    @apply dark:bg-gray-900 dark:bg-opacity-80;
+    @apply dark:bg-gray-900;
     /* Border */
     @apply border-gray-100;
     @apply dark:border-gray-700;
