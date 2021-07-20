@@ -8,7 +8,10 @@ const Sidebar = () => {
   const { t } = useTranslation()
 
   const home = useMatch(routes.home()).match
+  //
+  const activity = false
   const listAccounts = useMatch(routes.listAccounts()).match
+  const listRoles = false
 
   return (
     <div className="sidebar">
@@ -17,18 +20,30 @@ const Sidebar = () => {
         <p className="hint">{t('Sidebar.subtitle')}</p>
       </div>
       <nav>
-        <button
-          className={clsx(home && 'active')}
-          onClick={() => navigate(routes.home())}
-        >
-          {t('Sidebar.nav.dashboard')}
-        </button>
-        <button
-          className={clsx(listAccounts && 'active')}
-          onClick={() => navigate(routes.listAccounts())}
-        >
-          {t('Sidebar.nav.listAccounts')}
-        </button>
+        <div>
+          <p>{t('Sidebar.nav.general.title')}</p>
+          <button
+            className={clsx(home && 'active')}
+            onClick={() => navigate(routes.home())}
+          >
+            {t('Sidebar.nav.general.dashboard')}
+          </button>
+        </div>
+        <div>
+          <p>{t('Sidebar.nav.identities.title')}</p>
+          <button className={clsx(activity && 'active')}>
+            {t('Sidebar.nav.identities.activity')}
+          </button>
+          <button
+            className={clsx(listAccounts && 'active')}
+            onClick={() => navigate(routes.listAccounts())}
+          >
+            {t('Sidebar.nav.identities.listAccounts')}
+          </button>
+          <button className={clsx(listRoles && 'active')}>
+            {t('Sidebar.nav.identities.listRoles')}
+          </button>
+        </div>
       </nav>
     </div>
   )

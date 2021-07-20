@@ -46,8 +46,16 @@
     "title": "Cerberus",
     "subtitle": "Identity and permission management",
     "nav": {
-      "dashboard": "Dashboard",
-      "listAccounts": "Accounts"
+      "general": {
+        "title": "General",
+        "dashboard": "Dashboard"
+      },
+      "identities": {
+        "title": "Identities",
+        "activity": "Activity",
+        "listAccounts": "Accounts",
+        "listRoles": "Roles"
+      }
     }
   },
   "Signup": {
