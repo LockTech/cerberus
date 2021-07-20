@@ -37,7 +37,7 @@ html, body, #redwood-app {
   }
   .title {
     @apply text;
-    @apply font-semibold text-3xl;
+    @apply font-semibold text-4xl;
   }
 }
 
@@ -164,11 +164,19 @@ html, body, #redwood-app {
   }
 
   /* Auth */
-  .auth-account {
+  .auth-link {
     @apply flex flex-row items-center justify-center;
     @apply hint;
     @apply w-full;
     @apply space-x-1.5;
+  }
+  .auth-card {
+    @apply card card-body;
+    @apply space-y-6;
+  }
+  .auth-card .title-group .title {
+    @apply text;
+    @apply font-semibold text-3xl;
   }
 
   /* Buttons */

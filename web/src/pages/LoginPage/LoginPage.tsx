@@ -66,7 +66,7 @@ const LoginPage = () => {
       <Helmet>
         <title>{t('Login.Page.Helmet.title')}</title>
       </Helmet>
-      <div className="card card-body space-y-6">
+      <div className="auth-card">
         <header className="title-group">
           <h1 className="title">{t('Login.Page.title')}</h1>
           <p className="hint">{t('Login.Page.subtitle')}</p>
@@ -127,7 +127,7 @@ const LoginPage = () => {
           </Submit>
         </Form>
       </div>
-      <div className="auth-account">
+      <div className="auth-link">
         <span>{t('Login.Page.account')}</span>{' '}
         <Link to={routes.signup()} className="link-primary">
           {t('Login.Page.signup')}
