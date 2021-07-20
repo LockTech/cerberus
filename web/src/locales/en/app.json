@@ -1,4 +1,17 @@
 {
+  "Dashboard": {
+    "Layout": {
+      "appbar": {
+        "userProfile": "User Profile"
+      },
+      "sidebar": {
+        "appname": "Cerberus",
+        "links": {
+          "home": "Dashboard"
+        }
+      }
+    }
+  },
   "Home": {
     "Page": {
       "Helmet": {
@@ -28,8 +41,7 @@
       },
       "account": "Don't have an account?",
       "signup": "Sign Up",
-      "redirectUnknown": "Redirecting to new host.",
-      "redirectHome": "Redirecting to the  dashboard.",
+      "redirect": "Redirecting your browser.",
       "loading": "Logging you into your account.",
       "success": "Successfully logged you into your account."
     }

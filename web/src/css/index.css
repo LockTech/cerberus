@@ -15,14 +15,10 @@ html, body, #redwood-app {
 
   /* Focus */
   .focus {
+    @apply duration-150 ease-in-out transition-all;
     @apply outline-none;
     @apply focus:border;
-    @apply focus:ring-2 active:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
-  }
-  .focus-gray {
-    @apply focus;
-    @apply focus:border-gray-300 ring-gray-300;
-    @apply dark:focus:border-gray-500 dark:ring-gray-600;
+    @apply focus:ring-2 active:focus:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
   }
 
   /* Typograph */
@@ -44,18 +40,22 @@ html, body, #redwood-app {
 @layer components {
   /* Buttons */
   .button {
-    @apply duration-[200ms] ease-in-out transition-colors;
+    @apply duration-[200ms] ease-in-out transition-all;
     @apply border border-transparent;
     @apply px-4 py-2;
-    @apply rounded;
+    @apply rounded-md;
   }
-
 
   /* Card */
   .card {
-    @apply bg-white border-gray-100;
-    @apply dark:bg-gray-800 dark:border-gray-700;
-    @apply border rounded;
+    /* Background */
+    @apply bg-white;
+    @apply dark:bg-gray-800;
+    /* Border */
+    @apply border rounded-lg;
+    @apply border-gray-100;
+    @apply dark:border-gray-700;
+    /* Misc */
     @apply shadow;
   }
   .card-body {
@@ -69,18 +69,29 @@ html, body, #redwood-app {
 
   /* Input */
   .input {
+    /* Background */
+    @apply bg-gray-50 bg-opacity-80;
+    @apply dark:bg-gray-700 dark:bg-opacity-70;
+    /* Border */
+    @apply border-transparent;
+    @apply hover:border-gray-100;
+    @apply dark:hover:border-gray-600;
+    /* Text */
+    @apply placeholder-gray-500 text-black;
+    @apply dark:placeholder-gray-400 dark:text-white;
+    /* Misc */
     @apply focus;
-    @apply bg-gray-50 border border-gray-200 placeholder-gray-400 text-black;
-    @apply dark:bg-gray-900 dark:bg-opacity-70 dark:border-gray-700 dark:text-white;
-    @apply rounded;
-    @apply px-4 py-2;
+    @apply border rounded-md;
+    @apply px-4 py-2.5;
   }
   .input-error {
     @apply input;
-    @apply border-red-500;
+    /* Border */
+    @apply border-red-300;
     @apply dark:border-red-400;
-    @apply text-red-600 placeholder-red-500;
-    @apply dark:text-red-400 dark:placeholder-red-300;
+    /* Text */
+    @apply placeholder-red-600;
+    @apply dark:placeholder-red-300;
   }
   .input-error-message {
     @apply text-red-600;
@@ -95,6 +106,10 @@ html, body, #redwood-app {
     @apply text-black;
     @apply dark:text-white;
   }
+  .input-label-error {
+    @apply text-red-600;
+    @apply dark:text-red-300;
+  }
   .input-label-group {
     @apply space-y-2;
   }
@@ -107,13 +122,41 @@ html, body, #redwood-app {
     @apply hover:underline active:underline;
   }
 
+  /* Sidebar */
+  .sidebar {
+    @apply space-y-4;
+  }
+  .sidebar .site-title {
+    @apply p-6;
+  }
+  .sidebar nav {
+    @apply flex flex-col items-start justify-center;
+    @apply px-4 space-y-4;
+  }
+  .sidebar-nav-button {
+    /* Border */
+    @apply border border-transparent rounded-md;
+    /* Misc */
+    @apply duration-[200ms] ease-in-out transition-all;
+    @apply flex flex-row items-center justify-start;
+    @apply px-4 py-3;
+    @apply w-full;
+  }
+
   /* Toast */
   .toast {
+    /* Background */
+    @apply bg-white;
+    @apply dark:bg-gray-800;
+    /* Border */
+    @apply border-gray-100;
+    @apply dark:border-gray-700;
     @apply border;
-    @apply bg-white border-gray-200;
-    @apply dark:bg-gray-800 dark:border-gray-700;
+    /* Text */
     @apply text-black;
     @apply dark:text-white;
+    /* Misc */
+    @apply shadow;
   }
 
   .title-group {
@@ -125,36 +168,66 @@ html, body, #redwood-app {
 @layer base {
   .focus-primary {
     @apply focus;
-    @apply focus:border-primary-400 ring-primary-300;
-    @apply dark:focus:border-primary-600 dark:ring-primary-600;
+    @apply focus:border-primary-500 ring-primary-600;
+    @apply dark:focus:border-primary-300 ring-primary-400;
   }
 }
 
 @layer components {
+  .appbar button {
+    @apply focus-primary focus:border-primary-300;
+  }
+
   .auth-account {
     @apply flex flex-row items-center justify-center space-x-1 hint w-full;
   }
 
   /* Buttons */
   .button-primary-fill {
+    /* Background */
+    @apply bg-primary-500 hover:bg-primary-400 active:bg-opacity-90;
+    @apply dark:bg-primary-400 dark:hover:bg-primary-500 dark:active:bg-primary-600;
+    /* Border */
+    /* Text */
+    @apply text-white;
+    /* Misc */
     @apply focus-primary;
     @apply button;
-    @apply bg-primary-600 hover:bg-primary-700 active:bg-primary-800;
-    @apply border-primary-600;
-    @apply text-black hover:text-white active:text-white;
   }
 
   /* Input */
   .input-primary {
     @apply focus-primary input;
-    @apply focus:bg-primary-100 focus:bg-opacity-60;
-    @apply dark:focus:bg-primary-900 dark:focus:bg-opacity-10;
   }
 
   /* Link */
   .link-primary {
     @apply focus-primary link;
-    @apply text-primary-600 hover:text-primary-700 active:text-primary-800;
-    @apply dark:text-primary-400 dark:hover:text-primary-300 dark:active:text-primary-200;
+    @apply text-primary-600 hover:text-primary-500 active:text-primary-400;
+    @apply dark:text-primary-200 dark:hover:text-primary-300 dark:active:text-primary-400;
+  }
+  /* Sidebar */
+  .sidebar {
+    @apply max-w-md min-w-[16rem] w-[18%];
+    /* Background */
+    @apply bg-gray-800;
+  }
+  .sidebar .site-title h1 {
+    @apply text-gray-50;
+    @apply font-medium text-2xl;
+  }
+  .sidebar nav button {
+    @apply sidebar-nav-button;
+    /* Background */
+    @apply bg-transparent;
+    @apply active:bg-gray-700;
+    @apply hover:border-gray-700 active:border-gray-600;
+    /* Text */
+    @apply text-gray-400 hover:text-gray-200 active:text-white;
+    /* Misc */
+    @apply focus-primary focus:border-primary-300;
+  }
+  .sidebar nav button.active {
+    @apply bg-gray-700;
   }
 }
