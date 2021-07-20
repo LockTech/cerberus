@@ -11,19 +11,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        green: colors.emerald,
         gray: {
           50: '#F7F7F7',
           100: '#E0E0E0',
           200: '#C9C9C9',
           300: '#B2B2B2',
           400: '#9C9C9C',
-          500: '#363636',
-          600: '#2E2E2E',
-          700: '#262626',
+          500: '#5C5C5C',
+          600: '#474747',
+          700: '#2E2E2E',
           800: '#1E1E1E',
           900: '#171717',
         },
+        green: colors.emerald,
         primary: {
           100: '#cdebef',
           200: '#98d6df',
