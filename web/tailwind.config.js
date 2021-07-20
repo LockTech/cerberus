@@ -38,6 +38,9 @@ module.exports = {
         red: colors.rose,
       },
     },
+    fontFamily: {
+      quicksand: ['Quicksand', 'sans-serif'],
+    },
   },
   variants: {
     extend: {},
