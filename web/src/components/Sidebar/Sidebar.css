@@ -11,7 +11,7 @@
   @apply p-6 space-y-1.5;
 }
 .sidebar .title h1 {
-  @apply text-gray-50;
+  @apply text-primary-200;
   @apply font-semibold tracking-wider text-2xl;
 }
 .sidebar .title .hint {
