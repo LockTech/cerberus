@@ -9,8 +9,9 @@ const Routes = () => {
     <Router>
       <Set wrap={[ColorModeLayout]}>
         <Private wrap={[DashboardLayout]} unauthenticated="login">
-          <Route path="/" page={HomePage} name="home" />
           <Route notfound page={NotFoundPage} />
+          <Route path="/" page={HomePage} name="home" />
+          <Route path="/accounts" page={ListAccountsPage} name="listAccounts" />
         </Private>
         <Set wrap={[AuthLayout]}>
           <Route path="/login" page={LoginPage} name="login" />
