@@ -3,5 +3,5 @@
 }
 
 .layout main {
-  @apply p-8;
+  @apply px-10 py-8;
 }
