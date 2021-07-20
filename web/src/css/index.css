@@ -122,27 +122,6 @@ html, body, #redwood-app {
     @apply hover:underline active:underline;
   }
 
-  /* Sidebar */
-  .sidebar {
-    @apply space-y-4;
-  }
-  .sidebar .site-title {
-    @apply p-6;
-  }
-  .sidebar nav {
-    @apply flex flex-col items-start justify-center;
-    @apply px-4 space-y-4;
-  }
-  .sidebar-nav-button {
-    /* Border */
-    @apply border border-transparent rounded-md;
-    /* Misc */
-    @apply duration-[200ms] ease-in-out transition-all;
-    @apply flex flex-row items-center justify-start;
-    @apply px-4 py-3;
-    @apply w-full;
-  }
-
   /* Toast */
   .toast {
     /* Background */
@@ -206,28 +185,10 @@ html, body, #redwood-app {
     @apply text-primary-600 hover:text-primary-500 active:text-primary-400;
     @apply dark:text-primary-200 dark:hover:text-primary-300 dark:active:text-primary-400;
   }
+
   /* Sidebar */
-  .sidebar {
-    @apply max-w-md min-w-[16rem] w-[18%];
-    /* Background */
-    @apply bg-gray-800;
-  }
-  .sidebar .site-title h1 {
-    @apply text-gray-50;
-    @apply font-medium text-2xl;
-  }
   .sidebar nav button {
-    @apply sidebar-nav-button;
-    /* Background */
-    @apply bg-transparent;
-    @apply active:bg-gray-700;
-    @apply hover:border-gray-700 active:border-gray-600;
-    /* Text */
-    @apply text-gray-400 hover:text-gray-200 active:text-white;
     /* Misc */
     @apply focus-primary focus:border-primary-300;
-  }
-  .sidebar nav button.active {
-    @apply bg-gray-700;
   }
 }

@@ -1,0 +1,30 @@
+.sidebar {
+  /* Background */
+  @apply bg-gray-800;
+  /* Misc */
+  @apply max-w-md min-w-[16rem] w-[18%];
+  @apply space-y-4;
+}
+
+.sidebar nav {
+  @apply flex flex-col items-start justify-center;
+  @apply px-4 space-y-4;
+}
+.sidebar nav button {
+  /* Background */
+  @apply bg-transparent;
+  @apply active:bg-gray-700;
+  @apply hover:border-gray-700 active:border-gray-600;
+  /* Border */
+  @apply border border-transparent rounded-md;
+  /* Text */
+  @apply text-gray-400 hover:text-gray-200 active:text-white;
+  /* Misc */
+  @apply duration-[200ms] ease-in-out transition-all;
+  @apply flex flex-row items-center justify-start;
+  @apply px-4 py-3;
+  @apply w-full;
+}
+.sidebar nav button.active {
+  @apply bg-gray-700;
+}
