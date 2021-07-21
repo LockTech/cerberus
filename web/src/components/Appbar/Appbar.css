@@ -9,11 +9,13 @@
 }
 
 .appbar .actions {
+  @apply space-x-4;
 }
 .appbar .actions button {
   /* Background */
   @apply bg-transparent;
-  @apply dark:active:bg-gray-700;
+  @apply active:bg-gray-200;
+  @apply dark:active:bg-gray-600;
   /* Border */
   @apply border border-transparent rounded-full;
   @apply dark:hover:border-gray-700;
