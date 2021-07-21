@@ -1,11 +1,11 @@
 {
-  "Dashboard": {
-    "Layout": {
-      "appbar": {
-        "userProfile": "User Profile"
-      }
+  "Appbar": {
+    "actions": {
+      "manual": "User Manual",
+      "userProfile": "User Profile"
     }
   },
+  "Dashboard": {},
   "Home": {
     "Page": {
       "Helmet": {
@@ -44,7 +44,7 @@
   },
   "Sidebar": {
     "title": "Cerberus",
-    "subtitle": "Identity and permission management",
+    "subtitle": "Identity and permission management for your organization.",
     "nav": {
       "general": {
         "title": "General",
