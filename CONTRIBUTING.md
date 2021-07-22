@@ -33,4 +33,4 @@ Most files should be covered with its current `purge` setting, additional paths 
 
 LockTech is an organization committed to protecting personal information. As such, Cerberus should **always** maintain compliancy with the [EU's GDPR](https://gdpr-info.eu/).
 
-As a contributor, your primary responsibility is to ensure any changes you make are reflected with an appropriate addition or modification to the application's [logger](api/src/lib/logger.ts); specifically, maintaining an up-to-date [`redaction`](https://github.com/pinojs/pino/blob/master/docs/redaction.md#redaction) list. Redacted information should include everything which could be used to identify indaviduals within an organization.
+As a contributor, your primary responsibility is to ensure any changes you make are reflected with an appropriate addition or modification to the application's [logger](api/src/lib/logger.ts); specifically, maintaining an up-to-date [`redaction`](https://github.com/pinojs/pino/blob/master/docs/redaction.md#redaction) list. Redacted information should include everything which could be used to identify indavidual members within an organization.
