@@ -205,6 +205,6 @@ html, body, #redwood-app {
 
   /* Sidebar */
   .sidebar nav button {
-    @apply focus-primary focus:border-primary-400;
+    @apply focus-primary;
   }
 }

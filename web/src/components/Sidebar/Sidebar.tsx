@@ -20,8 +20,8 @@ const Sidebar = () => {
         <p className="hint">{t('Sidebar.subtitle')}</p>
       </div>
       <nav>
-        <div>
-          <p>{t('Sidebar.nav.general.title')}</p>
+        <div className="nav-group">
+          <p className="nav-group-title">{t('Sidebar.nav.general.title')}</p>
           <button
             className={clsx(home && 'active')}
             onClick={() => navigate(routes.home())}
@@ -29,8 +29,8 @@ const Sidebar = () => {
             {t('Sidebar.nav.general.dashboard')}
           </button>
         </div>
-        <div>
-          <p>{t('Sidebar.nav.identities.title')}</p>
+        <div className="nav-group">
+          <p className="nav-group-title">{t('Sidebar.nav.identities.title')}</p>
           <button className={clsx(activity && 'active')}>
             {t('Sidebar.nav.identities.activity')}
           </button>

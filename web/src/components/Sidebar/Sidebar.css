@@ -1,6 +1,7 @@
 .sidebar {
   /* Background */
-  @apply bg-gray-900;
+  @apply bg-white;
+  @apply dark:bg-gray-900;
   /* Misc */
   @apply max-w-xs min-w-[16rem] w-[18%];
   @apply hidden lg:block;
@@ -11,11 +12,9 @@
   @apply p-6 space-y-1.5;
 }
 .sidebar .title h1 {
-  @apply text-primary-200;
+  @apply text-primary-700;
+  @apply dark:text-primary-200;
   @apply font-semibold tracking-wider text-2xl;
-}
-.sidebar .title .hint {
-  @apply text-gray-400;
 }
 
 .sidebar nav {
@@ -23,25 +22,33 @@
   @apply px-3 space-y-5;
 }
 
-.sidebar nav div {
+.sidebar nav .nav-group {
   @apply w-full;
   @apply space-y-2;
 }
-.sidebar nav div p {
+.sidebar nav .nav-group .nav-group-title {
   /* Text */
-  @apply text-gray-400;
+  @apply uppercase;
+  @apply text-gray-500;
+  @apply dark:text-gray-400;
+  /* Misc */
   @apply px-3 py-1.5;
 }
 
 .sidebar nav button {
   /* Background */
-  @apply bg-transparent hover:bg-gray-800 active:bg-gray-700;
+  @apply bg-transparent;
+  @apply hover:bg-gray-50 active:bg-gray-100;
+  @apply dark:hover:bg-gray-800 dark:active:bg-gray-700;
   /* Border */
   @apply border rounded;
-  @apply border-transparent hover:border-gray-700;
+  @apply border-transparent;
+  @apply hover:border-gray-100;
+  @apply dark:hover:border-gray-700;
   /* Text */
   @apply font-semibold tracking-wider;
-  @apply text-gray-500 hover:text-gray-300 active:text-gray-100;
+  @apply text-gray-400 hover:text-gray-600 active:text-gray-800;
+  @apply dark:text-gray-500 dark:hover:text-gray-300 dark:active:text-gray-100;
   /* Misc */
   @apply duration-[200ms] ease-in-out transition-all;
   @apply flex flex-row items-center;
@@ -51,7 +58,9 @@
 
 .sidebar nav button.active {
   /* Background */
-  @apply bg-gray-700;
+  @apply bg-gray-100;
+  @apply dark:bg-gray-700;
   /* Text */
-  @apply text-primary-300;
+  @apply text-primary-600;
+  @apply dark:text-primary-300;
 }
