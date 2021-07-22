@@ -28,7 +28,7 @@
 }
 .sidebar nav .nav-group .nav-group-title {
   /* Text */
-  @apply uppercase;
+  @apply text-sm uppercase;
   @apply text-gray-500;
   @apply dark:text-gray-400;
   /* Misc */
