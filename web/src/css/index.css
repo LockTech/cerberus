@@ -37,7 +37,7 @@ html, body, #redwood-app {
   }
   .title {
     @apply text;
-    @apply font-semibold text-4xl;
+    @apply font-semibold text-3xl;
   }
 }
 
@@ -173,10 +173,6 @@ html, body, #redwood-app {
   .auth-card {
     @apply card card-body;
     @apply space-y-6;
-  }
-  .auth-card .title-group .title {
-    @apply text;
-    @apply font-semibold text-3xl;
   }
 
   /* Buttons */
