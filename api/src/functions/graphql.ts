@@ -22,7 +22,7 @@ export const handler = createGraphQLHandler({
       requestId: true,
       query: true,
       tracing: false,
-      userAgent: true,
+      userAgent: false,
     },
   },
   schema: makeMergedSchema({
