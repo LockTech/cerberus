@@ -46,7 +46,7 @@
   @apply hover:border-gray-100;
   @apply dark:hover:border-gray-700;
   /* Text */
-  @apply font-semibold tracking-wider;
+  @apply tracking-wider;
   @apply text-gray-400 hover:text-gray-600 active:text-gray-800;
   @apply dark:text-gray-500 dark:hover:text-gray-300 dark:active:text-gray-100;
   /* Misc */
@@ -61,6 +61,7 @@
   @apply bg-gray-100;
   @apply dark:bg-gray-700;
   /* Text */
+  @apply font-semibold;
   @apply text-primary-600;
   @apply dark:text-primary-300;
 }
