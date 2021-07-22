@@ -44,7 +44,7 @@
   },
   "Sidebar": {
     "title": "Cerberus",
-    "subtitle": "Identity and permission management for your organization.",
+    "subtitle": "Manage your organization's identities and permissions.",
     "nav": {
       "general": {
         "title": "General",
