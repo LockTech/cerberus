@@ -10,8 +10,9 @@
       "Helmet": {
         "title": "Dashboard • Cerberus"
       },
-      "title": "Dashboard",
-      "subtitle": "Your organizations dashboard."
+      "Appbar": {
+        "title": "Dashboard"
+      }
     }
   },
   "Login": {

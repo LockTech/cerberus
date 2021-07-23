@@ -1,7 +1,1 @@
-.home-page {
-  @apply space-y-4;
-}
 
-.home-page h1 {
-  @apply text-3xl;
-}
