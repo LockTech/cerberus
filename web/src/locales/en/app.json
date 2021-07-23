@@ -50,8 +50,8 @@
         "title": "General",
         "dashboard": "Dashboard"
       },
-      "identities": {
-        "title": "Identities",
+      "accounts": {
+        "title": "Account Management",
         "activity": "Activity",
         "listAccounts": "Accounts",
         "listRoles": "Roles"

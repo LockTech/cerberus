@@ -30,18 +30,18 @@ const Sidebar = () => {
           </button>
         </div>
         <div className="nav-group">
-          <p className="nav-group-title">{t('Sidebar.nav.identities.title')}</p>
+          <p className="nav-group-title">{t('Sidebar.nav.accounts.title')}</p>
           <button className={clsx(activity && 'active')}>
-            {t('Sidebar.nav.identities.activity')}
+            {t('Sidebar.nav.accounts.activity')}
           </button>
           <button
             className={clsx(listAccounts && 'active')}
             onClick={() => navigate(routes.listAccounts())}
           >
-            {t('Sidebar.nav.identities.listAccounts')}
+            {t('Sidebar.nav.accounts.listAccounts')}
           </button>
           <button className={clsx(listRoles && 'active')}>
-            {t('Sidebar.nav.identities.listRoles')}
+            {t('Sidebar.nav.accounts.listRoles')}
           </button>
         </div>
       </nav>
