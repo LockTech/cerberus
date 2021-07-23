@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client'
+import type { Account } from '@prisma/client'
 import { DbAuthHandler } from '@redwoodjs/api'
 import { ValidationError } from '@redwoodjs/graphql-server'
 
@@ -11,7 +11,7 @@ export const handler = async (event, context) => {
   const authHandler = new DbAuthHandler(event, context, {
     db,
 
-    authModelAccessor: 'user',
+    authModelAccessor: 'account',
 
     authFields: {
       id: 'id',
@@ -25,10 +25,10 @@ export const handler = async (event, context) => {
 
       // send confirmation email
 
-      let res: User
+      let res: Account
 
       try {
-        res = await db.user.create({
+        res = await db.account.create({
           data: {
             email: username,
             hashedPassword,

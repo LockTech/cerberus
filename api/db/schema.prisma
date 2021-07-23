@@ -8,7 +8,7 @@ generator client {
   binaryTargets                 = "native"
 }
 
-model User {
+model Account {
   id                            String                            @id @default(uuid())
   email                         String                            @unique
   //
@@ -29,7 +29,7 @@ model Organization {
   created_at                    DateTime                          @default(now())
   updated_at                    DateTime                          @default(now())
   //
-  users                         User[]
+  accounts                      Account[]
 }
 
 // model Permission {
