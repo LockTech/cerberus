@@ -5,11 +5,10 @@
       "userProfile": "User Profile"
     }
   },
-  "Dashboard": {},
   "Home": {
     "Page": {
       "Helmet": {
-        "title": "Cerberus • Dashboard"
+        "title": "Dashboard • Cerberus"
       },
       "title": "Dashboard",
       "subtitle": "Your organizations dashboard."
@@ -18,7 +17,7 @@
   "Login": {
     "Page": {
       "Helmet": {
-        "title": "Cerberus • Login"
+        "title": "Login • Cerberus"
       },
       "title": "Login",
       "subtitle": "Enter your account's e-mail address and password to login.",
@@ -61,7 +60,7 @@
   "Signup": {
     "Page": {
       "Helmet": {
-        "title": "Cerberus • Sign Up"
+        "title": "Sign Up • Cerberus"
       },
       "title": "Sign Up",
       "subtitle": "Enter your e-mail address and a password to create an account and continue signing up.",
