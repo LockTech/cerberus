@@ -258,7 +258,7 @@ This is the workflow which powers [checking an account has been assigned an expe
 ## Checking Permissions
 
 An application can [`check`](https://www.ory.sh/keto/docs/next/reference/rest-api#check-a-relation-tuple) a given account has a permission by sending a request
-or using an [API](https://www.ory.sh/keto/docs/next/reference/proto-api).
+or using an [API](https://www.ory.sh/keto/docs/next/reference/proto-api) provided by Keto.
 
 As stated in the Roles section, an application only needs to know the information given in a permission-tuple and an account's UUID. The UUID is obtained once a member has been successfully authenticated.
 
