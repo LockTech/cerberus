@@ -11,6 +11,8 @@ generator client {
 model Account {
   id                            String                            @id @default(uuid())
   email                         String                            @unique
+  firstName                     String
+  lastName                      String
   //
   hashedPassword                String
   salt                          String
