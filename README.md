@@ -75,7 +75,7 @@ These dependencies are not directly required by Cerberus' RedwoodJS application,
 
 They must be installed alongside the application.
 
-* [Ory Keto](https://www.ory.sh/keto/docs/next/)
+* [Ory Keto](https://www.ory.sh/keto/docs/next/) - An example of using Keto with [Docker](https://www.docker.com/) can be found in this repository's [`docker-compose.yml`](docker-compose.yml).
 
 ### Optional Dependencies
 
