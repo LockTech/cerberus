@@ -192,8 +192,7 @@ Cerberus makes use of the [i18n framework](https://www.i18next.com/).
 
 You can make use of this framework, to provide better context and a more human-friendly experience to users making use of your application's permissions.
 
-[Translations are located on the web-side](web/locales) of the application. Your permission's locales should be added to either a new or
-[existing](web/src/locales/en/permissions.json) `permissions.json`.
+[Translations are located on the web-side](web/locales) of the application. Your permission's locales should be added to either a new or [existing](web/src/locales/en/permissions.json) `permissions.json`.
 
 The structure of these translations should resemble the following, in continuing with the example from above:
 
@@ -260,12 +259,13 @@ A relation-tuple which would fulfil this subject-set would resemble:
 }
 ```
 
+> [Recall from Keto](https://www.ory.sh/keto/docs/next/concepts/relation-tuples) that relation-tuples, "can be translated into the english sentence 'Subject has relation on object'".
+
 This is the workflow which powers [checking an account has been assigned an expected permission](#checking-permissions).
 
 ## Checking Permissions
 
-An application can [`check`](https://www.ory.sh/keto/docs/next/reference/rest-api#check-a-relation-tuple) a given account has a permission by sending a request
-or using an [API](https://www.ory.sh/keto/docs/next/reference/proto-api) provided by Keto.
+An application can [`check`](https://www.ory.sh/keto/docs/next/reference/rest-api#check-a-relation-tuple) a given account has a permission by sending a request or using an [API](https://www.ory.sh/keto/docs/next/reference/proto-api) provided by Keto.
 
 As stated in the Roles section, an application only needs to know the information given in a permission-tuple and an account's UUID. The UUID is obtained once a member has been successfully authenticated.
 
