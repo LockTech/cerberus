@@ -3,9 +3,16 @@
   @apply bg-gray-100;
   @apply dark:bg-gray-700;
   /* Misc */
-  @apply flex flex-row items-center justify-end;
+  @apply flex flex-row items-center justify-between;
   @apply w-full;
   @apply px-8 py-3 space-x-6;
+}
+
+.appbar h2 {
+  /* Text */
+  @apply font-semibold text-xl;
+  @apply text-gray-900;
+  @apply dark:text-gray-50;
 }
 
 .appbar .actions {
