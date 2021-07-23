@@ -88,13 +88,14 @@ Please read through it and the remainder of this `README` before submitting cont
 
 While most of the terminology used by Cerberus is obvious, common ideas have been explicity defined here to standardize the language used by and when describing the platform.
 
-* Organization - The tenants of this multi-tenant platform. Each organization is independent another; organizations can only manage the accounts which belong to them.
-* Account - A "user" or "account" which contains information identifying an indavidual in a particular organization.
-* Member - The indaviduals of an organization, who use their account to access various features and services.
+* **Organization** - The tenants of this multi-tenant platform. Each organization is independent another; organizations can only manage the accounts which belong to them.
+* **Account** - A "user" or "account" which contains information identifying an indavidual in a particular organization.
+* **Member** - The indaviduals of an organization, who use their account to access various features and services.
   * "Member" is perferred, to "identitiy", when speaking *to* an end-user of the Cerberus platform;
   "Manage your organization's accounts" would become "Manage your organization's members".
   * A member is a person, an account is a thing.
   * A member could have many accounts; so long as they have many emails backing those accounts.
+* **Administrator** - A member of an organization who has access to managing the organization's accounts.
 
 ## Applications
 
