@@ -30,6 +30,8 @@ To be written
 
 ### Configuration
 
+#### RedwoodJS Application
+
 All of Cerberus' RedwoodJS application's configuration can be done through environment variables; a file, `.env`, should be located at the project's root. An example of supported values can be found in [`.env.example`](./.env.example).
 
 > Remember that the `.env` used by your application in production should **never** be checked into source-control (ex: GitHub).
@@ -37,7 +39,11 @@ All of Cerberus' RedwoodJS application's configuration can be done through envir
 
 All variables are available to the API-side of the application. Only variables specified under `web/includeEnvironmentVariables` in [`redwood.toml`](redwood.toml) will be included on the web-side; [as-per RedwoodJS' documentation](https://redwoodjs.com/docs/environment-variables.html#production), prefixing a variable with `REDWOOD_ENV_` will have the same effect. Changing variables on the web-side will require rebuilding.
 
+#### Keto
+
 If you use the provided [`docker-compose.yml`](docker-compose.yml), [Keto can be configured](https://www.ory.sh/keto/docs/next/reference/configuration) by creating a `./config/keto` directory and adding the configuration to a `keto.yml` file. Here is an example which adds Cerberus' roles namespace (which is required) and an example application's.
+
+> By default, the entire `./config/` directory, and its children, are specified in this repository's accompanying [`.gitignore`](.gitignore).
 
 ```YAML
 namespaces:
