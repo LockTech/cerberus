@@ -61,6 +61,7 @@ In addition to the dependencies outlined in [RedwoodJS' introduction](https://re
 * [TailwindCSS](https://tailwindcss.com/)
   * [Autoprefixer](https://github.com/postcss/autoprefixer)
   * [PostCSS](https://github.com/postcss/postcss)
+* [TypeScript](https://www.typescriptlang.org/)
 
 ### Indirect Dependencies
 
