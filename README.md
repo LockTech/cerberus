@@ -259,7 +259,7 @@ A relation-tuple which would fulfil this subject-set would resemble:
 }
 ```
 
-> [Recall from Keto](https://www.ory.sh/keto/docs/next/concepts/relation-tuples) that relation-tuples, "can be translated into the english sentence 'Subject has relation on object'".
+> [Recall from Keto](https://www.ory.sh/keto/docs/next/concepts/relation-tuples) that relation-tuples, "...can be translated into the english sentence 'Subject has relation on object'".
 
 This is the workflow which powers [checking an account has been assigned an expected permission](#checking-permissions).
 
