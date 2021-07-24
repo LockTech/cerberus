@@ -8,9 +8,12 @@ import { logger } from 'src/lib/logger'
 import { isStr } from 'src/util/asserters'
 import { randomStr } from 'src/util/randomStr'
 
+import { validateEmail } from 'src/validators/email'
+
 // ==
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(requireCurrentUser)
+  rules.add(validateEmail, { only: ['inviteMember', 'signupAccount'] })
   rules.skip([requireCurrentUser], { only: ['signupAccount'] })
 }
 //
