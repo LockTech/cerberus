@@ -25,6 +25,12 @@ export const signupAccount = async ({ email }: SignupAccountArgs) => {
     throw new SyntaxError('Cannot signup an account without an email address.')
   }
 
+  const accountExist = await db.account.count({ where: { email } })
+  if (accountExist !== 0) {
+    logger.warn('Attempt to signup using a taken email address.')
+    throw new SyntaxError('Cannot signup using an already taken email address.')
+  }
+
   const code = randomStr(6)
 
   db.account_Confirmation.create({
@@ -42,6 +48,12 @@ export interface InviteMemberArgs {
 }
 export const inviteMember = async ({ email }: InviteMemberArgs) => {
   const organizationId = getCurrentUser().organizationId
+
+  const accountExist = await db.account.count({ where: { email } })
+  if (accountExist !== 0) {
+    logger.warn('Attempt to invite using a taken email address.')
+    throw new SyntaxError('Cannot invite using an already taken email address.')
+  }
 
   if (!isStr(email)) {
     logger.warn('Did not recieve a valid email for inviteMember.')
