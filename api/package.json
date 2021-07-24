@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@redwoodjs/api": "^0.35.2",
-    "@redwoodjs/graphql-server": "^0.35.2"
+    "@redwoodjs/graphql-server": "^0.35.2",
+    "nodemailer": "^6.6.3"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.4"
   }
 }
