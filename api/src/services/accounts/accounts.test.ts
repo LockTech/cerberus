@@ -81,14 +81,29 @@ describe('account service', () => {
       scenario('saves the given email', async (_scenario: AccountStandard) => {
         const email = 'anUnusedemail@example.com'
 
-        const inviteRes = await inviteMember({ email })
+        const signupRes = await signupAccount({ email })
         const assertRes = await db.account_Confirmation.findFirst({
           where: { email },
         })
 
-        expect(inviteRes).toBeTruthy()
+        expect(signupRes).toBeTruthy()
         expect(assertRes.email).toBe(email)
       })
+
+      scenario(
+        'generates a confirmation code',
+        async (_scenario: AccountStandard) => {
+          const email = 'anUnusedemail@example.com'
+
+          const signupRes = await signupAccount({ email })
+          const assertRes = await db.account_Confirmation.findFirst({
+            where: { email },
+          })
+
+          expect(signupRes).toBeTruthy()
+          expect(assertRes.code).toBeDefined()
+        }
+      )
     })
   })
 
