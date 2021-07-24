@@ -40,16 +40,16 @@ export interface ConfirmAccountOptions
 }
 export const confirmAccount = async ({
   code,
-  email,
+  email: enteredEmail,
   ...rest
 }: ConfirmAccountOptions) => {
-  let codeCheckRes: Pick<Account_Confirmation, 'organizationId'>
+  let codeCheckRes: Pick<Account_Confirmation, 'email' | 'organizationId'>
 
   try {
     codeCheckRes = await db.account_Confirmation.findFirst({
       orderBy: { created_at: 'desc' },
-      select: { organizationId: true },
-      where: { code, email },
+      select: { email: true, organizationId: true },
+      where: { code, email: enteredEmail },
     })
   } catch (err) {
     logger.error({ err }, 'Error confirming an account.')
@@ -61,11 +61,20 @@ export const confirmAccount = async ({
     return 'Error confirming your account.'
   }
 
+  const email = codeCheckRes.email
   const organizationId = codeCheckRes.organizationId || null
 
   const createRes = await createAccount({ email, organizationId, ...rest })
 
   if (isStr(createRes)) return createRes
+
+  try {
+    await db.account_Confirmation.deleteMany({
+      where: { email },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Error clearing Account_Confirmation.')
+  }
 
   if (organizationId === null) return true
   else return false
