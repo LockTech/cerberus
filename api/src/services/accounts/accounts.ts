@@ -1,7 +1,7 @@
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
-import { requireAuth } from 'src/lib/auth'
-import { getCurrentUser } from 'src/lib/currentUser'
 
+import { requireCurrentUser } from 'src/lib/auth'
+import { getCurrentUser } from 'src/lib/currentUser'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
@@ -10,8 +10,8 @@ import { randomStr } from 'src/util/randomStr'
 
 // ==
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(requireAuth)
-  rules.skip([requireAuth], { only: ['signupAccount'] })
+  rules.add(requireCurrentUser)
+  rules.skip([requireCurrentUser], { only: ['signupAccount'] })
 }
 //
 
