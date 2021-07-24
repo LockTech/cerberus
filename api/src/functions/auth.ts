@@ -1,9 +1,10 @@
-import type { Account } from '@prisma/client'
 import { DbAuthHandler } from '@redwoodjs/api'
-import { ValidationError } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
+
+import { isStr } from 'src/util/asserters'
+import { confirmAccount } from 'src/lib/confirmation'
 
 export const handler = async (event, context) => {
   logger.trace('Invoking auth handler.')
@@ -20,29 +21,32 @@ export const handler = async (event, context) => {
       salt: 'salt',
     },
 
-    signupHandler: async ({ username, hashedPassword, salt }) => {
-      logger.debug('Handling user sign up.')
-
-      // send confirmation email
-
-      let res: Account
-
-      try {
-        res = await db.account.create({
-          data: {
-            email: username,
-            hashedPassword,
-            salt,
-          },
-        })
-      } catch (err) {
-        logger.error({ err }, 'Error adding user to database.')
-        throw new ValidationError('An error occured trying to signup.')
+    signupHandler: async ({
+      hashedPassword,
+      salt,
+      username,
+      userAttributes: { code, firstName, lastName },
+    }) => {
+      if (!isStr(firstName) || !isStr(lastName)) {
+        logger.warn('Attempted signup without a first and last name.')
+        throw new SyntaxError(
+          'Cannot create an account without a first and last name.'
+        )
       }
 
-      logger.info('Successfully signed up a user.')
+      if (!isStr(code)) {
+        logger.warn('Attempted signup with a verification code.')
+      }
 
-      return res
+      const options = {
+        hashedPassword,
+        salt,
+        email: username,
+        firstName,
+        lastName,
+      }
+
+      return await confirmAccount({ code, ...options })
     },
 
     // How long a user will remain logged in, in seconds
