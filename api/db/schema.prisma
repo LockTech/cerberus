@@ -17,19 +17,29 @@ model Account {
   hashedPassword                String
   salt                          String
   //
-  created_at                    DateTime                          @default(now())
-  updated_at                    DateTime                          @default(now())
+  createdAt                     DateTime                          @default(now())
+  updatedAt                     DateTime                          @default(now())
   //
-  organization_id               String?
-  organization                  Organization?                     @relation(fields: [organization_id], references: [id])
+  organizationId                String?
+  organization                  Organization?                     @relation(fields: [organizationId], references: [id])
+  //
+}
+
+model Account_Confirmation {
+  id                            String                            @id @default(uuid())
+  code                          String                            @unique
+  email                         String
+  organizationId                String?
+  //
+  created_at                    DateTime                          @default(now())
 }
 
 model Organization {
   id                            String                            @id @default(uuid())
   name                          String
   //
-  created_at                    DateTime                          @default(now())
-  updated_at                    DateTime                          @default(now())
+  createdAt                     DateTime                          @default(now())
+  updatedAt                     DateTime                          @default(now())
   //
   accounts                      Account[]
 }
