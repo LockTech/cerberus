@@ -6,12 +6,22 @@ import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
 import { randomStr } from 'src/util/randomStr'
+import {
+  validateAccountId,
+  validateAccountOrganization,
+} from 'src/validators/account/account'
 
 import { validateEmail } from 'src/validators/email'
 
 // ==
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(requireCurrentUser)
+  rules.add(validateAccountId, {
+    only: ['currentAccount'],
+  })
+  rules.add(validateAccountOrganization, {
+    only: ['inviteMember', 'account', 'accounts'],
+  })
   rules.add(validateEmail, { only: ['inviteMember', 'signupAccount'] })
   rules.skip([requireCurrentUser], { only: ['signupAccount'] })
 }
@@ -71,19 +81,31 @@ export const inviteMember = async ({ email }: InviteMemberArgs) => {
 
 // == R
 export const account = async ({ id }: { id: string }) => {
-  const res = await db.account.findUnique({
-    where: { id },
+  const organizationId = getCurrentUser().organizationId
+
+  const res = await db.account.findFirst({
+    where: { id, organizationId },
   })
 
   return res
 }
 
-export const accounts = () => {
-  return db.account.findMany()
+export const accounts = async () => {
+  const organizationId = getCurrentUser().organizationId
+
+  const res = await db.account.findMany({
+    where: { organizationId },
+  })
+
+  return res
 }
 
-export const currentAccount = () => {
-  return getCurrentUser()
+export const currentAccount = async () => {
+  const id = getCurrentUser().id
+
+  const res = await db.account.findUnique({ where: { id } })
+
+  return res
 }
 //
 
