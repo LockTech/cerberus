@@ -13,9 +13,9 @@ export const validateEmail = (
   name: string,
   { input: { email } }: { input: EmailInput }
 ) => {
-  if (email === undefined) {
+  if (email === undefined || email === null) {
     logger.warn(`[${name}]: Could not validate email exist.`)
-    throw new ValidationError('exist')
+    throw new ValidationError('required')
   }
 
   if (!isStr(email)) {
