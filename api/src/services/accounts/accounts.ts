@@ -9,7 +9,7 @@ import { randomStr } from 'src/util/randomStr'
 import {
   validateAccountId,
   validateAccountOrganization,
-} from 'src/validators/account/account'
+} from 'src/validators/account'
 
 import { validateEmail } from 'src/validators/email'
 
