@@ -1,4 +1,5 @@
 import type { Account } from '@prisma/client'
+import { db } from 'src/lib/db'
 
 import {
   account,
@@ -28,6 +29,41 @@ describe('account service', () => {
           }).rejects.toThrow(TakenError)
         }
       )
+
+      scenario('saves the given email', async (scenario: AccountStandard) => {
+        const one = scenario.account.one as Account
+        const organizationId = one.organizationId
+        mockCurrentUser({ organizationId })
+
+        const email = 'anUnusedemail@example.com'
+
+        const inviteRes = await inviteMember({ email })
+        const assertRes = await db.account_Confirmation.findFirst({
+          where: { email },
+        })
+
+        expect(inviteRes).toBeTruthy()
+        expect(assertRes.email).toBe(email)
+      })
+
+      scenario(
+        'generates a confirmation code',
+        async (scenario: AccountStandard) => {
+          const one = scenario.account.one as Account
+          const organizationId = one.organizationId
+          mockCurrentUser({ organizationId })
+
+          const email = 'anUnusedemail@example.com'
+
+          const inviteRes = await inviteMember({ email })
+          const assertRes = await db.account_Confirmation.findFirst({
+            where: { email },
+          })
+
+          expect(inviteRes).toBeTruthy()
+          expect(assertRes.code).toBeDefined()
+        }
+      )
     })
 
     describe('signupAccount', () => {
@@ -41,6 +77,18 @@ describe('account service', () => {
           }).rejects.toThrow(TakenError)
         }
       )
+
+      scenario('saves the given email', async (_scenario: AccountStandard) => {
+        const email = 'anUnusedemail@example.com'
+
+        const inviteRes = await inviteMember({ email })
+        const assertRes = await db.account_Confirmation.findFirst({
+          where: { email },
+        })
+
+        expect(inviteRes).toBeTruthy()
+        expect(assertRes.email).toBe(email)
+      })
     })
   })
 
