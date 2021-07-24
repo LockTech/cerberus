@@ -17,7 +17,7 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 }
 //
 
-// ==
+// == C
 const checkEmailTaken = async (service: string, email: string) => {
   const accountExist = await db.account.count({ where: { email } })
   if (accountExist !== 0) {
@@ -69,7 +69,7 @@ export const inviteMember = async ({ email }: InviteMemberArgs) => {
 }
 //
 
-// ==
+// == R
 export const account = async ({ id }: { id: string }) => {
   const res = await db.account.findUnique({
     where: { id },
@@ -85,4 +85,10 @@ export const accounts = () => {
 export const currentAccount = () => {
   return getCurrentUser()
 }
+//
+
+// == U
+//
+
+// == D
 //
