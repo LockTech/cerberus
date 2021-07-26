@@ -1,6 +1,6 @@
 import type { Account } from '@prisma/client'
 import { context } from '@redwoodjs/api'
 
-export const getCurrentUser = () => {
+export const getContextUser = () => {
   return context.currentUser as Account
 }
