@@ -6,6 +6,8 @@ import { templateFileSendMail } from 'src/lib/email'
 import { logger } from 'src/lib/logger'
 import type { TemplateData } from 'src/lib/template'
 
+import { organization as getOrganization } from 'src/services/organizations'
+
 import { randomStr } from 'src/util/randomStr'
 
 import {
@@ -104,9 +106,11 @@ export interface InviteMemberArgs {
 export const inviteMember = async ({ email }: InviteMemberArgs) => {
   await checkEmailTaken('inviteMember', email)
 
-  const currentUser = getContextUser()
+  const organization = await getOrganization()
+  const organizationId = organization.id
+  const organizationName = organization.name
 
-  const organizationId = currentUser.organizationId
+  const currentUser = getContextUser()
   const name = `${currentUser.firstName} ${currentUser.lastName}`
   const code = randomStr(RandomStrLength)
 
@@ -122,6 +126,7 @@ export const inviteMember = async ({ email }: InviteMemberArgs) => {
   const data = {
     code,
     name,
+    organizationName,
   }
 
   await sendConfirmationEmail({
