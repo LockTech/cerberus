@@ -72,6 +72,7 @@ In addition to the dependencies outlined in [RedwoodJS' introduction](https://re
 
 * [HeadlessUI (React)](https://headlessui.dev/)
 * [i18next](https://www.i18next.com/)
+* [niceramps](https://github.com/MathGeniusJodie/niceramps)
 * [PostgreSQL](https://www.postgresql.org/)
 * [react-hook-form](https://react-hook-form.com/)
 * [RecoilJS](https://recoiljs.org/)
