@@ -49,11 +49,21 @@ export const confirmAccount = async ({
 }: ConfirmAccountOptions) => {
   let codeCheckRes: Pick<Account_Confirmation, 'email' | 'organizationId'>
 
+  const now = new Date()
+  const tenMinAgo = new Date(now.valueOf() - 60000 * 10)
+
   try {
     codeCheckRes = await db.account_Confirmation.findFirst({
       orderBy: { created_at: 'desc' },
       select: { email: true, organizationId: true },
-      where: { code, email: enteredEmail },
+      where: {
+        code,
+        email: enteredEmail,
+        created_at: {
+          gte: tenMinAgo.toISOString(),
+          lt: now.toISOString(),
+        },
+      },
     })
   } catch (err) {
     return databaseError('confirmAccount', err)
