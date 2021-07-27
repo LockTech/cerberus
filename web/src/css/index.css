@@ -28,7 +28,7 @@ html, body, #redwood-app {
   /* Typograph */
   .hint {
     @apply text-gray-500;
-    @apply dark:text-gray-400;
+    @apply dark:text-gray-300;
     @apply text-sm;
   }
   .text {
