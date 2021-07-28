@@ -1,11 +1,11 @@
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
+import { sendInviteEmail } from 'src/helpers/email'
+
 import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
-import { templateFileSendMail } from 'src/lib/email'
-import { logger } from 'src/lib/logger'
-import type { TemplateData } from 'src/lib/template'
 
+import { createInviteConfirm } from 'src/services/account_confirmations'
 import { organization as getOrganization } from 'src/services/organizations'
 
 import { randomStr } from 'src/util/randomStr'
@@ -18,19 +18,9 @@ import {
 } from 'src/validators/account'
 import { validateEmail } from 'src/validators/email'
 
-// ==
-const RandomStrLength = 8
-
-const EmailSignupFilePath = 'config/emails/signup.html'
-const EmailSignupSubject = process.env.EMAIL_SIGNUP_SUBJECT
-
-const EmailInviteFilePath = 'config/emails/invite.html'
-const EmailInviteSubject = process.env.EMAIL_INVITE_SUBJECT
-//
-
 //
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(validateCurrentUser, { except: ['signupAccount'] })
+  rules.add(validateCurrentUser)
   rules.add(validateAccountId, {
     only: ['currentAccount'],
   })
@@ -40,71 +30,15 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateAccountName, {
     only: ['inviteMember'],
   })
-  rules.add(validateEmail, { only: ['inviteMember', 'signupAccount'] })
+  rules.add(validateEmail, { only: ['inviteMember'] })
 }
 //
 
 // == C
-const checkEmailTaken = async (service: string, email: string) => {
-  const accountExist = await db.account.count({ where: { email } })
-  if (accountExist !== 0) {
-    logger.warn(`[${service}]: Attempted to use taken email.`)
-    throw new SyntaxError('taken')
+export const inviteMember = async ({ email }) => {
+  if (await checkEmailExist({ email })) {
+    throw new SyntaxError('email-taken')
   }
-}
-interface SendConfirmationEmailOptions {
-  data: TemplateData
-  email: string
-  path: string
-  subject: string
-}
-const sendConfirmationEmail = async ({
-  data,
-  email,
-  path,
-  subject,
-}: SendConfirmationEmailOptions) => {
-  await templateFileSendMail({
-    data,
-    path,
-    subject,
-    to: email,
-  })
-}
-
-export interface SignupAccountArgs {
-  email: string
-}
-export const signupAccount = async ({ email }: SignupAccountArgs) => {
-  await checkEmailTaken('signupAccount', email)
-
-  const code = randomStr(RandomStrLength)
-
-  await db.account_Confirmation.create({
-    data: {
-      code,
-      email,
-      created_at: new Date().toISOString(),
-    },
-  })
-
-  const data = { code }
-
-  await sendConfirmationEmail({
-    data,
-    email,
-    path: EmailSignupFilePath,
-    subject: EmailSignupSubject,
-  })
-
-  return true
-}
-
-export interface InviteMemberArgs {
-  email: string
-}
-export const inviteMember = async ({ email }: InviteMemberArgs) => {
-  await checkEmailTaken('inviteMember', email)
 
   const organization = await getOrganization()
   const organizationId = organization.id
@@ -112,29 +46,16 @@ export const inviteMember = async ({ email }: InviteMemberArgs) => {
 
   const currentUser = getContextUser()
   const name = `${currentUser.firstName} ${currentUser.lastName}`
-  const code = randomStr(RandomStrLength)
+  const code = randomStr(36)
 
-  await db.account_Confirmation.create({
-    data: {
-      code,
-      email,
-      organizationId,
-      created_at: new Date().toISOString(),
-    },
-  })
+  await createInviteConfirm({ code, email, organizationId })
 
   const data = {
     code,
     name,
     organizationName,
   }
-
-  await sendConfirmationEmail({
-    data,
-    email,
-    path: EmailInviteFilePath,
-    subject: EmailInviteSubject,
-  })
+  await sendInviteEmail({ data, email })
 
   return true
 }
@@ -162,6 +83,15 @@ export const accounts = async () => {
   })
 
   return res
+}
+
+interface CheckEmailExistArgs {
+  email: string
+}
+const checkEmailExist = async ({ email }: CheckEmailExistArgs) => {
+  const res = await db.account.count({ where: { email } })
+
+  return res >= 1 || false
 }
 
 export const currentAccount = async () => {
