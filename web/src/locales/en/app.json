@@ -5,6 +5,11 @@
       "userProfile": "User Profile"
     }
   },
+  "Auth": {
+    "Layout": {
+      "privacy": "Our Privacy Policy"
+    }
+  },
   "Home": {
     "Page": {
       "Helmet": {
@@ -60,12 +65,32 @@
   },
   "Signup": {
     "Page": {
+      "Errors": {
+        "email-required": "An email address is required to signup.",
+        "email-invalid": "An invalid email address was recieved.",
+        "email-length": "Your email has exceeded the maximum allowed length.",
+        "email-reserved": "Your email address contains an invalid character.",
+        "name-required": "Your first and last name are required to signup.",
+        "signup-confirmation-error": "An error occured trying to setup confirmation for your account.",
+        "signup-confirmation-email": "An error occured trying to send your confirmation email.",
+        "signup-account-create": "An error occured trying to create your account."
+      },
       "Helmet": {
         "title": "Sign Up • Cerberus"
       },
       "title": "Sign Up",
-      "subtitle": "Enter your e-mail address and a password to create an account and continue signing up.",
+      "subtitle": "Enter your some of your personal information to begin creating your account and organization.",
       "form": {
+        "firstName": {
+          "label": "First Name",
+          "placeholder": "Jane",
+          "required": "A first name is required to signup."
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Doe",
+          "required": "A last name is required to signup."
+        },
         "username": {
           "label": "E-Mail Address",
           "placeholder": "E-Mail Address",
@@ -73,7 +98,6 @@
         },
         "password": {
           "label": "Password",
-          "hint": "Passwords must be longer than eight characters. Secure passwords mix letters, numbers, symbols, and do not contain known phrases or words.",
           "placeholder": "Password",
           "minLength": "Your password must be longer than 8 characters.",
           "required": "A password is required to signup."
