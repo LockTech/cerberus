@@ -1,10 +1,9 @@
 import { DbAuthHandler } from '@redwoodjs/api'
 
+import { signupHandler } from 'src/helpers/signup'
+
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
-
-import { isStr } from 'src/util/asserters'
-import { confirmAccount } from 'src/lib/confirmation'
 
 export const handler = async (event, context) => {
   logger.trace('Invoking auth handler.')
@@ -21,33 +20,7 @@ export const handler = async (event, context) => {
       salt: 'salt',
     },
 
-    signupHandler: async ({
-      hashedPassword,
-      salt,
-      username,
-      userAttributes: { code, firstName, lastName },
-    }) => {
-      if (!isStr(firstName) || !isStr(lastName)) {
-        logger.warn('Attempted signup without a first and last name.')
-        throw new SyntaxError(
-          'Cannot create an account without a first and last name.'
-        )
-      }
-
-      if (!isStr(code)) {
-        logger.warn('Attempted signup with a verification code.')
-      }
-
-      const options = {
-        hashedPassword,
-        salt,
-        email: username,
-        firstName,
-        lastName,
-      }
-
-      return await confirmAccount({ code, ...options })
-    },
+    signupHandler,
 
     // How long a user will remain logged in, in seconds
     loginExpires: 60 * 60 * 24, // * 365 * 10,
