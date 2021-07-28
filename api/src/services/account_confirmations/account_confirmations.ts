@@ -13,6 +13,49 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 //
 
 // ==
+export interface CreateInviteConfirmArgs {
+  code: string
+  email: string
+  organizationId: string
+}
+export const createInviteConfirm = async ({
+  code,
+  email,
+  organizationId,
+}: CreateInviteConfirmArgs) => {
+  await db.account_Confirmation.create({
+    data: {
+      code,
+      email,
+      organizationId,
+      created_at: new Date().toISOString(), // ensure it's the application's time
+    },
+  })
+
+  return true
+}
+
+export interface CreateSignupConfirmArgs {
+  code: string
+  email: string
+}
+export const createSignupConfirm = async ({
+  code,
+  email,
+}: CreateSignupConfirmArgs) => {
+  await db.account_Confirmation.create({
+    data: {
+      code,
+      email,
+      created_at: new Date().toISOString(),
+    },
+  })
+
+  return true
+}
+//
+
+// ==
 export interface ConfirmInvitationArgs {
   code: string
   email: string
