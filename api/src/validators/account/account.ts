@@ -5,13 +5,19 @@ import { logger } from 'src/lib/logger'
 
 import { isStr } from 'src/util/asserters'
 
+/**
+ * @throws ValidationError('account-invalid')
+ */
 export const validateCurrentUser = (name: string) => {
   if (!context.currentUser) {
     logger.warn(`[${name}]: Could not validate current user.`)
-    throw new ValidationError('authentication')
+    throw new ValidationError('account-invalid')
   }
 }
 
+/**
+ * @throws ValidationError('account-organizationId-invalid')
+ */
 export const validateAccountOrganization = (name: string) => {
   const currentAccount = getContextUser()
 
@@ -19,12 +25,15 @@ export const validateAccountOrganization = (name: string) => {
 
   if (!isStr(organizationId)) {
     logger.warn(`[${name}]: Could not validate organization exist.`)
-    throw new ValidationError('exist.organizationId')
+    throw new ValidationError('account-organizationId-invalid')
   }
 
   // add validation for organization existing in DB
 }
 
+/**
+ * @throws ValidationError('account-id-invalid')
+ */
 export const validateAccountId = (name: string) => {
   const currentAccount = getContextUser()
 
@@ -32,10 +41,13 @@ export const validateAccountId = (name: string) => {
 
   if (!isStr(id)) {
     logger.warn(`[${name}]: Could not validate current user has an ID.`)
-    throw new ValidationError('exist.accountid')
+    throw new ValidationError('account-id-invalid')
   }
 }
 
+/**
+ * @throws ValidationError('account-name-invalid')
+ */
 export const validateAccountName = (name: string) => {
   const currentAccount = getContextUser()
 
@@ -46,6 +58,6 @@ export const validateAccountName = (name: string) => {
     logger.warn(
       `[${name}]: Could not validate current user has a first and last name.`
     )
-    throw new ValidationError('exit.accountName')
+    throw new ValidationError('account-name-invalid')
   }
 }
