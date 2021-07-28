@@ -1,3 +1,5 @@
+import { ValidationError } from '@redwoodjs/api'
+
 import { sendSignupEmail } from 'src/helpers/email'
 
 import { db } from 'src/lib/db'
@@ -38,7 +40,7 @@ const handleInvitation = async ({
   const verifyCode = await confirmInvitation({ code, email })
 
   if (!verifyCode) {
-    throw new Error('invalid-invite')
+    throw new ValidationError('invite-invalid')
   }
 
   await db.account.create({
@@ -73,23 +75,46 @@ const handleSignup = async ({
 }: HandleSignupOptions) => {
   const code = randomStr(8)
 
-  await createSignupConfirm({ code, email })
-
-  const data = {
-    code,
+  // confirmation
+  try {
+    await createSignupConfirm({ code, email })
+  } catch (err) {
+    logger.error(
+      { err },
+      'An error occured trying to create a signup confirmation.'
+    )
+    throw new ValidationError('signup-confirmation-create')
   }
-  await sendSignupEmail({ data, email })
 
-  await db.account.create({
-    data: {
-      email,
-      firstName,
-      hashedPassword,
-      lastName,
-      salt,
-      verified: false,
-    },
-  })
+  // email
+  try {
+    const data = {
+      code,
+    }
+    await sendSignupEmail({ data, email })
+  } catch (err) {
+    logger.error(
+      { err },
+      'An error occured trying to send a signup confirmation email.'
+    )
+    throw new ValidationError('signup-confirmation-email')
+  }
+
+  try {
+    await db.account.create({
+      data: {
+        email,
+        firstName,
+        hashedPassword,
+        lastName,
+        salt,
+        verified: false,
+      },
+    })
+  } catch (err) {
+    logger.error({ err }, 'An error occured trying to create an account.')
+    throw new ValidationError('signup-account-create')
+  }
 
   return SignupRes
 }
@@ -111,9 +136,7 @@ export const signupHandler = async ({
 
   if (!isStr(firstName) || !isStr(lastName)) {
     logger.warn('Attempted signup without a first and last name.')
-    throw new SyntaxError(
-      'Cannot create an account without a first and last name.'
-    )
+    throw new ValidationError('signup-name-required')
   }
 
   // Invite
@@ -131,6 +154,6 @@ export const signupHandler = async ({
   // Error
   else {
     logger.warn('Recieved a non-string value for signup "code".')
-    throw new SyntaxError('Signup code should be a string.')
+    throw new ValidationError('signup-invalid-code')
   }
 }
