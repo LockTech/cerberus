@@ -13,6 +13,7 @@ model Account {
   email                         String                            @unique
   firstName                     String
   lastName                      String
+  verified                      Boolean                           @default(false)
   //
   hashedPassword                String
   salt                          String
