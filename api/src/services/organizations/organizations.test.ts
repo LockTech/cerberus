@@ -7,14 +7,14 @@ import type { OrganizationStandard } from './organizations.scenarios'
 describe('organization service', () => {
   describe('read', () => {
     scenario(
-      "reads an organization using the current request's current user",
+      "reads an organization using the request's current user",
       async (scenario: OrganizationStandard) => {
         const one = scenario.organization.one as Organization
-        const id = one.id
+        const organizationId = one.id
 
-        mockCurrentUser({ id })
+        mockCurrentUser({ organizationId })
 
-        const res = organization()
+        const res = await organization()
 
         expect(res).toEqual(expect.objectContaining<Organization>(one))
       }
