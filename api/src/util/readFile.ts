@@ -1,5 +1,7 @@
 import { readFileSync } from 'fs'
 
+import { logger } from 'src/lib/logger'
+
 import { isStr } from 'src/util/asserters'
 
 /**
@@ -10,5 +12,17 @@ export const readFile = (path: string) => {
     throw new Error('Invalid file path.')
   }
 
-  return readFileSync(path).toString()
+  let res: string
+
+  try {
+    res = readFileSync(path).toString()
+  } catch (err) {
+    logger.error(
+      { err, path },
+      'An error occured trying to read a file from disk.'
+    )
+    throw new Error('Error trying to read a file from disk.')
+  }
+
+  return res
 }
