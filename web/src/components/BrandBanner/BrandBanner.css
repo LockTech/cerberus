@@ -1,0 +1,5 @@
+.brand-banner {
+  @apply text-gray-800 dark:text-gray-50;
+  @apply h-full w-9/12;
+  @apply m-auto;
+}
