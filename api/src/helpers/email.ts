@@ -6,10 +6,10 @@ import { readFile } from 'src/util/readFile'
 
 const from = process.env.EMAIL_FROM
 
-const EmailSignupFilePath = 'config/emails/signup.html'
+const EmailSignupFilePath = `${process.cwd()}/emails/signup.html`
 const EmailSignupSubject = process.env.EMAIL_SIGNUP_SUBJECT
 
-const EmailInviteFilePath = 'config/emails/invite.html'
+const EmailInviteFilePath = `${process.cwd()}/emails/invite.html`
 const EmailInviteSubject = process.env.EMAIL_INVITE_SUBJECT
 
 // ==
