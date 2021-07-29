@@ -1,6 +1,6 @@
 export const schema = gql`
   type Organization {
-    id: String!
+    id: ID!
     name: String!
     createdAt: DateTime!
     updatedAt: DateTime!
