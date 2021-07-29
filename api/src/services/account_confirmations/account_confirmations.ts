@@ -8,7 +8,8 @@ import { reject } from 'src/validators/rejector'
 
 //
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject)
+  rules.add(reject, { except: ['confirmSignup'] })
+  rules.skip({ only: ['confirmSignup'] })
 }
 //
 
