@@ -104,6 +104,10 @@ interface SendSignupEmailData extends TemplateData {
    * A unique code to include in the email, used to verify the signup at a later date.
    */
   code: string
+  /**
+   * The email being signed up.
+   */
+  email: string
 }
 interface SendSignupEmailOptions {
   data: SendSignupEmailData
