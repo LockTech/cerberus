@@ -27,7 +27,7 @@ export const createInviteConfirm = async ({
       code,
       email,
       organizationId,
-      created_at: new Date().toISOString(), // ensure it's the application's time
+      createdAt: new Date().toISOString(),
     },
   })
 
@@ -46,7 +46,7 @@ export const createSignupConfirm = async ({
     data: {
       code,
       email,
-      created_at: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     },
   })
 
@@ -71,7 +71,7 @@ export const confirmInvitation = async ({
 }: ConfirmInvitationArgs) => {
   const res = await db.account_Confirmation.findFirst({
     orderBy: {
-      created_at: 'desc',
+      createdAt: 'desc',
     },
     where: {
       code,
@@ -98,7 +98,7 @@ export interface ConfirmSignupArgs {
 export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
   const res = await db.account_Confirmation.findFirst({
     orderBy: {
-      created_at: 'desc',
+      createdAt: 'desc',
     },
     where: {
       code,
@@ -111,7 +111,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
   if (res.organizationId !== null) return false
 
   await db.account.update({
-    data: { verified: true },
+    data: { verified: true, verifiedAt: new Date().toISOString() },
     where: { email },
   })
 

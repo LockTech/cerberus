@@ -51,6 +51,7 @@ const handleInvitation = async ({
       lastName,
       salt,
       verified: true,
+      verifiedAt: new Date().toISOString(),
     },
   })
 
