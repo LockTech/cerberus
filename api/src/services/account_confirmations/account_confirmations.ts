@@ -84,7 +84,7 @@ export const confirmInvitation = async ({
 
   if (res.organizationId === null) return false
 
-  return res
+  return true
 }
 
 export interface ConfirmSignupArgs {
@@ -113,6 +113,6 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
 
   if (res.organizationId !== null) return false
 
-  return res
+  return true
 }
 //
