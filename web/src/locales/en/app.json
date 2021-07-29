@@ -20,6 +20,15 @@
       }
     }
   },
+  "Invite": {
+    "Confirmation": {
+      "Page": {
+        "Helmet": {
+          "title": "Invitation Confirmation • Cerberus"
+        }
+      }
+    }
+  },
   "Login": {
     "Page": {
       "Helmet": {
