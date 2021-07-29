@@ -9,9 +9,11 @@ const Sidebar = () => {
 
   const home = useMatch(routes.home()).match
   //
-  const activity = false
+  const accountActivity = false
   const listAccounts = useMatch(routes.listAccounts()).match
   const listRoles = false
+  //
+  const orgSettings = false
 
   return (
     <div className="sidebar">
@@ -31,7 +33,7 @@ const Sidebar = () => {
         </div>
         <div className="nav-group">
           <p className="nav-group-title">{t('Sidebar.nav.accounts.title')}</p>
-          <button className={clsx(activity && 'active')}>
+          <button className={clsx(accountActivity && 'active')}>
             {t('Sidebar.nav.accounts.activity')}
           </button>
           <button
@@ -42,6 +44,14 @@ const Sidebar = () => {
           </button>
           <button className={clsx(listRoles && 'active')}>
             {t('Sidebar.nav.accounts.listRoles')}
+          </button>
+        </div>
+        <div className="nav-group">
+          <p className="nav-group-title">
+            {t('Sidebar.nav.organization.title')}
+          </p>
+          <button className={clsx(orgSettings && 'active')}>
+            {t('Sidebar.nav.organization.settings')}
           </button>
         </div>
       </nav>

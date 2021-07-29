@@ -61,14 +61,18 @@
     "subtitle": "Manage your organization's accounts and their permissions.",
     "nav": {
       "general": {
-        "title": "General",
+        "title": "Cerberus",
         "dashboard": "Dashboard"
       },
       "accounts": {
-        "title": "Account Management",
+        "title": "Accounts",
         "activity": "Activity",
         "listAccounts": "Accounts",
         "listRoles": "Roles"
+      },
+      "organization": {
+        "title": "Organization",
+        "settings": "Settings"
       }
     }
   },
