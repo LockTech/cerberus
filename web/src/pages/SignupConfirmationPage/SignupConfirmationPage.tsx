@@ -39,6 +39,7 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
       toast.dismiss()
 
       if (data.confirmed) {
+        toast(t('Signup.Confirmation.Page.login'))
         toast.success(t('Signup.Confirmation.Page.success'))
         navigate(routes.login())
       } else {

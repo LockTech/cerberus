@@ -83,7 +83,8 @@
           "submit": "Confirm"
         },
         "loading": "Confirming your account.",
-        "success": "Your account has been confirmed. Please login to continue.",
+        "success": "Your account has been confirmed.",
+        "login": "Please login to finish creating your organization.",
         "failure": "Your account could not be confirmed."
       }
     },
@@ -130,7 +131,7 @@
       "account": "Already have an account?",
       "login": "Login",
       "loading": "Signing up your account.",
-      "success": "Confirmation e-mail sent to your account."
+      "success": "A confirmation code has been sent to your email address."
     }
   }
 }
