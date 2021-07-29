@@ -21,12 +21,17 @@ services:
         source: ./config/keto
         target: /home/ory
 
-  # api:
-  #   env_file: ./.env
-  #   image: cerberus_api:jeliasson-alpine
-  #   networks:
-  #     - default
-  #     - portunus_network
-  #     - poseidon_network
-  #   ports:
-  #     - 8910:8911
+  # Mailslurper is NOT for production use.
+  #
+  # Useful for development-time testing of Cerberus' functionality
+  # To use, set the environment variable `SMTP_HOST` to 'localhost' and `SMTP_PORT` to `2500`.
+  # Both `SMTP_USER` and `SMTP_PASS` can be left blank.
+  # You can view the emails sent at http://localhost:8080
+  mailslurper:
+    image: marcopas/docker-mailslurper:latest
+    ports:
+      - '8080:8080'
+      - '8085:8085'
+      - '2500:2500'
+    networks:
+      - default

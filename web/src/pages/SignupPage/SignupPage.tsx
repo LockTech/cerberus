@@ -8,12 +8,15 @@ import {
   PasswordField,
   FieldError,
   Submit,
+  TextField,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 interface SignupFormData {
+  firstName: string
+  lastName: string
   username: string
   password: string
 }
@@ -29,11 +32,10 @@ const SignupPage = () => {
     }
   }, [isAuthenticated])
 
-  // focus on email box on page load
-  const usernameRef = useRef<HTMLInputElement>()
+  const firstNameRef = useRef<HTMLInputElement>()
   useEffect(() => {
-    usernameRef.current.focus()
-  }, [usernameRef])
+    firstNameRef.current.focus()
+  }, [])
 
   const onSubmit = useCallback(
     async (data: SignupFormData) => {
@@ -47,9 +49,12 @@ const SignupPage = () => {
       toast.dismiss()
 
       if (error.message) {
-        toast.error(error.message)
+        toast.error(t(`Signup.Page.Errors.${error.message}`))
       } else {
         toast.success(t('Signup.Page.success'))
+
+        const email = data.username
+        navigate(routes.signupConfirmation({ email }))
       }
     },
     [signUp, t]
@@ -65,7 +70,54 @@ const SignupPage = () => {
           <h1 className="title">{t('Signup.Page.title')}</h1>
           <p className="hint">{t('Signup.Page.subtitle')}</p>
         </header>
-        <Form onSubmit={onSubmit} className="form">
+        <Form className="form" onSubmit={onSubmit}>
+          {/* firstName */}
+          <div className="input-group">
+            <Label
+              className="input-label"
+              errorClassName="input-label-error"
+              name="firstName"
+            >
+              {t('Signup.Page.form.firstName.label')}
+            </Label>
+            <TextField
+              className="input-primary"
+              errorClassName="input-error"
+              name="firstName"
+              placeholder={t('Signup.Page.form.firstName.placeholder')}
+              ref={firstNameRef}
+              validation={{
+                required: {
+                  value: true,
+                  message: t('Signup.Page.form.firstName.required'),
+                },
+              }}
+            />
+            <FieldError className="input-error-message" name="firstName" />
+          </div>
+          {/* lastName */}
+          <div className="input-group">
+            <Label
+              className="input-label"
+              errorClassName="input-label-error"
+              name="lastName"
+            >
+              {t('Signup.Page.form.lastName.label')}
+            </Label>
+            <TextField
+              className="input-primary"
+              errorClassName="input-error"
+              name="lastName"
+              placeholder={t('Signup.Page.form.lastName.placeholder')}
+              validation={{
+                required: {
+                  value: true,
+                  message: t('Signup.Page.form.lastName.required'),
+                },
+              }}
+            />
+            <FieldError className="input-error-message" name="lastName" />
+          </div>
           {/* username */}
           <div className="input-group">
             <Label
@@ -81,7 +133,6 @@ const SignupPage = () => {
               errorClassName="input-error"
               name="username"
               placeholder={t('Signup.Page.form.username.placeholder')}
-              ref={usernameRef}
               validation={{
                 required: {
                   value: true,
@@ -118,9 +169,6 @@ const SignupPage = () => {
               }}
             />
             <FieldError className="input-error-message" name="password" />
-            <Label name="password" className="hint" errorClassName="hidden">
-              {t('Signup.Page.form.password.hint')}
-            </Label>
           </div>
           {/* submit */}
           <Submit className="block button-primary-fill">

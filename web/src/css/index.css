@@ -7,9 +7,15 @@
   @apply font-quicksand leading-snug tracking-wide;
 }
 
-html, body, #redwood-app {
-  @apply bg-gray-50 dark:bg-gray-800;
-  @apply h-full w-full;
+html, body {
+  height: 100%;
+  width: 100%;
+}
+body { @apply bg-gray-50; }
+body.dark { @apply bg-gray-800; }
+#redwood-app {
+  height: 100%;
+  width: 100%;
 }
 
 @layer base {
@@ -28,7 +34,7 @@ html, body, #redwood-app {
   /* Typograph */
   .hint {
     @apply text-gray-500;
-    @apply dark:text-gray-400;
+    @apply dark:text-gray-300;
     @apply text-sm;
   }
   .text {
@@ -179,10 +185,13 @@ html, body, #redwood-app {
   .button-primary-fill {
     /* Background */
     @apply bg-primary-400 hover:bg-primary-500 active:bg-primary-600;
+    @apply disabled:bg-gray-300 dark:disabled:bg-gray-600;
     /* Border */
     /* Text */
     @apply text-black hover:text-white active:text-white;
+    @apply disabled:text-gray-400;
     /* Misc */
+    @apply disabled:cursor-not-allowed;
     @apply focus-primary;
     @apply button;
   }

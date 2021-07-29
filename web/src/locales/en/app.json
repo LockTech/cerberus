@@ -5,6 +5,11 @@
       "userProfile": "User Profile"
     }
   },
+  "Auth": {
+    "Layout": {
+      "privacy": "Our Privacy Policy"
+    }
+  },
   "Home": {
     "Page": {
       "Helmet": {
@@ -59,13 +64,57 @@
     }
   },
   "Signup": {
+    "Confirmation": {
+      "Page": {
+        "Helmet": {
+          "title": "Sign Up Confirmation • Cerberus"
+        },
+        "title": "Signup Confirmation",
+        "emailNotFound": "Your email address could not be determined.",
+        "emailNotFoundSteps": "You can find a link to this page in the confirmation email sent to the address you provided during signup.",
+        "codeEmail": "We've sent a confirmation code to {{ email }}.",
+        "codeUse": "Copy and paste it below to finish creating your account.",
+        "form": {
+          "code": {
+            "label": "Confirmation Code",
+            "placeholder": "Code",
+            "required": "A confirmation code is required to confirm your account."
+          },
+          "submit": "Confirm"
+        },
+        "loading": "Confirming your account.",
+        "success": "Your account has been confirmed.",
+        "login": "Please login to finish creating your organization.",
+        "failure": "Your account could not be confirmed."
+      }
+    },
     "Page": {
+      "Errors": {
+        "email-required": "An email address is required to signup.",
+        "email-invalid": "An invalid email address was recieved.",
+        "email-length": "Your email has exceeded the maximum allowed length.",
+        "email-reserved": "Your email address contains an invalid character.",
+        "name-required": "Your first and last name are required to signup.",
+        "signup-confirmation-error": "An error occured trying to setup confirmation for your account.",
+        "signup-confirmation-email": "An error occured trying to send your confirmation email.",
+        "signup-account-create": "An error occured trying to create your account."
+      },
       "Helmet": {
         "title": "Sign Up • Cerberus"
       },
       "title": "Sign Up",
-      "subtitle": "Enter your e-mail address and a password to create an account and continue signing up.",
+      "subtitle": "Enter some of your personal information below to begin creating your account and organization.",
       "form": {
+        "firstName": {
+          "label": "First Name",
+          "placeholder": "Jane",
+          "required": "A first name is required to signup."
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Doe",
+          "required": "A last name is required to signup."
+        },
         "username": {
           "label": "E-Mail Address",
           "placeholder": "E-Mail Address",
@@ -73,7 +122,6 @@
         },
         "password": {
           "label": "Password",
-          "hint": "Passwords must be longer than eight characters. Secure passwords mix letters, numbers, symbols, and do not contain known phrases or words.",
           "placeholder": "Password",
           "minLength": "Your password must be longer than 8 characters.",
           "required": "A password is required to signup."
@@ -83,7 +131,7 @@
       "account": "Already have an account?",
       "login": "Login",
       "loading": "Signing up your account.",
-      "success": "Confirmation e-mail sent to your account."
+      "success": "A confirmation code has been sent to your email address."
     }
   }
 }

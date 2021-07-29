@@ -20,6 +20,7 @@ const App = () => {
               <Toaster
                 toastOptions={{
                   className: 'toast',
+                  duration: 4000,
                   error: {
                     iconTheme: {
                       primary: '#fb7185',

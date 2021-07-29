@@ -4,22 +4,22 @@ const ServiceName = 'foo'
 
 const RequiredError: Error = {
   name: 'ValidationError',
-  message: 'required',
+  message: 'email-required',
 }
 
 const InvalidError: Error = {
   name: 'ValidationError',
-  message: 'invalid',
+  message: 'email-invalid',
 }
 
 const LengthError: Error = {
   name: 'ValidationError',
-  message: 'length',
+  message: 'email-length',
 }
 
 const CharacterError: Error = {
   name: 'ValidationError',
-  message: 'reserved',
+  message: 'email-reserved',
 }
 
 describe('email validator', () => {

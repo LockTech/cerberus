@@ -1,6 +1,6 @@
 export const schema = gql`
   type Account {
-    id: String!
+    id: ID!
     email: String!
     firstName: String!
     lastName: String!

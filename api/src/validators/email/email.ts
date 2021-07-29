@@ -15,21 +15,21 @@ export const validateEmail = (
 ) => {
   if (email === undefined || email === null) {
     logger.warn(`[${name}]: Could not validate email exist.`)
-    throw new ValidationError('required')
+    throw new ValidationError('email-required')
   }
 
   if (!isStr(email)) {
     logger.warn(`[${name}]: Could not validate email was a string.`)
-    throw new ValidationError('invalid')
+    throw new ValidationError('email-invalid')
   }
 
   if (email.length > 254) {
     logger.warn(`[${name}]: Email exceeds maximum length.`)
-    throw new ValidationError('length')
+    throw new ValidationError('email-length')
   }
 
   if (email.match(ValidEmailRegEx) === null) {
     logger.warn(`[${name}]: Email contains invalid character.`)
-    throw new ValidationError('reserved')
+    throw new ValidationError('email-reserved')
   }
 }

@@ -16,6 +16,7 @@ const Routes = () => {
         <Set wrap={[AuthLayout]}>
           <Route path="/login" page={LoginPage} name="login" />
           <Route path="/signup" page={SignupPage} name="signup" />
+          <Route path="/signup/confirmation" page={SignupConfirmationPage} name="signupConfirmation" />
         </Set>
       </Set>
     </Router>

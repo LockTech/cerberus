@@ -1,79 +1,61 @@
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
-import { requireCurrentUser } from 'src/lib/auth'
-import { getCurrentUser } from 'src/lib/currentUser'
+import { sendInviteEmail } from 'src/helpers/email'
+
+import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
+
+import { createInviteConfirm } from 'src/services/account_confirmations'
+import { organization as getOrganization } from 'src/services/organizations'
 
 import { randomStr } from 'src/util/randomStr'
+
 import {
+  validateCurrentUser,
   validateAccountId,
+  validateAccountName,
   validateAccountOrganization,
 } from 'src/validators/account'
-
 import { validateEmail } from 'src/validators/email'
 
-// ==
+//
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(requireCurrentUser)
+  rules.add(validateCurrentUser)
   rules.add(validateAccountId, {
     only: ['currentAccount'],
   })
   rules.add(validateAccountOrganization, {
     only: ['inviteMember', 'account', 'accounts'],
   })
-  rules.add(validateEmail, { only: ['inviteMember', 'signupAccount'] })
-  rules.skip([requireCurrentUser], { only: ['signupAccount'] })
+  rules.add(validateAccountName, {
+    only: ['inviteMember'],
+  })
+  rules.add(validateEmail, { only: ['inviteMember'] })
 }
 //
 
 // == C
-const checkEmailTaken = async (service: string, email: string) => {
-  const accountExist = await db.account.count({ where: { email } })
-  if (accountExist !== 0) {
-    logger.warn(`[${service}]: Attempted to use taken email.`)
-    throw new SyntaxError('taken')
+export const inviteMember = async ({ email }) => {
+  if (await checkEmailExist({ email })) {
+    throw new SyntaxError('email-taken')
   }
-}
 
-export interface SignupAccountArgs {
-  email: string
-}
-export const signupAccount = async ({ email }: SignupAccountArgs) => {
-  await checkEmailTaken('signupAccount', email)
+  const organization = await getOrganization()
+  const organizationId = organization.id
+  const organizationName = organization.name
 
-  const code = randomStr(6)
+  const currentUser = getContextUser()
+  const name = `${currentUser.firstName} ${currentUser.lastName}`
+  const code = randomStr(36)
 
-  await db.account_Confirmation.create({
-    data: {
-      code,
-      email,
-    },
-  })
+  await createInviteConfirm({ code, email, organizationId })
 
-  // send confirmation email
-
-  return true
-}
-
-export interface InviteMemberArgs {
-  email: string
-}
-export const inviteMember = async ({ email }: InviteMemberArgs) => {
-  await checkEmailTaken('inviteMember', email)
-
-  const organizationId = getCurrentUser().organizationId
-  const code = randomStr(6)
-
-  await db.account_Confirmation.create({
-    data: {
-      code,
-      email,
-      organizationId,
-    },
-  })
-
-  // send confirmation email
+  const data = {
+    code,
+    name,
+    organizationName,
+  }
+  await sendInviteEmail({ data, email })
 
   return true
 }
@@ -81,17 +63,20 @@ export const inviteMember = async ({ email }: InviteMemberArgs) => {
 
 // == R
 export const account = async ({ id }: { id: string }) => {
-  const organizationId = getCurrentUser().organizationId
+  const organizationId = getContextUser().organizationId
 
   const res = await db.account.findFirst({
-    where: { id, organizationId },
+    where: {
+      id,
+      organizationId,
+    },
   })
 
   return res
 }
 
 export const accounts = async () => {
-  const organizationId = getCurrentUser().organizationId
+  const organizationId = getContextUser().organizationId
 
   const res = await db.account.findMany({
     where: { organizationId },
@@ -100,8 +85,17 @@ export const accounts = async () => {
   return res
 }
 
+interface CheckEmailExistArgs {
+  email: string
+}
+const checkEmailExist = async ({ email }: CheckEmailExistArgs) => {
+  const res = await db.account.count({ where: { email } })
+
+  return res >= 1 || false
+}
+
 export const currentAccount = async () => {
-  const id = getCurrentUser().id
+  const id = getContextUser().id
 
   const res = await db.account.findUnique({ where: { id } })
 

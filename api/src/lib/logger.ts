@@ -10,6 +10,16 @@ const redact: redactOptions = {
     'data.redwood.currentUser.hashedPassword',
     'data.redwood.currentUser.salt',
     //
+    // ==
+    'data.email',
+    'data.hashedPassword',
+    'data.salt',
+    //
+    // ==
+    'query.email',
+    'query.hashedPassword',
+    'query.salt',
+    //
   ],
 }
 

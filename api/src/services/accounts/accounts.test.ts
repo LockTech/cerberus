@@ -1,20 +1,16 @@
 import type { Account } from '@prisma/client'
 import { db } from 'src/lib/db'
 
-import {
-  account,
-  accounts,
-  currentAccount,
-  inviteMember,
-  signupAccount,
-} from './accounts'
+import { account, accounts, currentAccount, inviteMember } from './accounts'
 
 import type { AccountStandard } from './accounts.scenarios'
 
 const TakenError: Error = {
   name: 'SyntaxError',
-  message: 'taken',
+  message: 'email-taken',
 }
+
+jest.setTimeout(100000)
 
 describe('account service', () => {
   describe('create', () => {
@@ -61,46 +57,6 @@ describe('account service', () => {
           })
 
           expect(inviteRes).toBeTruthy()
-          expect(assertRes.code).toBeDefined()
-        }
-      )
-    })
-
-    describe('signupAccount', () => {
-      scenario(
-        'throws when an email already exist',
-        async (scenario: AccountStandard) => {
-          const email = scenario.account.one.email
-
-          expect(async () => {
-            await signupAccount({ email })
-          }).rejects.toThrow(TakenError)
-        }
-      )
-
-      scenario('saves the given email', async (_scenario: AccountStandard) => {
-        const email = 'anUnusedemail@example.com'
-
-        const signupRes = await signupAccount({ email })
-        const assertRes = await db.account_Confirmation.findFirst({
-          where: { email },
-        })
-
-        expect(signupRes).toBeTruthy()
-        expect(assertRes.email).toBe(email)
-      })
-
-      scenario(
-        'generates a confirmation code',
-        async (_scenario: AccountStandard) => {
-          const email = 'anUnusedemail@example.com'
-
-          const signupRes = await signupAccount({ email })
-          const assertRes = await db.account_Confirmation.findFirst({
-            where: { email },
-          })
-
-          expect(signupRes).toBeTruthy()
           expect(assertRes.code).toBeDefined()
         }
       )
