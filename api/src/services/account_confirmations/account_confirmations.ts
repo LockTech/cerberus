@@ -2,8 +2,6 @@ import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
-import { minutes } from 'src/util/time'
-
 import { reject } from 'src/validators/rejector'
 
 //
@@ -98,19 +96,12 @@ export interface ConfirmSignupArgs {
   email: string
 }
 export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
-  const now = new Date()
-  const tenMinAgo = new Date(now.valueOf() - minutes(10))
-
   const res = await db.account_Confirmation.findFirst({
     orderBy: {
       created_at: 'desc',
     },
     where: {
       code,
-      created_at: {
-        gte: tenMinAgo,
-        lt: now,
-      },
       email,
     },
   })

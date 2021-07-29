@@ -37,7 +37,7 @@ describe('account_confirmation service', () => {
       )
 
       scenario(
-        'returns the confirmation when it is successful',
+        'returns true when the code is valid',
         async (scenario: AccountConfirmationStandard) => {
           const one = scenario.account_Confirmation
             .invite_1 as Account_Confirmation
@@ -67,20 +67,6 @@ describe('account_confirmation service', () => {
       )
 
       scenario(
-        'returns false when the code is 10 minutes or older',
-        async (scenario: AccountConfirmationStandard) => {
-          const conf = scenario.account_Confirmation
-            .signup_2 as Account_Confirmation
-          const code = conf.code
-          const email = conf.email
-
-          const res = await confirmSignup({ code, email })
-
-          expect(res).toBeFalsy()
-        }
-      )
-
-      scenario(
         'returns false when "organizationId" is defined',
         async (scenario: AccountConfirmationStandard) => {
           const conf = scenario.account_Confirmation
@@ -95,7 +81,7 @@ describe('account_confirmation service', () => {
       )
 
       scenario(
-        'returns the result when the code is validated in time',
+        'returns true when the code is valid',
         async (scenario: AccountConfirmationStandard) => {
           const one = scenario.account_Confirmation
             .signup_1 as Account_Confirmation
