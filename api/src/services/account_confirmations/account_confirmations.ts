@@ -85,6 +85,11 @@ export const confirmInvitation = async ({
 
   if (res.organizationId === null) return false
 
+  const id = res.id
+  await db.account_Confirmation.delete({
+    where: { id },
+  })
+
   return true
 }
 
@@ -113,6 +118,16 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
   if (res === null) return false
 
   if (res.organizationId !== null) return false
+
+  await db.account.update({
+    data: { verified: true },
+    where: { email },
+  })
+
+  const id = res.id
+  await db.account_Confirmation.delete({
+    where: { id },
+  })
 
   return true
 }
