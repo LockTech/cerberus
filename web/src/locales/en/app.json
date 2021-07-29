@@ -64,6 +64,26 @@
     }
   },
   "Signup": {
+    "Confirmation": {
+      "Page": {
+        "Helmet": {
+          "title": "Sign Up Confirmation • Cerberus"
+        },
+        "title": "Signup Confirmation",
+        "emailNotFound": "Your email address could not be determined.",
+        "emailNotFoundSteps": "You can find a link to this page in the confirmation email sent to the address you provided during signup.",
+        "codeEmail": "We've sent a confirmation code to {{ email }}.",
+        "codeUse": "Copy and paste it below to finish creating your account.",
+        "form": {
+          "code": {
+            "label": "Confirmation Code",
+            "placeholder": "Code",
+            "required": "A confirmation code is required to confirm your account."
+          },
+          "submit": "Confirm"
+        }
+      }
+    },
     "Page": {
       "Errors": {
         "email-required": "An email address is required to signup.",
@@ -79,7 +99,7 @@
         "title": "Sign Up • Cerberus"
       },
       "title": "Sign Up",
-      "subtitle": "Enter your some of your personal information to begin creating your account and organization.",
+      "subtitle": "Enter some of your personal information below to begin creating your account and organization.",
       "form": {
         "firstName": {
           "label": "First Name",
