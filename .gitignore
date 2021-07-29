@@ -15,7 +15,5 @@ coverage/*
 
 config/*
 
-api/emails
-
 #Temp
 docker-benchmark-*
