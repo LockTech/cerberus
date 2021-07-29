@@ -7,7 +7,8 @@ const host = process.env.SMTP_HOST
 const port = parseInt(process.env.SMTP_PORT)
 const user = process.env.SMTP_USER || ''
 const pass = process.env.SMTP_PASS || ''
-const debug = process.env.SMTP_DEBUG === 'true' ? true : false
+const debug = process.env.SMTP_DEBUG.toUpperCase() === 'TRUE' ? true : false
+const logging = process.env.SMTP_LOGGING.toUpperCase() === 'TRUE' ? true : false
 
 const options: Options = {
   host,
@@ -16,8 +17,9 @@ const options: Options = {
     user,
     pass,
   },
+  // https://github.com/pinojs/pino/blob/b5785d56a2e4ff67b3ad6948d99c01542f47d8fa/package.json#L71
   /// @ts-expect-error Pino uses bunyan under the hood.
-  logger,
+  logger: logging ? logger : null,
   debug,
 }
 
