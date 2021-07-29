@@ -58,10 +58,10 @@
 
 .sidebar nav button.active {
   /* Background */
-  @apply bg-gray-100 bg-opacity-50;
+  @apply bg-gray-100;
   @apply dark:bg-gray-700;
   /* Text */
   @apply font-semibold;
-  @apply text-primary-600;
-  @apply dark:text-primary-300;
+  @apply text-gray-900;
+  @apply dark:text-gray-50;
 }
