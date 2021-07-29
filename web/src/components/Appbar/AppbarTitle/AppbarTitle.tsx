@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
-import { AppbarTitleAtom } from 'src/atoms/AppbarTitleAtom'
+
+import { AppbarTitleAtom } from 'src/atoms/AppbarTitle'
 
 interface AppbarTitleProps {
   children: string

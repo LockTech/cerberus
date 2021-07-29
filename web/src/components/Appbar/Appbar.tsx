@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useRecoilValue } from 'recoil'
 import { UserCircleIcon } from '@heroicons/react/solid'
 
-import { AppbarTitleAtom } from 'src/atoms/AppbarTitleAtom'
+import { AppbarTitleAtom } from 'src/atoms/AppbarTitle'
 
 import './Appbar.css'
 
@@ -13,7 +13,7 @@ const Appbar = () => {
 
   return (
     <div className="appbar">
-      {title !== '' && <h2>{title}</h2>}
+      {title !== '' && typeof title === 'string' && <h2>{title}</h2>}
       <div className="actions">
         {/* <button>
           <abbr title={t('Appbar.actions.manual')}>
@@ -24,12 +24,11 @@ const Appbar = () => {
           </abbr>
         </button> */}
         <button>
-          <abbr title={t('Appbar.actions.userProfile')}>
-            <UserCircleIcon
-              aria-label={t('Appbar.actions.userProfile')}
-              className="icon"
-            />
-          </abbr>
+          {}
+          <UserCircleIcon
+            aria-label={t('Appbar.actions.userProfile')}
+            className="icon"
+          />
         </button>
       </div>
     </div>

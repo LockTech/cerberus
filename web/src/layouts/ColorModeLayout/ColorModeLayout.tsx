@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 
-import { ColorModeAtom } from 'src/atoms/ColorModeAtom'
+import { ColorModeAtom } from 'src/atoms/ColorMode'
 
 type ColorModeLayoutProps = {
   children: React.ReactNode
