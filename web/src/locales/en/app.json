@@ -81,7 +81,10 @@
             "required": "A confirmation code is required to confirm your account."
           },
           "submit": "Confirm"
-        }
+        },
+        "loading": "Confirming your account.",
+        "success": "Your account has been confirmed. Please login to continue.",
+        "failure": "Your account could not be confirmed."
       }
     },
     "Page": {

@@ -1,7 +1,20 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useMutation } from '@apollo/client'
 import { Form, Label, FieldError, Submit, TextField } from '@redwoodjs/forms'
 import { Helmet } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+import { navigate, routes } from '@redwoodjs/router'
+
+const MUTATION = gql`
+  mutation SignupConfirmationMutation($code: String!, $email: String!) {
+    confirmed: confirmSignup(code: $code, email: $email)
+  }
+`
+
+interface SignupConfirmationMutationResult {
+  confirmed: boolean
+}
 
 interface SignupConfirmationFormData {
   code: string
@@ -19,7 +32,43 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
     codeRef.current && codeRef.current.focus()
   }, [])
 
-  const onSubmit = useCallback((data: SignupConfirmationFormData) => {}, [])
+  // ==
+
+  const onCompleted = useCallback(
+    (data: SignupConfirmationMutationResult) => {
+      toast.dismiss()
+
+      if (data.confirmed) {
+        toast.success(t('Signup.Confirmation.Page.success'))
+        navigate(routes.login())
+      } else {
+        toast.error(t('Signup.Confirmation.Page.failure'))
+      }
+    },
+    [t]
+  )
+  const onError = useCallback((error: Error) => {
+    toast.dismiss()
+    toast.error(error.message)
+  }, [])
+
+  const [mutate, { loading }] = useMutation(MUTATION, {
+    onCompleted,
+    onError,
+  })
+
+  const onSubmit = useCallback(
+    (data: SignupConfirmationFormData) => {
+      if (loading) return
+
+      toast.loading(t('Signup.Confirmation.Page.loading'))
+
+      const code = data.code
+
+      mutate({ variables: { code, email } })
+    },
+    [email, loading, mutate, t]
+  )
 
   return (
     <>
@@ -83,7 +132,7 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
                 <FieldError className="input-error-message" name="code" />
               </div>
               {/* Submit */}
-              <Submit className="block button-primary-fill">
+              <Submit className="block button-primary-fill" disabled={loading}>
                 {t('Signup.Confirmation.Page.form.submit')}
               </Submit>
             </Form>
