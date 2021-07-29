@@ -103,6 +103,14 @@ Please read through it and the remainder of this `README` before submitting cont
 
 ---
 
+## Preface
+
+[Cerberus' wiki](https://github.com/LockTech/cerberus/wiki) contains information detailing the platform and how it operates and can be used.
+
+This `README` was created prior to any work being done on the platform, and serves as its executive summary. Eventually, the wiki linked above will fully replace it.
+
+That said, please take this document as the intended state of Cerberus, where as the wiki is an update-to-date documentation of its current state.
+
 ## Glossary
 
 While most of the terminology used by Cerberus is obvious, common ideas have been explicity defined here to standardize the language used by and when describing the platform.
