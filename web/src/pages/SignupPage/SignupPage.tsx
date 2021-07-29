@@ -35,7 +35,7 @@ const SignupPage = () => {
   const firstNameRef = useRef<HTMLInputElement>()
   useEffect(() => {
     firstNameRef.current.focus()
-  }, [firstNameRef])
+  }, [])
 
   const onSubmit = useCallback(
     async (data: SignupFormData) => {
@@ -52,6 +52,9 @@ const SignupPage = () => {
         toast.error(t(`Signup.Page.Errors.${error.message}`))
       } else {
         toast.success(t('Signup.Page.success'))
+
+        const email = data.username
+        navigate(routes.signupConfirmation({ email }))
       }
     },
     [signUp, t]
@@ -67,7 +70,7 @@ const SignupPage = () => {
           <h1 className="title">{t('Signup.Page.title')}</h1>
           <p className="hint">{t('Signup.Page.subtitle')}</p>
         </header>
-        <Form onSubmit={onSubmit} className="form">
+        <Form className="form" onSubmit={onSubmit}>
           {/* firstName */}
           <div className="input-group">
             <Label
