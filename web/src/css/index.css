@@ -181,10 +181,13 @@ body.dark { @apply bg-gray-800; }
   .button-primary-fill {
     /* Background */
     @apply bg-primary-400 hover:bg-primary-500 active:bg-primary-600;
+    @apply disabled:bg-gray-300 dark:disabled:bg-gray-600;
     /* Border */
     /* Text */
     @apply text-black hover:text-white active:text-white;
+    @apply disabled:text-gray-400;
     /* Misc */
+    @apply disabled:cursor-not-allowed;
     @apply focus-primary;
     @apply button;
   }
