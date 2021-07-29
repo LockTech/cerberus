@@ -21,7 +21,7 @@ model Account {
   salt                          String
   //
   createdAt                     DateTime                          @default(now())
-  updatedAt                     DateTime                          @default(now())
+  updatedAt                     DateTime                          @updatedAt
   //
   organizationId                String?
   organization                  Organization?                     @relation(fields: [organizationId], references: [id])
@@ -42,7 +42,7 @@ model Organization {
   name                          String
   //
   createdAt                     DateTime                          @default(now())
-  updatedAt                     DateTime                          @default(now())
+  updatedAt                     DateTime                          @updatedAt
   //
   accounts                      Account[]
 }
