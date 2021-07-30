@@ -28,7 +28,7 @@ export const useCurrentAccount = () => {
   const onCompleted = useCallback(
     (data: CurrentAccountQueryData) => {
       toast.dismiss()
-      toast.success(t('CurrentUser.success'))
+      toast.success(t('CurrentAccount.hook.success'))
       setCurrentAccount(data.currentAccount)
     },
     [setCurrentAccount, t]
@@ -46,7 +46,7 @@ export const useCurrentAccount = () => {
   useEffect(() => {
     if (!called) {
       get()
-      toast.loading(t('CurrentUser.loading'))
+      toast.loading(t('CurrentAccount.hook.loading'))
     }
   }, [called, get, t])
 }
