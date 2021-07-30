@@ -166,8 +166,16 @@ body.dark { @apply bg-gray-800; }
 }
 
 @layer components {
+  /* AccountMenu */
+  .account-menu .menu-items {
+    @apply card;
+  }
+  .account-menu .menu-item {
+    @apply focus-primary;
+  }
+
   /* Appbar */
-  .appbar .actions button {
+  .appbar .menu-button {
     @apply focus-primary;
   }
 
