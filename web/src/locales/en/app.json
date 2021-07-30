@@ -10,6 +10,10 @@
       "privacy": "Our Privacy Policy"
     }
   },
+  "CurrentUser": {
+    "loading": "Fetching your account.",
+    "success": "Successfully fetched your account."
+  },
   "Home": {
     "Page": {
       "Helmet": {

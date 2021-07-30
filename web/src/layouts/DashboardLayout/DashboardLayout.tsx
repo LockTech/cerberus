@@ -1,6 +1,8 @@
 import Appbar from 'src/components/Appbar'
 import Sidebar from 'src/components/Sidebar'
 
+import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
+
 import './DashboardLayout.css'
 
 type DashboardLayoutProps = {
@@ -8,6 +10,8 @@ type DashboardLayoutProps = {
 }
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  useCurrentAccount()
+
   return (
     <>
       <div className="layout">
