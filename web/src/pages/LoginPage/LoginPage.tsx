@@ -122,7 +122,7 @@ const LoginPage = () => {
             <FieldError name="password" className="input-error-message" />
           </div>
           {/* submit */}
-          <Submit className="block button-primary-fill">
+          <Submit className="button-primary-fill w-full">
             {t('Login.Page.form.submit')}
           </Submit>
         </Form>

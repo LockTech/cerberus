@@ -133,7 +133,7 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
                 <FieldError className="input-error-message" name="code" />
               </div>
               {/* Submit */}
-              <Submit className="block button-primary-fill" disabled={loading}>
+              <Submit className="button-primary-fill w-full" disabled={loading}>
                 {t('Signup.Confirmation.Page.form.submit')}
               </Submit>
             </Form>

@@ -171,7 +171,7 @@ const SignupPage = () => {
             <FieldError className="input-error-message" name="password" />
           </div>
           {/* submit */}
-          <Submit className="block button-primary-fill">
+          <Submit className="button-primary-fill w-full">
             {t('Signup.Page.form.submit')}
           </Submit>
         </Form>
