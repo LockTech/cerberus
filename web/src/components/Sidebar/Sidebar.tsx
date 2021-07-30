@@ -51,7 +51,7 @@ const Sidebar = () => {
       >
         <div className="title">
           <h1>{t('Sidebar.title')}</h1>
-          <p className="hint">{t('Sidebar.subtitle')}</p>
+          <p>{t('Sidebar.subtitle')}</p>
         </div>
         <SidebarNav />
       </Transition>

@@ -24,3 +24,7 @@
   @apply text-primary-200;
   @apply font-semibold text-2xl;
 }
+.sidebar .title p {
+  @apply text-sm;
+  @apply text-gray-200;
+}
