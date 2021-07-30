@@ -21,7 +21,10 @@ const AccountMenu = () => {
         {currentAccount && (
           <span className="title">{`${currentAccount.firstName} ${currentAccount.lastName}`}</span>
         )}
-        <UserCircleIcon className="icon" />
+        <UserCircleIcon
+          aria-label={t('AccountMenu.accountProfile')}
+          className="icon"
+        />
       </Menu.Button>
       <Transition
         as={React.Fragment}

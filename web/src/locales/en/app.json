@@ -9,9 +9,11 @@
     }
   },
   "AccountMenu": {
+    "accountProfile": "Account Profile",
     "logout": "Logout"
   },
   "Appbar": {
+    "sidebarToggle": "Toggle Sidebar",
     "actions": {
       "manual": "User Manual",
       "userProfile": "User Profile"
