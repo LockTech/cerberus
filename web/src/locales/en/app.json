@@ -1,4 +1,21 @@
 {
+  "Account": {
+    "SettingsModal": {
+      "title": "Cerberus Settings",
+      "form": {
+        "theme": {
+          "label": "Theme",
+          "options": {
+            "browser": "Detect",
+            "light": "Day",
+            "night": "Night"
+          }
+        },
+        "submit": "Save"
+      },
+      "saved": "Settings updated."
+    }
+  },
   "Accounts": {
     "List": {
       "Page": {
@@ -31,20 +48,6 @@
     "hook": {
       "loading": "Fetching your account.",
       "success": "Successfully fetched your account."
-    },
-    "SettingsModal": {
-      "title": "Cerberus Settings",
-      "form": {
-        "theme": {
-          "label": "Theme",
-          "options": {
-            "browser": "Use your computer's",
-            "light": "Day",
-            "night": "Night"
-          }
-        },
-        "submit": "Save"
-      }
     }
   },
   "Home": {

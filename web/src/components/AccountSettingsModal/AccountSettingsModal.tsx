@@ -3,40 +3,40 @@ import { useTranslation } from 'react-i18next'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'
 import { Form, Label, Submit } from '@redwoodjs/forms'
+import { toast } from '@redwoodjs/web/toast'
 
 import { ColorModeAtom } from 'src/atoms/ColorMode'
 import type { ColorMode } from 'src/atoms/ColorMode'
-import { CurrentAccountSettingsModalAtom } from 'src/atoms/CurrentAccountSettingsModal'
+import { AccountSettingsModalAtom } from 'src/atoms/AccountSettingsModal'
 
 import Select from 'src/components/Select'
 
-import './CurrentAccountSettingsModal.css'
+import './AccountSettingsModal.css'
 
-const ThemeKey = 'CurrentAccount.SettingsModal.form.theme.options'
+const ThemeKey = 'Account.SettingsModal.form.theme.options'
 const ThemeValues = [
   { name: `${ThemeKey}.browser`, value: 'browser' },
   { name: `${ThemeKey}.light`, value: 'light' },
   { name: `${ThemeKey}.night`, value: 'night' },
 ]
 
-interface CurrentAccountSettingsFormData {
+interface AccountSettingsFormData {
   theme: { name: string; value: ColorMode }
 }
 
-const CurrentAccountSettingsModal = () => {
+const AccountSettingsModal = () => {
   const { t } = useTranslation()
 
-  const [modalOpen, setModalOpen] = useRecoilState(
-    CurrentAccountSettingsModalAtom
-  )
+  const [modalOpen, setModalOpen] = useRecoilState(AccountSettingsModalAtom)
   const [colorMode, setColorMode] = useRecoilState(ColorModeAtom)
 
   const onSubmit = useCallback(
-    (data: CurrentAccountSettingsFormData) => {
+    (data: AccountSettingsFormData) => {
       setColorMode(data.theme.value)
       setModalOpen(false)
+      toast.success(t('Account.SettingsModal.saved'))
     },
-    [setColorMode, setModalOpen]
+    [setColorMode, setModalOpen, t]
   )
 
   return (
@@ -65,13 +65,13 @@ const CurrentAccountSettingsModal = () => {
           <div className="card card-body modal-body">
             <div className="title-group">
               <h2 className="modal-title">
-                {t('CurrentAccount.SettingsModal.title')}
+                {t('Account.SettingsModal.title')}
               </h2>
             </div>
             <Form className="form" onSubmit={onSubmit}>
               <div className="input-group">
                 <Label name="theme" className="input-label">
-                  {t('CurrentAccount.SettingsModal.form.theme.label')}
+                  {t('Account.SettingsModal.form.theme.label')}
                 </Label>
                 <Select
                   defaultValue={{
@@ -83,7 +83,7 @@ const CurrentAccountSettingsModal = () => {
                 />
               </div>
               <Submit className="button-primary-fill w-full">
-                {t('CurrentAccount.SettingsModal.form.submit')}
+                {t('Account.SettingsModal.form.submit')}
               </Submit>
             </Form>
           </div>
@@ -93,4 +93,4 @@ const CurrentAccountSettingsModal = () => {
   )
 }
 
-export default CurrentAccountSettingsModal
+export default AccountSettingsModal
