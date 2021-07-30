@@ -11,7 +11,11 @@ export const ColorModeAtom = selector({
   key: 'ColorMode',
   get: ({ get }) => {
     const colorMode = get(_ColorModeAtom)
-    const localMode = window.localStorage.getItem('theme') as ColorMode | null
+
+    const localMode = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('theme='))
+      .split('=')[1] as ColorMode
 
     if (localMode !== null && colorMode !== localMode) {
       return localMode
@@ -25,7 +29,7 @@ export const ColorModeAtom = selector({
     return colorMode
   },
   set: ({ set }, val: string) => {
-    window.localStorage.setItem('theme', val)
+    document.cookie = `theme=${val};max-age=63072000`
     set(_ColorModeAtom, val)
   },
 })
