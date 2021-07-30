@@ -72,6 +72,9 @@ export const account = async ({ id }: { id: string }) => {
     },
   })
 
+  delete res.hashedPassword
+  delete res.salt
+
   return res
 }
 
@@ -80,6 +83,11 @@ export const accounts = async () => {
 
   const res = await db.account.findMany({
     where: { organizationId },
+  })
+
+  res.forEach((_acc, index) => {
+    delete res[index].hashedPassword
+    delete res[index].salt
   })
 
   return res
@@ -98,6 +106,9 @@ export const currentAccount = async () => {
   const id = getContextUser().id
 
   const res = await db.account.findUnique({ where: { id } })
+
+  delete res.hashedPassword
+  delete res.salt
 
   return res
 }
