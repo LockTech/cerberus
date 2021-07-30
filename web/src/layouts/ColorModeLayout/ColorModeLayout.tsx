@@ -7,30 +7,48 @@ type ColorModeLayoutProps = {
   children: React.ReactNode
 }
 
-// FIXME: remove 'm' keybind below
-
 const ColorModeLayout = ({ children }: ColorModeLayoutProps) => {
   const [colorMode, setColorMode] = useRecoilState(ColorModeAtom)
 
-  const onKeybind = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === 'm') {
-        setColorMode(colorMode === 'light' ? 'night' : 'light')
+  const onChangePreference = useCallback((e) => {
+    e.matches
+      ? document.body.classList.add('dark')
+      : document.body.classList.remove('dark')
+  }, [])
+
+  useEffect(() => {
+    switch (colorMode) {
+      case 'browser': {
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? document.body.classList.add('dark')
+          : document.body.classList.remove('dark')
+
+        window
+          .matchMedia('(prefers-color-scheme: dark)')
+          .addEventListener('change', onChangePreference)
+        break
       }
-    },
-    [colorMode, setColorMode]
-  )
+      case 'light': {
+        document.body.classList.remove('dark')
+        window
+          .matchMedia('(prefers-color-scheme: dark)')
+          .removeEventListener('change', onChangePreference)
+        break
+      }
+      case 'night': {
+        document.body.classList.add('dark')
+        window
+          .matchMedia('(prefers-color-scheme: dark)')
+          .removeEventListener('change', onChangePreference)
+        break
+      }
+    }
 
-  useEffect(() => {
-    colorMode === 'night'
-      ? window.document.body.classList.add('dark')
-      : window.document.body.classList.remove('dark')
-  }, [colorMode])
-
-  useEffect(() => {
-    document.addEventListener('keydown', onKeybind)
-    return () => document.removeEventListener('keydown', onKeybind)
-  }, [onKeybind])
+    return () =>
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .removeEventListener('change', onChangePreference)
+  }, [colorMode, onChangePreference, setColorMode])
 
   return <>{children}</>
 }
