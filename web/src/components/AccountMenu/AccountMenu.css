@@ -8,7 +8,7 @@
   /* Misc */
   @apply outline-none;
   @apply absolute origin-top-right right-0;
-  @apply mr-2 mt-2 py-1;
+  @apply mr-2 mt-1 py-1;
   @apply w-[15rem];
   @apply shadow-xl;
 }
@@ -19,6 +19,7 @@
   /* Border */
   @apply border border-transparent;
   /* Text */
+  @apply font-medium;
   @apply text-gray-900;
   @apply dark:text-gray-50;
   /* Misc */
