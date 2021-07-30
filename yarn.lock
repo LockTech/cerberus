@@ -2010,6 +2010,11 @@
   resolved "https://registry.yarnpkg.com/@hapi/bourne/-/bourne-2.0.0.tgz#5bb2193eb685c0007540ca61d166d4e1edaf918d"
   integrity sha512-WEezM1FWztfbzqIUbsDzFRVMxSoLy3HugVcux6KDDtTqzPsLE8NDRHfXvev66aH1i2oOKKar3/XDjbvh/OUBdg==
 
+"@headlessui/react@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.4.0.tgz#c6d424d8ab10ac925e4423d7f3cbab02c30d736a"
+  integrity sha512-C+FmBVF6YGvqcEI5fa2dfVbEaXr2RGR6Kw1E5HXIISIZEfsrH/yuCgsjWw5nlRF9vbCxmQ/EKs64GAdKeb8gCw==
+
 "@heroicons/react@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-1.0.2.tgz#e44a25d139e6fc8f94f4b146aeebad8f9af3d7dc"
