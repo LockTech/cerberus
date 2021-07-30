@@ -1,4 +1,16 @@
 {
+  "Accounts": {
+    "List": {
+      "Page": {
+        "Appbar": {
+          "title": "Accounts"
+        }
+      }
+    }
+  },
+  "AccountMenu": {
+    "logout": "Logout"
+  },
   "Appbar": {
     "actions": {
       "manual": "User Manual",

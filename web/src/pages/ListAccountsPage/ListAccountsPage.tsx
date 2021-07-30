@@ -1,17 +1,13 @@
-import { Link, routes } from '@redwoodjs/router'
+import { useTranslation } from 'react-i18next'
+
+import AppbarTitle from 'src/components/Appbar/AppbarTitle'
 
 const ListAccountsPage = () => {
+  const { t } = useTranslation()
+
   return (
     <>
-      <h1>ListAccountsPage</h1>
-      <p>
-        Find me in{' '}
-        <code>./web/src/pages/ListAccountsPage/ListAccountsPage.tsx</code>
-      </p>
-      <p>
-        My default route is named <code>listAccounts</code>, link to me with `
-        <Link to={routes.listAccounts()}>ListAccounts</Link>`
-      </p>
+      <AppbarTitle>{t('Accounts.List.Page.Appbar.title')}</AppbarTitle>
     </>
   )
 }
