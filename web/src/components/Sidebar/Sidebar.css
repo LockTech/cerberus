@@ -3,8 +3,16 @@
   @apply bg-white;
   @apply dark:bg-gray-900;
   /* Misc */
-  @apply max-w-xs min-w-[16rem] w-[18%];
-  @apply hidden lg:block;
+  @apply max-w-[80%] min-w-[17rem] w-[18%];
+  @apply pb-6;
+  @apply absolute inset-0 z-30;
+  @apply lg:relative;
+  @apply overflow-y-scroll lg:overflow-y-auto;
+}
+
+.sidebar-overlay {
+  @apply bg-gray-900 bg-opacity-50;
+  @apply absolute inset-0 z-20;
 }
 
 .sidebar .title {
