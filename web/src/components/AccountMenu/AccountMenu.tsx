@@ -5,9 +5,9 @@ import { CogIcon, LogoutIcon, UserCircleIcon } from '@heroicons/react/solid'
 import { useAuth } from '@redwoodjs/auth'
 
 import { CurrentAccountAtom } from 'src/atoms/CurrentAccount'
-import { AccountSettingsModalAtom } from 'src/atoms/AccountSettingsModal'
+import { AppSettingsModalAtom } from 'src/atoms/AppSettingsModal'
 
-import AccountSettingsModal from 'src/components/AccountSettingsModal'
+import AppSettingsModal from 'src/components/AppSettingsModal'
 
 import './AccountMenu.css'
 
@@ -15,13 +15,13 @@ const AccountMenu = () => {
   const { t } = useTranslation()
 
   const currentAccount = useRecoilValue(CurrentAccountAtom)
-  const setSettingsModalOpen = useSetRecoilState(AccountSettingsModalAtom)
+  const setSettingsModalOpen = useSetRecoilState(AppSettingsModalAtom)
 
   const { logOut } = useAuth()
 
   return (
     <>
-      <AccountSettingsModal />
+      <AppSettingsModal />
       <Menu as="div" className="account-menu">
         <Menu.Button as="button" className="menu-button">
           {currentAccount && (

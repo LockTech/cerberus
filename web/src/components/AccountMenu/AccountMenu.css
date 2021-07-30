@@ -8,7 +8,7 @@
   /* Misc */
   @apply outline-none;
   @apply absolute origin-top-right right-0;
-  @apply mr-2 mt-2 p-1 space-y-1;
+  @apply mr-2 mt-2 py-1;
   @apply w-[15rem];
   @apply shadow-xl;
 }
@@ -17,7 +17,7 @@
   @apply bg-white hover:bg-gray-50 active:bg-gray-100;
   @apply dark:bg-gray-900 dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:bg-opacity-25;
   /* Border */
-  @apply border border-transparent rounded-md;
+  @apply border border-transparent;
   /* Text */
   @apply text-gray-900;
   @apply dark:text-gray-50;

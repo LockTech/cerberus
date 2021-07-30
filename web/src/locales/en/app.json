@@ -1,21 +1,4 @@
 {
-  "Account": {
-    "SettingsModal": {
-      "title": "Cerberus Settings",
-      "form": {
-        "theme": {
-          "label": "Theme",
-          "options": {
-            "browser": "Detect",
-            "light": "Day",
-            "night": "Night"
-          }
-        },
-        "submit": "Save"
-      },
-      "saved": "Settings updated."
-    }
-  },
   "Accounts": {
     "List": {
       "Page": {
@@ -28,8 +11,25 @@
   "AccountMenu": {
     "accountProfile": "Account Profile",
     "items": {
-      "settings": "Cerberus Settings",
+      "settings": "App Settings",
       "logout": "Logout"
+    }
+  },
+  "App": {
+    "SettingsModal": {
+      "title": "Application Settings",
+      "form": {
+        "theme": {
+          "label": "Theme",
+          "options": {
+            "browser": "Detect",
+            "light": "Day",
+            "night": "Night"
+          }
+        },
+        "submit": "Save"
+      },
+      "saved": "Settings updated."
     }
   },
   "Appbar": {
