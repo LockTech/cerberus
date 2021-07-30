@@ -1,7 +1,7 @@
 .sidebar {
   /* Background */
-  @apply bg-white;
-  @apply dark:bg-gray-900;
+  /* @apply bg-white; */
+  @apply bg-gray-900;
   /* Misc */
   @apply max-w-[80%] min-w-[17rem] w-[18%];
   @apply pb-6;
@@ -20,7 +20,7 @@
   @apply p-6 space-y-1.5;
 }
 .sidebar .title h1 {
-  @apply text-primary-600;
-  @apply dark:text-primary-200;
+  /* @apply text-primary-600; */
+  @apply text-primary-200;
   @apply font-semibold text-2xl;
 }
