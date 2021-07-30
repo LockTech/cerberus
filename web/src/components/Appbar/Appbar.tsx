@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil'
 import { UserCircleIcon } from '@heroicons/react/solid'
 
 import { AppbarTitleAtom } from 'src/atoms/AppbarTitle'
+import { CurrentAccountAtom } from 'src/atoms/CurrentAccount'
 
 import './Appbar.css'
 
@@ -10,6 +11,8 @@ const Appbar = () => {
   const { t } = useTranslation()
 
   const title = useRecoilValue(AppbarTitleAtom)
+
+  const currentAccount = useRecoilValue(CurrentAccountAtom)
 
   return (
     <div className="appbar">
@@ -23,12 +26,11 @@ const Appbar = () => {
             />
           </abbr>
         </button> */}
-        <button>
-          {}
-          <UserCircleIcon
-            aria-label={t('Appbar.actions.userProfile')}
-            className="icon"
-          />
+        <button aria-label={t('Appbar.actions.userProfile')}>
+          {currentAccount && (
+            <span className="title">{`${currentAccount.firstName} ${currentAccount.lastName}`}</span>
+          )}
+          <UserCircleIcon className="icon" />
         </button>
       </div>
     </div>
