@@ -1,0 +1,65 @@
+.account-menu {
+  @apply relative;
+}
+.account-menu .menu-button {
+  /* Background */
+  @apply bg-transparent;
+  @apply hover:bg-gray-200 active:bg-gray-400;
+  @apply dark:hover:bg-gray-600 dark:active:bg-gray-500;
+  /* Border */
+  @apply border border-transparent rounded-full;
+  @apply hover:border-gray-300;
+  @apply dark:hover:border-gray-500;
+  /* Text */
+  @apply text-gray-500 hover:text-gray-700 active:text-gray-900;
+  @apply dark:text-gray-400 dark:hover:text-gray-200 dark:active:text-gray-50;
+  /* Misc */
+  @apply flex flex-row items-center;
+  @apply duration-[200ms] ease-in-out transition-all;
+  @apply px-3 py-1.5 space-x-3;
+}
+.account-menu .menu-button .title {
+  /* Text */
+  @apply text-sm;
+}
+.account-menu .menu-button .icon {
+  /* Misc */
+  @apply h-6 w-6;
+}
+
+.account-menu .menu-items {
+  /* Background */
+  @apply card;
+  /* Border */
+  @apply rounded-md;
+  /* Misc */
+  @apply outline-none;
+  @apply absolute origin-top-right right-0;
+  @apply p-1 space-y-1;
+  @apply w-[17rem];
+  @apply shadow-lg;
+}
+.account-menu .menu-item {
+  /* Background */
+  @apply bg-white hover:bg-gray-50 active:bg-gray-100;
+  @apply dark:bg-gray-900 dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:bg-opacity-25;
+  /* Border */
+  @apply border border-transparent rounded-md;
+  /* Text */
+  @apply text-gray-900;
+  @apply dark:text-gray-50;
+  /* Misc */
+  @apply duration-200 ease-in-out transition-colors;
+  @apply flex flex-row items-center;
+  @apply px-3 py-2;
+  @apply w-full;
+}
+.account-menu .menu-item .icon {
+  @apply h-4 w-4;
+  @apply mr-4;
+}
+.account-menu .menu-item.logout {
+  /* Text */
+  @apply text-red-700;
+  @apply dark:text-red-300;
+}

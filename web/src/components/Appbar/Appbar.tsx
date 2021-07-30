@@ -1,18 +1,13 @@
-import { useTranslation } from 'react-i18next'
 import { useRecoilValue } from 'recoil'
-import { UserCircleIcon } from '@heroicons/react/solid'
 
 import { AppbarTitleAtom } from 'src/atoms/AppbarTitle'
-import { CurrentAccountAtom } from 'src/atoms/CurrentAccount'
+
+import AccountMenu from 'src/components/AccountMenu'
 
 import './Appbar.css'
 
 const Appbar = () => {
-  const { t } = useTranslation()
-
   const title = useRecoilValue(AppbarTitleAtom)
-
-  const currentAccount = useRecoilValue(CurrentAccountAtom)
 
   return (
     <div className="appbar">
@@ -26,12 +21,7 @@ const Appbar = () => {
             />
           </abbr>
         </button> */}
-        <button aria-label={t('Appbar.actions.userProfile')}>
-          {currentAccount && (
-            <span className="title">{`${currentAccount.firstName} ${currentAccount.lastName}`}</span>
-          )}
-          <UserCircleIcon className="icon" />
-        </button>
+        <AccountMenu />
       </div>
     </div>
   )
