@@ -1,8 +1,6 @@
-import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useRecoilState } from 'recoil'
 import { Transition } from '@headlessui/react'
-import { routes, navigate, useMatch } from '@redwoodjs/router'
 
 import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
 
@@ -10,6 +8,7 @@ import { useCloseSidebarOnNavigate } from 'src/hooks/useCloseSidebarOnNavigate'
 import { useScreenWidth } from 'src/hooks/useScreenWidth'
 
 import './Sidebar.css'
+import SidebarNav from './SidebarNav/SidebarNav'
 
 const Sidebar = () => {
   const { t } = useTranslation()
@@ -19,14 +18,6 @@ const Sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useRecoilState(SidebarOpenAtom)
 
   const width = useScreenWidth()
-
-  const home = useMatch(routes.home()).match
-  //
-  const accountActivity = false
-  const listAccounts = useMatch(routes.listAccounts()).match
-  const listRoles = false
-  //
-  const orgSettings = false
 
   const responsiveSidebarOpen = width >= 1024 ? true : sidebarOpen
 
@@ -62,40 +53,7 @@ const Sidebar = () => {
           <h1>{t('Sidebar.title')}</h1>
           <p className="hint">{t('Sidebar.subtitle')}</p>
         </div>
-        <nav>
-          <div className="nav-group">
-            <p className="nav-group-title">{t('Sidebar.nav.general.title')}</p>
-            <button
-              className={clsx(home && 'active')}
-              onClick={() => navigate(routes.home())}
-            >
-              {t('Sidebar.nav.general.dashboard')}
-            </button>
-          </div>
-          <div className="nav-group">
-            <p className="nav-group-title">{t('Sidebar.nav.accounts.title')}</p>
-            <button className={clsx(accountActivity && 'active')}>
-              {t('Sidebar.nav.accounts.activity')}
-            </button>
-            <button
-              className={clsx(listAccounts && 'active')}
-              onClick={() => navigate(routes.listAccounts())}
-            >
-              {t('Sidebar.nav.accounts.listAccounts')}
-            </button>
-            <button className={clsx(listRoles && 'active')}>
-              {t('Sidebar.nav.accounts.listRoles')}
-            </button>
-          </div>
-          <div className="nav-group">
-            <p className="nav-group-title">
-              {t('Sidebar.nav.organization.title')}
-            </p>
-            <button className={clsx(orgSettings && 'active')}>
-              {t('Sidebar.nav.organization.settings')}
-            </button>
-          </div>
-        </nav>
+        <SidebarNav />
       </Transition>
     </>
   )
