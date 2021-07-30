@@ -34,6 +34,14 @@ body.dark { @apply bg-gray-800; }
     @apply focus:border-primary-500 ring-primary-700;
     @apply dark:focus:border-primary-300 ring-primary-400;
   }
+  .focus-gray {
+    @apply duration-150 ease-in-out transition-all;
+    @apply outline-none;
+    @apply focus:border;
+    @apply focus:ring-2 active:focus:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
+    @apply focus:border-gray-500 ring-gray-700;
+    @apply dark:focus:border-gray-300 ring-gray-400;
+  }
 
   /* Typograph */
   .hint {
@@ -307,6 +315,9 @@ body.dark { @apply bg-gray-800; }
     @apply focus-primary link;
     @apply text-primary-600 hover:text-primary-700 active:text-primary-800;
     @apply dark:text-primary-200 dark:hover:text-primary-300 dark:active:text-primary-400;
+  }
+  .link-gray {
+    @apply focus-gray link;
   }
 
   /* Sidebar */
