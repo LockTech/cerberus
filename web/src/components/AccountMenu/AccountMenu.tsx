@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useRecoilValue } from 'recoil'
 import { Menu, Transition } from '@headlessui/react'
-import { LogoutIcon, UserCircleIcon } from '@heroicons/react/solid'
+import { CogIcon, LogoutIcon, UserCircleIcon } from '@heroicons/react/solid'
 import { useAuth } from '@redwoodjs/auth'
 
 import { CurrentAccountAtom } from 'src/atoms/CurrentAccount'
@@ -36,13 +36,17 @@ const AccountMenu = () => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="menu-items">
+          <Menu.Item as="button" className="menu-item">
+            <CogIcon aria-hidden="true" className="icon" />
+            {t('AccountMenu.items.settings')}
+          </Menu.Item>
           <Menu.Item
             as="button"
             className="menu-item logout"
             onClick={() => logOut()}
           >
             <LogoutIcon aria-hidden="true" className="icon" />
-            {t('AccountMenu.logout')}
+            {t('AccountMenu.items.logout')}
           </Menu.Item>
         </Menu.Items>
       </Transition>

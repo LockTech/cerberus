@@ -10,7 +10,10 @@
   },
   "AccountMenu": {
     "accountProfile": "Account Profile",
-    "logout": "Logout"
+    "items": {
+      "settings": "Cerberus Settings",
+      "logout": "Logout"
+    }
   },
   "Appbar": {
     "sidebarToggle": "Toggle Sidebar",
