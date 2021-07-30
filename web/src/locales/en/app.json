@@ -27,9 +27,25 @@
       "privacy": "Our Privacy Policy"
     }
   },
-  "CurrentUser": {
-    "loading": "Fetching your account.",
-    "success": "Successfully fetched your account."
+  "CurrentAccount": {
+    "hook": {
+      "loading": "Fetching your account.",
+      "success": "Successfully fetched your account."
+    },
+    "SettingsModal": {
+      "title": "Cerberus Settings",
+      "form": {
+        "theme": {
+          "label": "Theme",
+          "options": {
+            "browser": "Use your computer's",
+            "light": "Day",
+            "night": "Night"
+          }
+        },
+        "submit": "Save"
+      }
+    }
   },
   "Home": {
     "Page": {
