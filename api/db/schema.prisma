@@ -34,7 +34,7 @@ model Account_Confirmation {
   email                         String
   organizationId                String?
   //
-  createdAt                    DateTime                          @default(now())
+  createdAt                    DateTime                           @default(now())
 }
 
 model Organization {
