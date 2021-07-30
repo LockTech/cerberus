@@ -43,17 +43,22 @@ const handleInvitation = async ({
     throw new ValidationError('invite-invalid')
   }
 
-  await db.account.create({
-    data: {
-      email,
-      firstName,
-      hashedPassword,
-      lastName,
-      salt,
-      verified: true,
-      verifiedAt: new Date().toISOString(),
-    },
-  })
+  try {
+    await db.account.create({
+      data: {
+        email,
+        firstName,
+        hashedPassword,
+        lastName,
+        salt,
+        verified: true,
+        verifiedAt: new Date().toISOString(),
+      },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error creating invited account.')
+    throw new Error('create')
+  }
 
   return InviteRes
 }
@@ -80,11 +85,8 @@ const handleSignup = async ({
   try {
     await createSignupConfirm({ code, email })
   } catch (err) {
-    logger.error(
-      { err },
-      'An error occured trying to create a signup confirmation.'
-    )
-    throw new ValidationError('signup-confirmation-create')
+    logger.error({ err }, 'Error creating signup confirmation.')
+    throw new Error('confirm-create')
   }
 
   // email
@@ -95,11 +97,8 @@ const handleSignup = async ({
     }
     await sendSignupEmail({ data, email })
   } catch (err) {
-    logger.error(
-      { err },
-      'An error occured trying to send a signup confirmation email.'
-    )
-    throw new ValidationError('signup-confirmation-email')
+    logger.error({ err }, 'Error sending signup confirmation email.')
+    throw new Error('confirm-email')
   }
 
   try {
@@ -114,8 +113,8 @@ const handleSignup = async ({
       },
     })
   } catch (err) {
-    logger.error({ err }, 'An error occured trying to create an account.')
-    throw new ValidationError('signup-account-create')
+    logger.error({ err }, 'Prisma error creating signed up account.')
+    throw new ValidationError('create')
   }
 
   return SignupRes
@@ -138,7 +137,7 @@ export const signupHandler = async ({
 
   if (!isStr(firstName) || !isStr(lastName)) {
     logger.warn('Attempted signup without a first and last name.')
-    throw new ValidationError('signup-name-required')
+    throw new ValidationError('name-required')
   }
 
   // Invite
@@ -156,6 +155,6 @@ export const signupHandler = async ({
   // Error
   else {
     logger.warn('Recieved a non-string value for signup "code".')
-    throw new ValidationError('signup-invalid-code')
+    throw new ValidationError('invalid-code')
   }
 }

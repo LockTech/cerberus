@@ -152,14 +152,15 @@
     },
     "Page": {
       "Errors": {
+        "invalid-code": "A confirmation code is not required in this stage of signup.",
         "email-required": "An email address is required to signup.",
         "email-invalid": "An invalid email address was recieved.",
         "email-length": "Your email has exceeded the maximum allowed length.",
         "email-reserved": "Your email address contains an invalid character.",
         "name-required": "Your first and last name are required to signup.",
-        "signup-confirmation-error": "An error occured trying to setup confirmation for your account.",
-        "signup-confirmation-email": "An error occured trying to send your confirmation email.",
-        "signup-account-create": "An error occured trying to create your account."
+        "confirm-create": "An error occured trying to setup confirmation for your account.",
+        "confirm-email": "An error occured trying to send your confirmation email.",
+        "create": "An error occured trying to create your account."
       },
       "Helmet": {
         "title": "Sign Up • Cerberus"
