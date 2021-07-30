@@ -32,7 +32,7 @@
 
 .sidebar .copyright {
   @apply text-center;
-  @apply px-6;
+  @apply px-6 pt-12;
 }
 .sidebar .copyright a {
   @apply text-gray-400 hover:text-gray-300 active:text-gray-200 !important;
