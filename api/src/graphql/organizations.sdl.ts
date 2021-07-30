@@ -4,18 +4,14 @@ export const schema = gql`
     name: String!
     createdAt: DateTime!
     updatedAt: DateTime!
-    accounts: [Account]!
+    accounts: [Account!]
   }
 
   type Query {
-    organizations: [Organization!]!
+    organization: Organization
   }
 
-  input CreateOrganizationInput {
-    name: String!
-  }
-
-  input UpdateOrganizationInput {
-    name: String
+  type Mutation {
+    createOrganization(name: String!): Organization!
   }
 `
