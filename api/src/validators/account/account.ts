@@ -6,6 +6,9 @@ import { logger } from 'src/lib/logger'
 import { isStr } from 'src/util/asserters'
 
 /**
+ * Validate `context.currentUser` is not `null`; i.e. the user making the request
+ * has been previously authenticated.
+ *
  * @throws ValidationError('account-invalid')
  */
 export const validateCurrentUser = (name: string) => {
@@ -16,6 +19,8 @@ export const validateCurrentUser = (name: string) => {
 }
 
 /**
+ * Validate `context.currentUser` includes an `organizationId`.
+ *
  * @throws ValidationError('account-organizationId-invalid')
  */
 export const validateAccountOrganization = (name: string) => {
@@ -32,6 +37,8 @@ export const validateAccountOrganization = (name: string) => {
 }
 
 /**
+ * Validate that `context.currentUser` includes an `id`.
+ *
  * @throws ValidationError('account-id-invalid')
  */
 export const validateAccountId = (name: string) => {
@@ -46,6 +53,8 @@ export const validateAccountId = (name: string) => {
 }
 
 /**
+ * Validate that `context.currentUser` includes a `first` and `last` name.
+ *
  * @throws ValidationError('account-name-invalid')
  */
 export const validateAccountName = (name: string) => {

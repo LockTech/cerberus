@@ -1,9 +1,11 @@
+import type { Account } from '@prisma/client'
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
 import { sendInviteEmail } from 'src/helpers/email'
 
 import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
+import { logger } from 'src/lib/logger'
 
 import { createInviteConfirm } from 'src/services/account_confirmations'
 import { organization as getOrganization } from 'src/services/organizations'
@@ -48,14 +50,23 @@ export const inviteMember = async ({ email }) => {
   const name = `${currentUser.firstName} ${currentUser.lastName}`
   const code = randomStr(36)
 
-  await createInviteConfirm({ code, email, organizationId })
+  try {
+    await createInviteConfirm({ code, email, organizationId })
+  } catch (err) {
+    throw new Error('create-confirm')
+  }
 
   const data = {
     code,
     name,
     organizationName,
   }
-  await sendInviteEmail({ data, email })
+  try {
+    await sendInviteEmail({ data, email })
+  } catch (err) {
+    logger.error({ err }, 'Error sending invitation email.')
+    throw new Error('email-send')
+  }
 
   return true
 }
@@ -65,12 +76,19 @@ export const inviteMember = async ({ email }) => {
 export const account = async ({ id }: { id: string }) => {
   const organizationId = getContextUser().organizationId
 
-  const res = await db.account.findFirst({
-    where: {
-      id,
-      organizationId,
-    },
-  })
+  let res: Account
+
+  try {
+    res = await db.account.findFirst({
+      where: {
+        id,
+        organizationId,
+      },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error getting an account.')
+    throw new Error('get')
+  }
 
   delete res.hashedPassword
   delete res.salt
@@ -81,9 +99,16 @@ export const account = async ({ id }: { id: string }) => {
 export const accounts = async () => {
   const organizationId = getContextUser().organizationId
 
-  const res = await db.account.findMany({
-    where: { organizationId },
-  })
+  let res: Account[]
+
+  try {
+    res = await db.account.findMany({
+      where: { organizationId },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error getting accounts.')
+    throw new Error('get')
+  }
 
   res.forEach((_acc, index) => {
     delete res[index].hashedPassword
@@ -105,7 +130,14 @@ const checkEmailExist = async ({ email }: CheckEmailExistArgs) => {
 export const currentAccount = async () => {
   const id = getContextUser().id
 
-  const res = await db.account.findUnique({ where: { id } })
+  let res: Account
+
+  try {
+    res = await db.account.findUnique({ where: { id } })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error getting currentAccount.')
+    throw new Error('get')
+  }
 
   delete res.hashedPassword
   delete res.salt

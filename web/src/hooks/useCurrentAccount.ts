@@ -33,10 +33,13 @@ export const useCurrentAccount = () => {
     },
     [setCurrentAccount, t]
   )
-  const onError = useCallback((error: Error) => {
-    toast.dismiss()
-    toast.error(error.message)
-  }, [])
+  const onError = useCallback(
+    (error: Error) => {
+      toast.dismiss()
+      toast.error(t(`CurrentAccount.hook.error.${error.message}`))
+    },
+    [t]
+  )
 
   const [get, { called }] = useLazyQuery(QUERY, {
     onCompleted,

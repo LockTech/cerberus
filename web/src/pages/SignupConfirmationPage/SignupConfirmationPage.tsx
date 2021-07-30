@@ -48,10 +48,13 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
     },
     [t]
   )
-  const onError = useCallback((error: Error) => {
-    toast.dismiss()
-    toast.error(error.message)
-  }, [])
+  const onError = useCallback(
+    (error: Error) => {
+      toast.dismiss()
+      toast.error(t(`Signup.Confirmation.Page.Errors.${error.message}`))
+    },
+    [t]
+  )
 
   const [mutate, { loading }] = useMutation(MUTATION, {
     onCompleted,

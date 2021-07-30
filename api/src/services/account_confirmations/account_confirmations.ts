@@ -1,6 +1,8 @@
+import type { Account_Confirmation } from '@prisma/client'
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
+import { logger } from 'src/lib/logger'
 
 import { reject } from 'src/validators/rejector'
 
@@ -22,14 +24,19 @@ export const createInviteConfirm = async ({
   email,
   organizationId,
 }: CreateInviteConfirmArgs) => {
-  await db.account_Confirmation.create({
-    data: {
-      code,
-      email,
-      organizationId,
-      createdAt: new Date().toISOString(),
-    },
-  })
+  try {
+    await db.account_Confirmation.create({
+      data: {
+        code,
+        email,
+        organizationId,
+        createdAt: new Date().toISOString(),
+      },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error creating invitation confirmation.')
+    throw new Error('create')
+  }
 
   return true
 }
@@ -42,13 +49,18 @@ export const createSignupConfirm = async ({
   code,
   email,
 }: CreateSignupConfirmArgs) => {
-  await db.account_Confirmation.create({
-    data: {
-      code,
-      email,
-      createdAt: new Date().toISOString(),
-    },
-  })
+  try {
+    await db.account_Confirmation.create({
+      data: {
+        code,
+        email,
+        createdAt: new Date().toISOString(),
+      },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error creating signup confirmation.')
+    throw new Error('create')
+  }
 
   return true
 }
@@ -69,24 +81,36 @@ export const confirmInvitation = async ({
   code,
   email,
 }: ConfirmInvitationArgs) => {
-  const res = await db.account_Confirmation.findFirst({
-    orderBy: {
-      createdAt: 'desc',
-    },
-    where: {
-      code,
-      email,
-    },
-  })
+  let res: Account_Confirmation
+
+  try {
+    res = await db.account_Confirmation.findFirst({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      where: {
+        code,
+        email,
+      },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error getting invitation confirmation.')
+    throw new Error('get')
+  }
 
   if (res === null) return false
 
   if (res.organizationId === null) return false
 
   const id = res.id
-  await db.account_Confirmation.delete({
-    where: { id },
-  })
+  try {
+    await db.account_Confirmation.delete({
+      where: { id },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error deleting invitation confirmation.')
+    throw new Error('delete')
+  }
 
   return true
 }
@@ -96,29 +120,46 @@ export interface ConfirmSignupArgs {
   email: string
 }
 export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
-  const res = await db.account_Confirmation.findFirst({
-    orderBy: {
-      createdAt: 'desc',
-    },
-    where: {
-      code,
-      email,
-    },
-  })
+  let res: Account_Confirmation
+
+  try {
+    res = await db.account_Confirmation.findFirst({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      where: {
+        code,
+        email,
+      },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error getting signup confirmaton.')
+    throw new Error('get')
+  }
 
   if (res === null) return false
 
   if (res.organizationId !== null) return false
 
-  await db.account.update({
-    data: { verified: true, verifiedAt: new Date().toISOString() },
-    where: { email },
-  })
+  try {
+    await db.account.update({
+      data: { verified: true, verifiedAt: new Date().toISOString() },
+      where: { email },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error verifying account.')
+    throw new Error('verify')
+  }
 
   const id = res.id
-  await db.account_Confirmation.delete({
-    where: { id },
-  })
+  try {
+    await db.account_Confirmation.delete({
+      where: { id },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error deleting signup confirmation.')
+    throw new Error('delete')
+  }
 
   return true
 }

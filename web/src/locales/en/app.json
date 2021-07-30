@@ -48,7 +48,10 @@
   "CurrentAccount": {
     "hook": {
       "loading": "Fetching your account.",
-      "success": "Successfully fetched your account."
+      "success": "Successfully fetched your account.",
+      "error": {
+        "get": "Error fetching your account."
+      }
     }
   },
   "Home": {
@@ -139,7 +142,12 @@
         "loading": "Confirming your account.",
         "success": "Your account has been confirmed.",
         "login": "Please login to finish creating your organization.",
-        "failure": "Your account could not be confirmed."
+        "failure": "Your account could not be confirmed.",
+        "Errors": {
+          "get": "Error retrieving confirmation details.",
+          "verify": "Error verifying account after confirmation.",
+          "delete": "Error deleting confirmation details."
+        }
       }
     },
     "Page": {
