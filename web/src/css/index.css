@@ -19,16 +19,20 @@ body.dark { @apply bg-gray-800; }
 }
 
 @layer base {
-  .block {
-    @apply w-full;
-  }
-
   /* Focus */
   .focus {
     @apply duration-150 ease-in-out transition-all;
     @apply outline-none;
     @apply focus:border;
     @apply focus:ring-2 active:focus:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
+  }
+  .focus-primary {
+    @apply duration-150 ease-in-out transition-all;
+    @apply outline-none;
+    @apply focus:border;
+    @apply focus:ring-2 active:focus:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
+    @apply focus:border-primary-500 ring-primary-700;
+    @apply dark:focus:border-primary-300 ring-primary-400;
   }
 
   /* Typograph */
@@ -61,7 +65,7 @@ body.dark { @apply bg-gray-800; }
   .card {
     /* Background */
     @apply bg-white;
-    @apply dark:bg-gray-900 dark:bg-opacity-80;
+    @apply dark:bg-gray-900;
     /* Border */
     @apply border rounded-lg;
     @apply border-gray-100;
@@ -83,7 +87,7 @@ body.dark { @apply bg-gray-800; }
     /* Background */
     @apply bg-transparent;
     /* Border */
-    @apply border-transparent;
+    @apply border rounded-md;
     @apply border-gray-200 hover:border-gray-400;
     @apply dark:border-gray-700 dark:hover:border-gray-500;
     /* Text */
@@ -91,7 +95,6 @@ body.dark { @apply bg-gray-800; }
     @apply dark:placeholder-gray-400 dark:text-white;
     /* Misc */
     @apply focus;
-    @apply border rounded-md;
     @apply px-4 py-2.5;
   }
   .input-error {
@@ -133,6 +136,100 @@ body.dark { @apply bg-gray-800; }
     @apply px-1;
   }
 
+  /* Modal */
+  .modal {
+    @apply absolute inset-0;
+    @apply overflow-y-hidden;
+  }
+  .modal-overlay {
+    @apply bg-gray-900 bg-opacity-60;
+    @apply fixed inset-0 z-30;
+  }
+  .modal-layout {
+    @apply absolute inset-0 z-40;
+    @apply p-6 md:pt-12;
+    @apply pointer-events-auto sm:pointer-events-none;
+    @apply overflow-y-auto sm:overflow-y-hidden;
+  }
+  .modal-body {
+    @apply pointer-events-auto;
+    @apply w-full max-w-lg;
+    @apply mx-auto space-y-6;
+  }
+  .modal-title {
+    @apply text;
+    @apply font-semibold text-2xl;
+  }
+
+  /* Select */
+  .select {
+    @apply relative;
+  }
+  .select-button {
+    /* Border */
+    @apply border rounded-md;
+    @apply border-gray-200 hover:border-gray-400;
+    @apply dark:border-gray-700 dark:hover:border-gray-500;
+    /* Text */
+    @apply text-gray-900;
+    @apply dark:text-gray-50;
+    /* Misc */
+    @apply focus-primary;
+    @apply flex flex-row items-center justify-between;
+    @apply px-4 py-2.5;
+    @apply w-full;
+  }
+  .select-button .icon {
+    /* Text */
+    @apply text-gray-500;
+    @apply dark:text-gray-400;
+    /* Misc */
+    @apply duration-100 ease-in-out transform-gpu transition-transform;
+    @apply h-6 w-6;
+  }
+  .select-options {
+    /* Background */
+    @apply bg-gray-50;
+    @apply dark:bg-gray-800;
+    /* Border */
+    @apply border rounded-md;
+    @apply border-gray-200;
+    @apply dark:border-gray-500;
+    /* Misc */
+    @apply outline-none;
+    @apply absolute;
+    @apply mt-2 py-1 w-full;
+    @apply shadow-lg;
+  }
+  .select-option {
+    /* Background */
+    @apply bg-transparent;
+    /* Border */
+    @apply border border-transparent;
+    /* Text */
+    @apply text-gray-700;
+    @apply dark:text-gray-200;
+    /* Misc */
+    @apply focus-primary;
+    @apply duration-200 ease-in-out transition-colors;
+    @apply px-3 py-2;
+    @apply w-full;
+    @apply text-left;
+  }
+  .select-option.active {
+    /* Background */
+    @apply bg-gray-100;
+    @apply dark:bg-gray-700;
+  }
+  .select-option.selected {
+    /* Background */
+    @apply bg-gray-200 bg-opacity-50;
+    @apply dark:bg-gray-600 dark:bg-opacity-75;
+    /* Text */
+    @apply text-gray-900;
+    @apply dark:text-gray-50;
+  }
+
   /* Toast */
   .toast {
     /* Background */
@@ -153,15 +250,6 @@ body.dark { @apply bg-gray-800; }
 
   .title-group {
     @apply space-y-2;
-  }
-}
-
-/* Application styling */
-@layer base {
-  .focus-primary {
-    @apply focus;
-    @apply focus:border-primary-500 ring-primary-700;
-    @apply dark:focus:border-primary-300 ring-primary-400;
   }
 }
 
