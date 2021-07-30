@@ -175,6 +175,7 @@ body.dark { @apply bg-gray-800; }
   /* Select */
   .select {
     @apply relative;
+    @apply select-none;
   }
   .select-button {
     /* Border */
