@@ -146,6 +146,7 @@ body.dark { @apply bg-gray-800; }
     @apply text-black;
     @apply dark:text-white;
     /* Misc */
+    @apply origin-bottom-right;
     @apply px-4 space-x-4;
     @apply shadow;
   }
