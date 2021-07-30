@@ -209,7 +209,8 @@ body.dark { @apply bg-gray-800; }
     /* Misc */
     @apply outline-none;
     @apply absolute;
-    @apply mt-2 py-1 w-full;
+    @apply mt-2 py-2 space-y-1;
+    @apply w-full;
     @apply shadow-lg;
   }
   .select-option {
