@@ -42,6 +42,14 @@ body.dark { @apply bg-gray-800; }
     @apply focus:border-gray-500 ring-gray-700;
     @apply dark:focus:border-gray-300 ring-gray-400;
   }
+  .focus-red {
+    @apply duration-150 ease-in-out transition-all;
+    @apply outline-none;
+    @apply focus:border;
+    @apply focus:ring-2 active:focus:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
+    @apply focus:border-red-500 ring-red-700;
+    @apply dark:focus:border-red-300 ring-red-400;
+  }
 
   /* Typograph */
   .hint {
@@ -273,6 +281,9 @@ body.dark { @apply bg-gray-800; }
   }
   .account-menu .menu-item {
     @apply focus-primary;
+  }
+  .account-menu .menu-item.logout {
+    @apply focus-red;
   }
 
   /* Appbar */
