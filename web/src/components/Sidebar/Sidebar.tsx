@@ -42,18 +42,30 @@ const Sidebar = () => {
         appear
         className="sidebar"
         enter="duration-300 ease-in-out transition-transform transform-gpu"
-        enterFrom="-translate-x-64 opacity-0"
+        enterFrom="-translate-x-64 lg:translate-x-0 opacity-0"
         enterTo="translate-x-0 opacity-100"
         leave="duration-300 ease-in-out transition-transform transform-gpu"
         leaveFrom="translate-x-0 opacity-100"
         leaveTo="-translate-x-64 opacity-0"
         show={responsiveSidebarOpen}
       >
-        <div className="title">
-          <h1>{t('Sidebar.title')}</h1>
-          <p>{t('Sidebar.subtitle')}</p>
+        <div>
+          <div className="title">
+            <h1>{t('Sidebar.title')}</h1>
+            <p>{t('Sidebar.subtitle')}</p>
+          </div>
+          <SidebarNav />
         </div>
-        <SidebarNav />
+        <div className="copyright">
+          <a
+            className="link-gray"
+            href="https://locktech.software"
+            target="_blank"
+            rel="noreferrer"
+          >
+            © 2021 LockTech Software
+          </a>
+        </div>
       </Transition>
     </>
   )

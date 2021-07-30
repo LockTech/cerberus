@@ -8,6 +8,7 @@
   @apply absolute inset-0 z-30;
   @apply lg:relative;
   @apply overflow-y-scroll lg:overflow-y-auto;
+  @apply flex flex-col justify-between;
 }
 
 .sidebar-overlay {
@@ -27,4 +28,13 @@
 .sidebar .title p {
   @apply text-sm;
   @apply text-gray-200;
+}
+
+.sidebar .copyright {
+  @apply text-center;
+  @apply px-6;
+}
+.sidebar .copyright a {
+  @apply text-gray-400 hover:text-gray-300 active:text-gray-200 !important;
+  @apply text-sm;
 }
