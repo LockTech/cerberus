@@ -18,6 +18,7 @@
   "App": {
     "SettingsModal": {
       "title": "Application Settings",
+      "subtitle": "Generic settings which affect all LockTech applications.",
       "form": {
         "theme": {
           "label": "Theme",

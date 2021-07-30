@@ -160,6 +160,9 @@ body.dark { @apply bg-gray-800; }
     @apply text;
     @apply font-semibold text-2xl;
   }
+  .modal-subtitle {
+    @apply hint;
+  }
 
   /* Select */
   .select {

@@ -64,7 +64,12 @@ const AppSettingsModal = () => {
         >
           <div className="card card-body modal-body">
             <div className="title-group">
-              <h2 className="modal-title">{t('App.SettingsModal.title')}</h2>
+              <Dialog.Title className="modal-title">
+                {t('App.SettingsModal.title')}
+              </Dialog.Title>
+              <Dialog.Description className="modal-subtitle">
+                {t('App.SettingsModal.subtitle')}
+              </Dialog.Description>
             </div>
             <Form className="form" onSubmit={onSubmit}>
               <div className="input-group">
