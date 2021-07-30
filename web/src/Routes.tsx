@@ -14,10 +14,10 @@ const Routes = () => {
           <Route path="/accounts" page={ListAccountsPage} name="listAccounts" />
         </Private>
         <Set wrap={[AuthLayout]}>
-          <Route path="/login" page={LoginPage} name="login" />
-          <Route path="/signup" page={SignupPage} name="signup" />
-          <Route path="/signup/confirmation" page={SignupConfirmationPage} name="signupConfirmation" />
-          <Route path="/invite/confirmation" page={InviteConfirmationPage} name="inviteConfirmation" />
+          <Route name="login" path="/login" page={LoginPage} prerender />
+          <Route name="signup" path="/signup" page={SignupPage} prerender />
+          <Route name="signupConfirmation" path="/signup/confirmation" page={SignupConfirmationPage} prerender />
+          <Route name="inviteConfirmation" path="/invite/confirmation" page={InviteConfirmationPage} prerender />
         </Set>
       </Set>
     </Router>
