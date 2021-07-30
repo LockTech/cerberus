@@ -41,7 +41,7 @@ const CurrentAccountSettingsModal = () => {
 
   return (
     <Transition as={React.Fragment} show={modalOpen}>
-      <Dialog className="modal" onClose={() => null}>
+      <Dialog className="modal" onClose={() => setModalOpen(false)}>
         <Transition.Child
           as={Dialog.Overlay}
           className="modal-overlay"
