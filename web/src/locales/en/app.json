@@ -11,14 +11,14 @@
   "AccountMenu": {
     "accountProfile": "Account Profile",
     "items": {
-      "settings": "App Settings",
+      "settings": "Settings",
       "logout": "Logout"
     }
   },
   "App": {
     "SettingsModal": {
       "title": "Application Settings",
-      "subtitle": "Generic settings which affect all LockTech applications.",
+      "subtitle": "General settings which do not effect your organization or its members.",
       "form": {
         "theme": {
           "label": "Theme",
@@ -30,7 +30,7 @@
         },
         "submit": "Save"
       },
-      "saved": "Application settings updated."
+      "saved": "Settings updated."
     }
   },
   "Appbar": {
