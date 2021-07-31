@@ -152,6 +152,53 @@ body.dark { @apply bg-gray-800; }
     @apply px-1;
   }
 
+  /* Menu */
+  .menu {
+    @apply relative;
+  }
+
+  .menu .menu-items {
+    /* Background */
+    @apply card;
+    /* Border */
+    @apply rounded-md;
+    /* Misc */
+    @apply outline-none;
+    @apply absolute origin-top-right right-0;
+    @apply mr-2 mt-1 py-2 space-y-1;
+    @apply w-[15rem];
+    @apply shadow-xl;
+  }
+  .menu .menu-item {
+    /* Background */
+    @apply bg-white hover:bg-gray-50 active:bg-gray-100;
+    @apply dark:bg-gray-900 dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:bg-opacity-25;
+    /* Border */
+    @apply border border-transparent;
+    /* Text */
+    @apply font-medium;
+    @apply text-gray-900;
+    @apply dark:text-gray-50;
+    /* Misc */
+    @apply focus-primary;
+    @apply select-none;
+    @apply duration-200 ease-in-out transition-colors;
+    @apply flex flex-row items-center;
+    @apply px-3 py-2;
+    @apply w-full;
+  }
+  .menu .menu-item .icon {
+    @apply h-4 w-4;
+    @apply mr-4;
+  }
+  .menu .menu-item.logout {
+    /* Text */
+    @apply text-red-700;
+    @apply dark:text-red-300;
+    /* Misc */
+    @apply focus-red;
+  }
+
   /* Modal */
   .modal {
     @apply absolute inset-0;
@@ -275,17 +322,6 @@ body.dark { @apply bg-gray-800; }
 }
 
 @layer components {
-  /* AccountMenu */
-  .account-menu .menu-items {
-    @apply card;
-  }
-  .account-menu .menu-item {
-    @apply focus-primary;
-  }
-  .account-menu .menu-item.logout {
-    @apply focus-red;
-  }
-
   /* Appbar */
   .appbar .menu-button {
     @apply focus-primary;

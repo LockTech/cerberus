@@ -22,7 +22,7 @@ const AccountMenu = () => {
   return (
     <>
       <AppSettingsModal />
-      <Menu as="div" className="account-menu">
+      <Menu as="div" className="menu">
         <Menu.Button as="button" className="menu-button">
           {currentAccount && (
             <span className="title">{`${currentAccount.firstName} ${currentAccount.lastName}`}</span>
