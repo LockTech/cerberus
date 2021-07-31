@@ -2,13 +2,15 @@ import { Private, Router, Route, Set } from '@redwoodjs/router'
 
 import AuthLayout from 'src/layouts/AuthLayout'
 import ColorModeLayout from 'src/layouts/ColorModeLayout'
+import CurrentAccountLayout from 'src/layouts/CurrentAccountLayout'
 import DashboardLayout from 'src/layouts/DashboardLayout'
+import CreateOrganizationLayout from 'src/layouts/CreateOrganizationLayout'
 
 const Routes = () => {
   return (
     <Router>
       <Set wrap={[ColorModeLayout]}>
-        <Private wrap={[DashboardLayout]} unauthenticated="login">
+        <Private wrap={[CurrentAccountLayout, DashboardLayout, CreateOrganizationLayout]} unauthenticated="login">
           <Route notfound page={NotFoundPage} />
           <Route path="/" page={HomePage} name="home" />
           <Route path="/accounts" page={ListAccountsPage} name="listAccounts" />
