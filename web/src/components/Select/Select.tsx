@@ -41,13 +41,13 @@ const Select = ({ defaultValue, name, values }: SelectProps) => {
             <span>{t(value?.name)}</span>
             <SelectorIcon className="icon" />
           </Listbox.Button>
-          <Listbox.Options className="select-options">
+          <Listbox.Options className="select-items">
             {values.map((val, index) => (
               <Listbox.Option key={index} value={val}>
                 {({ active, selected }) => (
                   <button
                     className={clsx(
-                      'select-option',
+                      'select-item',
                       active && 'active',
                       selected && 'selected'
                     )}

@@ -207,7 +207,7 @@ body.dark { @apply bg-gray-800; }
     @apply duration-100 ease-in-out transform-gpu transition-transform;
     @apply h-6 w-6;
   }
-  .select-options {
+  .select-items {
     /* Background */
     @apply bg-gray-50;
     @apply dark:bg-gray-800;
@@ -222,7 +222,7 @@ body.dark { @apply bg-gray-800; }
     @apply w-full;
     @apply shadow-lg;
   }
-  .select-option {
+  .select-item {
     /* Background */
     @apply bg-transparent;
     /* Border */
@@ -237,12 +237,12 @@ body.dark { @apply bg-gray-800; }
     @apply w-full;
     @apply text-left;
   }
-  .select-option.active {
+  .select-item.active {
     /* Background */
     @apply bg-gray-100;
     @apply dark:bg-gray-700;
   }
-  .select-option.selected {
+  .select-item.selected {
     /* Background */
     @apply bg-gray-200 bg-opacity-50;
     @apply dark:bg-gray-600 dark:bg-opacity-75;
