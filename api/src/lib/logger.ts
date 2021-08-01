@@ -1,24 +1,41 @@
 import type { redactOptions } from 'pino'
 import { createLogger } from '@redwoodjs/graphql-server/logger'
 
+import { buildRedactString } from 'src/util/logger'
+
+/**
+ * A list of fields redacted from the `Accounts` model.
+ *
+ * **Additional fields can be added as needed.**
+ */
+const AccountRedactions = [
+  'id',
+  'email',
+  'firstName',
+  'lastName',
+  'hashedPassword',
+  'salt',
+  'verifiedAt',
+  'createdAt',
+  'updatedAt',
+]
+
+/**
+ * Generate a list of Account redactions with an optional `prefix` attached to each.
+ *
+ * @param prefix A string to place before each of the Account redactions.
+ * @returns A list of account redactions
+ */
+const getAccountRedactions = (prefix?: string) =>
+  AccountRedactions.map((redaction) => buildRedactString(redaction, prefix))
+
 const redact: redactOptions = {
   censor: '[GDPR Compliancy]',
   paths: [
-    // ==
-    'data.redwood.currentUser.id',
-    'data.redwood.currentUser.email',
-    'data.redwood.currentUser.hashedPassword',
-    'data.redwood.currentUser.salt',
-    //
-    // ==
-    'data.email',
-    'data.hashedPassword',
-    'data.salt',
-    //
-    // ==
-    'query.email',
-    'query.hashedPassword',
-    'query.salt',
+    // == Accounts
+    ...getAccountRedactions('data.redwood.currentUser'),
+    ...getAccountRedactions('data.*'),
+    ...getAccountRedactions('query.*'),
     //
   ],
 }
