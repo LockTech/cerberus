@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useLazyQuery } from '@apollo/client'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -20,7 +20,7 @@ const QUERY = gql`
   }
 `
 
-export const useCurrentAccount = () => {
+export const useQueryCurrentAccount = () => {
   const { t } = useTranslation()
 
   const setCurrentAccount = useSetRecoilState(CurrentAccountAtom)
@@ -53,3 +53,8 @@ export const useCurrentAccount = () => {
     }
   }, [called, get, t])
 }
+
+/**
+ * @returns `useRecoilValue(CurrentAccountAtom)`
+ */
+export const useCurrentAccount = () => useRecoilValue(CurrentAccountAtom)
