@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRecoilState } from 'recoil'
-import { Dialog, Transition } from '@headlessui/react'
 import { Form, Label, Submit } from '@redwoodjs/forms'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -9,6 +8,7 @@ import { ColorModeAtom } from 'src/atoms/ColorMode'
 import type { ColorMode } from 'src/atoms/ColorMode'
 import { AppSettingsModalAtom } from 'src/atoms/AppSettingsModal'
 
+import Modal from 'src/components/Modal'
 import Select from 'src/components/Select'
 
 import './AppSettingsModal.css'
@@ -40,59 +40,36 @@ const AppSettingsModal = () => {
   )
 
   return (
-    <Transition as={React.Fragment} show={modalOpen}>
-      <Dialog className="modal" onClose={() => setModalOpen(false)}>
-        <Transition.Child
-          as={Dialog.Overlay}
-          className="modal-overlay"
-          enter="duration-150 ease-in-out transition-opacity"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="duration-150 ease-in-out transition-opacity"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        />
-        <Transition.Child
-          as="div"
-          className="modal-layout"
-          enter="duration-200 ease-in-out origin-top transition-all transform-gpu"
-          enterFrom="opacity-0 scale-75"
-          enterTo="opacity-100 scale-100"
-          leave="duration-200 ease-in-out origin-top transition-all transform-gpu"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-75"
-        >
-          <div className="card card-body modal-body">
-            <div className="title-group">
-              <Dialog.Title className="modal-title">
-                {t('App.SettingsModal.title')}
-              </Dialog.Title>
-              <Dialog.Description className="modal-subtitle">
-                {t('App.SettingsModal.subtitle')}
-              </Dialog.Description>
-            </div>
-            <Form className="form" onSubmit={onSubmit}>
-              <div className="input-group">
-                <Label name="theme" className="input-label">
-                  {t('App.SettingsModal.form.theme.label')}
-                </Label>
-                <Select
-                  defaultValue={{
-                    name: `${ThemeKey}.${colorMode}`,
-                    value: colorMode,
-                  }}
-                  name="theme"
-                  values={ThemeValues}
-                />
-              </div>
-              <Submit className="button-primary-fill w-full">
-                {t('App.SettingsModal.form.submit')}
-              </Submit>
-            </Form>
+    <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+      <div className="card card-body">
+        <div className="title-group">
+          <Modal.Title className="modal-title">
+            {t('App.SettingsModal.title')}
+          </Modal.Title>
+          <Modal.Description className="modal-subtitle">
+            {t('App.SettingsModal.subtitle')}
+          </Modal.Description>
+        </div>
+        <Form className="form" onSubmit={onSubmit}>
+          <div className="input-group">
+            <Label name="theme" className="input-label">
+              {t('App.SettingsModal.form.theme.label')}
+            </Label>
+            <Select
+              defaultValue={{
+                name: `${ThemeKey}.${colorMode}`,
+                value: colorMode,
+              }}
+              name="theme"
+              values={ThemeValues}
+            />
           </div>
-        </Transition.Child>
-      </Dialog>
-    </Transition>
+          <Submit className="button-primary-fill w-full">
+            {t('App.SettingsModal.form.submit')}
+          </Submit>
+        </Form>
+      </div>
+    </Modal>
   )
 }
 
