@@ -1,3 +1,7 @@
+import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
+
+import CreateOrganizationModal from 'src/components/CreateOrganizationModal'
+
 type CreateOrganizationLayoutProps = {
   children?: React.ReactNode
 }
@@ -5,7 +9,16 @@ type CreateOrganizationLayoutProps = {
 const CreateOrganizationLayout = ({
   children,
 }: CreateOrganizationLayoutProps) => {
-  return <>{children}</>
+  const currentAccount = useCurrentAccount()
+
+  return (
+    <>
+      <CreateOrganizationModal
+        open={!currentAccount || currentAccount.organizationId === null}
+      />
+      {children}
+    </>
+  )
 }
 
 export default CreateOrganizationLayout
