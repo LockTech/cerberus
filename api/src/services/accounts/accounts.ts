@@ -133,7 +133,10 @@ export const currentAccount = async () => {
   let res: Account
 
   try {
-    res = await db.account.findUnique({ where: { id } })
+    res = await db.account.findUnique({
+      where: { id },
+      include: { organization: true },
+    })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting currentAccount.')
     throw new Error('get')
