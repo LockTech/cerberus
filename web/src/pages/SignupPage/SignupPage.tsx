@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@redwoodjs/auth'
 import {
@@ -22,6 +23,10 @@ interface SignupFormData {
 }
 
 const SignupPage = () => {
+  // REALLY doesn't want to validate `currentPassword` before first
+  // submit without initiating the form ourselves; no biggie.
+  const formMethods = useForm({ mode: 'all' })
+
   const { t } = useTranslation()
 
   const { isAuthenticated, signUp } = useAuth()
@@ -37,6 +42,10 @@ const SignupPage = () => {
     firstNameRef.current.focus()
   }, [])
 
+  const passwordRef = useRef<HTMLInputElement>()
+  const currentPassword =
+    (passwordRef.current && passwordRef.current.value) || ''
+
   const onSubmit = useCallback(
     async (data: SignupFormData) => {
       toast.loading(t('Signup.Page.loading'))
@@ -49,7 +58,11 @@ const SignupPage = () => {
       toast.dismiss()
 
       if (error.message) {
-        toast.error(t(`Signup.Page.Errors.${error.message}`))
+        if (!error.name) {
+          toast.error(error.message)
+        } else {
+          toast.error(t(`Signup.Page.Errors.${error.message}`))
+        }
       } else {
         toast.success(t('Signup.Page.success'))
 
@@ -70,7 +83,7 @@ const SignupPage = () => {
           <h1 className="title">{t('Signup.Page.title')}</h1>
           <p className="hint">{t('Signup.Page.subtitle')}</p>
         </header>
-        <Form className="form" onSubmit={onSubmit}>
+        <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
           {/* firstName */}
           <div className="input-group">
             <Label
@@ -81,6 +94,7 @@ const SignupPage = () => {
               {t('Signup.Page.form.firstName.label')}
             </Label>
             <TextField
+              autoComplete="given-name"
               className="input-primary"
               errorClassName="input-error"
               name="firstName"
@@ -105,6 +119,7 @@ const SignupPage = () => {
               {t('Signup.Page.form.lastName.label')}
             </Label>
             <TextField
+              autoComplete="family-name"
               className="input-primary"
               errorClassName="input-error"
               name="lastName"
@@ -152,11 +167,12 @@ const SignupPage = () => {
               {t('Signup.Page.form.password.label')}
             </Label>
             <PasswordField
-              autoComplete="current-password"
+              autoComplete="new-password"
               className="input-primary"
               errorClassName="input-error"
               name="password"
               placeholder={t('Signup.Page.form.password.placeholder')}
+              ref={passwordRef}
               validation={{
                 minLength: {
                   value: 8,
@@ -169,6 +185,32 @@ const SignupPage = () => {
               }}
             />
             <FieldError className="input-error-message" name="password" />
+          </div>
+          {/* confirm password */}
+          <div className="input-group">
+            <Label
+              className="input-label"
+              errorClassName="input-label-error"
+              name="confirmPassword"
+            >
+              {t('Signup.Page.form.confirmPassword.label')}
+            </Label>
+            <PasswordField
+              autoComplete="new-password"
+              className="input-primary"
+              errorClassName="input-error"
+              name="confirmPassword"
+              placeholder={t('Signup.Page.form.password.placeholder')}
+              validation={{
+                validate: (value: string) =>
+                  value === currentPassword ||
+                  t('Signup.Page.form.confirmPassword.match'),
+              }}
+            />
+            <FieldError
+              className="input-error-message"
+              name="confirmPassword"
+            />
           </div>
           {/* submit */}
           <Submit className="button-primary-fill w-full">
