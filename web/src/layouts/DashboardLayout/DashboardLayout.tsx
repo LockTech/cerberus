@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     <>
       <div className="layout">
         <Sidebar />
-        <div className="flex flex-col w-full">
+        <div className="content">
           <Appbar />
           <main>{children}</main>
         </div>

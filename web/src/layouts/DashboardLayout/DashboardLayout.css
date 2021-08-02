@@ -1,7 +1,13 @@
 .layout {
-  @apply flex flex-row h-full w-full;
+  @apply flex flex-row;
+  @apply h-full w-full;
 }
 
-.layout main {
+.layout .content {
+  @apply flex flex-col;
+  @apply w-full;
+}
+
+.layout .content main {
   @apply px-10 py-8;
 }
