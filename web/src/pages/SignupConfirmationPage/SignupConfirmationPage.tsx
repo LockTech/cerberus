@@ -6,7 +6,7 @@ import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { navigate, routes } from '@redwoodjs/router'
 
-const MUTATION = gql`
+export const MUTATION = gql`
   mutation SignupConfirmationMutation($code: String!, $email: String!) {
     confirmed: confirmSignup(code: $code, email: $email)
   }
@@ -119,6 +119,7 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
                   {t('Signup.Confirmation.Page.form.code.label')}
                 </Label>
                 <TextField
+                  autoComplete="one-time-code"
                   className="input-primary"
                   errorClassName="input-error"
                   name="code"
