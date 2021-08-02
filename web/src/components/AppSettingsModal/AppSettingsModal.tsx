@@ -41,12 +41,10 @@ const AppSettingsModal = () => {
 
   return (
     <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-      <div className="card card-body">
+      <div className="card card-body space-y-6">
         <div className="title-group">
-          <Modal.Title className="modal-title">
-            {t('App.SettingsModal.title')}
-          </Modal.Title>
-          <Modal.Description className="modal-subtitle">
+          <Modal.Title>{t('App.SettingsModal.title')}</Modal.Title>
+          <Modal.Description>
             {t('App.SettingsModal.subtitle')}
           </Modal.Description>
         </div>
