@@ -52,6 +52,9 @@
       "error": {
         "get": "Error fetching your account."
       }
+    },
+    "Layout": {
+      "loading": "Loading your account."
     }
   },
   "Home": {
@@ -98,6 +101,24 @@
       "redirect": "Redirecting your browser.",
       "loading": "Logging you into your account.",
       "success": "Successfully logged you into your account."
+    }
+  },
+  "Organization": {
+    "Create": {
+      "Modal": {
+        "title": "Create Organization",
+        "subtitle": "Looks like you don't have an organization yet, fill in the required fields below to create one.",
+        "form": {
+          "name": {
+            "label": "Name",
+            "hint": "Your organization's name will need to be unique accross the whole platform; we'll take care of making sure it is.",
+            "required": "A name is required to create an organization."
+          },
+          "submit": "Create"
+        },
+        "loading": "Creating your organization.",
+        "success": "Your organization has been successfully created."
+      }
     }
   },
   "Sidebar": {
@@ -188,6 +209,11 @@
           "placeholder": "Password",
           "minLength": "Your password must be longer than 8 characters.",
           "required": "A password is required to signup."
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "placeholder": "Password",
+          "match": "Passwords do not match."
         },
         "submit": "Sign Up"
       },
