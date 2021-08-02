@@ -129,6 +129,21 @@
           "title": "Organization Settings"
         }
       }
+    },
+    "Update": {
+      "Cell": {
+        "Success": {
+          "title": "Update Organization",
+          "subtitle": "Update your organization's general information.",
+          "form": {
+            "name": {
+              "label": "Organization Name",
+              "required": "A name is required when updating your organization."
+            },
+            "submit": "Update"
+          }
+        }
+      }
     }
   },
   "Sidebar": {
