@@ -5,7 +5,10 @@ export interface CurrentAccount {
   email: string
   firstName: string
   lastName: string
-  organizationId: string | null
+  organization?: {
+    id: string
+    name: string
+  }
 }
 
 export const CurrentAccountAtom = atom<CurrentAccount>({
