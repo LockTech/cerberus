@@ -13,12 +13,14 @@
   @apply font-semibold text-xl;
   @apply text-gray-900;
   @apply dark:text-gray-50;
+  /* Misc */
+  @apply flex-grow;
+  @apply truncate;
 }
 
 .appbar .actions {
   @apply flex flex-row items-center justify-end;
   @apply space-x-4;
-  @apply w-full;
 }
 
 .appbar {
@@ -37,17 +39,23 @@
   @apply text-gray-500 hover:text-gray-700 active:text-gray-900;
   @apply dark:text-gray-400 dark:hover:text-gray-200 dark:active:text-gray-50;
   /* Misc */
-  @apply flex flex-row items-center;
+  @apply flex flex-row items-center justify-center;
   @apply duration-[200ms] ease-in-out transition-all;
-  @apply px-1.5 md:px-3 py-1.5;
+  @apply px-1.5 md:px-6 py-1.5 space-x-0 md:space-x-5;
+}
+.appbar .menu-button span {
+  @apply flex;
+}
+.appbar .menu-button .title-group {
+  @apply flex flex-col items-start justify-center;
+  @apply space-y-[0.25rem];
+  @apply hidden md:block;
 }
 .appbar .menu-button .title {
   /* Text */
   @apply text-sm;
-  /* Misc */
-  @apply hidden md:block;
-  @apply md:mr-3;
 }
+.appbar .menu-button .hint {}
 .appbar .menu-button .icon {
   /* Misc */
   @apply h-6 w-6;
