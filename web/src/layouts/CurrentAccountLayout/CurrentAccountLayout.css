@@ -1,0 +1,8 @@
+.currentAccount-loader {
+  @apply flex flex-col items-center justify-center;
+  @apply h-full w-full;
+}
+
+.currentAccount-loader .loading-indicator {
+  @apply h-16 w-16;
+}
