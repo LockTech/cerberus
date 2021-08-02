@@ -26,6 +26,7 @@ model Account {
   organizationId                String?
   organization                  Organization?                     @relation(fields: [organizationId], references: [id])
   //
+  // roles                         Role[]
 }
 
 model Account_Confirmation {
@@ -39,13 +40,29 @@ model Account_Confirmation {
 
 model Organization {
   id                            String                            @id @default(uuid())
-  name                          String
+  name                          String                            @unique
   //
   createdAt                     DateTime                          @default(now())
   updatedAt                     DateTime                          @updatedAt
   //
   accounts                      Account[]
+  // roles                         Role[]
 }
+
+// model Role {
+//   id                            String                            @id @default(uuid())
+//   name                          String
+//   //
+//   createdAt                     DateTime                          @default(now())
+//   updatedAt                     DateTime                          @updatedAt
+//   //
+//   organizationId                String
+//   organization                  Organization                      @relation(fields: [organizationId], references: [id])
+//   //
+//   accounts                      Account[]
+//   //
+//   @@unique([name, organizationId])
+// }
 
 // model Permission {
 //   id                            String                            @id @default(uuid())
@@ -58,12 +75,4 @@ model Organization {
 //   updated_at                    DateTime                          @default(now())
 
 //   @@unique([application, namespace, object, relation])
-// }
-
-// model Role {
-//   id                            String                            @id @default(uuid())
-//   name                          String
-//   //
-//   created_at                    DateTime                          @default(now())
-//   updated_at                    DateTime                          @default(now())
 // }
