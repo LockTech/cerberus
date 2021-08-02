@@ -1,21 +1,24 @@
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { toast } from '@redwoodjs/web/toast'
 
 import { CurrentAccountAtom } from 'src/atoms/CurrentAccount'
 import type { CurrentAccount } from 'src/atoms/CurrentAccount'
 
 type CurrentAccountQueryData = { currentAccount: CurrentAccount }
-const QUERY = gql`
+export const QUERY = gql`
   query CurrentAccountQuery {
     currentAccount {
       id
       email
       firstName
       lastName
-      organizationId
+      organization {
+        id
+        name
+      }
     }
   }
 `
@@ -27,31 +30,28 @@ export const useQueryCurrentAccount = () => {
 
   const onCompleted = useCallback(
     (data: CurrentAccountQueryData) => {
-      toast.dismiss()
-      toast.success(t('CurrentAccount.hook.success'))
       setCurrentAccount(data.currentAccount)
     },
-    [setCurrentAccount, t]
+    [setCurrentAccount]
   )
   const onError = useCallback(
     (error: Error) => {
-      toast.dismiss()
       toast.error(t(`CurrentAccount.hook.error.${error.message}`))
     },
     [t]
   )
 
-  const [get, { called }] = useLazyQuery(QUERY, {
+  const { loading, error, data } = useQuery(QUERY, {
     onCompleted,
     onError,
   })
 
   useEffect(() => {
-    if (!called) {
-      get()
-      toast.loading(t('CurrentAccount.hook.loading'))
+    if (!loading) {
+      if (error) onError(error)
+      if (data) onCompleted(data)
     }
-  }, [called, get, t])
+  }, [data, error, loading, onCompleted, onError])
 }
 
 /**
