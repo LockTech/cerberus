@@ -26,9 +26,9 @@ export const Success = ({
   const { t } = useTranslation()
 
   return (
-    <div className="card card-body space-y-6">
+    <div className="card card-body">
       <div className="title-group">
-        <h2 className="title">{t('Organization.Update.Cell.Success.title')}</h2>
+        <h3 className="title">{t('Organization.Update.Cell.Success.title')}</h3>
         <p className="hint">{t('Organization.Update.Cell.Success.subtitle')}</p>
       </div>
       <Form className="form">
