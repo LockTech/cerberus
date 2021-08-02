@@ -60,7 +60,7 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
 
   return (
     <Modal open={open} onClose={() => 0}>
-      <div className="card card-body space-y-6">
+      <div className="card card-body">
         <div className="title-group">
           <Modal.Title>{t('Organization.Create.Modal.title')}</Modal.Title>
           <Modal.Description>
