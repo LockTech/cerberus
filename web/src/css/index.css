@@ -108,7 +108,11 @@ body.dark { @apply bg-gray-800; }
 
   /* Form */
   .form {
+    @apply flex flex-col;
     @apply space-y-6;
+  }
+  .form-button {
+    @apply self-end;
   }
 
   /* Input */
