@@ -95,7 +95,7 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
           </div>
           <Submit
             disabled={called || loading}
-            className="button-primary-fill w-full"
+            className="button-primary-fill form-button"
           >
             {t('Organization.Create.Modal.form.submit')}
           </Submit>

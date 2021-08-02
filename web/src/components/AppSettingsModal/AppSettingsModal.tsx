@@ -62,7 +62,7 @@ const AppSettingsModal = () => {
               values={ThemeValues}
             />
           </div>
-          <Submit className="button-primary-fill w-full">
+          <Submit className="button-primary-fill form-button">
             {t('App.SettingsModal.form.submit')}
           </Submit>
         </Form>
