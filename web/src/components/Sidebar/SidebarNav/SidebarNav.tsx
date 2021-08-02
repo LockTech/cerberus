@@ -13,7 +13,7 @@ const SidebarNav = () => {
   const listAccounts = useMatch(routes.listAccounts()).match
   const listRoles = false
   //
-  const orgSettings = false
+  const orgSettings = useMatch(routes.organizationSettings()).match
 
   return (
     <nav>
@@ -43,7 +43,10 @@ const SidebarNav = () => {
       </div>
       <div className="nav-group">
         <p className="nav-group-title">{t('Sidebar.nav.organization.title')}</p>
-        <button className={clsx(orgSettings && 'active')}>
+        <button
+          className={clsx(orgSettings && 'active')}
+          onClick={() => navigate(routes.organizationSettings())}
+        >
           {t('Sidebar.nav.organization.settings')}
         </button>
       </div>

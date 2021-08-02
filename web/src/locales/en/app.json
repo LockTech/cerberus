@@ -119,6 +119,16 @@
         "loading": "Creating your organization.",
         "success": "Your organization has been successfully created."
       }
+    },
+    "Settings": {
+      "Page": {
+        "Helmet": {
+          "title": "Organization Settings • Cerberus"
+        },
+        "Appbar": {
+          "title": "Organization Settings"
+        }
+      }
     }
   },
   "Sidebar": {
