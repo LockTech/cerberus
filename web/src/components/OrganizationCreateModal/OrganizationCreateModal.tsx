@@ -22,11 +22,11 @@ export interface CreateOrganizationMutationResult {
   organization: { __typename: string }
 }
 
-export interface CreateOrganizationModal {
+export interface OrganizationCreateModal {
   open: boolean
 }
 
-const CreateOrganizationModal = ({ open }: CreateOrganizationModal) => {
+const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
   const { t } = useTranslation()
 
   const onCompleted = useCallback(
@@ -105,4 +105,4 @@ const CreateOrganizationModal = ({ open }: CreateOrganizationModal) => {
   )
 }
 
-export default CreateOrganizationModal
+export default OrganizationCreateModal

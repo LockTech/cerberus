@@ -1,6 +1,6 @@
 import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
 
-import CreateOrganizationModal from 'src/components/CreateOrganizationModal'
+import OrganizationCreateModal from 'src/components/OrganizationCreateModal'
 
 type CreateOrganizationLayoutProps = {
   children?: React.ReactNode
@@ -13,7 +13,7 @@ const CreateOrganizationLayout = ({
 
   return (
     <>
-      <CreateOrganizationModal
+      <OrganizationCreateModal
         open={currentAccount?.organization?.id === null}
       />
       {children}

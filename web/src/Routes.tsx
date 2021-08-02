@@ -4,13 +4,13 @@ import AuthLayout from 'src/layouts/AuthLayout'
 import ColorModeLayout from 'src/layouts/ColorModeLayout'
 import CurrentAccountLayout from 'src/layouts/CurrentAccountLayout'
 import DashboardLayout from 'src/layouts/DashboardLayout'
-import CreateOrganizationLayout from 'src/layouts/CreateOrganizationLayout'
+import OrganizationCreateLayout from 'src/layouts/OrganizationCreateLayout'
 
 const Routes = () => {
   return (
     <Router>
       <Set wrap={[ColorModeLayout]}>
-        <Set private unauthenticated="login" wrap={[CurrentAccountLayout, DashboardLayout, CreateOrganizationLayout]}>
+        <Set private unauthenticated="login" wrap={[CurrentAccountLayout, DashboardLayout, OrganizationCreateLayout]}>
           {/* General */}
           <Route notfound page={NotFoundPage} />
           <Route path="/" page={HomePage} name="home" />
