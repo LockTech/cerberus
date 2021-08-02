@@ -1,16 +1,26 @@
 import type { ReactNode } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-export interface ModalProps {
+interface ChildrenProps {
   children: ReactNode
+}
+
+const ModalDescription = (props: ChildrenProps) => (
+  <Dialog.Description {...props} as="p" className="modal-subtitle" />
+)
+const ModalTitle = (props: ChildrenProps) => (
+  <Dialog.Title {...props} as="h2" className="modal-title" />
+)
+
+export interface ModalProps extends ChildrenProps {
   onClose: (open: boolean) => void
   open: boolean
 }
 
 type ModalComponent = (props: ModalProps) => JSX.Element
 type ModalType = ModalComponent & {
-  Description: typeof Dialog.Description
-  Title: typeof Dialog.Title
+  Description: typeof ModalDescription
+  Title: typeof ModalTitle
 }
 
 /**
@@ -50,7 +60,7 @@ const Modal: ModalType = ({ children, onClose, open }: ModalProps) => {
   )
 }
 
-Modal.Description = Dialog.Description
-Modal.Title = Dialog.Title
+Modal.Description = ModalDescription
+Modal.Title = ModalTitle
 
 export default Modal
