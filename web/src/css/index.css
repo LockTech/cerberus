@@ -18,6 +18,19 @@ body.dark { @apply bg-gray-800; }
   width: 100%;
 }
 
+/* Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2.5;
+}
+::-webkit-scrollbar-track {
+  /* Background */
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  /* Background */
+  @apply bg-gray-400 hover:bg-gray-300 active:bg-gray-200;
+}
+
 @layer base {
   /* Focus */
   .focus {
