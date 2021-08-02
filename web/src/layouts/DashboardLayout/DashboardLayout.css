@@ -9,5 +9,5 @@
 }
 
 .layout .content main {
-  @apply px-10 py-8;
+  @apply px-10 pb-8 pt-4;
 }
