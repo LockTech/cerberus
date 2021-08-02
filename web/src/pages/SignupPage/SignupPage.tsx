@@ -107,7 +107,7 @@ const SignupPage = () => {
                 },
               }}
             />
-            <FieldError className="input-error-message" name="firstName" />
+            <FieldError className="input-field-error" name="firstName" />
           </div>
           {/* lastName */}
           <div className="input-group">
@@ -131,7 +131,7 @@ const SignupPage = () => {
                 },
               }}
             />
-            <FieldError className="input-error-message" name="lastName" />
+            <FieldError className="input-field-error" name="lastName" />
           </div>
           {/* username */}
           <div className="input-group">
@@ -155,7 +155,7 @@ const SignupPage = () => {
                 },
               }}
             />
-            <FieldError className="input-error-message" name="username" />
+            <FieldError className="input-field-error" name="username" />
           </div>
           {/* password */}
           <div className="input-group">
@@ -184,7 +184,7 @@ const SignupPage = () => {
                 },
               }}
             />
-            <FieldError className="input-error-message" name="password" />
+            <FieldError className="input-field-error" name="password" />
           </div>
           {/* confirm password */}
           <div className="input-group">
@@ -208,7 +208,7 @@ const SignupPage = () => {
               }}
             />
             <FieldError
-              className="input-error-message"
+              className="input-field-error"
               name="confirmPassword"
             />
           </div>

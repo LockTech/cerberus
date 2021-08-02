@@ -135,7 +135,7 @@ body.dark { @apply bg-gray-800; }
     @apply placeholder-red-600;
     @apply dark:placeholder-red-300;
   }
-  .input-error-message {
+  .input-field-error {
     @apply text-red-600;
     @apply dark:text-red-300;
     @apply text-sm;

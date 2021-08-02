@@ -95,7 +95,7 @@ const LoginPage = () => {
                 },
               }}
             />
-            <FieldError name="username" className="input-error-message" />
+            <FieldError name="username" className="input-field-error" />
           </div>
           {/* password */}
           <div className="input-group">
@@ -119,7 +119,7 @@ const LoginPage = () => {
                 },
               }}
             />
-            <FieldError name="password" className="input-error-message" />
+            <FieldError name="password" className="input-field-error" />
           </div>
           {/* submit */}
           <Submit className="button-primary-fill w-full">

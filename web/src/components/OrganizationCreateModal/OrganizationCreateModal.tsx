@@ -88,7 +88,7 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
                 },
               }}
             />
-            <FieldError className="input-error-message" name="name" />
+            <FieldError className="input-field-error" name="name" />
             <Label className="hint" errorClassName="hidden" name="name">
               {t('Organization.Create.Modal.form.name.hint')}
             </Label>
