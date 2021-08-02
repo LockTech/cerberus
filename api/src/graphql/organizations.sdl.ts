@@ -8,10 +8,10 @@ export const schema = gql`
   }
 
   type Query {
-    organization: Organization
+    organization: Organization!
   }
 
   type Mutation {
-    createOrganization(name: String!): Organization!
+    createOrganization(name: String!): Organization
   }
 `
