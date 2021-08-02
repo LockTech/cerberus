@@ -207,10 +207,7 @@ const SignupPage = () => {
                   t('Signup.Page.form.confirmPassword.match'),
               }}
             />
-            <FieldError
-              className="input-field-error"
-              name="confirmPassword"
-            />
+            <FieldError className="input-field-error" name="confirmPassword" />
           </div>
           {/* submit */}
           <Submit className="button-primary-fill w-full">
