@@ -16,21 +16,24 @@
     }
   },
   "App": {
-    "SettingsModal": {
-      "title": "Application Settings",
-      "subtitle": "General settings which do not effect your organization or its members.",
-      "form": {
-        "theme": {
-          "label": "Color Scheme",
-          "options": {
-            "browser": "Detect",
-            "light": "Day",
-            "night": "Night"
-          }
+    "Settings": {
+      "Modal": {
+        "title": "Application Settings",
+        "subtitle": "General settings which do not effect your organization or its members.",
+        "form": {
+          "theme": {
+            "label": "Color Scheme",
+            "options": {
+              "browser": "Detect",
+              "light": "Day",
+              "night": "Night"
+            },
+            "hint": "Update the application's colors to match the time-of-day or your personal preference."
+          },
+          "submit": "Save"
         },
-        "submit": "Save"
-      },
-      "saved": "Settings updated."
+        "saved": "Settings updated."
+      }
     }
   },
   "Appbar": {
