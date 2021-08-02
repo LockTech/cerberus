@@ -10,6 +10,9 @@ module.exports = {
   mode: 'jit',
   theme: {
     extend: {
+      animation: {
+        'spin-physics': 'spin 1.5s cubic-bezier(.8, .25, .2, .75) infinite',
+      },
       colors: {
         gray: {
           50: '#F4F4F6',
