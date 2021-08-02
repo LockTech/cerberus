@@ -5,6 +5,8 @@ import { signupHandler } from 'src/helpers/signup'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
+const loginExpires = 60 * 60 * 24 // * 365 * 10,
+
 export const handler = async (event, context) => {
   logger.trace('Invoking auth handler.')
 
@@ -22,8 +24,7 @@ export const handler = async (event, context) => {
 
     signupHandler,
 
-    // How long a user will remain logged in, in seconds
-    loginExpires: 60 * 60 * 24, // * 365 * 10,
+    loginExpires,
   })
 
   const res = await authHandler.invoke()
