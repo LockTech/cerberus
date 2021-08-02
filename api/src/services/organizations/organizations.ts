@@ -27,12 +27,26 @@ export const createOrganization = async ({ name }: CreateOrganizationArgs) => {
     throw new SyntaxError('name-taken')
   }
 
+  const currentAccount = getContextUser()
+  const accountId = currentAccount.id
+
   let res: Organization
 
   try {
     res = await db.organization.create({
       data: {
         name,
+      },
+    })
+
+    const organizationId = res.id
+
+    await db.account.update({
+      data: {
+        organizationId,
+      },
+      where: {
+        id: accountId,
       },
     })
   } catch (err) {
