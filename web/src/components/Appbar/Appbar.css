@@ -32,16 +32,13 @@
   @apply hover:bg-gray-200 hover:bg-opacity-30 active:bg-gray-300 active:bg-opacity-50;
   @apply dark:hover:bg-gray-600 dark:hover:bg-opacity-30 dark:active:bg-gray-500 dark:active:bg-opacity-50;
   /* Border */
-  @apply border border-transparent rounded-full;
+  @apply border border-transparent rounded-full md:rounded-md;
   @apply hover:border-gray-300;
   @apply dark:hover:border-gray-500;
-  /* Text */
-  @apply text-gray-500 hover:text-gray-700 active:text-gray-900;
-  @apply dark:text-gray-400 dark:hover:text-gray-200 dark:active:text-gray-50;
   /* Misc */
   @apply flex flex-row items-center justify-center;
   @apply duration-[200ms] ease-in-out transition-all;
-  @apply px-1.5 md:px-6 py-1.5 space-x-0 md:space-x-5;
+  @apply px-2 md:px-4 py-2 space-x-0 md:space-x-5;
 }
 .appbar .menu-button span {
   @apply flex;
@@ -54,9 +51,17 @@
 .appbar .menu-button .title {
   /* Text */
   @apply text-sm;
+  @apply text-gray-900;
+  @apply dark:text-gray-50;
 }
-.appbar .menu-button .hint {}
+.appbar .menu-button .hint {
+  @apply text-gray-500;
+  @apply dark:text-gray-300;
+}
 .appbar .menu-button .icon {
+  /* Text */
+  @apply text-gray-500;
+  @apply dark:text-gray-300;
   /* Misc */
   @apply h-6 w-6;
 }
