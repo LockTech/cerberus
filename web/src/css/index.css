@@ -34,39 +34,17 @@ body.dark { @apply bg-gray-800; }
 @layer base {
   /* Focus */
   .focus {
-    @apply duration-150 ease-in-out transition-all;
+    @apply duration-[200ms] ease-in-out transition-all;
     @apply outline-none;
     @apply focus:border;
-    @apply focus:ring-2 active:focus:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
-  }
-  .focus-primary {
-    @apply duration-150 ease-in-out transition-all;
-    @apply outline-none;
-    @apply focus:border;
-    @apply focus:ring-2 active:focus:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
-    @apply focus:border-primary-500 ring-primary-700;
-    @apply dark:focus:border-primary-300 ring-primary-400;
-  }
-  .focus-gray {
-    @apply duration-150 ease-in-out transition-all;
-    @apply outline-none;
-    @apply focus:border;
-    @apply focus:ring-2 active:focus:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
-    @apply focus:border-gray-500 ring-gray-700;
-    @apply dark:focus:border-gray-300 ring-gray-400;
-  }
-  .focus-red {
-    @apply duration-150 ease-in-out transition-all;
-    @apply outline-none;
-    @apply focus:border;
-    @apply focus:ring-2 active:focus:ring-[3px] focus:ring-opacity-50 dark:focus:ring-opacity-60;
-    @apply focus:border-red-500 ring-red-700;
-    @apply dark:focus:border-red-300 ring-red-400;
+    @apply focus:ring-2 active:focus:ring-[3px];
+    @apply focus:ring-opacity-50 !important;
+    @apply dark:focus:ring-opacity-70 !important;
   }
 
   /* Typograph */
   .hint {
-    @apply text-gray-500;
+    @apply text-gray-400;
     @apply dark:text-gray-300;
     @apply text-sm;
   }
@@ -80,14 +58,51 @@ body.dark { @apply bg-gray-800; }
   }
 }
 
+@layer base {
+  /* Focus */
+  .focus-primary {
+    @apply focus;
+    @apply focus:border-primary-600 ring-primary-700 !important;
+    @apply dark:focus:border-primary-300 ring-primary-400 !important;
+  }
+  .focus-gray {
+    @apply focus;
+    @apply focus:border-gray-600 ring-gray-700 !important;
+    @apply dark:focus:border-gray-300 ring-gray-400 !important;
+  }
+  .focus-red {
+    @apply focus;
+    @apply focus:border-red-600 ring-red-700 !important;
+    @apply dark:focus:border-red-300 ring-red-400 !important;
+  }
+
+  /* Typography */
+  .hint-red {
+    @apply hint;
+    @apply text-red-600;
+    @apply dark:text-red-300;
+  }
+  .title-red {
+    @apply title;
+    @apply text-red-700;
+    @apply dark:text-red-400;
+  }
+}
+
 @layer components {
   /* Buttons */
   .button {
-    @apply duration-[200ms] ease-in-out transition-all;
-    @apply border border-transparent;
+    /* Background */
+    @apply disabled:bg-gray-300 dark:disabled:bg-gray-600;
+    /* Border */
+    @apply border border-transparent rounded-md;
+    /* Text */
     @apply font-medium uppercase;
+    @apply disabled:text-gray-400;
+    /* Misc */
+    @apply duration-[200ms] ease-in-out transition-all;
+    @apply disabled:cursor-not-allowed;
     @apply px-4 py-2;
-    @apply rounded-md;
   }
 
   /* Card */
@@ -103,7 +118,12 @@ body.dark { @apply bg-gray-800; }
     @apply shadow;
   }
   .card-body {
-    @apply p-5;
+    @apply p-6 space-y-6;
+  }
+  .card-red {
+    /* Border */
+    @apply border-red-400;
+    @apply dark:border-red-700 dark:border-opacity-70;
   }
 
   /* Form */
@@ -113,6 +133,7 @@ body.dark { @apply bg-gray-800; }
   }
   .form-button {
     @apply self-end;
+    @apply w-full sm:w-auto;
   }
 
   /* Input */
@@ -242,6 +263,11 @@ body.dark { @apply bg-gray-800; }
   }
   .modal-subtitle {
     @apply hint;
+  }
+
+  /* Pages */
+  .page-layout {
+    @apply space-y-12;
   }
 
   /* Select */
@@ -374,14 +400,23 @@ body.dark { @apply bg-gray-800; }
   .button-primary-fill {
     /* Background */
     @apply bg-primary-400 hover:bg-primary-500 active:bg-primary-600;
-    @apply disabled:bg-gray-300 dark:disabled:bg-gray-600;
     /* Border */
     /* Text */
     @apply text-black hover:text-white active:text-white;
-    @apply disabled:text-gray-400;
     /* Misc */
-    @apply disabled:cursor-not-allowed;
     @apply focus-primary;
+    @apply button;
+  }
+  .button-red-outline {
+    /* Background */
+    @apply bg-transparent hover:bg-red-500 active:bg-red-600;
+    /* Border */
+    @apply border-red-400 hover:border-red-500 active:border-red-600 !important;
+    /* Text */
+    @apply text-black hover:text-black active:text-white;
+    @apply dark:text-white dark:hover:text-black dark:active:text-white;
+    /* Misc */
+    @apply focus-red;
     @apply button;
   }
 
@@ -398,6 +433,11 @@ body.dark { @apply bg-gray-800; }
   }
   .link-gray {
     @apply focus-gray link;
+  }
+
+  /* Settings Danger Card */
+  .settings-danger-card {
+    @apply card card-body card-red;
   }
 
   /* Sidebar */
