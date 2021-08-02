@@ -14,7 +14,7 @@ const CreateOrganizationLayout = ({
   return (
     <>
       <CreateOrganizationModal
-        open={!currentAccount || currentAccount.organizationId === null}
+        open={currentAccount?.organization?.id === null}
       />
       {children}
     </>
