@@ -21,7 +21,7 @@
       "subtitle": "General settings which do not effect your organization or its members.",
       "form": {
         "theme": {
-          "label": "Theme",
+          "label": "Color Scheme",
           "options": {
             "browser": "Detect",
             "light": "Day",
