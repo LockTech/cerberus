@@ -121,6 +121,16 @@
       }
     },
     "Settings": {
+      "Danger": {
+        "Card": {
+          "title": "Danger Zone",
+          "subtitle": "Take caution when making use of the following features.",
+          "delete": {
+            "label": "Permanently delete your organization, removing all of its accounts and roles.",
+            "action": "Delete Organization"
+          }
+        }
+      },
       "Page": {
         "Helmet": {
           "title": "Organization Settings • Cerberus"
@@ -133,7 +143,7 @@
     "Update": {
       "Cell": {
         "Success": {
-          "title": "Update Organization",
+          "title": "Details",
           "subtitle": "Update your organization's general information.",
           "form": {
             "name": {
