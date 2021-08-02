@@ -1,13 +1,16 @@
+.sidebar-container {
+  @apply max-w-[80%] lg:max-w-[10%] min-w-[17rem] w-[18%];
+}
+
 .sidebar {
   /* Background */
   /* @apply bg-white; */
   @apply bg-gray-900;
   /* Misc */
-  @apply max-w-[80%] min-w-[17rem] w-[18%];
+  @apply max-w-[80%] lg:max-w-[10%] min-w-[17rem] w-[18%];
   @apply pb-6;
-  @apply absolute inset-0 z-30;
-  @apply lg:relative;
-  @apply overflow-y-scroll lg:overflow-y-auto;
+  @apply fixed inset-0 z-30;
+  @apply overflow-y-auto;
   @apply flex flex-col justify-between;
 }
 

@@ -4,11 +4,12 @@ import { Transition } from '@headlessui/react'
 
 import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
 
+import SidebarNav from './SidebarNav/SidebarNav'
+
 import { useCloseSidebarOnNavigate } from 'src/hooks/useCloseSidebarOnNavigate'
 import { useScreenWidth } from 'src/hooks/useScreenWidth'
 
 import './Sidebar.css'
-import SidebarNav from './SidebarNav/SidebarNav'
 
 const Sidebar = () => {
   const { t } = useTranslation()
@@ -22,7 +23,7 @@ const Sidebar = () => {
   const responsiveSidebarOpen = width >= 1024 ? true : sidebarOpen
 
   return (
-    <>
+    <div className={width >= 1024 && 'sidebar-container'}>
       {width < 1024 && (
         <Transition
           as="div"
@@ -67,7 +68,7 @@ const Sidebar = () => {
           </a>
         </div>
       </Transition>
-    </>
+    </div>
   )
 }
 
