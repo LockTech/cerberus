@@ -13,5 +13,6 @@ export const schema = gql`
 
   type Mutation {
     createOrganization(name: String!): Organization
+    updateOrganization(name: String): Organization
   }
 `

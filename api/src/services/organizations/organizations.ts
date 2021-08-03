@@ -16,13 +16,13 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add([validateAccountOrganization], { except: ['createOrganization'] })
 }
 
-// ==
+// == C
+//
 export interface CreateOrganizationArgs {
   name: string
 }
 export const createOrganization = async ({ name }: CreateOrganizationArgs) => {
   const orgCount = await db.organization.count({ where: { name } })
-
   if (orgCount >= 1) {
     throw new SyntaxError('name-taken')
   }
@@ -72,6 +72,32 @@ export const organization = async () => {
   } catch (err) {
     logger.error({ err }, 'Prisma error getting organization.')
     throw new Error('get')
+  }
+
+  return res
+}
+//
+
+// == U
+//
+export interface UpdateOrganizationArgs {
+  name?: string
+}
+export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
+  const id = getContextUser().organizationId
+
+  name = name === null ? undefined : name
+
+  let res: Organization
+
+  try {
+    res = await db.organization.update({
+      data: { name },
+      where: { id },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error updating organization.')
+    throw new Error('update')
   }
 
   return res
