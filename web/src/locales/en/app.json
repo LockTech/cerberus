@@ -28,7 +28,7 @@
               "light": "Day",
               "night": "Night"
             },
-            "hint": "Update the application's colors to match the time-of-day or use your personal preference."
+            "hint": "Update the application's design to match the current time-of-day or use your personal preference."
           },
           "submit": "Save"
         },
