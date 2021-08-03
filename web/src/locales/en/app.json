@@ -129,8 +129,9 @@
           "title": "Danger Zone",
           "subtitle": "Take caution when making use of the following features.",
           "delete": {
+            "title": "Delete your organization",
             "label": "Permanently delete your organization, removing all of its accounts and roles.",
-            "action": "Delete Organization"
+            "action": "Delete"
           }
         }
       },
