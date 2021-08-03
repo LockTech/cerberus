@@ -26,14 +26,19 @@ export const validateCurrentUser = (name: string) => {
 export const validateAccountOrganization = (name: string) => {
   const currentAccount = getContextUser()
 
-  const organizationId = currentAccount?.organizationId || undefined
+  const id = currentAccount?.organizationId || undefined
 
-  if (!isStr(organizationId)) {
-    logger.warn(`[${name}]: Could not validate organization exist.`)
+  if (!isStr(id)) {
+    logger.warn(`[${name}]: Could not validate organizationId is present.`)
     throw new ValidationError('account-organizationId-invalid')
   }
 
-  // add validation for organization existing in DB
+  // FIXME: Pending release of Redwood 0.36 - support for async beforeResolvers
+  // const orgCount = await db.organization.count({ where: { id } })
+  // if (orgCount !== 1) {
+  //   logger.warn(`[${name}]: Could not validate organization exist.`)
+  //   throw new ValidationError('account-organization-exist')
+  // }
 }
 
 /**
