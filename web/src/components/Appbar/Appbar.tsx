@@ -25,7 +25,7 @@ const Appbar = () => {
       >
         <MenuIcon className="icon" />
       </button>
-      {title !== '' && typeof title === 'string' && <h2>{title}</h2>}
+      {title !== '' && typeof title === 'string' && <h1>{title}</h1>}
       <div className="actions">
         <AccountMenu />
       </div>

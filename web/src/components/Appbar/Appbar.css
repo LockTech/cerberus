@@ -5,10 +5,10 @@
   /* Misc */
   @apply flex flex-row items-center;
   @apply w-full;
-  @apply px-4 lg:px-8 py-3;
+  @apply px-6 sm:px-10 py-3;
 }
 
-.appbar h2 {
+.appbar h1 {
   /* Text */
   @apply font-semibold text-2xl;
   @apply text-gray-900;
