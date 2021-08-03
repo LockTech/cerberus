@@ -12,6 +12,10 @@
   @apply space-x-0 space-y-3 sm:space-x-4 sm:space-y-0;
 }
 
+.settings-danger-card .action .title-group {
+  @apply space-y-1;
+}
+
 .settings-danger-card .action button {
   @apply flex-shrink-0;
 }

@@ -20,9 +20,14 @@ const OrganizationSettingsDangerCard = () => {
         </p>
       </div>
       <div className="action">
-        <p className="text">
-          {t('Organization.Settings.Danger.Card.delete.label')}
-        </p>
+        <div className="title-group">
+          <p className="font-semibold text">
+            {t('Organization.Settings.Danger.Card.delete.title')}
+          </p>
+          <p className="hint">
+            {t('Organization.Settings.Danger.Card.delete.label')}
+          </p>
+        </div>
         <button className="button-red-outline form-button">
           {t('Organization.Settings.Danger.Card.delete.action')}
         </button>
