@@ -19,16 +19,16 @@
   @apply absolute inset-0 z-20;
 }
 
-.sidebar .title {
+.sidebar .title-group {
   @apply flex flex-col;
-  @apply p-6 space-y-1.5;
+  @apply p-6 space-y-2;
 }
-.sidebar .title h1 {
+.sidebar .title-group h1 {
   /* @apply text-primary-600; */
   @apply text-primary-200;
   @apply font-semibold text-2xl;
 }
-.sidebar .title p {
+.sidebar .title-group p {
   @apply text-sm;
   @apply text-gray-200;
 }

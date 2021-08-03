@@ -23,7 +23,7 @@ const Sidebar = () => {
   const responsiveSidebarOpen = width >= 1024 ? true : sidebarOpen
 
   return (
-    <div className={width >= 1024 && 'sidebar-container'}>
+    <section className={width >= 1024 && 'sidebar-container'}>
       {width < 1024 && (
         <Transition
           as="div"
@@ -51,13 +51,13 @@ const Sidebar = () => {
         show={responsiveSidebarOpen}
       >
         <div>
-          <div className="title">
+          <header className="title-group">
             <h1>{t('Sidebar.title')}</h1>
             <p>{t('Sidebar.subtitle')}</p>
-          </div>
+          </header>
           <SidebarNav />
         </div>
-        <div className="copyright">
+        <footer className="copyright">
           <a
             className="link-gray"
             href="https://locktech.software"
@@ -66,9 +66,9 @@ const Sidebar = () => {
           >
             © 2021 LockTech Software
           </a>
-        </div>
+        </footer>
       </Transition>
-    </div>
+    </section>
   )
 }
 
