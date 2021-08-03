@@ -10,7 +10,7 @@
 
 .appbar h2 {
   /* Text */
-  @apply font-semibold text-xl;
+  @apply font-semibold text-2xl;
   @apply text-gray-900;
   @apply dark:text-gray-50;
   /* Misc */
