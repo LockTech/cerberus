@@ -17,7 +17,7 @@ const Appbar = () => {
   const [sidebarOpen, setSidebarOpen] = useRecoilState(SidebarOpenAtom)
 
   return (
-    <div className="appbar">
+    <header className="appbar">
       <button
         aria-label={t('Appbar.sidebarToggle')}
         className="menu-button sidebar-toggle"
@@ -29,7 +29,7 @@ const Appbar = () => {
       <div className="actions">
         <AccountMenu />
       </div>
-    </div>
+    </header>
   )
 }
 
