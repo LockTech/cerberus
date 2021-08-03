@@ -12,10 +12,10 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     <>
       <div className="layout">
         <Sidebar />
-        <div className="content">
+        <section className="content">
           <Appbar />
           <main>{children}</main>
-        </div>
+        </section>
       </div>
     </>
   )
