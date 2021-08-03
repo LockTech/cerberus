@@ -436,6 +436,7 @@ body.dark { @apply bg-gray-800; }
 
   /* Card */
   .card-red {
+    @apply card;
     /* Border */
     @apply border-red-400;
     @apply dark:border-red-700 dark:border-opacity-70;
@@ -457,8 +458,8 @@ body.dark { @apply bg-gray-800; }
   }
 
   /* Settings Danger Card */
-  .settings-danger-card {
-    @apply card card-body card-red;
+  .org-danger-settings {
+    @apply card-body card-red;
   }
 
   /* Sidebar */

@@ -7,7 +7,7 @@ const OrganizationSettingsDangerCard = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="settings-danger-card">
+    <div className="org-danger-settings">
       <header className="title-group">
         <div className="title-icon">
           <ExclamationIcon aria-hidden="true" className="icon" />

@@ -1,24 +1,24 @@
-.settings-danger-card .title-icon {
+.org-danger-settings .title-icon {
   @apply flex flex-row items-end;
   @apply space-x-3 space-y-0;
 }
-.settings-danger-card .title-icon .icon {
+.org-danger-settings .title-icon .icon {
   @apply text-red-800 dark:text-red-500;
   @apply h-8 w-8;
 }
 
-.settings-danger-card .action {
+.org-danger-settings .action {
   @apply flex flex-col sm:flex-row sm:items-center sm:justify-between;
   @apply space-x-0 space-y-3 sm:space-x-4 sm:space-y-0;
 }
-.settings-danger-card .action .group {
+.org-danger-settings .action .group {
   @apply space-y-1;
 }
-.settings-danger-card .action .group .hint {
+.org-danger-settings .action .group .hint {
   @apply text-base;
   @apply text-gray-700;
   @apply dark:text-gray-200;
 }
-.settings-danger-card .action button {
+.org-danger-settings .action button {
   @apply flex-shrink-0;
 }
