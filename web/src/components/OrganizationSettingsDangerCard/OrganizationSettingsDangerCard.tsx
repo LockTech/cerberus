@@ -9,11 +9,11 @@ const OrganizationSettingsDangerCard = () => {
   return (
     <div className="settings-danger-card">
       <div className="title-group">
-        <div className="title-icon-group">
+        <div className="title-icon">
           <ExclamationIcon aria-hidden="true" className="icon" />
-          <h3 className="title-red">
+          <h2 className="title-red">
             {t('Organization.Settings.Danger.Card.title')}
-          </h3>
+          </h2>
         </div>
         <p className="hint">
           {t('Organization.Settings.Danger.Card.subtitle')}
