@@ -42,12 +42,12 @@ const AppSettingsModal = () => {
   return (
     <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
       <div className="card card-body">
-        <div className="title-group">
+        <header className="title-group">
           <Modal.Title>{t('App.Settings.Modal.title')}</Modal.Title>
           <Modal.Description>
             {t('App.Settings.Modal.subtitle')}
           </Modal.Description>
-        </div>
+        </header>
         <Form className="form" onSubmit={onSubmit}>
           {/* Theme */}
           <div className="input-group">

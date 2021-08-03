@@ -61,12 +61,12 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
   return (
     <Modal open={open} onClose={() => 0}>
       <div className="card card-body">
-        <div className="title-group">
+        <header className="title-group">
           <Modal.Title>{t('Organization.Create.Modal.title')}</Modal.Title>
           <Modal.Description>
             {t('Organization.Create.Modal.subtitle')}
           </Modal.Description>
-        </div>
+        </header>
         <Form className="form" onSubmit={onSubmit}>
           <div className="input-group">
             <Label
