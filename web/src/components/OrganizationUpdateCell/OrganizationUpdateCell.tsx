@@ -73,10 +73,10 @@ export const Success = ({
 
   return (
     <div className="card card-body">
-      <div className="title-group">
+      <header className="title-group">
         <h2 className="title">{t('Organization.Update.Cell.Success.title')}</h2>
         <p className="hint">{t('Organization.Update.Cell.Success.subtitle')}</p>
-      </div>
+      </header>
       <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
         <div className="input-group">
           <Label
