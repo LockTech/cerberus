@@ -8,12 +8,15 @@ import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY as CurrentAccountQuery } from 'src/hooks/useCurrentAccount'
 
-import type { OrganizationUpdateQuery } from 'types/graphql'
+import type {
+  OrganizationUpdateQuery,
+  OrganizationUpdateMutation,
+} from 'types/graphql'
 
 export const MUTATION = gql`
   mutation OrganizationUpdateMutation($name: String!) {
     organization: updateOrganization(name: $name) {
-      __typename
+      name
     }
   }
 `
@@ -41,17 +44,26 @@ export const Success = ({
   organization,
 }: CellSuccessProps<OrganizationUpdateQuery>) => {
   const formMethods = useForm<OrganizationUpdateFormData>({
-    defaultValues: organization,
-    mode: 'all',
+    defaultValues: {
+      name: organization.name,
+    },
+    mode: 'onSubmit',
   })
+  const { reset } = formMethods
   const { isDirty } = formMethods.formState
 
   const { t } = useTranslation()
 
-  const onCompleted = useCallback(() => {
-    toast.dismiss()
-    toast.success(t('Organization.Update.Cell.Success.success'))
-  }, [t])
+  const onCompleted = useCallback(
+    (data: OrganizationUpdateMutation) => {
+      toast.dismiss()
+      toast.success(t('Organization.Update.Cell.Success.success'))
+
+      const name = data.organization.name
+      reset({ name })
+    },
+    [reset, t]
+  )
   const onError = useCallback(() => {}, [])
 
   const [mutate, { loading }] = useMutation(MUTATION, {
