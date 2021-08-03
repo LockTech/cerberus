@@ -8,7 +8,7 @@ const OrganizationSettingsDangerCard = () => {
 
   return (
     <div className="settings-danger-card">
-      <div className="title-group">
+      <header className="title-group">
         <div className="title-icon">
           <ExclamationIcon aria-hidden="true" className="icon" />
           <h2 className="title-red">
@@ -18,9 +18,9 @@ const OrganizationSettingsDangerCard = () => {
         <p className="hint">
           {t('Organization.Settings.Danger.Card.subtitle')}
         </p>
-      </div>
+      </header>
       <div className="action">
-        <div className="title-group">
+        <div className="group">
           <p className="font-semibold text">
             {t('Organization.Settings.Danger.Card.delete.title')}
           </p>
