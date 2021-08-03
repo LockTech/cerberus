@@ -11,6 +11,8 @@ interface AppbarTitleProps {
  * Updates `AppbarTitleAtom` to the value passed as this components `children`.
  *
  * `children` MUST be a `string`.
+ *
+ * The value of `children` will be used as the `<main>` content's `<h1>` declaration.
  */
 const AppbarTitle = ({ children }: AppbarTitleProps) => {
   const setTitle = useSetRecoilState(AppbarTitleAtom)
