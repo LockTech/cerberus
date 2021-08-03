@@ -194,7 +194,6 @@ body.dark { @apply bg-gray-800; }
   .menu {
     @apply relative;
   }
-
   .menu .menu-items {
     /* Background */
     @apply card;
@@ -205,7 +204,7 @@ body.dark { @apply bg-gray-800; }
     @apply absolute origin-top-right right-0;
     @apply mt-1 py-2 space-y-1;
     @apply w-[15rem];
-    @apply shadow-xl;
+    @apply shadow-lg;
   }
   .menu .menu-item {
     /* Background */
