@@ -54,7 +54,7 @@ export const Success = ({
   }, [t])
   const onError = useCallback(() => {}, [])
 
-  const [mutate, { called, loading }] = useMutation(MUTATION, {
+  const [mutate, { loading }] = useMutation(MUTATION, {
     onCompleted,
     onError,
     refetchQueries: [{ query: QUERY }, { query: CurrentAccountQuery }],
@@ -62,13 +62,13 @@ export const Success = ({
 
   const onSubmit = useCallback(
     (variables: OrganizationUpdateFormData) => {
-      if (called) return
+      if (loading) return
 
       toast.loading(t('Organization.Update.Cell.Success.loading'))
 
       mutate({ variables })
     },
-    [called, mutate, t]
+    [loading, mutate, t]
   )
 
   return (
@@ -87,6 +87,7 @@ export const Success = ({
             {t('Organization.Update.Cell.Success.form.name.label')}
           </Label>
           <TextField
+            autoComplete="organization"
             className="input-primary"
             defaultValue={organization.name}
             errorClassName="input-error"
