@@ -29,7 +29,7 @@ export const ColorModeAtom = selector({
     return colorMode
   },
   set: ({ set }, val: string) => {
-    document.cookie = `theme=${val};max-age=63072000`
+    document.cookie = `theme=${val};max-age=63072000;path=/;secure`
     set(_ColorModeAtom, val)
   },
 })
