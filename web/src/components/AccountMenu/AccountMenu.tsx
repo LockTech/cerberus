@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { Menu, Transition } from '@headlessui/react'
@@ -43,21 +44,27 @@ const AccountMenu = () => {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="menu-items">
-            <Menu.Item
-              as="button"
-              className="menu-item"
-              onClick={() => setSettingsModalOpen(true)}
-            >
-              <CogIcon aria-hidden="true" className="icon" />
-              {t('AccountMenu.items.settings')}
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={clsx('menu-item', active && 'active')}
+                  onClick={() => setSettingsModalOpen(true)}
+                >
+                  <CogIcon aria-hidden="true" className="icon" />
+                  {t('AccountMenu.items.settings')}
+                </button>
+              )}
             </Menu.Item>
-            <Menu.Item
-              as="button"
-              className="menu-item logout"
-              onClick={() => logOut()}
-            >
-              <LogoutIcon aria-hidden="true" className="icon" />
-              {t('AccountMenu.items.logout')}
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={clsx('menu-item logout', active && 'active')}
+                  onClick={() => logOut()}
+                >
+                  <LogoutIcon aria-hidden="true" className="icon" />
+                  {t('AccountMenu.items.logout')}
+                </button>
+              )}
             </Menu.Item>
           </Menu.Items>
         </Transition>

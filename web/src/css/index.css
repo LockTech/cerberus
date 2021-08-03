@@ -44,7 +44,7 @@ body.dark { @apply bg-gray-800; }
 
   /* Typograph */
   .hint {
-    @apply text-gray-400;
+    @apply text-gray-500;
     @apply dark:text-gray-300;
     @apply text-sm;
   }
@@ -209,8 +209,8 @@ body.dark { @apply bg-gray-800; }
   }
   .menu .menu-item {
     /* Background */
-    @apply bg-white hover:bg-gray-50 active:bg-gray-100;
-    @apply dark:bg-gray-900 dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:bg-opacity-25;
+    @apply bg-white;
+    @apply dark:bg-gray-900;
     /* Border */
     @apply border border-transparent;
     /* Text */
@@ -225,9 +225,10 @@ body.dark { @apply bg-gray-800; }
     @apply px-3 py-2;
     @apply w-full;
   }
-  .menu .menu-item .icon {
-    @apply h-4 w-4;
-    @apply mr-4;
+  .menu .menu-item.active {
+    /* Background */
+    @apply bg-gray-100;
+    @apply dark:bg-gray-700 dark:bg-opacity-40;
   }
   .menu .menu-item.logout {
     /* Text */
@@ -236,6 +237,10 @@ body.dark { @apply bg-gray-800; }
     /* Misc */
     @apply focus-red;
   }
+  .menu .menu-item .icon {
+    @apply h-4 w-4;
+    @apply mr-4;
+  }
 
   /* Modal */
   .modal {
@@ -243,13 +248,14 @@ body.dark { @apply bg-gray-800; }
     @apply overflow-y-hidden;
   }
   .modal-overlay {
-    @apply bg-gray-900 bg-opacity-60;
+    @apply bg-gray-800 bg-opacity-80;
+    @apply dark:bg-gray-900 dark:bg-opacity-80;
     @apply fixed inset-0 z-30;
   }
   .modal-layout {
     @apply absolute inset-0 z-40;
     @apply p-6 md:pt-12;
-    @apply pointer-events-auto sm:pointer-events-none;
+    @apply pointer-events-none;
     @apply overflow-y-auto sm:overflow-y-hidden;
   }
   .modal-body {
