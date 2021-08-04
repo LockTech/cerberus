@@ -1,5 +1,5 @@
 import { ValidationError } from '@redwoodjs/api'
-import { logger } from 'src/lib/logger'
+
 import { isStr } from 'src/util/asserters'
 
 export const ValidEmailRegEx =
@@ -10,26 +10,22 @@ interface EmailInput {
 }
 
 export const validateEmail = (
-  name: string,
+  _name: string,
   { input: { email } }: { input: EmailInput }
 ) => {
   if (email === undefined || email === null) {
-    logger.warn(`[${name}]: Could not validate email exist.`)
     throw new ValidationError('email-required')
   }
 
   if (!isStr(email) || email === '') {
-    logger.warn(`[${name}]: Could not validate email was a string.`)
     throw new ValidationError('email-invalid')
   }
 
   if (email.length > 254) {
-    logger.warn(`[${name}]: Email exceeds maximum length.`)
     throw new ValidationError('email-length')
   }
 
   if (email.match(ValidEmailRegEx) === null) {
-    logger.warn(`[${name}]: Email contains invalid character.`)
     throw new ValidationError('email-reserved')
   }
 }
