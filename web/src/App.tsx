@@ -20,7 +20,7 @@ const App = () => {
               <Toaster
                 toastOptions={{
                   className: 'toast',
-                  duration: 2000,
+                  duration: 3000,
                   position: 'bottom-right',
                   error: {
                     iconTheme: {
