@@ -18,7 +18,7 @@ export const validateEmail = (
     throw new ValidationError('email-required')
   }
 
-  if (!isStr(email)) {
+  if (!isStr(email) || email === '') {
     logger.warn(`[${name}]: Could not validate email was a string.`)
     throw new ValidationError('email-invalid')
   }

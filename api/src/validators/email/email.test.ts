@@ -51,6 +51,12 @@ describe('email validator', () => {
     ).toThrow(InvalidError)
   })
 
+  it('throws when email is an empty string', () => {
+    expect(() => validateEmail(ServiceName, { input: { email: '' } })).toThrow(
+      InvalidError
+    )
+  })
+
   it('throws when email is longer than 254 characters', () => {
     expect(() =>
       validateEmail(ServiceName, {
@@ -66,27 +72,33 @@ describe('email validator', () => {
     expect(() =>
       validateEmail(ServiceName, { input: { email: 'foobar$@example.com' } })
     ).toThrow(CharacterError)
+    //
     expect(() =>
       validateEmail(ServiceName, {
         input: { email: 'fodad#fa2$17sdf(fa|fa!d@example.com' },
       })
     ).toThrow(CharacterError)
+    //
     expect(() =>
       validateEmail(ServiceName, { input: { email: "fodad'obar@example.com" } })
     ).toThrow(CharacterError)
+    //
     expect(() =>
       validateEmail(ServiceName, { input: { email: 'fodad"obar@example.com' } })
     ).toThrow(CharacterError)
+    //
     expect(() =>
       validateEmail(ServiceName, {
         input: { email: 'fodadconsole.log("obar");@example.com' },
       })
     ).toThrow(CharacterError)
+    //
     expect(() =>
       validateEmail(ServiceName, {
         input: { email: 'foda_adwk@ex_ample.com' },
       })
     ).toThrow(CharacterError)
+    //
     expect(() =>
       validateEmail(ServiceName, {
         input: { email: 'fo..da_adwk@example.com' },
