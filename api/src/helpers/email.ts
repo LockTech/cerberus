@@ -1,3 +1,5 @@
+import { resolve } from 'path'
+
 import { transporter } from 'src/lib/smtp'
 import { template } from 'src/lib/template'
 import type { TemplateData } from 'src/lib/template'
@@ -6,11 +8,13 @@ import { readFile } from 'src/util/readFile'
 
 const from = process.env.EMAIL_FROM
 
-const EmailSignupFilePath = `${process.cwd()}/emails/signup.html`
-const EmailSignupSubject = process.env.EMAIL_SIGNUP_SUBJECT
+const EmailDirectory = resolve(__dirname, '../../emails')
 
-const EmailInviteFilePath = `${process.cwd()}/emails/invite.html`
+const EmailInviteFilePath = `${EmailDirectory}/invite.html`
 const EmailInviteSubject = process.env.EMAIL_INVITE_SUBJECT
+
+const EmailSignupFilePath = `${EmailDirectory}/signup.html`
+const EmailSignupSubject = process.env.EMAIL_SIGNUP_SUBJECT
 
 // ==
 export interface SendMailOptions {
