@@ -9,19 +9,19 @@ import {
   validateCurrentUser,
   validateAccountOrganization,
 } from 'src/validators/account'
-import { isDefined, isStr } from 'src/util/asserters'
+import {
+  validateOrganizationExist,
+  validateOrganizationName,
+} from 'src/validators/organization'
 
-// Used when the environment variable REDWOOD_SECURE_SERVICES=1
+// ==
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add([validateCurrentUser])
   rules.add([validateAccountOrganization], { except: ['createOrganization'] })
-}
-
-// == Helpers
-const isNameValid = (name: unknown) => {
-  if (!isStr(name)) return false
-  if (name === '') return false
-  else return true
+  rules.add([validateOrganizationExist], { except: ['createOrganization'] })
+  rules.add([validateOrganizationName], {
+    only: ['createOrganization', 'updateOrganization'],
+  })
 }
 //
 
@@ -32,18 +32,12 @@ export interface CreateOrganizationArgs {
 }
 /**
  * @throws
- *  * 'name-required' - When `name` is not a string or equals `''`.
  *  * 'name-taken' - When `name` is in use by another organization; case insensitive.
  *  * 'already-member' - When the creating account is already a member of an organization.
  *  * 'create' - When the organization cannot be created in the DB.
  */
 export const createOrganization = async ({ name }: CreateOrganizationArgs) => {
-  if (!isNameValid(name)) {
-    throw new Error('name-required')
-  }
-
-  const exist = await checkOrganizationExist({ name })
-  if (exist) {
+  if (await checkOrganizationExist({ name })) {
     throw new Error('name-taken')
   }
 
@@ -85,12 +79,10 @@ export const createOrganization = async ({ name }: CreateOrganizationArgs) => {
 
 // == R
 //
-export interface CheckOrganizationExistArgs {
+interface CheckOrganizationExistArgs {
   name?: string
 }
-export const checkOrganizationExist = async ({
-  name,
-}: CheckOrganizationExistArgs) => {
+const checkOrganizationExist = async ({ name }: CheckOrganizationExistArgs) => {
   let count: number
 
   try {
@@ -139,18 +131,15 @@ export interface UpdateOrganizationArgs {
 }
 /**
  * @throws
- *  * 'invalid-name' - When `name` is defined but not a string, or equals `''`.
+ *  * 'name-taken' - When `name` is in use by another organization; case insensitive.
  *  * 'update' - When there is an error updating the organization in the DB.
  */
 export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
-  if (!isDefined(name) && !isNameValid(name)) {
-    throw new Error('invalid-name')
+  if (await checkOrganizationExist({ name })) {
+    throw new Error('name-taken')
   }
 
   const id = getContextUser().organizationId
-
-  // https://www.prisma.io/docs/concepts/components/prisma-client/null-and-undefined
-  name = name === null ? undefined : name
 
   let res: Organization
 

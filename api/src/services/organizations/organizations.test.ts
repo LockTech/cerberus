@@ -1,9 +1,18 @@
 import type { Account, Organization } from '@prisma/client'
 import { db } from 'src/lib/db'
 
-import { createOrganization, organization } from './organizations'
+import {
+  createOrganization,
+  organization,
+  updateOrganization,
+} from './organizations'
 
 import type { OrganizationStandard } from './organizations.scenarios'
+
+const NameTakenError = {
+  name: 'Error',
+  message: 'name-taken',
+}
 
 describe('organization service', () => {
   describe('create', () => {
@@ -13,22 +22,13 @@ describe('organization service', () => {
         const one = scenario.organization.one as Organization
         let name = one.name
 
-        expect(createOrganization({ name })).rejects.toThrow({
-          name: 'SyntaxError',
-          message: 'name-taken',
-        })
+        expect(createOrganization({ name })).rejects.toThrow(NameTakenError)
 
         name = one.name.toLowerCase()
-        expect(createOrganization({ name })).rejects.toThrow({
-          name: 'Error',
-          message: 'name-taken',
-        })
+        expect(createOrganization({ name })).rejects.toThrow(NameTakenError)
 
         name = one.name.toUpperCase()
-        expect(createOrganization({ name })).rejects.toThrow({
-          name: 'Error',
-          message: 'name-taken',
-        })
+        expect(createOrganization({ name })).rejects.toThrow(NameTakenError)
       }
     )
 
@@ -43,37 +43,6 @@ describe('organization service', () => {
         expect(createOrganization({ name })).rejects.toThrow({
           name: 'Error',
           message: 'already-member',
-        })
-      }
-    )
-
-    scenario(
-      'throws when "name" is not a valid string',
-      async (scenario: OrganizationStandard) => {
-        const account = scenario.account.two as Account
-        const id = account.id
-        mockCurrentUser({ id })
-
-        const name = 55
-        // @ts-expect-error checking failing functionality
-        expect(createOrganization({ name })).rejects.toThrow({
-          name: 'Error',
-          message: 'name-required',
-        })
-      }
-    )
-
-    scenario(
-      'throws when "name" is an empty string',
-      async (scenario: OrganizationStandard) => {
-        const account = scenario.account.two as Account
-        const id = account.id
-        mockCurrentUser({ id })
-
-        const name = ''
-        expect(createOrganization({ name })).rejects.toThrow({
-          name: 'Error',
-          message: 'name-required',
         })
       }
     )
@@ -127,6 +96,68 @@ describe('organization service', () => {
         const res = await organization()
 
         expect(res).toEqual(expect.objectContaining<Organization>(one))
+      }
+    )
+  })
+
+  describe('update', () => {
+    scenario(
+      'throws when "name" is in use by another organization',
+      async (scenario: OrganizationStandard) => {
+        const org1 = scenario.organization.one as Organization
+        const org2 = scenario.organization.two as Organization
+
+        const acc = scenario.account.two as Account
+        mockCurrentUser({ id: acc.id, organizationId: org1.id })
+
+        let name = org2.name
+        expect(updateOrganization({ name })).rejects.toThrow(NameTakenError)
+
+        name = org2.name.toLowerCase()
+        expect(updateOrganization({ name })).rejects.toThrow(NameTakenError)
+
+        name = org2.name.toUpperCase()
+        expect(updateOrganization({ name })).rejects.toThrow(NameTakenError)
+      }
+    )
+
+    scenario(
+      'updates the "name" of an organization',
+      async (scenario: OrganizationStandard) => {
+        const org = scenario.organization.one as Organization
+        const id = org.id
+
+        const acc = scenario.account.one as Account
+        mockCurrentUser({ id: acc.id, organizationId: id })
+
+        const name = 'This new name rules!'
+        const res = await updateOrganization({ name })
+
+        const dbRes = await db.organization.findUnique({ where: { id } })
+
+        expect(res.name).toBe(name)
+        expect(dbRes.name).toBe(res.name)
+      }
+    )
+
+    scenario(
+      'only allows for the updating of an organization\'s "name"',
+      async (scenario: OrganizationStandard) => {
+        const org = scenario.organization.one as Organization
+        const id = org.id
+
+        const acc = scenario.account.one as Account
+        mockCurrentUser({ id: acc.id, organizationId: id })
+
+        const name = "some new name cause it's required"
+        const updateId = '1'
+        // @ts-expect-error checking failing functionality
+        const res = await updateOrganization({ id: updateId, name })
+
+        const dbRes = await db.organization.findUnique({ where: { id } })
+
+        expect(res.id).toBe(id)
+        expect(dbRes.id).toBe(res.id)
       }
     )
   })
