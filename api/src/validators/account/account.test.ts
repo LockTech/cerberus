@@ -7,30 +7,31 @@ import {
 
 const ServiceName = 'foo'
 
-const AuthError: Error = {
-  name: 'ValidationError',
-  message: 'authentication',
-}
-
 describe('account validator', () => {
   it("throws if current request's user is undefined", () => {
     mockCurrentUser(undefined)
+    expect(() => validateCurrentUser(ServiceName)).toThrow({
+      name: 'ValidationError',
+      message: 'account-invalid',
+    })
 
-    expect(() => {
-      validateCurrentUser(ServiceName)
-    }).toThrow(AuthError)
+    mockCurrentUser({})
+    expect(() => validateCurrentUser(ServiceName)).not.toThrow()
   })
   it("throws if current current request's user is null", () => {
-    mockCurrentUser(null)
+    mockCurrentUser(undefined)
+    expect(() => validateCurrentUser(ServiceName)).toThrow({
+      name: 'ValidationError',
+      message: 'account-invalid',
+    })
 
-    expect(() => {
-      validateCurrentUser(ServiceName)
-    }).toThrow(AuthError)
+    mockCurrentUser({ id: 'Hey look, an ID' })
+    expect(() => validateCurrentUser(ServiceName)).not.toThrow()
   })
   it('throws if organizationId cannot be validated', () => {
     expect(() => validateAccountOrganization(ServiceName)).toThrow({
       name: 'ValidationError',
-      message: 'invalid-organizationId',
+      message: 'account-organizationId-invalid',
     })
     mockCurrentUser({ organizationId: '1' })
     expect(() => validateAccountOrganization(ServiceName)).not.toThrow()
@@ -38,7 +39,7 @@ describe('account validator', () => {
   it('throws if ID cannot be validated', () => {
     expect(() => validateAccountId(ServiceName)).toThrow({
       name: 'ValidationError',
-      message: 'invalid-accountId',
+      message: 'account-id-invalid',
     })
     mockCurrentUser({ id: '1' })
     expect(() => validateAccountId(ServiceName)).not.toThrow()
@@ -46,7 +47,7 @@ describe('account validator', () => {
   it('throws if accountName cannot be validated', () => {
     expect(() => validateAccountName(ServiceName)).toThrow({
       name: 'ValidationError',
-      message: 'invalid-accountName',
+      message: 'account-name-invalid',
     })
     mockCurrentUser({ firstName: 'John', lastName: 'Doe' })
     expect(() => validateAccountName(ServiceName)).not.toThrow()
