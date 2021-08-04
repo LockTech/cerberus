@@ -1,4 +1,5 @@
 import type { Organization } from '@prisma/client'
+import { UserInputError } from '@redwoodjs/api'
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
@@ -38,7 +39,7 @@ export interface CreateOrganizationArgs {
  */
 export const createOrganization = async ({ name }: CreateOrganizationArgs) => {
   if (await checkOrganizationExist({ name })) {
-    throw new Error('organization-name-taken')
+    throw new UserInputError('organization-name-taken')
   }
 
   const currentAccount = getContextUser()
@@ -117,7 +118,7 @@ export const organization = async () => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting organization.')
-    throw new Error('organization-get')
+    throw new UserInputError('organization-get')
   }
 
   return res
@@ -131,12 +132,12 @@ export interface UpdateOrganizationArgs {
 }
 /**
  * @throws
- *  * 'name-taken' - When `name` is in use by another organization; case insensitive.
+ *  * 'organization-name-taken' - When `name` is in use by another organization; case insensitive.
  *  * 'organization-update' - When there is an error updating the organization in the DB.
  */
 export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
   if (await checkOrganizationExist({ name })) {
-    throw new Error('organization-name-taken')
+    throw new UserInputError('organization-name-taken')
   }
 
   const id = getContextUser().organizationId
@@ -150,7 +151,7 @@ export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error updating organization.')
-    throw new Error('organization-update')
+    throw new UserInputError('organization-update')
   }
 
   return res

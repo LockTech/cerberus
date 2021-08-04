@@ -1,4 +1,5 @@
 import type { Account_Confirmation } from '@prisma/client'
+import { UserInputError } from '@redwoodjs/api'
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
@@ -38,7 +39,7 @@ export const createInviteConfirm = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating invitation confirmation.')
-    throw new Error('account-confirmation-create')
+    throw new UserInputError('account-confirmation-create')
   }
 
   return true
@@ -65,7 +66,7 @@ export const createSignupConfirm = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating signup confirmation.')
-    throw new Error('account-confirmation-create')
+    throw new UserInputError('account-confirmation-create')
   }
 
   return true
@@ -107,7 +108,7 @@ export const confirmInvitation = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting invitation confirmation.')
-    throw new Error('account-confirmation-get')
+    throw new UserInputError('account-confirmation-get')
   }
 
   if (res === null) return false
@@ -160,7 +161,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting signup confirmaton.')
-    throw new Error('account-confirmation-get')
+    throw new UserInputError('account-confirmation-get')
   }
 
   if (res === null) return false
@@ -174,7 +175,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error verifying account.')
-    throw new Error('account-confirmation-update')
+    throw new UserInputError('account-confirmation-update')
   }
 
   const id = res.id
@@ -184,7 +185,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error deleting signup confirmation.')
-    throw new Error('account-confirmation-delete')
+    throw new UserInputError('account-confirmation-delete')
   }
 
   return true

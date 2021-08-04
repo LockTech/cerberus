@@ -6,7 +6,7 @@ export const validateOrganizationExist = () => {
 }
 
 interface NameInput {
-  input: { name: string }
+  name: string
 }
 /**
  * @throws
@@ -14,7 +14,7 @@ interface NameInput {
  */
 export const validateOrganizationName = (
   _service: string,
-  { input: { name } }: NameInput
+  { name }: NameInput
 ) => {
   if (!isStr(name) || name === '') {
     throw new ValidationError('organization-name-invalid')

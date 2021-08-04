@@ -1,4 +1,4 @@
-import { ValidationError } from '@redwoodjs/api'
+import { ValidationError, UserInputError } from '@redwoodjs/api'
 
 import { sendSignupEmail } from 'src/helpers/email'
 
@@ -43,7 +43,7 @@ const handleInvitation = async ({
   salt,
 }: HandleInvitationOptions) => {
   if (!(await confirmInvitation({ code, email }))) {
-    throw new ValidationError('invite-code-invalid')
+    throw new UserInputError('invite-code-invalid')
   }
 
   try {
@@ -60,7 +60,7 @@ const handleInvitation = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating invited account.')
-    throw new Error('invite-create-account')
+    throw new UserInputError('invite-create-account')
   }
 
   return InviteRes
@@ -95,7 +95,7 @@ const handleSignup = async ({
     await createSignupConfirm({ code, email })
   } catch (err) {
     logger.error({ err }, 'Error creating signup confirmation.')
-    throw new Error('signup-confirm-create')
+    throw new UserInputError('signup-confirm-create')
   }
 
   // email
@@ -107,7 +107,7 @@ const handleSignup = async ({
     await sendSignupEmail({ data, email })
   } catch (err) {
     logger.error({ err }, 'Error sending signup confirmation email.')
-    throw new Error('signup-email-send')
+    throw new UserInputError('signup-email-send')
   }
 
   // create
@@ -124,7 +124,7 @@ const handleSignup = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating signed up account.')
-    throw new ValidationError('signup-create-account')
+    throw new UserInputError('signup-create-account')
   }
 
   return SignupRes

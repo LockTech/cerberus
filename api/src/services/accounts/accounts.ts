@@ -1,4 +1,5 @@
 import type { Account } from '@prisma/client'
+import { UserInputError } from '@redwoodjs/api'
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
 import { sendInviteEmail } from 'src/helpers/email'
@@ -55,7 +56,7 @@ const removeAuthFields = (acc: Account) => {
  */
 export const inviteMember = async ({ email }) => {
   if (await checkEmailExist({ email })) {
-    throw new SyntaxError('account-email-taken')
+    throw new UserInputError('account-email-taken')
   }
 
   const organization = await getOrganization()
@@ -70,7 +71,7 @@ export const inviteMember = async ({ email }) => {
   try {
     await createInviteConfirm({ code, email, organizationId })
   } catch (err) {
-    throw new Error('account-create-confirm')
+    throw new UserInputError('account-create-confirm')
   }
 
   const data = {
@@ -82,7 +83,7 @@ export const inviteMember = async ({ email }) => {
     await sendInviteEmail({ data, email })
   } catch (err) {
     logger.error({ err }, 'Error sending invitation email.')
-    throw new Error('account-email-send')
+    throw new UserInputError('account-email-send')
   }
 
   return true
@@ -108,7 +109,7 @@ export const account = async ({ id }: { id: string }) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting an account.')
-    throw new Error('account-get')
+    throw new UserInputError('account-get')
   }
 
   res = removeAuthFields(res)
@@ -131,7 +132,7 @@ export const accounts = async () => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting accounts.')
-    throw new Error('account-get')
+    throw new UserInputError('account-get')
   }
 
   res = res.map((acc) => removeAuthFields(acc))
@@ -164,7 +165,7 @@ export const currentAccount = async () => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting currentAccount.')
-    throw new Error('account-get')
+    throw new UserInputError('account-get')
   }
 
   res = removeAuthFields(res)

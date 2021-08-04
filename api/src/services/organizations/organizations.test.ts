@@ -10,11 +10,11 @@ import {
 import type { OrganizationStandard } from './organizations.scenarios'
 
 const MemberError = {
-  name: 'Error',
+  name: 'UserInputError',
   message: 'organization-already-member',
 }
 const NameTakenError = {
-  name: 'Error',
+  name: 'UserInputError',
   message: 'organization-name-taken',
 }
 

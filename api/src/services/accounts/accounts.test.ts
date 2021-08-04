@@ -6,7 +6,7 @@ import { account, accounts, currentAccount, inviteMember } from './accounts'
 import type { AccountStandard } from './accounts.scenarios'
 
 const TakenError: Error = {
-  name: 'SyntaxError',
+  name: 'UserInputError',
   message: 'account-email-taken',
 }
 
