@@ -58,11 +58,7 @@ const SignupPage = () => {
       toast.dismiss()
 
       if (error.message) {
-        if (!error.name) {
-          toast.error(error.message)
-        } else {
-          toast.error(t(`Signup.Page.Errors.${error.message}`))
-        }
+        toast.error(t(`Signup.Page.Errors.${error.message}`, error.message))
       } else {
         toast.success(t('Signup.Page.success'))
 

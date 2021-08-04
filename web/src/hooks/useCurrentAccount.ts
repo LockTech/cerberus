@@ -36,7 +36,9 @@ export const useQueryCurrentAccount = () => {
   )
   const onError = useCallback(
     (error: Error) => {
-      toast.error(t(`CurrentAccount.hook.error.${error.message}`))
+      toast.error(
+        t(`CurrentAccount.hook.errors.${error.message}`, error.message)
+      )
     },
     [t]
   )

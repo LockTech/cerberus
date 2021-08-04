@@ -51,7 +51,9 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
   const onError = useCallback(
     (error: Error) => {
       toast.dismiss()
-      toast.error(t(`Signup.Confirmation.Page.Errors.${error.message}`))
+      toast.error(
+        t(`Signup.Confirmation.Page.errors.${error.message}`, error.message)
+      )
     },
     [t]
   )

@@ -52,8 +52,8 @@
     "hook": {
       "loading": "Fetching your account.",
       "success": "Successfully fetched your account.",
-      "error": {
-        "get": "Error fetching your account."
+      "errors": {
+        "account-get": "Error fetching your account."
       }
     },
     "Layout": {
@@ -205,25 +205,14 @@
         "success": "Your account has been confirmed.",
         "login": "Please login to finish creating your organization.",
         "failure": "Your account could not be confirmed.",
-        "Errors": {
-          "get": "Error retrieving confirmation details.",
-          "verify": "Error verifying account after confirmation.",
-          "delete": "Error deleting confirmation details."
+        "errors": {
+          "account-confirmation-get": "Error retrieving confirmation details.",
+          "account-confirmation-update": "Error verifying account after confirmation.",
+          "account-confirmation-delete": "Error deleting confirmation details."
         }
       }
     },
     "Page": {
-      "Errors": {
-        "invalid-code": "A confirmation code is not required in this stage of signup.",
-        "email-required": "An email address is required to signup.",
-        "email-invalid": "An invalid email address was recieved.",
-        "email-length": "Your email has exceeded the maximum allowed length.",
-        "email-reserved": "Your email address contains an invalid character.",
-        "name-required": "Your first and last name are required to signup.",
-        "confirm-create": "An error occured trying to setup confirmation for your account.",
-        "confirm-email": "An error occured trying to send your confirmation email.",
-        "create": "An error occured trying to create your account."
-      },
       "Helmet": {
         "title": "Sign Up • Cerberus"
       },
@@ -261,7 +250,18 @@
       "account": "Already have an account?",
       "login": "Login",
       "loading": "Signing up your account.",
-      "success": "A confirmation code has been sent to your email address."
+      "success": "A confirmation code has been sent to your email address.",
+      "errors": {
+        "email-required": "An email address is required to signup.",
+        "email-invalid": "An invalid email address was recieved.",
+        "email-length": "Your email has exceeded the maximum allowed length.",
+        "email-reserved": "Your email address contains an invalid character.",
+        "signup-invalid-code": "A confirmation code is not required in this stage of signup.",
+        "signup-name-required": "Your first and last name are required to signup.",
+        "signup-create-confirm": "An error occured trying to setup confirmation for your account.",
+        "signup-email-send": "An error occured trying to send your confirmation email.",
+        "signup-create-account": "An error occured trying to create your account."
+      }
     }
   }
 }
