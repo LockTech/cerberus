@@ -17,11 +17,8 @@ export const readFile = (path: string) => {
   try {
     res = readFileSync(path).toString()
   } catch (err) {
-    logger.error(
-      { err, path },
-      'An error occured trying to read a file from disk.'
-    )
-    throw new Error('Error trying to read a file from disk.')
+    logger.error({ err, path }, 'Error trying to read file.')
+    throw new Error('Error trying to read file.')
   }
 
   return res
