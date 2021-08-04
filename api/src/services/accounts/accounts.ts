@@ -49,13 +49,13 @@ const removeAuthFields = (acc: Account) => {
 // == C
 /**
  * @throws
- *  * 'email-taken' - When the email provided is already in use.
- *  * 'create-confirm' - When an error occurs creating the invitation.
- *  * 'email-send' - When an error occurs sending the invitation email.
+ *  * 'account-email-taken' - When the email provided is already in use.
+ *  * 'account-create-confirm' - When an error occurs creating the invitation.
+ *  * 'account-email-send' - When an error occurs sending the invitation email.
  */
 export const inviteMember = async ({ email }) => {
   if (await checkEmailExist({ email })) {
-    throw new SyntaxError('email-taken')
+    throw new SyntaxError('account-email-taken')
   }
 
   const organization = await getOrganization()
@@ -70,7 +70,7 @@ export const inviteMember = async ({ email }) => {
   try {
     await createInviteConfirm({ code, email, organizationId })
   } catch (err) {
-    throw new Error('create-confirm')
+    throw new Error('account-create-confirm')
   }
 
   const data = {
@@ -82,7 +82,7 @@ export const inviteMember = async ({ email }) => {
     await sendInviteEmail({ data, email })
   } catch (err) {
     logger.error({ err }, 'Error sending invitation email.')
-    throw new Error('email-send')
+    throw new Error('account-email-send')
   }
 
   return true
@@ -92,7 +92,7 @@ export const inviteMember = async ({ email }) => {
 // == R
 /**
  * @throws
- *  * 'get' - When an error occurs retrieving an account from the DB.
+ *  * 'account-get' - When an error occurs retrieving an account from the DB.
  */
 export const account = async ({ id }: { id: string }) => {
   const organizationId = getContextUser().organizationId
@@ -108,7 +108,7 @@ export const account = async ({ id }: { id: string }) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting an account.')
-    throw new Error('get')
+    throw new Error('account-get')
   }
 
   res = removeAuthFields(res)
@@ -118,7 +118,7 @@ export const account = async ({ id }: { id: string }) => {
 
 /**
  * @throws
- *  * 'get' - When an error occurs retrieving accounts from the DB.
+ *  * 'account-get' - When an error occurs retrieving accounts from the DB.
  */
 export const accounts = async () => {
   const organizationId = getContextUser().organizationId
@@ -131,7 +131,7 @@ export const accounts = async () => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting accounts.')
-    throw new Error('get')
+    throw new Error('account-get')
   }
 
   res = res.map((acc) => removeAuthFields(acc))
@@ -150,7 +150,7 @@ const checkEmailExist = async ({ email }: CheckEmailExistArgs) => {
 
 /**
  * @throws
- *  * 'get' - When an error occurs retrieving an account from the DB.
+ *  * 'account-get' - When an error occurs retrieving an account from the DB.
  */
 export const currentAccount = async () => {
   const id = getContextUser().id
@@ -164,7 +164,7 @@ export const currentAccount = async () => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting currentAccount.')
-    throw new Error('get')
+    throw new Error('account-get')
   }
 
   res = removeAuthFields(res)

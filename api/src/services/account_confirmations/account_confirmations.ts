@@ -13,12 +13,16 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 }
 //
 
-// ==
+// == C
 export interface CreateInviteConfirmArgs {
   code: string
   email: string
   organizationId: string
 }
+/**
+ * @throws
+ *  * 'account-confirmation-create' - When there is an error creating the AccountConfirmation in the DB.
+ */
 export const createInviteConfirm = async ({
   code,
   email,
@@ -34,7 +38,7 @@ export const createInviteConfirm = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating invitation confirmation.')
-    throw new Error('create')
+    throw new Error('account-confirmation-create')
   }
 
   return true
@@ -44,6 +48,10 @@ export interface CreateSignupConfirmArgs {
   code: string
   email: string
 }
+/**
+ * @throws
+ *  * 'account-confirmation-create' - When there is an error creating the AccountConfirmation in the DB.
+ */
 export const createSignupConfirm = async ({
   code,
   email,
@@ -57,14 +65,14 @@ export const createSignupConfirm = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating signup confirmation.')
-    throw new Error('create')
+    throw new Error('account-confirmation-create')
   }
 
   return true
 }
 //
 
-// ==
+// == R
 export interface ConfirmInvitationArgs {
   code: string
   email: string
@@ -78,8 +86,8 @@ export interface ConfirmInvitationArgs {
  *  * `false` if the combination are **not** valid.
  *  * `true` if the combination is valid.
  * @throws
- *  * 'get' - When there is an error retrieving the Account_Confirmation from the DB.
- *  * 'delete' - When there is an error deleting the Account_Confirmation from the DB.
+ *  * 'account-confirmation-get' - When there is an error retrieving the Account_Confirmation from the DB.
+ *  * 'account-confirmation-delete' - When there is an error deleting the Account_Confirmation from the DB.
  */
 export const confirmInvitation = async ({
   code,
@@ -99,7 +107,7 @@ export const confirmInvitation = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting invitation confirmation.')
-    throw new Error('get')
+    throw new Error('account-confirmation-get')
   }
 
   if (res === null) return false
@@ -113,7 +121,7 @@ export const confirmInvitation = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error deleting invitation confirmation.')
-    throw new Error('delete')
+    throw new Error('account-confirmation-delete')
   }
 
   return true
@@ -133,10 +141,9 @@ export interface ConfirmSignupArgs {
  *  * `false` if the combination are **not** valid.
  *  * `true` if the combination is valid.
  * @throws
- *  * 'account-exist' - When the referenced email does not have a valid Account in the DB.
- *  * 'get' - When there is an error retrieving the Account_Confirmation from the DB.
- *  * 'update' - When there is an error updating the confirmed account in the DB.
- *  * 'delete' - When there is an error deleting the Account_Confirmation from the DB.
+ *  * 'account-confirmation-get' - When there is an error retrieving the Account_Confirmation from the DB.
+ *  * 'account-confirmation-update' - When there is an error updating the confirmed account in the DB.
+ *  * 'account-confirmation-delete' - When there is an error deleting the Account_Confirmation from the DB.
  */
 export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
   let res: Account_Confirmation
@@ -153,7 +160,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting signup confirmaton.')
-    throw new Error('get')
+    throw new Error('account-confirmation-get')
   }
 
   if (res === null) return false
@@ -167,7 +174,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error verifying account.')
-    throw new Error('update')
+    throw new Error('account-confirmation-update')
   }
 
   const id = res.id
@@ -177,7 +184,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error deleting signup confirmation.')
-    throw new Error('delete')
+    throw new Error('account-confirmation-delete')
   }
 
   return true

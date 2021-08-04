@@ -9,9 +9,13 @@ import {
 
 import type { OrganizationStandard } from './organizations.scenarios'
 
+const MemberError = {
+  name: 'Error',
+  message: 'organization-already-member',
+}
 const NameTakenError = {
   name: 'Error',
-  message: 'name-taken',
+  message: 'organization-name-taken',
 }
 
 describe('organization service', () => {
@@ -40,10 +44,7 @@ describe('organization service', () => {
         mockCurrentUser({ id })
 
         const name = 'dragons'
-        expect(createOrganization({ name })).rejects.toThrow({
-          name: 'Error',
-          message: 'already-member',
-        })
+        expect(createOrganization({ name })).rejects.toThrow(MemberError)
       }
     )
 

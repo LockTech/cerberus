@@ -32,13 +32,13 @@ export interface CreateOrganizationArgs {
 }
 /**
  * @throws
- *  * 'name-taken' - When `name` is in use by another organization; case insensitive.
- *  * 'already-member' - When the creating account is already a member of an organization.
- *  * 'create' - When the organization cannot be created in the DB.
+ *  * 'organization-name-taken' - When `name` is in use by another organization; case insensitive.
+ *  * 'organization-already-member' - When the creating account is already a member of an organization.
+ *  * 'organization-create' - When the organization cannot be created in the DB.
  */
 export const createOrganization = async ({ name }: CreateOrganizationArgs) => {
   if (await checkOrganizationExist({ name })) {
-    throw new Error('name-taken')
+    throw new Error('organization-name-taken')
   }
 
   const currentAccount = getContextUser()
@@ -46,7 +46,7 @@ export const createOrganization = async ({ name }: CreateOrganizationArgs) => {
   const accountId = currentAccount.id
 
   if (accountOrgId !== null) {
-    throw new Error('already-member')
+    throw new Error('organization-already-member')
   }
 
   let res: Organization
@@ -70,7 +70,7 @@ export const createOrganization = async ({ name }: CreateOrganizationArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating organization.')
-    throw new Error('create')
+    throw new Error('organization-create')
   }
 
   return res
@@ -104,7 +104,7 @@ const checkOrganizationExist = async ({ name }: CheckOrganizationExistArgs) => {
 
 /**
  * @throws
- *  * 'get' - When an error occurs trying to retrieving the organization from the DB.
+ *  * 'organization-get' - When an error occurs trying to retrieving the organization from the DB.
  */
 export const organization = async () => {
   const id = getContextUser().organizationId
@@ -117,7 +117,7 @@ export const organization = async () => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting organization.')
-    throw new Error('get')
+    throw new Error('organization-get')
   }
 
   return res
@@ -132,11 +132,11 @@ export interface UpdateOrganizationArgs {
 /**
  * @throws
  *  * 'name-taken' - When `name` is in use by another organization; case insensitive.
- *  * 'update' - When there is an error updating the organization in the DB.
+ *  * 'organization-update' - When there is an error updating the organization in the DB.
  */
 export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
   if (await checkOrganizationExist({ name })) {
-    throw new Error('name-taken')
+    throw new Error('organization-name-taken')
   }
 
   const id = getContextUser().organizationId
@@ -150,7 +150,7 @@ export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error updating organization.')
-    throw new Error('update')
+    throw new Error('organization-update')
   }
 
   return res

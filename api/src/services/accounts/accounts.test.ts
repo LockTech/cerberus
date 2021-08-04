@@ -7,7 +7,7 @@ import type { AccountStandard } from './accounts.scenarios'
 
 const TakenError: Error = {
   name: 'SyntaxError',
-  message: 'email-taken',
+  message: 'account-email-taken',
 }
 
 jest.setTimeout(100000)
