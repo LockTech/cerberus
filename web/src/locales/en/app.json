@@ -157,7 +157,12 @@
             "submit": "Update"
           },
           "loading": "Updating your organization.",
-          "success": "Updated your organization."
+          "success": "Updated your organization.",
+          "errors": {
+            "organization-name-invalid": "A name is required when updating your organization.",
+            "organization-name-taken": "That name is already in use by another organization.",
+            "organization-update": "An error occured trying to update your organization."
+          }
         }
       }
     }
