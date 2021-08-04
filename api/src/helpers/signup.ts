@@ -29,6 +29,11 @@ interface HandleInvitationOptions {
   lastName: string
   salt: string
 }
+/**
+ * @throws
+ *  * 'invite-code-invalid' - When the invitation code given is invalid.
+ *  * 'invite-create-account' - When an errror occurs creating the account in the DB.
+ */
 const handleInvitation = async ({
   code,
   email,
@@ -37,10 +42,8 @@ const handleInvitation = async ({
   lastName,
   salt,
 }: HandleInvitationOptions) => {
-  const verifyCode = await confirmInvitation({ code, email })
-
-  if (!verifyCode) {
-    throw new ValidationError('invite-invalid')
+  if (!(await confirmInvitation({ code, email }))) {
+    throw new ValidationError('invite-code-invalid')
   }
 
   try {
@@ -57,7 +60,7 @@ const handleInvitation = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating invited account.')
-    throw new Error('create')
+    throw new Error('invite-create-account')
   }
 
   return InviteRes
@@ -72,6 +75,12 @@ interface HandleSignupOptions {
   lastName: string
   salt: string
 }
+/**
+ * @throws
+ *  * 'signup-create-confirm' - When an error occurs creating the signup confirmation.
+ *  * 'signup-email-send' - When an error occurs sending the confirmation email.
+ *  * 'signup-create-account' - When an error occurs creating the account in the DB.
+ */
 const handleSignup = async ({
   email,
   firstName,
@@ -86,7 +95,7 @@ const handleSignup = async ({
     await createSignupConfirm({ code, email })
   } catch (err) {
     logger.error({ err }, 'Error creating signup confirmation.')
-    throw new Error('confirm-create')
+    throw new Error('signup-confirm-create')
   }
 
   // email
@@ -98,9 +107,10 @@ const handleSignup = async ({
     await sendSignupEmail({ data, email })
   } catch (err) {
     logger.error({ err }, 'Error sending signup confirmation email.')
-    throw new Error('confirm-email')
+    throw new Error('signup-email-send')
   }
 
+  // create
   try {
     await db.account.create({
       data: {
@@ -114,7 +124,7 @@ const handleSignup = async ({
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating signed up account.')
-    throw new ValidationError('create')
+    throw new ValidationError('signup-create-account')
   }
 
   return SignupRes
@@ -128,6 +138,12 @@ interface SignupHandlerOptions {
   salt: string
   userAttributes?: { code: string; firstName: string; lastName: string }
 }
+/**
+ * @throws
+ *  * Any error thrown by `validateEmail`
+ *  * 'signup-name-required' - When `first` and `last` names are not present.
+ *  * 'signup-invalid-code' - When `code` is defined but not a string.
+ */
 export const signupHandler = async ({
   username: email,
   userAttributes: { code, firstName, lastName },
@@ -137,7 +153,7 @@ export const signupHandler = async ({
 
   if (!isStr(firstName) || !isStr(lastName)) {
     logger.warn('Attempted signup without a first and last name.')
-    throw new ValidationError('name-required')
+    throw new ValidationError('signup-name-required')
   }
 
   // Invite
@@ -155,6 +171,6 @@ export const signupHandler = async ({
   // Error
   else {
     logger.warn('Recieved a non-string value for signup "code".')
-    throw new ValidationError('invalid-code')
+    throw new ValidationError('signup-invalid-code')
   }
 }
