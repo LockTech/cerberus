@@ -22,6 +22,7 @@ export const standard = defineScenario({
       organizationId: '0251d504-347b-4880-9783-db6d199e02ee',
       hashedPassword: '',
       salt: '',
+      verified: false,
     },
     two: {
       email: 'foo.baz@acme.corp',
@@ -31,6 +32,7 @@ export const standard = defineScenario({
       organizationId: '0251d504-347b-4880-9783-db6d199e02ee',
       hashedPassword: '',
       salt: '',
+      verified: false,
     },
     three: {
       email: 'john.doe@example.com',
@@ -40,6 +42,7 @@ export const standard = defineScenario({
       organizationId: '9ad110e6-71db-4e83-b9ae-eed8df78e332',
       hashedPassword: '',
       salt: '',
+      verified: false,
     },
   },
 })

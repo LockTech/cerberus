@@ -36,7 +36,23 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 }
 //
 
+// == Helpers
+const removeAuthFields = (acc: Account) => {
+  if (acc) {
+    delete acc.hashedPassword
+    delete acc.salt
+  }
+  return acc
+}
+//
+
 // == C
+/**
+ * @throws
+ *  * 'email-taken' - When the email provided is already in use.
+ *  * 'create-confirm' - When an error occurs creating the invitation.
+ *  * 'email-send' - When an error occurs sending the invitation email.
+ */
 export const inviteMember = async ({ email }) => {
   if (await checkEmailExist({ email })) {
     throw new SyntaxError('email-taken')
@@ -48,6 +64,7 @@ export const inviteMember = async ({ email }) => {
 
   const currentUser = getContextUser()
   const name = `${currentUser.firstName} ${currentUser.lastName}`
+
   const code = randomStr(36)
 
   try {
@@ -73,6 +90,10 @@ export const inviteMember = async ({ email }) => {
 //
 
 // == R
+/**
+ * @throws
+ *  * 'get' - When an error occurs retrieving an account from the DB.
+ */
 export const account = async ({ id }: { id: string }) => {
   const organizationId = getContextUser().organizationId
 
@@ -90,12 +111,15 @@ export const account = async ({ id }: { id: string }) => {
     throw new Error('get')
   }
 
-  delete res.hashedPassword
-  delete res.salt
+  res = removeAuthFields(res)
 
   return res
 }
 
+/**
+ * @throws
+ *  * 'get' - When an error occurs retrieving accounts from the DB.
+ */
 export const accounts = async () => {
   const organizationId = getContextUser().organizationId
 
@@ -110,10 +134,7 @@ export const accounts = async () => {
     throw new Error('get')
   }
 
-  res.forEach((_acc, index) => {
-    delete res[index].hashedPassword
-    delete res[index].salt
-  })
+  res = res.map((acc) => removeAuthFields(acc))
 
   return res
 }
@@ -124,9 +145,13 @@ interface CheckEmailExistArgs {
 const checkEmailExist = async ({ email }: CheckEmailExistArgs) => {
   const res = await db.account.count({ where: { email } })
 
-  return res >= 1 || false
+  return res !== 0
 }
 
+/**
+ * @throws
+ *  * 'get' - When an error occurs retrieving an account from the DB.
+ */
 export const currentAccount = async () => {
   const id = getContextUser().id
 
@@ -142,8 +167,7 @@ export const currentAccount = async () => {
     throw new Error('get')
   }
 
-  delete res.hashedPassword
-  delete res.salt
+  res = removeAuthFields(res)
 
   return res
 }
