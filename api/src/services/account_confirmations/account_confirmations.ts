@@ -30,7 +30,6 @@ export const createInviteConfirm = async ({
         code,
         email,
         organizationId,
-        createdAt: new Date().toISOString(),
       },
     })
   } catch (err) {
@@ -54,7 +53,6 @@ export const createSignupConfirm = async ({
       data: {
         code,
         email,
-        createdAt: new Date().toISOString(),
       },
     })
   } catch (err) {
@@ -74,8 +72,14 @@ export interface ConfirmInvitationArgs {
 /**
  * Determines if a given `code` and `email` combination are valid for an `invitation` to an organization.
  *
- * @returns - `false` if the combination are **not** valid.
- * @returns - the `Account_Confirmation` information if they are.
+ * If the combination are valid, the record in the DB will be deleted.
+ *
+ * @returns
+ *  * `false` if the combination are **not** valid.
+ *  * `true` if the combination is valid.
+ * @throws
+ *  * 'get' - When there is an error retrieving the Account_Confirmation from the DB.
+ *  * 'delete' - When there is an error deleting the Account_Confirmation from the DB.
  */
 export const confirmInvitation = async ({
   code,
@@ -119,6 +123,21 @@ export interface ConfirmSignupArgs {
   code: string
   email: string
 }
+/**
+ * Determines if a given `code` and `email` combination are valid for a new account `signup`.
+ *
+ * If the combination are valid, the record in the DB will be deleted and the account
+ * which was confirmed will be `verified`.
+ *
+ * @returns
+ *  * `false` if the combination are **not** valid.
+ *  * `true` if the combination is valid.
+ * @throws
+ *  * 'account-exist' - When the referenced email does not have a valid Account in the DB.
+ *  * 'get' - When there is an error retrieving the Account_Confirmation from the DB.
+ *  * 'update' - When there is an error updating the confirmed account in the DB.
+ *  * 'delete' - When there is an error deleting the Account_Confirmation from the DB.
+ */
 export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
   let res: Account_Confirmation
 
@@ -148,7 +167,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error verifying account.')
-    throw new Error('verify')
+    throw new Error('update')
   }
 
   const id = res.id
