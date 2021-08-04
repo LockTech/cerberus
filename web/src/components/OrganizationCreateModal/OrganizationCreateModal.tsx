@@ -37,12 +37,17 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
     },
     [t]
   )
-  const onError = useCallback((error: Error) => {
-    toast.dismiss()
-    toast.error(error.message)
-  }, [])
+  const onError = useCallback(
+    (error: Error) => {
+      toast.dismiss()
+      toast.error(
+        t(`Organization.Create.Modal.errors.${error.message}`, error.message)
+      )
+    },
+    [t]
+  )
 
-  const [mutate, { called, loading }] = useMutation(MUTATION, {
+  const [mutate, { loading }] = useMutation(MUTATION, {
     onCompleted,
     onError,
     refetchQueries: [{ query: QUERY }],
@@ -50,12 +55,12 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
 
   const onSubmit = useCallback(
     (data: CreateOrganizationFormData) => {
-      if (!called) {
+      if (!loading) {
         mutate({ variables: data })
         toast.loading(t('Organization.Create.Modal.loading'))
       }
     },
-    [called, mutate, t]
+    [loading, mutate, t]
   )
 
   return (
@@ -94,7 +99,7 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
             </Label>
           </div>
           <Submit
-            disabled={called || loading}
+            disabled={loading}
             className="button-primary-fill form-button"
           >
             {t('Organization.Create.Modal.form.submit')}
