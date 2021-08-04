@@ -64,7 +64,18 @@ export const Success = ({
     },
     [reset, t]
   )
-  const onError = useCallback(() => {}, [])
+  const onError = useCallback(
+    (error: Error) => {
+      toast.dismiss()
+      toast.error(
+        t(
+          `Organization.Update.Cell.Success.errors.${error.message}`,
+          error.message
+        )
+      )
+    },
+    [t]
+  )
 
   const [mutate, { loading }] = useMutation(MUTATION, {
     onCompleted,
