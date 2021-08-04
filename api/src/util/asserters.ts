@@ -7,3 +7,4 @@ export const isUndefined = (value: unknown) => {
   if (typeof value === 'undefined') return true
   else return false
 }
+export const isDefined = (value: unknown) => !isUndefined(value)
