@@ -1,8 +1,6 @@
-import { AuthenticationError } from '@redwoodjs/api'
-
 /**
- * Throws a 'rejected' `AuthenticationError`. Nothing more.
+ * Throws a 'rejected' error, nothing more.
  */
 export const reject = () => {
-  throw new AuthenticationError('rejected')
+  throw new Error('rejected')
 }
