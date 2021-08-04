@@ -28,8 +28,8 @@ const options: Options = {
  * with [Nodemailer's `SMTPTransporter`](https://nodemailer.com/smtp/).
  *
  * An SMTP server should be configured using the provided environment variables.
+ * This function can be combined with `template` to easily created user generated emails.
  *
- * **Note:** For simple emailing, consider using `sendMail`. This function can be combined
- * with `template` to easily created user generated emails.
+ * **Note:** For simple emailing, consider using `sendMail`.
  */
 export const transporter = createTransport(options)
