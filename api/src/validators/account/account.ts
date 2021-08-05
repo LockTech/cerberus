@@ -8,7 +8,8 @@ import { isStr } from 'src/util/asserters'
  * Validate `context.currentUser` is not `null`; i.e. the user making the request
  * has been previously authenticated.
  *
- * @throws ValidationError('account-invalid')
+ * @throws
+ *  * 'account-invalid' - When `context.currentUser` is undefined.
  */
 export const validateCurrentUser = () => {
   if (!context.currentUser) {
@@ -19,7 +20,8 @@ export const validateCurrentUser = () => {
 /**
  * Validate `context.currentUser` includes an `organizationId`.
  *
- * @throws ValidationError('account-organizationId-invalid')
+ * @throws
+ *  * 'account-organizationId-invalid' - When `context.currentUser.organizationId` is undefined.
  */
 export const validateAccountOrganization = () => {
   const currentAccount = getContextUser()
@@ -41,7 +43,8 @@ export const validateAccountOrganization = () => {
 /**
  * Validate that `context.currentUser` includes an `id`.
  *
- * @throws ValidationError('account-id-invalid')
+ * @throws
+ *  * 'account-id-invalid' - When `context.currentUser.id` is undefined.
  */
 export const validateAccountId = () => {
   const currentAccount = getContextUser()
@@ -56,7 +59,9 @@ export const validateAccountId = () => {
 /**
  * Validate that `context.currentUser` includes a `first` and `last` name.
  *
- * @throws ValidationError('account-name-invalid')
+ * @throws
+ *  * 'account-name-invalid' - When `context.currentUser.firstName` AND `context.currentUser.lastName` are undefined.
+ *  * 'account-name-length' - When `context.currentUser.firstName` OR `context.currentUser.lastName` are longer than `MaxNameLength`.
  */
 export const validateAccountName = () => {
   const currentAccount = getContextUser()
