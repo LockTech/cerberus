@@ -20,7 +20,7 @@ const Appbar = () => {
     <header className="appbar">
       <button
         aria-label={t('Appbar.sidebarToggle')}
-        className="menu-button sidebar-toggle"
+        className="sidebar-toggle"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         <MenuIcon className="icon" />
