@@ -198,6 +198,7 @@ body.dark { @apply bg-gray-800; }
   /* Menu */
   .menu {
     @apply relative;
+    @apply w-max;
   }
   .menu .menu-items {
     /* Background */
