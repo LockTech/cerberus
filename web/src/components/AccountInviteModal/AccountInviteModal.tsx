@@ -23,13 +23,13 @@ const AccountInviteModal = () => {
 
   const onCompleted = useCallback(() => {
     toast.dismiss()
-    toast.success(t('Account.Invite.Modal.success'))
+    toast.success(t('Accounts.Invite.Modal.success'))
   }, [t])
   const onError = useCallback(
     (error: Error) => {
       toast.dismiss()
       toast.error(
-        t(`Account.Invite.modal.errors.${error.message}`, error.message)
+        t(`Accounts.Invite.modal.errors.${error.message}`, error.message)
       )
     },
     [t]
@@ -40,7 +40,7 @@ const AccountInviteModal = () => {
   const onSubmit = useCallback(
     (variables: AccountInviteFormData) => {
       if (!loading) {
-        toast.loading(t('Account.Invite.Modal.loading'))
+        toast.loading(t('Accounts.Invite.Modal.loading'))
 
         mutate({ variables })
       }
