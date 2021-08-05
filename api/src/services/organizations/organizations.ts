@@ -9,6 +9,7 @@ import { logger } from 'src/lib/logger'
 import {
   validateCurrentUser,
   validateAccountOrganization,
+  validateAccountId,
 } from 'src/validators/account'
 import {
   validateOrganizationExist,
@@ -18,6 +19,7 @@ import {
 // ==
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add([validateCurrentUser])
+  rules.add([validateAccountId], { only: ['createOrganization'] })
   rules.add([validateAccountOrganization], { except: ['createOrganization'] })
   rules.add([validateOrganizationExist], { except: ['createOrganization'] })
   rules.add([validateOrganizationName], {
