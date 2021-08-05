@@ -54,7 +54,7 @@ const removeAuthFields = (acc: Account) => {
  *  * 'account-create-confirm' - When an error occurs creating the invitation.
  *  * 'account-email-send' - When an error occurs sending the invitation email.
  */
-export const inviteMember = async ({ email }) => {
+export const inviteAccount = async ({ email }) => {
   if (await checkEmailExist({ email })) {
     throw new UserInputError('account-email-taken')
   }
