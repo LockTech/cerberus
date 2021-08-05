@@ -83,7 +83,7 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
             </Label>
             <TextField
               autoComplete="organization"
-              className="input-primary w-full"
+              className="input-primary"
               errorClassName="input-error"
               name="name"
               validation={{
