@@ -26,8 +26,8 @@ const AccountMenu = () => {
       <Menu as="div" className="menu">
         <Menu.Button as="button" className="account-menu">
           <div className="title-group">
-            <span className="hint">{`${currentAccount?.organization?.name}`}</span>
-            <span className="title">{`${currentAccount?.firstName} ${currentAccount?.lastName}`}</span>
+            <span className="hint">{currentAccount?.organization?.name}</span>
+            <span className="title">{currentAccount?.name}</span>
           </div>
           <UserCircleIcon
             aria-label={t('AccountMenu.accountProfile')}

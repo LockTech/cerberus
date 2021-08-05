@@ -11,8 +11,7 @@ import { buildRedactString } from 'src/util/logger'
 const AccountRedactions = [
   'id',
   'email',
-  'firstName',
-  'lastName',
+  'name',
   'hashedPassword',
   'salt',
   'verifiedAt',

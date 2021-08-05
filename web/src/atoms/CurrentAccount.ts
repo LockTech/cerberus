@@ -3,8 +3,7 @@ import { atom } from 'recoil'
 export interface CurrentAccount {
   id: string
   email: string
-  firstName: string
-  lastName: string
+  name: string
   organization?: {
     id: string
     name: string

@@ -16,8 +16,7 @@ export const standard = defineScenario({
   account: {
     one: {
       email: 'foo.bar@acme.corp',
-      firstName: 'Foo',
-      lastName: 'Bar',
+      name: 'Foo Bar',
       id: '00fa2b1a-40d1-4c32-be0c-516d86872970',
       organizationId: '0251d504-347b-4880-9783-db6d199e02ee',
       hashedPassword: '',
@@ -26,8 +25,7 @@ export const standard = defineScenario({
     },
     two: {
       email: 'foo.baz@acme.corp',
-      firstName: 'Foo',
-      lastName: 'Baz',
+      name: 'Foo Baz',
       id: '9d17477b-ece9-4926-8c2d-440430be2bb7',
       organizationId: '0251d504-347b-4880-9783-db6d199e02ee',
       hashedPassword: '',
@@ -36,8 +34,7 @@ export const standard = defineScenario({
     },
     three: {
       email: 'john.doe@example.com',
-      firstName: 'John',
-      lastName: 'Doe',
+      name: 'John Doe',
       id: '65bbec92-e9c3-4cbd-8b18-747276dedaa4',
       organizationId: '9ad110e6-71db-4e83-b9ae-eed8df78e332',
       hashedPassword: '',

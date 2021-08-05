@@ -13,8 +13,7 @@ export const QUERY = gql`
     currentAccount {
       id
       email
-      firstName
-      lastName
+      name
       organization {
         id
         name

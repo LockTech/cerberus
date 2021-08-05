@@ -235,19 +235,15 @@
       "title": "Sign Up",
       "subtitle": "Enter some of your personal information below to begin creating your account and organization.",
       "form": {
-        "firstName": {
-          "label": "First Name",
-          "placeholder": "Jane",
-          "required": "A first name is required to signup."
-        },
-        "lastName": {
-          "label": "Last Name",
-          "placeholder": "Doe",
-          "required": "A last name is required to signup."
+        "name": {
+          "label": "Full Name",
+          "placeholder": "Jane Doe",
+          "length": "Your name must be shorter than 70 characters.",
+          "required": "Your name is required to signup."
         },
         "username": {
           "label": "E-Mail Address",
-          "placeholder": "E-Mail Address",
+          "placeholder": "jane.doe@example.net",
           "required": "An e-mail address is required to signup."
         },
         "password": {
@@ -273,7 +269,8 @@
         "email-length": "Your email has exceeded the maximum allowed length.",
         "email-reserved": "Your email address contains an invalid character.",
         "signup-invalid-code": "A confirmation code is not required in this stage of signup.",
-        "signup-name-required": "Your first and last name are required to signup.",
+        "signup-name-required": "Your name is required to signup.",
+        "signup-name-length": "Your name must be shorter than 70 characters.",
         "signup-create-confirm": "An error occured trying to setup confirmation for your account.",
         "signup-email-send": "An error occured trying to send your confirmation email.",
         "signup-create-account": "An error occured trying to create your account."

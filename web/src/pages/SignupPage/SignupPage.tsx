@@ -16,8 +16,7 @@ import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 interface SignupFormData {
-  firstName: string
-  lastName: string
+  name: string
   username: string
   password: string
 }
@@ -25,7 +24,7 @@ interface SignupFormData {
 const SignupPage = () => {
   // REALLY doesn't want to validate `currentPassword` before first
   // submit without initiating the form ourselves; no biggie.
-  const formMethods = useForm({ mode: 'all' })
+  const formMethods = useForm({ mode: 'onSubmit' })
 
   const { t } = useTranslation()
 
@@ -37,9 +36,9 @@ const SignupPage = () => {
     }
   }, [isAuthenticated])
 
-  const firstNameRef = useRef<HTMLInputElement>()
+  const nameRef = useRef<HTMLInputElement>()
   useEffect(() => {
-    firstNameRef.current.focus()
+    nameRef.current.focus()
   }, [])
 
   const passwordRef = useRef<HTMLInputElement>()
@@ -80,54 +79,34 @@ const SignupPage = () => {
           <p className="hint">{t('Signup.Page.subtitle')}</p>
         </header>
         <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
-          {/* firstName */}
+          {/* name */}
           <div className="input-group">
             <Label
               className="input-label"
               errorClassName="input-label-error"
-              name="firstName"
+              name="name"
             >
-              {t('Signup.Page.form.firstName.label')}
+              {t('Signup.Page.form.name.label')}
             </Label>
             <TextField
-              autoComplete="given-name"
+              autoComplete="name"
               className="input-primary"
               errorClassName="input-error"
-              name="firstName"
-              placeholder={t('Signup.Page.form.firstName.placeholder')}
-              ref={firstNameRef}
+              name="name"
+              placeholder={t('Signup.Page.form.name.placeholder')}
+              ref={nameRef}
               validation={{
+                maxLength: {
+                  value: 70,
+                  message: t('Signup.Page.form.name.length'),
+                },
                 required: {
                   value: true,
-                  message: t('Signup.Page.form.firstName.required'),
+                  message: t('Signup.Page.form.name.required'),
                 },
               }}
             />
-            <FieldError className="input-field-error" name="firstName" />
-          </div>
-          {/* lastName */}
-          <div className="input-group">
-            <Label
-              className="input-label"
-              errorClassName="input-label-error"
-              name="lastName"
-            >
-              {t('Signup.Page.form.lastName.label')}
-            </Label>
-            <TextField
-              autoComplete="family-name"
-              className="input-primary"
-              errorClassName="input-error"
-              name="lastName"
-              placeholder={t('Signup.Page.form.lastName.placeholder')}
-              validation={{
-                required: {
-                  value: true,
-                  message: t('Signup.Page.form.lastName.required'),
-                },
-              }}
-            />
-            <FieldError className="input-field-error" name="lastName" />
+            <FieldError className="input-field-error" name="name" />
           </div>
           {/* username */}
           <div className="input-group">

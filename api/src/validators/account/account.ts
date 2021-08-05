@@ -4,6 +4,8 @@ import { getContextUser } from 'src/lib/context'
 
 import { isStr } from 'src/util/asserters'
 
+const MaxNameLength = 70
+
 /**
  * Validate `context.currentUser` is not `null`; i.e. the user making the request
  * has been previously authenticated.
@@ -57,19 +59,22 @@ export const validateAccountId = () => {
 }
 
 /**
- * Validate that `context.currentUser` includes a `first` and `last` name.
+ * Validate that `context.currentUser` includes a `name`.
  *
  * @throws
- *  * 'account-name-invalid' - When `context.currentUser.firstName` AND `context.currentUser.lastName` are undefined.
- *  * 'account-name-length' - When `context.currentUser.firstName` OR `context.currentUser.lastName` are longer than `MaxNameLength`.
+ *  * 'account-name-invalid' - When `context.currentUser.name` is undefined.
+ *  * 'account-name-length' - When `context.currentUser.name` is longer than `MaxNameLength`.
  */
 export const validateAccountName = () => {
   const currentAccount = getContextUser()
 
-  const firstName = currentAccount?.firstName || undefined
-  const lastName = currentAccount?.lastName || undefined
+  const name = currentAccount?.name
 
-  if (!isStr(firstName) || !isStr(lastName)) {
+  if (!isStr(name)) {
     throw new ValidationError('account-name-invalid')
+  }
+
+  if (name.length > MaxNameLength) {
+    throw new ValidationError('account-name-length')
   }
 }

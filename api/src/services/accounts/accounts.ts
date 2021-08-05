@@ -63,8 +63,7 @@ export const inviteMember = async ({ email }) => {
   const organizationId = organization.id
   const organizationName = organization.name
 
-  const currentUser = getContextUser()
-  const name = `${currentUser.firstName} ${currentUser.lastName}`
+  const name = getContextUser().name
 
   const code = randomStr(36)
 

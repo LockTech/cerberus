@@ -28,8 +28,7 @@ export const standard = defineScenario({
     one: {
       id: '45e805e0-ced7-418c-9ffa-16546ee436cd',
       email: 'foo.bar@acme.corp',
-      firstName: 'Foo',
-      lastName: 'Bar',
+      name: 'Foo Bar',
       organizationId: null,
       hashedPassword: '',
       salt: '',

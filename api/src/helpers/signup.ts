@@ -24,9 +24,8 @@ const SignupRes = false
 interface HandleInvitationOptions {
   code: string
   email: string
-  firstName: string
+  name: string
   hashedPassword: string
-  lastName: string
   salt: string
 }
 /**
@@ -37,9 +36,8 @@ interface HandleInvitationOptions {
 const handleInvitation = async ({
   code,
   email,
-  firstName,
+  name,
   hashedPassword,
-  lastName,
   salt,
 }: HandleInvitationOptions) => {
   if (!(await confirmInvitation({ code, email }))) {
@@ -50,9 +48,8 @@ const handleInvitation = async ({
     await db.account.create({
       data: {
         email,
-        firstName,
+        name,
         hashedPassword,
-        lastName,
         salt,
         verified: true,
         verifiedAt: new Date().toISOString(),
@@ -70,9 +67,8 @@ const handleInvitation = async ({
 // ==
 interface HandleSignupOptions {
   email: string
-  firstName: string
+  name: string
   hashedPassword: string
-  lastName: string
   salt: string
 }
 /**
@@ -83,9 +79,8 @@ interface HandleSignupOptions {
  */
 const handleSignup = async ({
   email,
-  firstName,
+  name,
   hashedPassword,
-  lastName,
   salt,
 }: HandleSignupOptions) => {
   const code = randomStr(8)
@@ -115,9 +110,8 @@ const handleSignup = async ({
     await db.account.create({
       data: {
         email,
-        firstName,
+        name,
         hashedPassword,
-        lastName,
         salt,
         verified: false,
       },
@@ -136,36 +130,41 @@ interface SignupHandlerOptions {
   username: string
   hashedPassword: string
   salt: string
-  userAttributes?: { code: string; firstName: string; lastName: string }
+  userAttributes?: { code: string; name: string }
 }
 /**
  * @throws
  *  * Any error thrown by `validateEmail`
- *  * 'signup-name-required' - When `first` and `last` names are not present.
+ *  * 'signup-name-required' - When `name` is not present.
+ *  * 'signup-name-length' - When `name` is not present.
  *  * 'signup-invalid-code' - When `code` is defined but not a string.
  */
 export const signupHandler = async ({
   username: email,
-  userAttributes: { code, firstName, lastName },
+  userAttributes: { code, name },
   ...rest
 }: SignupHandlerOptions) => {
   validateEmail('signupHandler', { input: { email } })
 
-  if (!isStr(firstName) || !isStr(lastName)) {
-    logger.warn('Attempted signup without a first and last name.')
+  if (!isStr(name)) {
+    logger.warn('Attempted signup without a name.')
     throw new ValidationError('signup-name-required')
+  }
+
+  if (name.length > 70) {
+    throw new ValidationError('signup-name-length')
   }
 
   // Invite
   if (isStr(code)) {
     logger.info('Attempting to accept an invitation.')
-    return await handleInvitation({ code, email, firstName, lastName, ...rest })
+    return await handleInvitation({ code, email, name, ...rest })
   }
 
   // Signup
   else if (isUndefined(code)) {
     logger.info('Attempting to signup a new account.')
-    return await handleSignup({ email, firstName, lastName, ...rest })
+    return await handleSignup({ email, name, ...rest })
   }
 
   // Error
