@@ -70,6 +70,7 @@ export const inviteMember = async ({ email }) => {
   try {
     await createInviteConfirm({ code, email, organizationId })
   } catch (err) {
+    logger.error({ err }, 'Error creating invitation confirmation.')
     throw new UserInputError('account-create-confirm')
   }
 
