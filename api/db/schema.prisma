@@ -11,8 +11,7 @@ generator client {
 model Account {
   id                            String                            @id @default(uuid())
   email                         String                            @unique
-  firstName                     String
-  lastName                      String
+  name                          String
   //
   verified                      Boolean                           @default(false)
   verifiedAt                    DateTime?
