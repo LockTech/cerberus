@@ -120,7 +120,15 @@
           "submit": "Create"
         },
         "loading": "Creating your organization.",
-        "success": "Your organization has been successfully created."
+        "success": "Your organization has been successfully created.",
+        "errors": {
+          "account-invalid": "Your account could not be validated.",
+          "account-id-invalid": "Your account has been corrupted, contact customer support.",
+          "organization-create": "An error occured trying to create your organization.",
+          "organization-name-invalid": "A name is required to create your organization.",
+          "organization-name-length": "Your organization's name must be shorter than 60 characters.",
+          "organization-name-taken": "That name is already in use by another organization."
+        }
       }
     },
     "Settings": {
@@ -159,7 +167,10 @@
           "loading": "Updating your organization.",
           "success": "Updated your organization.",
           "errors": {
+            "account-invalid": "Your account could not be validated.",
+            "account-organizationId-invalid": "Could not validate you belong to an organization.",
             "organization-name-invalid": "A name is required when updating your organization.",
+            "organization-name-length": "Your organization's name must be shorter than 60 characters.",
             "organization-name-taken": "That name is already in use by another organization.",
             "organization-update": "An error occured trying to update your organization."
           }
