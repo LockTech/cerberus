@@ -24,12 +24,14 @@ const AccountInviteModal = () => {
   const onCompleted = useCallback(() => {
     toast.dismiss()
     toast.success(t('Accounts.Invite.Modal.success'))
-  }, [t])
+
+    setOpen(false)
+  }, [setOpen, t])
   const onError = useCallback(
     (error: Error) => {
       toast.dismiss()
       toast.error(
-        t(`Accounts.Invite.modal.errors.${error.message}`, error.message)
+        t(`Accounts.Invite.Modal.errors.${error.message}`, error.message)
       )
     },
     [t]
