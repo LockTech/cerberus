@@ -12,10 +12,14 @@ export const ColorModeAtom = selector({
   get: ({ get }) => {
     const colorMode = get(_ColorModeAtom)
 
-    const localMode = document.cookie
+    const themeCookie = document.cookie
       .split('; ')
       .find((row) => row.startsWith('theme='))
-      .split('=')[1] as ColorMode
+
+    let localMode: ColorMode = null
+    if (themeCookie) {
+      localMode = themeCookie.split('=')[1] as ColorMode
+    }
 
     if (localMode !== null && colorMode !== localMode) {
       return localMode
