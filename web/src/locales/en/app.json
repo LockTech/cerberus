@@ -1,7 +1,32 @@
 {
   "Accounts": {
+    "Invite": {
+      "Modal": {
+        "inviteMember": "Invite Member",
+        "title": "Invite Member",
+        "subtitle": "Send an invitation email to a member of your organization.",
+        "form": {
+          "email": {
+            "label": "E-Mail Address",
+            "placeholder": "jane.doe@example.net",
+            "required": "An e-mail address is required to invite a member to your organization."
+          },
+          "submit": "Invite"
+        },
+        "loading": "Sending invitation to your organization.",
+        "success": "Successfully invited a member to your organization.",
+        "errors": {
+          "account-email-taken": "This email is already in use by another member.",
+          "account-create-confirm": "An error occured trying to create a confirmation email for the member.",
+          "account-email-send": "An error occured sending the invitation email to the member."
+        }
+      }
+    },
     "List": {
       "Page": {
+        "Helmet": {
+          "title": "Accounts • Cerberus"
+        },
         "Appbar": {
           "title": "Accounts"
         }
