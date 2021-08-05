@@ -22,6 +22,9 @@ const AccountRedactions = [
 /**
  * Generate a list of Account redactions with an optional `prefix` attached to each.
  *
+ * @example
+ * getAccountRedactions('a.path')
+ *
  * @param prefix A string to place before each of the Account redactions.
  * @returns A list of account redactions
  */
@@ -33,8 +36,8 @@ const redact: redactOptions = {
   paths: [
     // == Accounts
     ...getAccountRedactions('data.redwood.currentUser'),
-    ...getAccountRedactions('data.*'),
-    ...getAccountRedactions('query.*'),
+    ...getAccountRedactions('data'),
+    ...getAccountRedactions('query'),
     //
   ],
 }

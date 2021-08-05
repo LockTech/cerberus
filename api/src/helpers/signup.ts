@@ -144,6 +144,8 @@ export const signupHandler = async ({
   userAttributes: { code, name },
   ...rest
 }: SignupHandlerOptions) => {
+  logger.debug({ email, code, name, ...rest }, 'Handling signup.')
+
   validateEmail('signupHandler', { input: { email } })
 
   if (!isStr(name)) {

@@ -1,5 +1,6 @@
 import { resolve } from 'path'
 
+import { logger } from 'src/lib/logger'
 import { transporter } from 'src/lib/smtp'
 import { template } from 'src/lib/template'
 import type { TemplateData } from 'src/lib/template'
@@ -30,6 +31,8 @@ export interface SendMailOptions {
  * `body` should be an already templated string; **any user generated values have already been escaped**.
  */
 export const sendMail = async ({ body, subject, to }: SendMailOptions) => {
+  logger.debug({ subject, to }, 'Sending an email.')
+
   await transporter.sendMail({
     from,
     html: body,

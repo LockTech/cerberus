@@ -12,6 +12,8 @@ export const readFile = (path: string) => {
     throw new Error('Invalid file path.')
   }
 
+  logger.debug({ path }, 'Reading a file from disk.')
+
   let res: string
 
   try {
