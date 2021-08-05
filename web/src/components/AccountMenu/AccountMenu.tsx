@@ -24,7 +24,7 @@ const AccountMenu = () => {
     <>
       <AppSettingsModal />
       <Menu as="div" className="menu">
-        <Menu.Button as="button" className="menu-button">
+        <Menu.Button as="button" className="account-menu">
           <div className="title-group">
             <span className="hint">{`${currentAccount?.organization?.name}`}</span>
             <span className="title">{`${currentAccount?.firstName} ${currentAccount?.lastName}`}</span>
