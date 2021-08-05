@@ -1,8 +1,6 @@
 .appbar {
-  /* Background */
-  /* @apply bg-gray-100;
-  @apply dark:bg-gray-700; */
   /* Misc */
+  @apply relative;
   @apply flex flex-row items-center;
   @apply w-full;
   @apply px-6 sm:px-10 py-3;
@@ -21,49 +19,6 @@
 .appbar .actions {
   @apply flex flex-row items-center justify-end;
   @apply space-x-4;
-}
-
-.appbar {
-  @apply relative;
-}
-.appbar .menu-button {
-  /* Background */
-  @apply bg-transparent;
-  @apply hover:bg-gray-200 hover:bg-opacity-30 active:bg-gray-300 active:bg-opacity-50;
-  @apply dark:hover:bg-gray-600 dark:hover:bg-opacity-30 dark:active:bg-gray-500 dark:active:bg-opacity-50;
-  /* Border */
-  @apply border border-transparent rounded-full md:rounded-md;
-  @apply hover:border-gray-300;
-  @apply dark:hover:border-gray-500;
-  /* Misc */
-  @apply flex flex-row items-center justify-center;
-  @apply duration-[200ms] ease-in-out transition-all;
-  @apply px-2 md:px-4 py-2 space-x-0 md:space-x-5;
-}
-.appbar .menu-button span {
-  @apply flex;
-}
-.appbar .menu-button .title-group {
-  @apply flex flex-col items-start justify-center;
-  @apply space-y-[0.25rem];
-  @apply hidden md:block;
-}
-.appbar .menu-button .title {
-  /* Text */
-  @apply text-sm;
-  @apply text-gray-900;
-  @apply dark:text-gray-50;
-}
-.appbar .menu-button .hint {
-  @apply text-gray-500;
-  @apply dark:text-gray-300;
-}
-.appbar .menu-button .icon {
-  /* Text */
-  @apply text-gray-500;
-  @apply dark:text-gray-300;
-  /* Misc */
-  @apply h-6 w-6;
 }
 
 .menu-button.sidebar-toggle {
