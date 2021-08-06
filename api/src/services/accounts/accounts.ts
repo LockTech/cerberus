@@ -41,7 +41,7 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 //
 
 // == Helpers
-const removeAuthFields = (acc: Account) => {
+export const removeAuthFields = (acc: Account) => {
   if (acc) {
     delete acc.hashedPassword
     delete acc.salt
