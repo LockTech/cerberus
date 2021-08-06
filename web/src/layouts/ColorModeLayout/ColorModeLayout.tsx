@@ -16,6 +16,14 @@ const ColorModeLayout = ({ children }: ColorModeLayoutProps) => {
       : document.body.classList.remove('dark')
   }, [])
 
+  const delChangePreference = useCallback(
+    () =>
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', onChangePreference),
+    [onChangePreference]
+  )
+
   useEffect(() => {
     switch (colorMode) {
       case 'browser': {
@@ -30,25 +38,20 @@ const ColorModeLayout = ({ children }: ColorModeLayoutProps) => {
       }
       case 'light': {
         document.body.classList.remove('dark')
-        window
-          .matchMedia('(prefers-color-scheme: dark)')
-          .removeEventListener('change', onChangePreference)
+        delChangePreference()
         break
       }
       case 'night': {
         document.body.classList.add('dark')
-        window
-          .matchMedia('(prefers-color-scheme: dark)')
-          .removeEventListener('change', onChangePreference)
+        delChangePreference()
         break
       }
     }
 
-    return () =>
-      window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .removeEventListener('change', onChangePreference)
-  }, [colorMode, onChangePreference, setColorMode])
+    return delChangePreference()
+  }, [colorMode, delChangePreference, onChangePreference, setColorMode])
+
+  console.log(colorMode)
 
   return <>{children}</>
 }
