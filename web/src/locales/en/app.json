@@ -23,6 +23,9 @@
       }
     },
     "List": {
+      "Cell": {
+        "loading": "Loading your organization's accounts."
+      },
       "Page": {
         "Helmet": {
           "title": "Accounts • Cerberus"
