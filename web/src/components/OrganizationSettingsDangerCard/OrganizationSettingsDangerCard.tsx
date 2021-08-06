@@ -1,38 +1,26 @@
 import { useTranslation } from 'react-i18next'
-import { ExclamationIcon } from '@heroicons/react/solid'
 
-import './OrganizationSettingsDangerCard.css'
+import DangerCard from 'src/components/DangerCard'
 
 const OrganizationSettingsDangerCard = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="org-danger-settings">
-      <header className="title-group">
-        <div className="title-icon">
-          <ExclamationIcon aria-hidden="true" className="icon" />
-          <h2 className="title-red">
-            {t('Organization.Settings.Danger.Card.title')}
-          </h2>
-        </div>
-        <p className="hint">
-          {t('Organization.Settings.Danger.Card.subtitle')}
-        </p>
-      </header>
+    <DangerCard>
       <div className="action">
-        <div className="group">
-          <p className="font-semibold text">
+        <div className="title-group">
+          <p className="title">
             {t('Organization.Settings.Danger.Card.delete.title')}
           </p>
           <p className="hint">
-            {t('Organization.Settings.Danger.Card.delete.label')}
+            {t('Organization.Settings.Danger.Card.delete.subtitle')}
           </p>
         </div>
-        <button className="button-red-outline form-button">
+        <button className="button-red-outline">
           {t('Organization.Settings.Danger.Card.delete.action')}
         </button>
       </div>
-    </div>
+    </DangerCard>
   )
 }
 

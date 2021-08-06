@@ -6,6 +6,8 @@ import { FieldError, Form, Label, Submit, TextField } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import OrganizationSettingsDangerCard from 'src/components/OrganizationSettingsDangerCard'
+
 import { QUERY as CurrentAccountQuery } from 'src/hooks/useCurrentAccount'
 
 import type {
@@ -95,44 +97,51 @@ export const Success = ({
   )
 
   return (
-    <div className="card card-body">
-      <header className="title-group">
-        <h2 className="title">{t('Organization.Update.Cell.Success.title')}</h2>
-        <p className="hint">{t('Organization.Update.Cell.Success.subtitle')}</p>
-      </header>
-      <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
-        <div className="input-group">
-          <Label
-            className="input-label"
-            errorClassName="input-label-error"
-            name="name"
+    <div className="page-layout">
+      <div className="card card-body">
+        <header className="title-group">
+          <h2 className="title">
+            {t('Organization.Update.Cell.Success.title')}
+          </h2>
+          <p className="hint">
+            {t('Organization.Update.Cell.Success.subtitle')}
+          </p>
+        </header>
+        <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
+          <div className="input-group">
+            <Label
+              className="input-label"
+              errorClassName="input-label-error"
+              name="name"
+            >
+              {t('Organization.Update.Cell.Success.form.name.label')}
+            </Label>
+            <TextField
+              autoComplete="organization"
+              className="input-primary"
+              defaultValue={organization.name}
+              errorClassName="input-error"
+              name="name"
+              validation={{
+                required: {
+                  value: true,
+                  message: t(
+                    'Organization.Update.Cell.Success.form.name.required'
+                  ),
+                },
+              }}
+            />
+            <FieldError className="input-field-error" name="name" />
+          </div>
+          <Submit
+            className="button-primary-fill form-button"
+            disabled={!isDirty || loading}
           >
-            {t('Organization.Update.Cell.Success.form.name.label')}
-          </Label>
-          <TextField
-            autoComplete="organization"
-            className="input-primary"
-            defaultValue={organization.name}
-            errorClassName="input-error"
-            name="name"
-            validation={{
-              required: {
-                value: true,
-                message: t(
-                  'Organization.Update.Cell.Success.form.name.required'
-                ),
-              },
-            }}
-          />
-          <FieldError className="input-field-error" name="name" />
-        </div>
-        <Submit
-          className="button-primary-fill form-button"
-          disabled={!isDirty || loading}
-        >
-          {t('Organization.Update.Cell.Success.form.submit')}
-        </Submit>
-      </Form>
+            {t('Organization.Update.Cell.Success.form.submit')}
+          </Submit>
+        </Form>
+      </div>
+      <OrganizationSettingsDangerCard />
     </div>
   )
 }
