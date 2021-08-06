@@ -443,8 +443,11 @@ body.dark { @apply bg-gray-800; }
   }
   .card-interactive {
     /* Background */
-    @apply hover:bg-primary-100 active:bg-primary-200;
-    @apply dark:hover:bg-primary-900 dark:active:bg-primary-800;
+    @apply active:bg-primary-100;
+    @apply dark:active:bg-primary-900;
+    /* Border */
+    @apply hover:border-primary-400;
+    @apply dark:hover:border-primary-500;
     /* Misc */
     @apply focus-primary cursor-pointer;
     @apply hover:shadow-lg active:shadow-sm;
@@ -463,11 +466,6 @@ body.dark { @apply bg-gray-800; }
   }
   .link-gray {
     @apply focus-gray link;
-  }
-
-  /* Settings Danger Card */
-  .org-danger-settings {
-    @apply card-body card-red;
   }
 
   /* Sidebar */
