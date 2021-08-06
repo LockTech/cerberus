@@ -1,6 +1,6 @@
 import type { Organization } from '@prisma/client'
-import { UserInputError } from '@redwoodjs/api'
-import type { BeforeResolverSpecType } from '@redwoodjs/api'
+import { UserInputError } from '@redwoodjs/graphql-server'
+import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
 import { getContextUser } from 'src/lib/context'

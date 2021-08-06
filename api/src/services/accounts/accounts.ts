@@ -1,6 +1,6 @@
 import type { Account } from '@prisma/client'
-import { UserInputError } from '@redwoodjs/api'
-import type { BeforeResolverSpecType } from '@redwoodjs/api'
+import { UserInputError } from '@redwoodjs/graphql-server'
+import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 
 import { sendInviteEmail } from 'src/helpers/email'
 

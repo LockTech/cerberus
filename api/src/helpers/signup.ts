@@ -1,4 +1,4 @@
-import { ValidationError, UserInputError } from '@redwoodjs/api'
+import { ValidationError, UserInputError } from '@redwoodjs/graphql-server'
 
 import { sendSignupEmail } from 'src/helpers/email'
 

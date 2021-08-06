@@ -1,4 +1,4 @@
-import { ValidationError } from '@redwoodjs/api'
+import { ValidationError } from '@redwoodjs/graphql-server'
 
 import { isStr } from 'src/util/asserters'
 

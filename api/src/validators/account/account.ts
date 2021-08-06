@@ -1,4 +1,4 @@
-import { context, ValidationError } from '@redwoodjs/api'
+import { context, ValidationError } from '@redwoodjs/graphql-server'
 
 import { getContextUser } from 'src/lib/context'
 
