@@ -17,6 +17,7 @@ const AccountRedactions = [
   'verifiedAt',
   'createdAt',
   'updatedAt',
+  'lastLoginAt',
 ]
 
 /**
@@ -37,7 +38,9 @@ const redact: redactOptions = {
     // == Accounts
     ...getAccountRedactions('data.redwood.currentUser'),
     ...getAccountRedactions('data'),
+    ...getAccountRedactions('data.*'),
     ...getAccountRedactions('query'),
+    ...getAccountRedactions('query.*'),
     //
   ],
 }
