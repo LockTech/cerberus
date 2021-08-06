@@ -23,7 +23,7 @@ export const validateCurrentUser = () => {
  * Validate `context.currentUser` includes an `organizationId`.
  *
  * @throws
- *  * 'account-organizationId-invalid' - When `context.currentUser.organizationId` is undefined.
+ *  * 'account-organization-invalid' - When `context.currentUser.organizationId` is undefined.
  */
 export const validateAccountOrganization = () => {
   const currentAccount = getContextUser()
@@ -31,7 +31,7 @@ export const validateAccountOrganization = () => {
   const id = currentAccount?.organizationId || undefined
 
   if (!isStr(id)) {
-    throw new ValidationError('account-organizationId-invalid')
+    throw new ValidationError('account-organization-invalid')
   }
 
   // FIXME: Pending release of Redwood 0.36 - support for async beforeResolvers
