@@ -5,6 +5,7 @@ export const schema = gql`
     name: String!
     createdAt: DateTime!
     updatedAt: DateTime!
+    lastLoginAt: DateTime!
     organizationId: String
     organization: Organization
   }
