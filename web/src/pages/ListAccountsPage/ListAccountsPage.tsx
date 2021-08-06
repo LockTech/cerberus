@@ -11,9 +11,9 @@ const ListAccountsPage = () => {
   return (
     <>
       <Helmet>
-        <title>{t('Accounts.List.Page.Helmet.title')}</title>
+        <title>{t('Account.List.Page.Helmet.title')}</title>
       </Helmet>
-      <AppbarTitle>{t('Accounts.List.Page.Appbar.title')}</AppbarTitle>
+      <AppbarTitle>{t('Account.List.Page.Appbar.title')}</AppbarTitle>
       <div className="page-layout">
         <AccountInviteModal />
         <AccountListCell />

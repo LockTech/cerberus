@@ -22,7 +22,7 @@ export const Loading = () => {
 
   return (
     <LoadingCard>
-      <p className="text">{t('Accounts.List.Cell.loading')}</p>
+      <p className="text">{t('Account.List.Cell.loading')}</p>
     </LoadingCard>
   )
 }

@@ -23,7 +23,7 @@ const AccountInviteModal = () => {
 
   const onCompleted = useCallback(() => {
     toast.dismiss()
-    toast.success(t('Accounts.Invite.Modal.success'))
+    toast.success(t('Account.Invite.Modal.success'))
 
     setOpen(false)
   }, [setOpen, t])
@@ -31,7 +31,7 @@ const AccountInviteModal = () => {
     (error: Error) => {
       toast.dismiss()
       toast.error(
-        t(`Accounts.Invite.Modal.errors.${error.message}`, error.message)
+        t(`Account.Invite.Modal.errors.${error.message}`, error.message)
       )
     },
     [t]
@@ -42,7 +42,7 @@ const AccountInviteModal = () => {
   const onSubmit = useCallback(
     (variables: AccountInviteFormData) => {
       if (!loading) {
-        toast.loading(t('Accounts.Invite.Modal.loading'))
+        toast.loading(t('Account.Invite.Modal.loading'))
 
         mutate({ variables })
       }
@@ -56,14 +56,14 @@ const AccountInviteModal = () => {
         className="button-primary-fill w-full"
         onClick={() => setOpen(true)}
       >
-        {t('Accounts.Invite.Modal.inviteMember')}
+        {t('Account.Invite.Modal.inviteMember')}
       </button>
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className="card card-body">
           <div>
-            <Modal.Title>{t('Accounts.Invite.Modal.title')}</Modal.Title>
+            <Modal.Title>{t('Account.Invite.Modal.title')}</Modal.Title>
             <Modal.Description>
-              {t('Accounts.Invite.Modal.subtitle')}
+              {t('Account.Invite.Modal.subtitle')}
             </Modal.Description>
           </div>
           <Form className="form" onSubmit={onSubmit}>
@@ -73,7 +73,7 @@ const AccountInviteModal = () => {
                 errorClassName="input-label-error"
                 name="email"
               >
-                {t('Accounts.Invite.Modal.form.email.label')}
+                {t('Account.Invite.Modal.form.email.label')}
               </Label>
               <TextField
                 autoComplete="email"
@@ -83,14 +83,14 @@ const AccountInviteModal = () => {
                 validation={{
                   required: {
                     value: true,
-                    message: t('Accounts.Invite.Modal.form.email.required'),
+                    message: t('Account.Invite.Modal.form.email.required'),
                   },
                 }}
               />
               <FieldError className="input-field-error" name="email" />
             </div>
             <Submit className="button-primary-fill form-button">
-              {t('Accounts.Invite.Modal.form.submit')}
+              {t('Account.Invite.Modal.form.submit')}
             </Submit>
           </Form>
         </div>
