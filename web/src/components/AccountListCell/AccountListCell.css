@@ -1,0 +1,3 @@
+.account-list {
+  @apply grid grid-cols-4;
+}
