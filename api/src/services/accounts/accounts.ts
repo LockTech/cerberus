@@ -24,16 +24,15 @@ import { validateEmail } from 'src/validators/email'
 //
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateCurrentUser)
-  rules.add(validateAccountId, {
-    only: ['currentAccount'],
-  })
-  rules.add(validateAccountOrganization, {
-    only: ['inviteMember', 'account', 'accounts'],
-  })
-  rules.add(validateAccountName, {
-    only: ['inviteMember'],
-  })
-  rules.add(validateEmail, { only: ['inviteMember'] })
+  rules.add(validateAccountOrganization)
+  rules.add(validateAccountId, { only: ['currentAccount'] })
+  // Invite Account Name
+  rules.add(
+    (s: string) => validateAccountName(s, { name: getContextUser().name }),
+    { only: ['inviteAccount'] }
+  )
+  rules.add(validateAccountName, { only: ['updateAccount'] })
+  rules.add(validateEmail, { only: ['inviteAccount'] })
 }
 //
 
@@ -175,6 +174,45 @@ export const currentAccount = async () => {
 //
 
 // == U
+export interface UpdateAccountArgs {
+  id: string
+  email: string
+  name: string
+}
+/**
+ * @throws
+ *  * 'account-organization-invalid' - When the organization the account belongs to does not match the current user's.
+ *  * 'account-update' - When an error occures updating the Account in the DB.
+ */
+export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
+  const organizationId = getContextUser().organizationId
+
+  const updateOrg = await db.account.findUnique({
+    select: { organizationId: true },
+    where: { id },
+  })
+  const updateOrganizationId = updateOrg.organizationId
+
+  if (updateOrganizationId !== organizationId) {
+    throw new UserInputError('account-organization-invalid')
+  }
+
+  let res: Account
+
+  try {
+    res = await db.account.update({
+      data: { email, name },
+      where: { id },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error updating account.')
+    throw new UserInputError('account-update')
+  }
+
+  res = removeAuthFields(res)
+
+  return res
+}
 //
 
 // == D

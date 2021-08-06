@@ -1,13 +1,24 @@
 import type { Account } from '@prisma/client'
 import { db } from 'src/lib/db'
 
-import { account, accounts, currentAccount, inviteMember } from './accounts'
+import {
+  account,
+  accounts,
+  currentAccount,
+  inviteAccount,
+  updateAccount,
+} from './accounts'
 
 import type { AccountStandard } from './accounts.scenarios'
 
 const TakenError: Error = {
   name: 'UserInputError',
   message: 'account-email-taken',
+}
+
+const UpdateOrgError: Error = {
+  name: 'UserInputError',
+  message: 'account-organization-invalid',
 }
 
 jest.setTimeout(100000)
@@ -30,14 +41,14 @@ const safeAccount = (scenario: AccountStandard, key: string) => {
 
 describe('account service', () => {
   describe('create', () => {
-    describe('inviteMember', () => {
+    describe('inviteAccount', () => {
       scenario(
         'throws when an email already exist',
         async (scenario: AccountStandard) => {
           const email = scenario.account.one.email
 
           expect(async () => {
-            await inviteMember({ email })
+            await inviteAccount({ email })
           }).rejects.toThrow(TakenError)
         }
       )
@@ -51,7 +62,7 @@ describe('account service', () => {
 
           const email = 'anUnusedemail@example.com'
 
-          const inviteRes = await inviteMember({ email })
+          const inviteRes = await inviteAccount({ email })
           const assertRes = await db.account_Confirmation.findFirst({
             where: { email },
           })
@@ -70,7 +81,7 @@ describe('account service', () => {
 
           const email = 'anUnusedemail@example.com'
 
-          const inviteRes = await inviteMember({ email })
+          const inviteRes = await inviteAccount({ email })
           const assertRes = await db.account_Confirmation.findFirst({
             where: { email },
           })
@@ -243,5 +254,31 @@ describe('account service', () => {
         }
       )
     })
+  })
+
+  describe('update', () => {
+    scenario(
+      "throws when the currentUser's organization does not match the account being updated",
+      async (scenario: AccountStandard) => {
+        const currentAcc = scenario.account.one as Account
+        const currentId = currentAcc.id
+        mockCurrentUser({ id: currentId })
+
+        const updateAcc = scenario.account.three as Account
+        const id = updateAcc.id
+
+        const email = 'testemail@example.com'
+        const name = 'Check this new name'
+
+        expect(updateAccount({ id, email, name })).rejects.toThrow(
+          UpdateOrgError
+        )
+
+        const res = await db.account.findUnique({ where: { id } })
+
+        expect(res.email).toBe(updateAcc.email)
+        expect(res.name).toBe(updateAcc.name)
+      }
+    )
   })
 })
