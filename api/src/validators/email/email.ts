@@ -2,6 +2,8 @@ import { ValidationError } from '@redwoodjs/api'
 
 import { isStr } from 'src/util/asserters'
 
+const MaxEmailLength = 254
+
 export const ValidEmailRegEx =
   /^[\w-]+(?:\.[\w-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*$/g
 
@@ -18,7 +20,7 @@ export const validateEmail = (_name: string, { email }: EmailInput) => {
     throw new ValidationError('email-invalid')
   }
 
-  if (email.length > 254) {
+  if (email.length > MaxEmailLength) {
     throw new ValidationError('email-length')
   }
 
