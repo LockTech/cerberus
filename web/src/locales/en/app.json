@@ -24,6 +24,12 @@
     },
     "List": {
       "Cell": {
+        "failure": {
+          "title": "Error loading your organization's accounts.",
+          "errors": {
+            "account-get": "An unexpected database error occured trying to retrieve your accounts."
+          }
+        },
         "loading": "Loading your organization's accounts."
       },
       "Page": {
