@@ -12,6 +12,7 @@ import {
 
 import { isStr, isUndefined } from 'src/util/asserters'
 import { randomStr } from 'src/util/randomStr'
+import { validateAccountName } from 'src/validators/account'
 
 import { validateEmail } from 'src/validators/email'
 
@@ -147,15 +148,7 @@ export const signupHandler = async ({
   logger.debug({ email, code, name, ...rest }, 'Handling signup.')
 
   validateEmail('signupHandler', { email })
-
-  if (!isStr(name)) {
-    logger.warn('Attempted signup without a name.')
-    throw new ValidationError('signup-name-required')
-  }
-
-  if (name.length > 70) {
-    throw new ValidationError('signup-name-length')
-  }
+  validateAccountName('signupHandler', { name })
 
   // Invite
   if (isStr(code)) {
