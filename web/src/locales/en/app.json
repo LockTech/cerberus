@@ -1,8 +1,17 @@
 {
   "Account": {
+    "Danger": {
+      "Card": {
+        "delete": {
+          "title": "Delete {{ name, pluralPossessive }} Account",
+          "subtitle": "Permanently remove this account from your organization.",
+          "action": "Delete"
+        }
+      }
+    },
     "Invite": {
       "Modal": {
-        "inviteMember": "Invite Member",
+        "inviteMember": "Send Invitation",
         "title": "Invite Member",
         "subtitle": "Send an invitation email to a member of your organization.",
         "form": {
@@ -38,7 +47,7 @@
         },
         "Loading": "Loading your organization's accounts.",
         "Success": {
-          "lastLogin": "Last seen at {{ time }} on {{ date }}"
+          "lastLogin": "Last seen at {{ time, friendlyTime }} on {{ date, friendlyDate }}"
         }
       },
       "Page": {
@@ -55,7 +64,33 @@
         "title": "Account Details • Cerberus"
       },
       "Appbar": {
-        "title": "Account Details"
+        "title": "Account"
+      }
+    },
+    "Update": {
+      "Cell": {
+        "Failure": {
+          "title": "Error loading your member's account details.",
+          "errors": {
+            "account-get": "An unexpected database error occured trying to retrieve this member's account."
+          }
+        },
+        "Loading": "Loading your member's account details.",
+        "Success": {
+          "title": "{{ name }}",
+          "subtitle": "Update {{ name, pluralPossessive  }} account details.",
+          "form": {
+            "email": {
+              "label": "Email Address",
+              "required": "An email address is required to update an account."
+            },
+            "name": {
+              "label": "Full Name",
+              "required": "A name is required to update an account."
+            },
+            "submit": "Update"
+          }
+        }
       }
     }
   },
@@ -109,6 +144,12 @@
     },
     "Layout": {
       "loading": "Loading your account."
+    }
+  },
+  "Danger": {
+    "Card": {
+      "title": "Danger",
+      "subtitle": "Take caution when making use of the following features."
     }
   },
   "Home": {
@@ -185,11 +226,9 @@
     "Settings": {
       "Danger": {
         "Card": {
-          "title": "Danger",
-          "subtitle": "Take caution when making use of the following features.",
           "delete": {
             "title": "Delete your organization",
-            "label": "Permanently delete your organization, removing all of its accounts and roles.",
+            "subtitle": "Permanently delete your organization, removing all of its accounts and roles.",
             "action": "Delete"
           }
         }
