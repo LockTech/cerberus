@@ -27,8 +27,12 @@ export const handler = createGraphQLHandler({
   },
   schema: makeMergedSchema({
     schemas,
+    // @ts-expect-error Redwood
     services: makeServices({ services }),
   }),
+  depthLimitOptions: {
+    maxDepth: 3,
+  },
   onException: () => {
     // Disconnect from your database with an unhandled exception.
     db.$disconnect()
