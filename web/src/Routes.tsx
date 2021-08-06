@@ -9,13 +9,14 @@ import OrganizationCreateLayout from 'src/layouts/OrganizationCreateLayout'
 const Routes = () => {
   return (
     <Router>
+      <Route path="/account" page={AccountPage} name="account" />
       <Set wrap={[ColorModeLayout]}>
         <Set private unauthenticated="login" wrap={[CurrentAccountLayout, DashboardLayout, OrganizationCreateLayout]}>
           {/* General */}
           <Route notfound page={NotFoundPage} />
           <Route path="/" page={HomePage} name="home" />
           {/* Accounts */}
-          <Route path="/accounts" page={ListAccountsPage} name="listAccounts" />
+          <Route path="/accounts" page={AccountListPage} name="listAccounts" />
           {/* Organizations */}
           <Route path="/organization/settings" page={OrganizationSettingsPage} name="organizationSettings" />
         </Set>

@@ -5,7 +5,7 @@ import AppbarTitle from 'src/components/Appbar/AppbarTitle'
 import AccountInviteModal from 'src/components/AccountInviteModal'
 import AccountListCell from 'src/components/AccountListCell'
 
-const ListAccountsPage = () => {
+const AccountListPage = () => {
   const { t } = useTranslation()
 
   return (
@@ -22,4 +22,4 @@ const ListAccountsPage = () => {
   )
 }
 
-export default ListAccountsPage
+export default AccountListPage
