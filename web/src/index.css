@@ -362,7 +362,7 @@ body.dark { @apply bg-gray-800; }
     @apply origin-center;
   }
   .spinner .inner {
-    @apply text-gray-500 dark:text-gray-400;
+    @apply text-primary-500 dark:text-primary-400;
     @apply animate-spin-physics origin-center;
   }
 
@@ -441,6 +441,14 @@ body.dark { @apply bg-gray-800; }
     /* Border */
     @apply border-red-400;
     @apply dark:border-red-700 dark:border-opacity-70;
+  }
+  .card-interactive {
+    /* Background */
+    @apply hover:bg-primary-100 active:bg-primary-200;
+    @apply dark:hover:bg-primary-900 dark:active:bg-primary-800;
+    /* Misc */
+    @apply focus-primary cursor-pointer;
+    @apply hover:shadow-lg active:shadow-sm;
   }
 
   /* Input */
