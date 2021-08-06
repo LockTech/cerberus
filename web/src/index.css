@@ -110,7 +110,7 @@ body.dark { @apply bg-gray-900; }
     @apply font-medium uppercase;
     @apply disabled:text-gray-400;
     /* Misc */
-    @apply duration-300 ease-in-out transition-all !important;
+    @apply duration-200 ease-in-out transition-all !important;
     @apply disabled:cursor-not-allowed;
     @apply px-4 py-2;
   }
