@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from '@apollo/client'
@@ -10,7 +11,6 @@ import FailureCard from 'src/components/FailureCard'
 import LoadingCard from 'src/components/LoadingCard'
 
 import type { AccountUpdateQuery, AccountUpdateMutation } from 'types/graphql'
-import { useCallback } from 'react'
 
 export const QUERY = gql`
   query AccountUpdateQuery($id: ID!) {
@@ -23,7 +23,7 @@ export const QUERY = gql`
 `
 
 export const MUTATION = gql`
-  mutation AccountUpdateMutation($id: ID!, $email: String!, $name: String!) {
+  mutation AccountUpdateMutation($id: ID!, $email: String, $name: String) {
     account: updateAccount(id: $id, email: $email, name: $name) {
       email
       name
@@ -63,7 +63,6 @@ interface UpdateAccountFormData {
   email: string
   name: string
 }
-type AccountUpdateMutationResult = AccountUpdateMutation['account']
 export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
   const email = account.email
   const id = account.id
@@ -77,16 +76,16 @@ export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
     },
   })
   const { reset } = formMethods
-  const { isDirty } = formMethods.formState
+  const { dirtyFields, isDirty } = formMethods.formState
 
   const { t } = useTranslation()
 
   const onCompleted = useCallback(
-    (data: AccountUpdateMutationResult) => {
+    (data: AccountUpdateMutation) => {
       toast.dismiss()
       toast.success(t('Account.Update.Cell.Success.success'))
 
-      reset({ email: data.email, name: data.name })
+      reset({ email: data.account.email, name: data.account.name })
     },
     [reset, t]
   )
@@ -107,14 +106,20 @@ export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
   })
 
   const onSubmit = useCallback(
-    (variables: UpdateAccountFormData) => {
+    (data: UpdateAccountFormData) => {
       if (!loading) {
         toast.loading(t('Account.Update.Cell.Success.loading'))
 
-        mutate({ variables: { id, ...variables } })
+        const variables = { id }
+
+        Object.keys(dirtyFields).forEach((val) => {
+          variables[val] = data[val]
+        })
+
+        mutate({ variables })
       }
     },
-    [id, loading, mutate, t]
+    [dirtyFields, id, loading, mutate, t]
   )
 
   return (

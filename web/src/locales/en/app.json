@@ -1,7 +1,11 @@
 {
   "errors": {
+    "account-email-taken": "This email is already in use by another member.",
     "account-invalid": "Your account could not be validated.",
-    "account-organization-invalid": "Could not validate you belong to an organization."
+    "account-organization-invalid": "Could not validate you belong to an organization.",
+    "email-invalid": "Did not recieve a valid email address.",
+    "email-length": "Email address has exceeded the maximum allowed length.",
+    "email-reserved": "Email address contains an invalid character or is not formatted correctly."
   },
   "Account": {
     "Danger": {
@@ -29,13 +33,13 @@
         "loading": "Sending invitation to your organization.",
         "success": "Successfully invited a member to your organization.",
         "errors": {
-          "account-email-taken": "This email is already in use by another member.",
+          "account-email-taken": "$t(errors.account-email-taken)",
           "account-create-confirm": "An error occured trying to create a confirmation email for the member.",
           "account-email-send": "An error occured sending the invitation email to the member.",
           "email-required": "An email address is required to invite a member.",
-          "email-invalid": "Did not recieve a valid email address.",
-          "email-length": "Email address has exceeded the maximum allowed length.",
-          "email-reserved": "Email address contains an invalid character or is not formatted correctly."
+          "email-invalid": "$t(errors.email-invalid)",
+          "email-length": "$t(errors.email-length)",
+          "email-reserved": "$t(errors.email-reserved)"
         }
       }
     },
@@ -95,13 +99,18 @@
             "submit": "Update"
           },
           "errors": {
+            "account-email-taken": "$t(errors.account-email-taken)",
             "account-invalid": "$t(errors.account-invalid)",
             "account-organization-invalid": "$t(errors.account-organization-invalid)",
             "account-organization-match": "This use is not a member of your organization.",
             "account-name-invalid": "Did not recieve a valid value for the member's name.",
             "account-name-length": "Your member's name must be shorter than 70 characters.",
-            "account-update": "A database error occured trying to update your member."
-          }
+            "account-update": "A database error occured trying to update your member.",
+            "email-invalid": "$t(errors.email-invalid)",
+            "email-length": "$t(errors.email-length)",
+            "email-reserved": "$t(errors.email-reserved)"
+          },
+          "success": "Successfully updated your member's account."
         }
       }
     }
@@ -367,10 +376,11 @@
       "success": "A confirmation code has been sent to your email address.",
       "errors": {
         "email-required": "An email address is required to signup.",
-        "email-invalid": "An invalid email address was recieved.",
-        "email-length": "Your email has exceeded the maximum allowed length.",
-        "email-reserved": "Your email address contains an invalid character.",
+        "email-invalid": "$t(errors.email-invalid)",
+        "email-length": "$t(errors.email-length)",
+        "email-reserved": "$t(errors.email-reserved)",
         "signup-invalid-code": "A confirmation code is not required in this stage of signup.",
+        "account-name-required": "Your name is required to signup.",
         "account-name-invalid": "Your name is required to signup.",
         "account-name-length": "Your name must be shorter than 70 characters.",
         "signup-create-confirm": "An error occured trying to setup confirmation for your account.",
