@@ -1,0 +1,8 @@
+.loading-card {
+  @apply flex flex-col items-center;
+  @apply space-y-2;
+}
+
+.loading-card .loader {
+  @apply h-14 w-14;
+}
