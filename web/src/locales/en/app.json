@@ -1,4 +1,8 @@
 {
+  "errors": {
+    "account-invalid": "Your account could not be validated.",
+    "account-organization-invalid": "Could not validate you belong to an organization."
+  },
   "Account": {
     "Danger": {
       "Card": {
@@ -41,7 +45,7 @@
           "title": "Error loading your organization's accounts.",
           "errors": {
             "account-get": "An unexpected database error occured trying to retrieve your accounts.",
-            "account-invalid": "Your account could not be validated.",
+            "account-invalid": "$t(errors.account-invalid)",
             "account-organization-invalid": "Could not validate you belong to an organization."
           }
         },
@@ -64,7 +68,7 @@
         "title": "Account Details • Cerberus"
       },
       "Appbar": {
-        "title": "Account"
+        "title": "Account Details"
       }
     },
     "Update": {
@@ -89,6 +93,14 @@
               "required": "A name is required to update an account."
             },
             "submit": "Update"
+          },
+          "errors": {
+            "account-invalid": "$t(errors.account-invalid)",
+            "account-organization-invalid": "$t(errors.account-organization-invalid)",
+            "account-organization-match": "This use is not a member of your organization.",
+            "account-name-invalid": "Did not recieve a valid value for the member's name.",
+            "account-name-length": "Your member's name must be shorter than 70 characters.",
+            "account-update": "A database error occured trying to update your member."
           }
         }
       }
@@ -214,7 +226,7 @@
         "loading": "Creating your organization.",
         "success": "Your organization has been successfully created.",
         "errors": {
-          "account-invalid": "Your account could not be validated.",
+          "account-invalid": "$t(errors.account-invalid)",
           "account-id-invalid": "Your account has been corrupted, contact customer support.",
           "organization-create": "An error occured trying to create your organization.",
           "organization-name-invalid": "A name is required to create your organization.",
@@ -257,7 +269,7 @@
           "loading": "Updating your organization.",
           "success": "Updated your organization.",
           "errors": {
-            "account-invalid": "Your account could not be validated.",
+            "account-invalid": "$t(errors.account-invalid)",
             "account-organization-invalid": "Could not validate you belong to an organization.",
             "organization-name-invalid": "A name is required when updating your organization.",
             "organization-name-length": "Your organization's name must be shorter than 60 characters.",
@@ -359,8 +371,8 @@
         "email-length": "Your email has exceeded the maximum allowed length.",
         "email-reserved": "Your email address contains an invalid character.",
         "signup-invalid-code": "A confirmation code is not required in this stage of signup.",
-        "signup-name-required": "Your name is required to signup.",
-        "signup-name-length": "Your name must be shorter than 70 characters.",
+        "account-name-invalid": "Your name is required to signup.",
+        "account-name-length": "Your name must be shorter than 70 characters.",
         "signup-create-confirm": "An error occured trying to setup confirmation for your account.",
         "signup-email-send": "An error occured trying to send your confirmation email.",
         "signup-create-account": "An error occured trying to create your account."
