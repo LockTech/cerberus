@@ -1,0 +1,12 @@
+.failure-card {
+  @apply text-center;
+}
+
+.failure-card .icon {
+  /* Text */
+  @apply text-red-500;
+  @apply dark:text-red-400;
+  /* Misc */
+  @apply h-12 w-12;
+  @apply m-auto;
+}
