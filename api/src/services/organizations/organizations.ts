@@ -6,6 +6,8 @@ import { db } from 'src/lib/db'
 import { getContextUser } from 'src/lib/context'
 import { logger } from 'src/lib/logger'
 
+import { accounts, deleteAccount } from 'src/services/accounts'
+
 import {
   validateCurrentUser,
   validateAccountOrganization,
@@ -162,5 +164,36 @@ export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
 
 // == D
 //
-export const deleteOrganization = async () => {}
+export const deleteOrganization = async () => {
+  const accountList = await accounts()
+
+  // accounts
+  try {
+    accountList.forEach(async (account) => {
+      const id = account.id
+      await deleteAccount({ id })
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error deleting organization accounts.')
+    throw new UserInputError('organization-delete-accounts')
+  }
+
+  // roles
+
+  const id = getContextUser().organizationId
+
+  let res: Organization
+
+  // organization
+  try {
+    res = await db.organization.delete({
+      where: { id },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error deleting organization.')
+    throw new UserInputError('organization-delete')
+  }
+
+  return res
+}
 //
