@@ -9,7 +9,18 @@ i18n
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
-    interpolation: { escapeValue: false }, // React already does escaping
+    interpolation: {
+      escapeValue: false,
+      format: (value: string, format: string, lng: string) => {
+        if (format === 'pluralPossessive' && lng === 'en') {
+          if (!value.endsWith('s') && !value.endsWith('S')) {
+            value += "'s"
+          }
+        }
+
+        return value
+      },
+    }, // React already does escaping
     lng: 'en',
     fallbackLng: 'en',
     ns: ['app', 'permissions'],
