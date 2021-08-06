@@ -12,7 +12,7 @@ html, body {
   width: 100%;
 }
 body { @apply bg-gray-50; }
-body.dark { @apply bg-gray-800; }
+body.dark { @apply bg-gray-900; }
 #redwood-app {
   height: 100%;
   width: 100%;
@@ -119,7 +119,7 @@ body.dark { @apply bg-gray-800; }
   .card {
     /* Background */
     @apply bg-white;
-    @apply dark:bg-gray-900;
+    @apply dark:bg-gray-800;
     /* Border */
     @apply border rounded-lg;
     @apply border-gray-100;
@@ -148,7 +148,7 @@ body.dark { @apply bg-gray-800; }
     /* Border */
     @apply border rounded-md;
     @apply border-gray-200 hover:border-gray-400;
-    @apply dark:border-gray-700 dark:hover:border-gray-500;
+    @apply dark:border-gray-600 dark:hover:border-gray-400;
     /* Text */
     @apply placeholder-gray-500 text-black;
     @apply dark:placeholder-gray-400 dark:text-white;
@@ -215,7 +215,7 @@ body.dark { @apply bg-gray-800; }
   .menu .menu-item {
     /* Background */
     @apply bg-white;
-    @apply dark:bg-gray-900;
+    @apply dark:bg-gray-800;
     /* Border */
     @apply border border-transparent;
     /* Text */
@@ -233,7 +233,7 @@ body.dark { @apply bg-gray-800; }
   .menu .menu-item.active {
     /* Background */
     @apply bg-gray-100;
-    @apply dark:bg-gray-700 dark:bg-opacity-40;
+    @apply dark:bg-gray-700;
   }
   .menu .menu-item.logout {
     /* Text */
@@ -290,7 +290,7 @@ body.dark { @apply bg-gray-800; }
     /* Border */
     @apply border rounded-md;
     @apply border-gray-200 hover:border-gray-400;
-    @apply dark:border-gray-700 dark:hover:border-gray-500;
+    @apply dark:border-gray-600 dark:hover:border-gray-400;
     /* Text */
     @apply text-gray-900;
     @apply dark:text-gray-50;

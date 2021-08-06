@@ -10,7 +10,9 @@ const SidebarNav = () => {
   const home = useMatch(routes.home()).match
   //
   const accountActivity = false
-  const listAccounts = useMatch(routes.listAccounts()).match
+  const listAccountsMatch = useMatch(routes.listAccounts()).match
+  const accountMatch = useMatch(routes.account()).match
+  const listAccounts = listAccountsMatch || accountMatch
   const listRoles = false
   //
   const orgSettings = useMatch(routes.organizationSettings()).match
