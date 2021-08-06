@@ -18,7 +18,11 @@
         "errors": {
           "account-email-taken": "This email is already in use by another member.",
           "account-create-confirm": "An error occured trying to create a confirmation email for the member.",
-          "account-email-send": "An error occured sending the invitation email to the member."
+          "account-email-send": "An error occured sending the invitation email to the member.",
+          "email-required": "An email address is required to invite a member.",
+          "email-invalid": "Did not recieve a valid email address.",
+          "email-length": "Email address has exceeded the maximum allowed length.",
+          "email-reserved": "Email address contains an invalid character or is not formatted correctly."
         }
       }
     },
@@ -41,6 +45,14 @@
         "Appbar": {
           "title": "Accounts"
         }
+      }
+    },
+    "Page": {
+      "Helmet": {
+        "title": "Account Details • Cerberus"
+      },
+      "Appbar": {
+        "title": "Account Details"
       }
     }
   },
