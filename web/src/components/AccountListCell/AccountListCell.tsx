@@ -60,20 +60,14 @@ export const Success = ({ accounts }: CellSuccessProps<AccountListQuery>) => {
             key={id}
             onClick={() => navigate(routes.account({ id }))}
           >
-            <div className="title-group">
+            <header className="title-group">
               <h3 className="account-name text">{name}</h3>
               <p className="account-email hint">{email}</p>
-            </div>
+            </header>
             <p className="text">
               {t('Account.List.Cell.Success.lastLogin', {
-                time: new Date(lastLogin).toLocaleTimeString(undefined, {
-                  timeStyle: 'short',
-                }),
-                date: new Date(lastLogin).toLocaleDateString(undefined, {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                }),
+                time: lastLogin,
+                date: lastLogin,
               })}
             </p>
           </button>
