@@ -26,12 +26,16 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateCurrentUser)
   rules.add(validateAccountOrganization)
   rules.add(validateAccountId, { only: ['currentAccount'] })
-  // Invite Account Name
+  rules.add((s, { name }) => name && validateAccountName(s, { name }), {
+    only: ['updateAccount'],
+  })
   rules.add(
-    (s: string) => validateAccountName(s, { name: getContextUser().name }),
+    (s, _i) => validateAccountName(s, { name: getContextUser().name }),
     { only: ['inviteAccount'] }
   )
-  rules.add(validateAccountName, { only: ['updateAccount'] })
+  rules.add((s, { email }) => email && validateEmail(s, { email }), {
+    only: ['updateAccount'],
+  })
   rules.add(validateEmail, { only: ['inviteAccount'] })
 }
 //
@@ -49,14 +53,11 @@ const removeAuthFields = (acc: Account) => {
 // == C
 /**
  * @throws
- *  * 'account-email-taken' - When the email provided is already in use.
  *  * 'account-create-confirm' - When an error occurs creating the invitation.
  *  * 'account-email-send' - When an error occurs sending the invitation email.
  */
 export const inviteAccount = async ({ email }) => {
-  if (await checkEmailExist({ email })) {
-    throw new UserInputError('account-email-taken')
-  }
+  await checkEmailExist({ email })
 
   const organization = await getOrganization()
   const organizationId = organization.id
@@ -142,10 +143,16 @@ export const accounts = async () => {
 interface CheckEmailExistArgs {
   email: string
 }
+/**
+ * @throws
+ *  * 'account-email-taken' - When the email provided is already in use.
+ */
 const checkEmailExist = async ({ email }: CheckEmailExistArgs) => {
   const res = await db.account.count({ where: { email } })
 
-  return res !== 0
+  if (res !== 0) {
+    throw new UserInputError('account-email-taken')
+  }
 }
 
 /**
@@ -185,6 +192,8 @@ export interface UpdateAccountArgs {
  *  * 'account-update' - When an error occures updating the Account in the DB.
  */
 export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
+  email && (await checkEmailExist({ email }))
+
   const organizationId = getContextUser().organizationId
 
   const updateOrg = await db.account.findUnique({
