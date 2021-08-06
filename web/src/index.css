@@ -355,7 +355,6 @@ body.dark { @apply bg-gray-800; }
   /* Spinner */
   .spinner {
     @apply w-full max-w-[150px];
-    @apply m-6;
   }
   .spinner .outter {
     @apply text-gray-200 dark:text-gray-600;
