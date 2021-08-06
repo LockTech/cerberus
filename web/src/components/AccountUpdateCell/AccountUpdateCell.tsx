@@ -123,7 +123,7 @@ export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
   )
 
   return (
-    <div className="page-layout">
+    <>
       <div className="card card-body">
         <header className="title-group">
           <h2 className="title">
@@ -191,6 +191,6 @@ export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
         </Form>
       </div>
       <AccountDangerCard name={name} />
-    </div>
+    </>
   )
 }
