@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { navigate, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import FailureCard from 'src/components/FailureCard'
@@ -45,7 +46,11 @@ export const Success = ({ accounts }: CellSuccessProps<AccountListQuery>) => {
   return (
     <div className="account-list">
       {accounts.map((account) => (
-        <button className="card card-body card-interactive" key={account.id}>
+        <button
+          className="card card-body card-interactive"
+          key={account.id}
+          onClick={() => navigate(routes.account({ id: account.id }))}
+        >
           <div className="title-group">
             <h3 className="account-name text">{account.name}</h3>
             <p className="account-email hint">{account.email}</p>
