@@ -8,5 +8,5 @@
   @apply space-y-1;
 }
 .account-list .account-name {
-  @apply font-medium text-xl;
+  @apply font-semibold text-xl;
 }
