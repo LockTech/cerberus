@@ -181,7 +181,7 @@ export interface UpdateAccountArgs {
 }
 /**
  * @throws
- *  * 'account-organization-invalid' - When the organization the account belongs to does not match the current user's.
+ *  * 'account-organization-match' - When the organization the account belongs to does not match the current user's.
  *  * 'account-update' - When an error occures updating the Account in the DB.
  */
 export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
@@ -194,7 +194,7 @@ export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
   const updateOrganizationId = updateOrg.organizationId
 
   if (updateOrganizationId !== organizationId) {
-    throw new UserInputError('account-organization-invalid')
+    throw new UserInputError('account-organization-match')
   }
 
   let res: Account

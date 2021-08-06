@@ -18,7 +18,7 @@ const TakenError: Error = {
 
 const UpdateOrgError: Error = {
   name: 'UserInputError',
-  message: 'account-organization-invalid',
+  message: 'account-organization-match',
 }
 
 jest.setTimeout(100000)
