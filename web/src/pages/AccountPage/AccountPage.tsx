@@ -1,8 +1,12 @@
 import { useTranslation } from 'react-i18next'
+import { KeyIcon } from '@heroicons/react/solid'
 import { Helmet } from '@redwoodjs/web'
 
 import AppbarTitle from 'src/components/Appbar/AppbarTitle'
 import AccountUpdateCell from 'src/components/AccountUpdateCell'
+
+import './AccountPage.css'
+import { useAuth } from '@redwoodjs/auth'
 
 export interface AccountPageProps {
   id: string
@@ -11,13 +15,28 @@ export interface AccountPageProps {
 const AccountPage = ({ id }: AccountPageProps) => {
   const { t } = useTranslation()
 
+  const { currentUser } = useAuth()
+
+  console.log(currentUser)
+
   return (
     <>
       <Helmet>
         <title>{t('Account.Page.Helmet.title')}</title>
       </Helmet>
       <AppbarTitle>{t('Account.Page.Appbar.title')}</AppbarTitle>
-      <AccountUpdateCell id={id} />
+      <div className="page-layout">
+        <div className="account-page-actions">
+          <button className="button-primary-outline">
+            <KeyIcon
+              aria-label={t('Account.Page.actions.passwordReset')}
+              className="icon"
+            />
+            <p>{t('Account.Page.actions.passwordReset')}</p>
+          </button>
+        </div>
+        <AccountUpdateCell id={id} />
+      </div>
     </>
   )
 }

@@ -1,0 +1,19 @@
+.account-page-actions {
+  @apply flex flex-row items-center justify-center;
+  @apply w-full;
+}
+.account-page-actions button {
+  /* Misc */
+  @apply flex flex-row items-center justify-center;
+  @apply w-full sm:w-max;
+  @apply py-3;
+  @apply space-x-4;
+}
+.account-page-actions button .icon {
+  /* Misc */
+  @apply h-6 w-6;
+}
+.account-page-actions button p {
+  /* Text */
+  @apply capitalize text-sm;
+}
