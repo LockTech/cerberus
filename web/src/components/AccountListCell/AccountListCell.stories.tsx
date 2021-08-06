@@ -11,6 +11,15 @@ export default {
 export const databaseFailure = () => (
   <Failure error={new Error('account-get')} />
 )
+export const accountFailure = () => (
+  <Failure error={new Error('account-invalid')} />
+)
+export const accountOrgFailure = () => (
+  <Failure error={new Error('account-organization-invalid')} />
+)
+export const miscFailure = () => (
+  <Failure error={new Error('An unexpected network error occured.')} />
+)
 
 export const loading = () => <Loading />
 
