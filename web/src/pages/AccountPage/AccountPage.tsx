@@ -17,9 +17,7 @@ const AccountPage = ({ id }: AccountPageProps) => {
         <title>{t('Account.Page.Helmet.title')}</title>
       </Helmet>
       <AppbarTitle>{t('Account.Page.Appbar.title')}</AppbarTitle>
-      <div className="page-layout">
-        <AccountUpdateCell id={id} />
-      </div>
+      <AccountUpdateCell id={id} />
     </>
   )
 }
