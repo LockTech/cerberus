@@ -62,12 +62,12 @@ export const validateAccountId = () => {
  * Validate that `context.currentUser` includes a `name`.
  *
  * @throws
- *  * 'account-name-invalid' - When `context.currentUser.name` is undefined.
- *  * 'account-name-length' - When `context.currentUser.name` is longer than `MaxNameLength`.
+ *  * 'account-name-invalid' - When `name` is undefined.
+ *  * 'account-name-length' - When `name` is longer than `MaxNameLength`.
  */
 export const validateAccountName = (
   _service: string,
-  { name }: { name: string }
+  { name }: { name?: string }
 ) => {
   if (!isStr(name)) {
     throw new ValidationError('account-name-invalid')
