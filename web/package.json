@@ -32,6 +32,7 @@
   "devDependencies": {
     "autoprefixer": "9.8.6",
     "postcss-loader": "4.0.2",
+    "storybook-dark-mode": "^1.0.8",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }
