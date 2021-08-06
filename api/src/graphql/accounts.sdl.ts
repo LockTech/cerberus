@@ -18,6 +18,6 @@ export const schema = gql`
 
   type Mutation {
     inviteAccount(email: String!): Boolean
-    updateAccount(id: ID!, email: String!, name: String!): Account!
+    updateAccount(id: ID!, email: String, name: String): Account!
   }
 `
