@@ -23,7 +23,7 @@ export const Loading = () => {
 
   return (
     <LoadingCard>
-      <p className="text">{t('Account.List.Cell.loading')}</p>
+      <p className="text">{t('Account.List.Cell.Loading')}</p>
     </LoadingCard>
   )
 }
@@ -33,9 +33,9 @@ export const Failure = ({ error }: CellFailureProps) => {
 
   return (
     <FailureCard>
-      <p className="text">{t('Account.List.Cell.failure.title')}</p>
+      <p className="text">{t('Account.List.Cell.Failure.title')}</p>
       <p className="text">
-        {t(`Account.List.Cell.failure.errors.${error.message}`, error.message)}
+        {t(`Account.List.Cell.Failure.errors.${error.message}`, error.message)}
       </p>
     </FailureCard>
   )

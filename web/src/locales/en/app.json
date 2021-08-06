@@ -24,7 +24,7 @@
     },
     "List": {
       "Cell": {
-        "failure": {
+        "Failure": {
           "title": "Error loading your organization's accounts.",
           "errors": {
             "account-get": "An unexpected database error occured trying to retrieve your accounts.",
@@ -32,7 +32,7 @@
             "account-organization-invalid": "Could not validate you belong to an organization."
           }
         },
-        "loading": "Loading your organization's accounts."
+        "Loading": "Loading your organization's accounts."
       },
       "Page": {
         "Helmet": {
