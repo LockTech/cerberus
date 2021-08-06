@@ -146,7 +146,7 @@ export const signupHandler = async ({
 }: SignupHandlerOptions) => {
   logger.debug({ email, code, name, ...rest }, 'Handling signup.')
 
-  validateEmail('signupHandler', { input: { email } })
+  validateEmail('signupHandler', { email })
 
   if (!isStr(name)) {
     logger.warn('Attempted signup without a name.')

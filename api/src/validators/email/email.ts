@@ -9,10 +9,7 @@ interface EmailInput {
   email: string
 }
 
-export const validateEmail = (
-  _name: string,
-  { input: { email } }: { input: EmailInput }
-) => {
+export const validateEmail = (_name: string, { email }: EmailInput) => {
   if (email === undefined || email === null) {
     throw new ValidationError('email-required')
   }
