@@ -11,13 +11,13 @@ export const schema = gql`
   }
 
   type Query {
-    account(id: String!): Account
+    account(id: String!): Account!
     accounts: [Account!]!
     currentAccount: Account!
   }
 
   type Mutation {
-    signupAccount(email: String!): Boolean
     inviteAccount(email: String!): Boolean
+    updateAccount(id: String!, email: String!, name: String!): Account!
   }
 `
