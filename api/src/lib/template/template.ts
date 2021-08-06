@@ -12,6 +12,6 @@ const config = getConfig({})
  * You are responsible for ensuring any data a user has input is sanatized or rejected prior.
  */
 export const template = (str: string, data: TemplateData) => {
-  logger.debug({ str, data }, 'Templating string using data.')
+  logger.debug({ data }, 'Templating string using data.')
   return render(str, data, config)
 }
