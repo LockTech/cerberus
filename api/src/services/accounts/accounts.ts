@@ -48,6 +48,17 @@ const removeAuthFields = (acc: Account) => {
   }
   return acc
 }
+
+const checkOrgsMatch = async (searchId: string, invokerId: string) => {
+  const updateOrg = await db.account.findUnique({
+    select: { organizationId: true },
+    where: { id: searchId },
+  })
+  const updateOrganizationId = updateOrg.organizationId
+  if (updateOrganizationId !== invokerId) {
+    throw new UserInputError('account-organization-match')
+  }
+}
 //
 
 // == C
@@ -194,17 +205,7 @@ export interface UpdateAccountArgs {
 export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
   email && (await checkEmailExist({ email }))
 
-  const organizationId = getContextUser().organizationId
-
-  const updateOrg = await db.account.findUnique({
-    select: { organizationId: true },
-    where: { id },
-  })
-  const updateOrganizationId = updateOrg.organizationId
-
-  if (updateOrganizationId !== organizationId) {
-    throw new UserInputError('account-organization-match')
-  }
+  await checkOrgsMatch(id, getContextUser().organizationId)
 
   let res: Account
 
@@ -225,4 +226,32 @@ export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
 //
 
 // == D
+export interface DeleteAccountArgs {
+  id: string
+}
+/**
+ * @throws
+ *  * 'account-organization-match' - When the organization the account belongs to does not match the current user's.
+ *  * 'account-delete' - When an error occures deleting the Account from the DB.
+ */
+export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
+  await checkOrgsMatch(id, getContextUser().organizationId)
+
+  let res: Account
+
+  // remove account roles
+
+  try {
+    res = await db.account.delete({
+      where: { id },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error deleting account.')
+    throw new UserInputError('account-delete')
+  }
+
+  res = removeAuthFields(res)
+
+  return res
+}
 //
