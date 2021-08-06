@@ -1,3 +1,12 @@
 .account-list {
-  @apply grid grid-cols-4;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4;
+  @apply gap-4;
+  @apply text-center;
+}
+
+.account-list .title-group {
+  @apply space-y-1;
+}
+.account-list .account-name {
+  @apply font-medium text-xl;
 }
