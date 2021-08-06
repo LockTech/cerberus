@@ -15,7 +15,22 @@ i18n
         if (format === 'pluralPossessive' && lng === 'en') {
           if (!value.endsWith('s') && !value.endsWith('S')) {
             value += "'s"
+          } else {
+            value += "'"
           }
+        }
+
+        if (format === 'friendlyDate') {
+          value = new Date(value).toLocaleDateString(lng, {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+          })
+        }
+        if (format === 'friendlyTime') {
+          value = new Date(value).toLocaleTimeString(lng, {
+            timeStyle: 'short',
+          })
         }
 
         return value
