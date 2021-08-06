@@ -36,7 +36,10 @@
             "account-organization-invalid": "Could not validate you belong to an organization."
           }
         },
-        "Loading": "Loading your organization's accounts."
+        "Loading": "Loading your organization's accounts.",
+        "Success": {
+          "lastLogin": "Last seen at {{ time }} on {{ date }}"
+        }
       },
       "Page": {
         "Helmet": {

@@ -12,9 +12,10 @@ import './AccountListCell.css'
 export const QUERY = gql`
   query AccountListQuery {
     accounts {
-      id
-      name
       email
+      id
+      lastLoginAt
+      name
     }
   }
 `
@@ -43,24 +44,41 @@ export const Failure = ({ error }: CellFailureProps) => {
 }
 
 export const Success = ({ accounts }: CellSuccessProps<AccountListQuery>) => {
+  const { t } = useTranslation()
+
   return (
     <div className="account-list">
-      {accounts.map((account) => (
-        <button
-          className="card card-body card-interactive"
-          key={account.id}
-          onClick={() => navigate(routes.account({ id: account.id }))}
-        >
-          <div className="title-group">
-            <h3 className="account-name text">{account.name}</h3>
-            <p className="account-email hint">{account.email}</p>
-          </div>
-          <p className="text">
-            Last seen at {new Date().toLocaleTimeString()} on{' '}
-            {new Date().toLocaleDateString()}
-          </p>
-        </button>
-      ))}
+      {accounts.map((account) => {
+        const email = account.email
+        const id = account.id
+        const lastLogin = account.lastLoginAt
+        const name = account.name
+
+        return (
+          <button
+            className="card card-body card-interactive"
+            key={id}
+            onClick={() => navigate(routes.account({ id }))}
+          >
+            <div className="title-group">
+              <h3 className="account-name text">{name}</h3>
+              <p className="account-email hint">{email}</p>
+            </div>
+            <p className="text">
+              {t('Account.List.Cell.Success.lastLogin', {
+                time: new Date(lastLogin).toLocaleTimeString(undefined, {
+                  timeStyle: 'short',
+                }),
+                date: new Date(lastLogin).toLocaleDateString(undefined, {
+                  day: '2-digit',
+                  month: 'long',
+                  year: 'numeric',
+                }),
+              })}
+            </p>
+          </button>
+        )
+      })}
     </div>
   )
 }
