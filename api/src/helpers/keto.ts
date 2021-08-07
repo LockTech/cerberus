@@ -1,6 +1,7 @@
 import { UserInputError } from '@redwoodjs/api'
-import { fetch } from '../lib/fetch-client'
-import { logger } from '../lib/logger'
+
+import { fetch } from 'src/lib/fetch'
+import { logger } from 'src/lib/logger'
 
 const KetoURL = process.env.KETO_URL
 const CheckURL = `${KetoURL}/check`
