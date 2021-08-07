@@ -7,7 +7,7 @@ import type { AuthScenario } from './auth.scenarios'
 describe('auth lib', () => {
   describe('getContextUser', () => {
     scenario(
-      'successfully creates an account',
+      "successfully retrieves the current request's account",
       async (scenario: AuthScenario) => {
         const one = scenario.account.one as Account
         const id = one.id
