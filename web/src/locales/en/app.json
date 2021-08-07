@@ -293,6 +293,11 @@
     }
   },
   "Role": {
+    "Create": {
+      "Modal": {
+        "createRole": "Create a Role"
+      }
+    },
     "List": {
       "Page": {
         "Helmet": {
