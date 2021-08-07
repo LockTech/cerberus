@@ -23,8 +23,8 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 export interface CreatePermissionArgs {
   application: string
   namespace: string
-  object: string
-  relation: string
+  object?: string
+  relation?: string
 }
 export const createPermission = async (data: CreatePermissionArgs) => {
   let res: Permission

@@ -1,5 +1,6 @@
 import { ValidationError } from '@redwoodjs/api'
-import { isStr } from 'src/util/asserters'
+
+import { isDefined, isStr } from 'src/util/asserters'
 
 // ==
 export interface IsPermissionTupleArgs {
@@ -19,10 +20,8 @@ export const isPermissionTuple = ({
     application === '' ||
     !isStr(namespace) ||
     namespace === '' ||
-    !isStr(object) ||
-    object === '' ||
-    !isStr(relation) ||
-    relation === ''
+    (isDefined(object) && !isStr(object)) ||
+    (isDefined(relation) && !isStr(relation))
   )
     return false
   return true
