@@ -24,7 +24,7 @@ import { validateEmail } from 'src/validators/email'
 //
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateCurrentUser)
-  rules.add(validateAccountOrganization)
+  rules.add(validateAccountOrganization, { except: ['currentAccount'] })
   rules.add(validateAccountId, { only: ['currentAccount'] })
   rules.add((s, { name }) => name && validateAccountName(s, { name }), {
     only: ['updateAccount'],
@@ -48,27 +48,19 @@ export const removeAuthFields = (acc: Account) => {
   }
   return acc
 }
-
-const checkOrgsMatch = async (searchId: string, invokerId: string) => {
-  const updateOrg = await db.account.findUnique({
-    select: { organizationId: true },
-    where: { id: searchId },
-  })
-  const updateOrganizationId = updateOrg.organizationId
-  if (updateOrganizationId !== invokerId) {
-    throw new UserInputError('account-organization-match')
-  }
-}
 //
 
 // == C
 /**
  * @throws
+ *  * 'account-email-taken' - If `email` is already in use by another member.
  *  * 'account-create-confirm' - When an error occurs creating the invitation.
  *  * 'account-email-send' - When an error occurs sending the invitation email.
  */
 export const inviteAccount = async ({ email }) => {
-  await checkEmailExist({ email })
+  if (await checkAccountExist({ email })) {
+    throw new UserInputError('account-email-taken')
+  }
 
   const organization = await getOrganization()
   const organizationId = organization.id
@@ -151,19 +143,40 @@ export const accounts = async () => {
   return res
 }
 
-interface CheckEmailExistArgs {
-  email: string
+interface CheckAccountExistArgs {
+  id?: string
+  email?: string
+  organizationId?: string
 }
-/**
- * @throws
- *  * 'account-email-taken' - When the email provided is already in use.
- */
-const checkEmailExist = async ({ email }: CheckEmailExistArgs) => {
-  const res = await db.account.count({ where: { email } })
+export const checkAccountExist = async ({
+  email,
+  id,
+  organizationId,
+}: CheckAccountExistArgs) => {
+  const res = await db.account.count({ where: { email, id, organizationId } })
 
-  if (res !== 0) {
-    throw new UserInputError('account-email-taken')
-  }
+  return res >= 1
+}
+
+/**
+ * Check that `accountId` is an Account `id` which belongs to the same organization as `invokerOrganizationId`.
+ *
+ * @param accountId
+ * @param invokerOrganizationId
+ * @throws
+ *  * 'account-organization-match'
+ */
+export const checkOrgsMatch = async (
+  accountId: string,
+  invokerOrganizationId: string
+) => {
+  const updateOrg = await db.account.findUnique({
+    select: { organizationId: true },
+    where: { id: accountId },
+  })
+  const searchOrganizationId = updateOrg.organizationId
+
+  return searchOrganizationId === invokerOrganizationId
 }
 
 /**
@@ -203,9 +216,15 @@ export interface UpdateAccountArgs {
  *  * 'account-update' - When an error occures updating the Account in the DB.
  */
 export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
-  email && (await checkEmailExist({ email }))
+  if (email) {
+    if (await checkAccountExist({ email })) {
+      throw new UserInputError('account-email-taken')
+    }
+  }
 
-  await checkOrgsMatch(id, getContextUser().organizationId)
+  if (await checkOrgsMatch(id, getContextUser().organizationId)) {
+    throw new UserInputError('account-organization-match')
+  }
 
   let res: Account
 
