@@ -222,7 +222,7 @@ export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
     }
   }
 
-  if (await checkOrgsMatch(id, getContextUser().organizationId)) {
+  if (!(await checkOrgsMatch(id, getContextUser().organizationId))) {
     throw new UserInputError('account-organization-match')
   }
 
@@ -263,7 +263,9 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
     throw new UserInputError('account-delete-self')
   }
 
-  await checkOrgsMatch(id, organizationId)
+  if (!(await checkOrgsMatch(id, organizationId))) {
+    throw new UserInputError('account-organization-match')
+  }
 
   let res: Account
 
