@@ -64,9 +64,10 @@ class fetch {
         ...headers,
       },
     })
+    const status = netRes.status
 
-    if (netRes.status < 200 || netRes.status >= 300) {
-      const { bodyUsed, json, status, statusText } = netRes
+    if (status < 200 || status >= 300) {
+      const { bodyUsed, json, statusText } = netRes
 
       const res = (bodyUsed && (await json())) || {}
 
@@ -82,7 +83,7 @@ class fetch {
     const res = netRes.bodyUsed && (await netRes.json())
 
     fetchLogger.info(
-      { res },
+      { res, status },
       'Successfully transformed JSON from Network Operation.'
     )
 
