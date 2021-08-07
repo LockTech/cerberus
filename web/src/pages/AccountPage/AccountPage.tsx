@@ -6,7 +6,6 @@ import AppbarTitle from 'src/components/Appbar/AppbarTitle'
 import AccountUpdateCell from 'src/components/AccountUpdateCell'
 
 import './AccountPage.css'
-import { useAuth } from '@redwoodjs/auth'
 
 export interface AccountPageProps {
   id: string
@@ -14,10 +13,6 @@ export interface AccountPageProps {
 
 const AccountPage = ({ id }: AccountPageProps) => {
   const { t } = useTranslation()
-
-  const { currentUser } = useAuth()
-
-  console.log(currentUser)
 
   return (
     <>
@@ -27,7 +22,7 @@ const AccountPage = ({ id }: AccountPageProps) => {
       <AppbarTitle>{t('Account.Page.Appbar.title')}</AppbarTitle>
       <div className="page-layout">
         <div className="account-page-actions">
-          <button className="button-primary-outline">
+          <button className="button-primary-ghost">
             <KeyIcon
               aria-label={t('Account.Page.actions.passwordReset')}
               className="icon"
