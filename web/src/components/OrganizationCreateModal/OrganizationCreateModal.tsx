@@ -113,7 +113,6 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
               {t('Organization.Create.Modal.form.adminRoleName.label')}
             </Label>
             <TextField
-              autoComplete="organization"
               className="input-primary"
               errorClassName="input-error"
               name="adminRoleName"
