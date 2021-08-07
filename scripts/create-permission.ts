@@ -1,6 +1,6 @@
-import { createPermission } from '../api/src/services/permissions/permissions'
+import { createPermission } from '../api/dist/services/permissions/permissions'
 
-import { validatePermissionTuple } from '../api/src/validators/permission/permission'
+import { validatePermissionTuple } from '../api/dist/validators/permission/permission'
 
 export interface CreatePermissionArgs {
   a: string
@@ -10,13 +10,18 @@ export interface CreatePermissionArgs {
 }
 
 export default async ({ args }: { args: CreatePermissionArgs }) => {
-  const { a: application, n: namespace, o: object, r: relation } = args
+  const { a: application, n: namespace } = args
+  let { o: object = '', r: relation = '' } = args
 
-  const permTuple = { application, namespace, object, relation }
+  object = typeof object === 'boolean' ? '' : object
+  relation = typeof relation === 'boolean' ? '' : relation
 
-  validatePermissionTuple('cli-create-permission', permTuple)
+  const data = { application, namespace, object, relation }
 
-  const res = await createPermission(permTuple)
+  validatePermissionTuple('cli-permission-create', data)
 
-  console.log(`Created PermissionTuple with ID: ${res.id}.`)
+  const res = await createPermission(data)
+
+  console.log({ res })
+  process.exit()
 }
