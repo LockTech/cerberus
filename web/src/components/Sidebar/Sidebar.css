@@ -6,7 +6,7 @@
   /* Background */
   /* @apply bg-white; */
   @apply bg-gray-900;
-  @apply dark:bg-black dark:bg-opacity-30;
+  /* @apply dark:bg-black dark:bg-opacity-30; */
   /* Misc */
   @apply max-w-[80%] lg:max-w-[10%] min-w-[17rem] w-[18%];
   @apply pb-6;
@@ -39,6 +39,6 @@
   @apply px-6 pt-12;
 }
 .sidebar .copyright a {
-  @apply text-gray-400 hover:text-gray-300 active:text-gray-200 !important;
+  @apply text-gray-400 hover:text-gray-200 active:text-gray-50 !important;
   @apply text-sm;
 }

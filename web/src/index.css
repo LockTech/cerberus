@@ -12,7 +12,7 @@ html, body {
   width: 100%;
 }
 body { @apply bg-gray-50; }
-body.dark { @apply bg-gray-900; }
+body.dark { @apply bg-gray-800; }
 #redwood-app {
   height: 100%;
   width: 100%;
@@ -119,7 +119,7 @@ body.dark { @apply bg-gray-900; }
   .card {
     /* Background */
     @apply bg-white;
-    @apply dark:bg-gray-800;
+    @apply dark:bg-gray-900;
     /* Border */
     @apply border rounded-lg;
     @apply border-gray-100;
@@ -214,8 +214,7 @@ body.dark { @apply bg-gray-900; }
   }
   .menu .menu-item {
     /* Background */
-    @apply bg-white;
-    @apply dark:bg-gray-800;
+    @apply bg-transparent;
     /* Border */
     @apply border border-transparent;
     /* Text */

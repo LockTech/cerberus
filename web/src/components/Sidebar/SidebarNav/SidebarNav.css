@@ -20,16 +20,14 @@
   /* Background */
   @apply bg-transparent;
   @apply hover:bg-gray-800 active:bg-gray-700;
-  @apply dark:hover:bg-gray-900 dark:active:bg-gray-800;
+  /* @apply dark:hover:bg-gray-900 dark:active:bg-gray-800; */
   /* Border */
   @apply border rounded;
   @apply border-transparent;
-  /* @apply hover:border-gray-100; */
   @apply hover:border-gray-700;
   /* Text */
   @apply font-medium tracking-wider;
-  /* @apply text-gray-500 hover:text-gray-700 active:text-gray-900; */
-  @apply text-gray-400 hover:text-gray-300 active:text-gray-100;
+  @apply text-gray-400 hover:text-gray-100 active:text-gray-50;
   /* Misc */
   @apply duration-[200ms] ease-in-out transition-all;
   @apply flex flex-row items-center;
@@ -42,6 +40,5 @@
   @apply bg-gray-700 bg-opacity-70;
   @apply dark:bg-gray-800 dark:bg-opacity-70;
   /* Text */
-  /* @apply text-gray-900; */
   @apply text-gray-50;
 }
