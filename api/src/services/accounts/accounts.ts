@@ -231,11 +231,20 @@ export interface DeleteAccountArgs {
 }
 /**
  * @throws
+ *  * 'account-delete-self' - When `context.currentUser.id === id`; preventing the deletion of the invokers account.
  *  * 'account-organization-match' - When the organization the account belongs to does not match the current user's.
  *  * 'account-delete' - When an error occures deleting the Account from the DB.
  */
 export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
-  await checkOrgsMatch(id, getContextUser().organizationId)
+  const currentAccount = getContextUser()
+  const currentId = currentAccount.id
+  const organizationId = currentAccount.organizationId
+
+  if (currentId === id) {
+    throw new UserInputError('account-delete-self')
+  }
+
+  await checkOrgsMatch(id, organizationId)
 
   let res: Account
 
