@@ -13,6 +13,12 @@ describe('permission validator', () => {
     it('returns "false" when "application" is not a string', () => {
       // @ts-expect-error checking failing functionality
       expect(isPermissionTuple({ ...Tuple, application: 0 })).toBeFalsy()
+      // @ts-expect-error checking failing functionality
+      expect(isPermissionTuple({ ...Tuple, application: true })).toBeFalsy()
+      // @ts-expect-error checking failing functionality
+      expect(isPermissionTuple({ ...Tuple, application: () => 4 })).toBeFalsy()
+    })
+    it('returns false when "application" is undefined or null', () => {
       // eslint-disable-next-line prettier/prettier
       expect(isPermissionTuple({ ...Tuple, application: undefined })).toBeFalsy()
       expect(isPermissionTuple({ ...Tuple, application: null })).toBeFalsy()
@@ -24,6 +30,12 @@ describe('permission validator', () => {
     it('returns "false" when "namespace" is not a string', () => {
       // @ts-expect-error checking failing functionality
       expect(isPermissionTuple({ ...Tuple, namespace: 0 })).toBeFalsy()
+      // @ts-expect-error checking failing functionality
+      expect(isPermissionTuple({ ...Tuple, namespace: true })).toBeFalsy()
+      // @ts-expect-error checking failing functionality
+      expect(isPermissionTuple({ ...Tuple, namespace: () => 4 })).toBeFalsy()
+    })
+    it('returns false when "application" is undefined or null', () => {
       // eslint-disable-next-line prettier/prettier
       expect(isPermissionTuple({ ...Tuple, namespace: undefined })).toBeFalsy()
       expect(isPermissionTuple({ ...Tuple, namespace: null })).toBeFalsy()
@@ -35,23 +47,19 @@ describe('permission validator', () => {
     it('returns "false" when "object" is not a string', () => {
       // @ts-expect-error checking failing functionality
       expect(isPermissionTuple({ ...Tuple, object: 0 })).toBeFalsy()
-      // eslint-disable-next-line prettier/prettier
-      expect(isPermissionTuple({ ...Tuple, object: undefined })).toBeFalsy()
-      expect(isPermissionTuple({ ...Tuple, object: null })).toBeFalsy()
-    })
-    it('returns "false" when "object" is an empty string', () => {
-      expect(isPermissionTuple({ ...Tuple, object: '' })).toBeFalsy()
+      // @ts-expect-error checking failing functionality
+      expect(isPermissionTuple({ ...Tuple, object: true })).toBeFalsy()
+      // @ts-expect-error checking failing functionality
+      expect(isPermissionTuple({ ...Tuple, object: () => 4 })).toBeFalsy()
     })
     // relation
     it('returns "false" when "relation" is not a string', () => {
       // @ts-expect-error checking failing functionality
       expect(isPermissionTuple({ ...Tuple, relation: 0 })).toBeFalsy()
-      // eslint-disable-next-line prettier/prettier
-      expect(isPermissionTuple({ ...Tuple, relation: undefined })).toBeFalsy()
-      expect(isPermissionTuple({ ...Tuple, relation: null })).toBeFalsy()
-    })
-    it('returns "false" when "relation" is an empty string', () => {
-      expect(isPermissionTuple({ ...Tuple, relation: '' })).toBeFalsy()
+      // @ts-expect-error checking failing functionality
+      expect(isPermissionTuple({ ...Tuple, relation: true })).toBeFalsy()
+      // @ts-expect-error checking failing functionality
+      expect(isPermissionTuple({ ...Tuple, relation: () => 4 })).toBeFalsy()
     })
   })
 })
