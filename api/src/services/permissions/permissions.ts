@@ -11,6 +11,15 @@ import {
 } from 'src/validators/account'
 import { reject } from 'src/validators/rejector'
 
+//
+export interface PermissionTuple {
+  application: string
+  namespace: string
+  object: string
+  relation: string
+}
+//
+
 // ==
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateCurrentUser)
