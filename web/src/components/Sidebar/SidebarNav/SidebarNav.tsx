@@ -13,12 +13,14 @@ const SidebarNav = () => {
   const listAccountsMatch = useMatch(routes.listAccounts()).match
   const accountMatch = useMatch(routes.account()).match
   const listAccounts = listAccountsMatch || accountMatch
-  const listRoles = false
+  //
+  const listRoles = useMatch(routes.listRoles()).match
   //
   const orgSettings = useMatch(routes.organizationSettings()).match
 
   return (
     <nav>
+      {/* General */}
       <div className="nav-group">
         <p className="nav-group-title">{t('Sidebar.nav.general.title')}</p>
         <button
@@ -28,6 +30,7 @@ const SidebarNav = () => {
           {t('Sidebar.nav.general.dashboard')}
         </button>
       </div>
+      {/* Accounts */}
       <div className="nav-group">
         <p className="nav-group-title">{t('Sidebar.nav.accounts.title')}</p>
         <button className={clsx(accountActivity && 'active')}>
@@ -39,10 +42,14 @@ const SidebarNav = () => {
         >
           {t('Sidebar.nav.accounts.listAccounts')}
         </button>
-        <button className={clsx(listRoles && 'active')}>
+        <button
+          className={clsx(listRoles && 'active')}
+          onClick={() => navigate(routes.listRoles())}
+        >
           {t('Sidebar.nav.accounts.listRoles')}
         </button>
       </div>
+      {/* Organization */}
       <div className="nav-group">
         <p className="nav-group-title">{t('Sidebar.nav.organization.title')}</p>
         <button

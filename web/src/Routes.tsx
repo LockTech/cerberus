@@ -17,6 +17,8 @@ const Routes = () => {
           {/* Accounts */}
           <Route path="/accounts" page={AccountListPage} name="listAccounts" />
           <Route path="/account/{id}" page={AccountPage} name="account" />
+          {/* Roles */}
+          <Route path="/roles" page={RoleListPage} name="listRoles" />
           {/* Organizations */}
           <Route path="/organization/settings" page={OrganizationSettingsPage} name="organizationSettings" />
         </Set>

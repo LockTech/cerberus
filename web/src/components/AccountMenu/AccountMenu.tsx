@@ -30,7 +30,7 @@ const AccountMenu = () => {
             <span className="title">{currentAccount?.name}</span>
           </div>
           <UserCircleIcon
-            aria-label={t('AccountMenu.accountProfile')}
+            aria-label={t('Account.Menu.accountProfile')}
             className="icon"
           />
         </Menu.Button>
@@ -51,7 +51,7 @@ const AccountMenu = () => {
                   onClick={() => setSettingsModalOpen(true)}
                 >
                   <CogIcon aria-hidden="true" className="icon" />
-                  {t('AccountMenu.items.settings')}
+                  {t('Account.Menu.items.settings')}
                 </button>
               )}
             </Menu.Item>
@@ -62,7 +62,7 @@ const AccountMenu = () => {
                   onClick={() => logOut()}
                 >
                   <LogoutIcon aria-hidden="true" className="icon" />
-                  {t('AccountMenu.items.logout')}
+                  {t('Account.Menu.items.logout')}
                 </button>
               )}
             </Menu.Item>

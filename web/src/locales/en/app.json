@@ -67,6 +67,13 @@
         }
       }
     },
+    "Menu": {
+      "accountProfile": "Account Profile",
+      "items": {
+        "settings": "Settings",
+        "logout": "Logout"
+      }
+    },
     "Page": {
       "Helmet": {
         "title": "Account Details • Cerberus"
@@ -116,13 +123,6 @@
           "success": "Successfully updated your member's account."
         }
       }
-    }
-  },
-  "AccountMenu": {
-    "accountProfile": "Account Profile",
-    "items": {
-      "settings": "Settings",
-      "logout": "Logout"
     }
   },
   "App": {
@@ -288,6 +288,18 @@
             "organization-name-taken": "That name is already in use by another organization.",
             "organization-update": "An error occured trying to update your organization."
           }
+        }
+      }
+    }
+  },
+  "Role": {
+    "List": {
+      "Page": {
+        "Helmet": {
+          "title": "Roles • Cerberus"
+        },
+        "Appbar": {
+          "title": "Roles"
         }
       }
     }
