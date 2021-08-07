@@ -61,18 +61,22 @@ model Organization {
 //   //
 //   accounts                      Account[]
 //   //
+//   permissions                   Permission[]
+//   //
 //   @@unique([name, organizationId])
 // }
 
-// model Permission {
-//   id                            String                            @id @default(uuid())
-//   application                   String
-//   namespace                     String
-//   object                        String
-//   relation                      String
-//   //
-//   created_at                    DateTime                          @default(now())
-//   updated_at                    DateTime                          @default(now())
-
-//   @@unique([application, namespace, object, relation])
-// }
+model Permission {
+  id                            String                            @id @default(uuid())
+  application                   String
+  namespace                     String
+  object                        String
+  relation                      String
+  //
+  created_at                    DateTime                          @default(now())
+  updated_at                    DateTime                          @default(now())
+  //
+  // roles                         Role[]
+  //
+  @@unique([application, namespace, object, relation])
+}
