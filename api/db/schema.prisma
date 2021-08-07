@@ -70,8 +70,8 @@ model Permission {
   id                            String                            @id @default(uuid())
   application                   String
   namespace                     String
-  object                        String
-  relation                      String
+  object                        String                            @default("")
+  relation                      String                            @default("")
   //
   created_at                    DateTime                          @default(now())
   updated_at                    DateTime                          @default(now())
