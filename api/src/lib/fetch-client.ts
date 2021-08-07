@@ -37,6 +37,8 @@ class fetch {
    * @param method The HTTP method defining the action to be performed
    * @param body An `unknown` object to be used as the body of the request.
    * @returns The `Response` given by the resource, typed according to the provided `generic`.
+   * @throws
+   *  * 'fetch-error' - If `response.status` is out of the success range (200).
    */
   static async fetch<T = Record<string, string>>(
     url: string,
@@ -72,7 +74,7 @@ class fetch {
         { res, status, statusText },
         'Error performing Network Operation; did not recieve "status" 200.'
       )
-      throw new ValidationError('Error performing network operation.')
+      throw new ValidationError('fetch-error')
     }
 
     // Response
