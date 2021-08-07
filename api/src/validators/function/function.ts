@@ -3,16 +3,24 @@ import { ValidationError } from '@redwoodjs/graphql-server'
 
 import { isStr } from 'src/util/asserters'
 
+const JSONHeader = 'application/json'
+
 /**
  * @throws
- *  * 'function-body-invalid' - When `body` is not a valid string.
+ *  * 'function-invalid-body' - When `body` is not a valid string.
+ *  * 'function-invalid-mediatype' - When `headers.Content-Type` is not `JSONHeader` ('application/json').
  */
-export const validateBodyJSON = (
+export const validateJSON = (
   _service: string,
-  { body }: APIGatewayEvent
+  { body, headers }: APIGatewayEvent
 ) => {
   if (!isStr(body)) {
-    throw new ValidationError('function-body-invalid')
+    throw new ValidationError('function-invalid-body')
+  }
+
+  const { 'Content-Type': contentType } = headers
+  if (contentType !== JSONHeader) {
+    throw new ValidationError('function-invalid-mediatype')
   }
 }
 
