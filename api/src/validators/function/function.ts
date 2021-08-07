@@ -15,3 +15,21 @@ export const validateBodyJSON = (
     throw new ValidationError('function-body-invalid')
   }
 }
+
+/**
+ * @throws
+ *  * 'function-method-invalid' - When `httpMethod` is not 'POST', 'GET', 'DELETE', or 'PUT'
+ */
+export const validateMethod = (
+  _service: string,
+  { httpMethod }: APIGatewayEvent
+) => {
+  if (
+    httpMethod !== 'POST' &&
+    httpMethod !== 'GET' &&
+    httpMethod !== 'DELETE' &&
+    httpMethod !== 'PUT'
+  ) {
+    throw new ValidationError('function-method-invalid')
+  }
+}
