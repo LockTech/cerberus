@@ -1,25 +1,27 @@
 import type { APIGatewayEvent } from 'aws-lambda'
 import { ValidationError } from '@redwoodjs/graphql-server'
 
-import { isStr } from 'src/util/asserters'
+import { isDefined, isStr } from 'src/util/asserters'
 
+const JSONHeaderKey = 'content-type'
 const JSONHeader = 'application/json'
 
 /**
  * @throws
- *  * 'function-invalid-body' - When `body` is not a valid string.
+ *  * 'function-invalid-body' - When `body` is defined and not a valid string.
  *  * 'function-invalid-mediatype' - When `headers.Content-Type` is not `JSONHeader` ('application/json').
  */
 export const validateJSON = (
   _service: string,
   { body, headers }: APIGatewayEvent
 ) => {
-  if (!isStr(body)) {
+  if (isDefined(body) && !isStr(body)) {
     throw new ValidationError('function-invalid-body')
   }
 
-  const { 'Content-Type': contentType } = headers
-  if (contentType !== JSONHeader) {
+  const contentType = headers[JSONHeaderKey]
+
+  if (isDefined(contentType) && contentType !== JSONHeader) {
     throw new ValidationError('function-invalid-mediatype')
   }
 }
