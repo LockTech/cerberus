@@ -436,11 +436,46 @@ body.dark { @apply bg-gray-800; }
     @apply focus-primary;
     @apply button;
   }
+  .button-primary-ghost {
+    /* Background */
+    @apply bg-transparent hover:bg-blue-500 active:bg-blue-600;
+    /* Border */
+    @apply border-transparent hover:border-blue-500 active:border-blue-600 !important;
+    /* Text */
+    @apply text-black hover:text-black active:text-white;
+    @apply dark:text-white dark:hover:text-black dark:active:text-white;
+    /* Misc */
+    @apply focus-primary;
+    @apply button;
+  }
+  .button-red-fill {
+    /* Background */
+    @apply bg-red-400 hover:bg-red-500 active:bg-red-600;
+    /* Border */
+    @apply border-red-400 hover:border-red-500 active:border-red-600 !important;
+    /* Text */
+    @apply text-black hover:text-black active:text-white;
+    /* Misc */
+    @apply focus-red;
+    @apply button;
+  }
   .button-red-outline {
     /* Background */
     @apply bg-transparent hover:bg-red-500 active:bg-red-600;
     /* Border */
     @apply border-red-400 hover:border-red-500 active:border-red-600 !important;
+    /* Text */
+    @apply text-black hover:text-black active:text-white;
+    @apply dark:text-white dark:hover:text-black dark:active:text-white;
+    /* Misc */
+    @apply focus-red;
+    @apply button;
+  }
+  .button-red-ghost {
+    /* Background */
+    @apply bg-transparent hover:bg-red-500 active:bg-red-600;
+    /* Border */
+    @apply border-transparent hover:border-red-500 active:border-red-600 !important;
     /* Text */
     @apply text-black hover:text-black active:text-white;
     @apply dark:text-white dark:hover:text-black dark:active:text-white;
