@@ -8,8 +8,11 @@ import { useCallback } from 'react'
 import { QUERY } from 'src/hooks/useCurrentAccount'
 
 export const MUTATION = gql`
-  mutation CreateOrganizationMutation($name: String!) {
-    organization: createOrganization(name: $name) {
+  mutation CreateOrganizationMutation($name: String!, $adminRoleName: String!) {
+    organization: createOrganization(
+      name: $name
+      adminRoleName: $adminRoleName
+    ) {
       __typename
     }
   }
@@ -17,6 +20,7 @@ export const MUTATION = gql`
 
 export interface CreateOrganizationFormData {
   name: string
+  adminRoleName: string
 }
 export interface CreateOrganizationMutationResult {
   organization: { __typename: string }
@@ -54,9 +58,9 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
   })
 
   const onSubmit = useCallback(
-    (data: CreateOrganizationFormData) => {
+    (variables: CreateOrganizationFormData) => {
       if (!loading) {
-        mutate({ variables: data })
+        mutate({ variables })
         toast.loading(t('Organization.Create.Modal.loading'))
       }
     },
@@ -73,6 +77,7 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
           </Modal.Description>
         </header>
         <Form className="form" onSubmit={onSubmit}>
+          {/* name */}
           <div className="input-group">
             <Label
               className="input-label"
@@ -96,6 +101,38 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
             <FieldError className="input-field-error" name="name" />
             <Label className="hint" errorClassName="hidden" name="name">
               {t('Organization.Create.Modal.form.name.hint')}
+            </Label>
+          </div>
+          {/* adminRoleName */}
+          <div className="input-group">
+            <Label
+              className="input-label"
+              errorClassName="input-label-error"
+              name="adminRoleName"
+            >
+              {t('Organization.Create.Modal.form.adminRoleName.label')}
+            </Label>
+            <TextField
+              autoComplete="organization"
+              className="input-primary"
+              errorClassName="input-error"
+              name="adminRoleName"
+              validation={{
+                required: {
+                  value: true,
+                  message: t(
+                    'Organization.Create.Modal.form.adminRoleName.required'
+                  ),
+                },
+              }}
+            />
+            <FieldError className="input-field-error" name="adminRoleName" />
+            <Label
+              className="hint"
+              errorClassName="hidden"
+              name="adminRoleName"
+            >
+              {t('Organization.Create.Modal.form.adminRoleName.hint')}
             </Label>
           </div>
           <Submit

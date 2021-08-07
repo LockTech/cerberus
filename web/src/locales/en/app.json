@@ -233,6 +233,11 @@
             "hint": "Your organization's name will need to be unique accross the whole platform; we'll take care of making sure it is.",
             "required": "A name is required to create an organization."
           },
+          "adminRoleName": {
+            "label": "Administrator Role Name",
+            "hint": "The name of the role which will grant access to managing your organization. You'll be assigned this role once creation is complete.",
+            "required": "A name is required to create an organization."
+          },
           "submit": "Create"
         },
         "loading": "Creating your organization.",
@@ -243,7 +248,12 @@
           "organization-create": "An error occured trying to create your organization.",
           "organization-name-invalid": "A name is required to create your organization.",
           "organization-name-length": "Your organization's name must be shorter than 60 characters.",
-          "organization-name-taken": "That name is already in use by another organization."
+          "organization-name-taken": "That name is already in use by another organization.",
+          "organization-already-member": "You already belong to an organization.",
+          "role-exist": "A role with that name already exist.",
+          "role-create": "An error occured trying to create your administrator role.",
+          "role-add-account": "An error occured adding your account to the administrator role.",
+          "role-account-tuple": "An error occured setting up your account's authorization."
         }
       }
     },
