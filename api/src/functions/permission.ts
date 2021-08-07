@@ -3,7 +3,7 @@ import type { Permission } from '@prisma/client'
 
 import { logger } from 'src/lib/logger'
 
-import { createPermission } from 'src/services/permissions'
+import { createPermission, permissions } from 'src/services/permissions'
 import { validateJSON, validateMethod } from 'src/validators/function/function'
 
 import { validatePermissionTuple } from 'src/validators/permission'
@@ -46,20 +46,29 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
   //
 
   //
-  const payload = JSON.parse(event.body)
+  const payload = JSON.parse(event.body || '{}')
   const httpMethod = event.httpMethod
 
-  let res: Permission
+  let res: Permission | Permission[]
 
   // Handle incoming request
   try {
     switch (httpMethod) {
+      case 'GET': {
+        logger.debug({ payload }, 'Getting permissions.')
+
+        res = await permissions()
+
+        break
+      }
       case 'POST': {
         logger.debug({ payload }, 'Creating permission.')
 
         validatePermissionTuple('permission-function', payload)
 
         res = await createPermission(payload)
+
+        break
       }
     }
   } catch (err) {
