@@ -1,14 +1,15 @@
 import type { APIGatewayEvent, Context } from 'aws-lambda'
+import type { Permission } from '@prisma/client'
 
 import { logger } from 'src/lib/logger'
 
 import { createPermission } from 'src/services/permissions'
-import { validateBodyJSON } from 'src/validators/function/function'
-
 import {
-  validatePermissionTuple,
-  ValidatePermissionTupleArgs,
-} from 'src/validators/permission'
+  validateBodyJSON,
+  validateMethod,
+} from 'src/validators/function/function'
+
+import { validatePermissionTuple } from 'src/validators/permission'
 
 /**
  * The `body` of the request should be a valid [PermissionTuple](https://github.com/LockTech/cerberus/wiki/Glossary).
@@ -23,12 +24,25 @@ import {
 export const handler = async (event: APIGatewayEvent, _context: Context) => {
   logger.trace('Invoking permission function.')
 
+  //
+  validateMethod('permission-function', event)
   validateBodyJSON('permission-function', event)
 
-  const payload = JSON.parse(event.body) as ValidatePermissionTupleArgs
-  validatePermissionTuple('permission-function', payload)
+  //
+  const payload = JSON.parse(event.body)
+  const httpMethod = event.httpMethod
 
-  const res = await createPermission(payload)
+  let res: Permission
+
+  switch (httpMethod) {
+    case 'POST': {
+      logger.debug({ payload }, 'Creating permission.')
+
+      validatePermissionTuple('permission-function', payload)
+
+      res = await createPermission(payload)
+    }
+  }
 
   logger.info({ res }, 'Successfully invoked permission function.')
 
