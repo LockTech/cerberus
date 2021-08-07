@@ -111,7 +111,7 @@ body.dark { @apply bg-gray-800; }
     /* Border */
     @apply border border-transparent rounded-md;
     /* Text */
-    @apply font-medium uppercase;
+    @apply font-medium capitalize;
     @apply disabled:text-gray-400;
     /* Misc */
     @apply duration-200 ease-in-out transition-all !important;

@@ -15,5 +15,5 @@
 }
 .account-page-actions button p {
   /* Text */
-  @apply capitalize text-sm;
+  @apply text-sm;
 }
