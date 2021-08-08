@@ -1,9 +1,11 @@
 import { ValidationError } from '@redwoodjs/api'
 
 import {
+  AccountEmailMaxLength,
   AccountNameMaxLength,
   AccountEmailValidRegEx,
 } from 'src/constants/account'
+
 import { logger } from 'src/lib/logger'
 import { isStr } from 'src/util/asserters'
 
@@ -25,7 +27,7 @@ export const validateAccountEmail = (
     throw new ValidationError('account-email-invalid')
   }
 
-  if (email.length <= 0 || email.length > AccountNameMaxLength) {
+  if (email.length <= 0 || email.length > AccountEmailMaxLength) {
     logger.error({ service }, 'Error validating account email.')
     throw new ValidationError('account-email-length')
   }
@@ -33,5 +35,25 @@ export const validateAccountEmail = (
   if (email.match(AccountEmailValidRegEx) === null) {
     logger.error({ service }, 'Error validating account email.')
     throw new ValidationError('account-email-reserved')
+  }
+}
+
+interface NameInput {
+  name: string
+}
+/**
+ * @throws
+ *  * 'account-name-invalid' - When `name` is not a string.
+ *  * 'account-name-length' - When `name` is less than 1 or greater than `AccountNameMaxLength` characters long.
+ */
+export const validateAccountName = (service: string, { name }: NameInput) => {
+  if (!isStr(name)) {
+    logger.error({ service }, 'Error validating account name.')
+    throw new ValidationError('account-name-invalid')
+  }
+
+  if (name.length <= 0 || name.length > AccountNameMaxLength) {
+    logger.error({ service }, 'Error validating account name.')
+    throw new ValidationError('account-name-length')
   }
 }

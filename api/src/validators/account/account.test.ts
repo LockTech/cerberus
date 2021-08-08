@@ -1,4 +1,8 @@
-import { validateAccountEmail } from './account'
+import {
+  AccountEmailMaxLength,
+  AccountNameMaxLength,
+} from 'src/constants/account'
+import { validateAccountEmail, validateAccountName } from './account'
 
 const Service = 'Foo'
 
@@ -13,6 +17,15 @@ const AccEmailLength = {
 const AccEmailReserved = {
   name: 'ValidationError',
   message: 'account-email-reserved',
+}
+//
+const AccNameInvalid = {
+  name: 'ValidationError',
+  message: 'account-name-invalid',
+}
+const AccNameLength = {
+  name: 'ValidationError',
+  message: 'account-name-length',
 }
 
 describe('account validator', () => {
@@ -53,16 +66,19 @@ describe('account validator', () => {
       //
     })
 
-    it('throws when `email` is the wrong length', () => {
+    it('throws when `email` is less than 1 character long', () => {
       expect(() =>
         validateAccountEmail(Service, {
           email: '',
         })
       ).toThrow(AccEmailLength)
+    })
+
+    it(`throws when \`email\` is greater than ${AccountEmailMaxLength} characters long`, () => {
       expect(() =>
         validateAccountEmail(Service, {
           email:
-            '444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444',
+            'sawdawdawdawdawdasadwdasadwawwefsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsfsawdawdawdawdawdasadwdasadwawwefsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsfsawdawdawdawdawdasadwdasadwawwefsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsffsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsf',
         })
       ).toThrow(AccEmailLength)
     })
@@ -115,6 +131,60 @@ describe('account validator', () => {
           email: 'fo< a href >adwk@example.com',
         })
       ).toThrow(AccEmailReserved)
+    })
+  })
+
+  describe('account name', () => {
+    it('throws when `name` is not a string', () => {
+      expect(() => validateAccountName(Service, { name: undefined })).toThrow(
+        AccNameInvalid
+      )
+      //
+      expect(() => validateAccountName(Service, { name: null })).toThrow(
+        AccNameInvalid
+      )
+      //
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountName(Service, { name: 423 })).toThrow(
+        AccNameInvalid
+      )
+      //
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountName(Service, { name: () => 323 })).toThrow(
+        AccNameInvalid
+      )
+      //
+      expect(() =>
+        // @ts-expect-error checking failing functionality
+        validateAccountName(Service, { name: () => '423' })
+      ).toThrow(AccNameInvalid)
+      //
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountName(Service, { name: true })).toThrow(
+        AccNameInvalid
+      )
+      //
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountName(Service, { name: false })).toThrow(
+        AccNameInvalid
+      )
+      //
+    })
+
+    it('throws when `name` is less than 1 character long', () => {
+      expect(() =>
+        validateAccountName(Service, {
+          name: '',
+        })
+      ).toThrow(AccNameLength)
+    })
+
+    it(`throws when \`name\` is greater than ${AccountNameMaxLength} characters long`, () => {
+      expect(() =>
+        validateAccountName(Service, {
+          name: 'sawdawdawdawdawdasadwdasadwawwefsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsf',
+        })
+      ).toThrow(AccNameLength)
     })
   })
 })
