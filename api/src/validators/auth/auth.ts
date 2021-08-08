@@ -1,7 +1,10 @@
 import { validate as validateUUID } from 'uuid'
-import { context, ValidationError } from '@redwoodjs/api'
+import { AuthenticationError, context, ValidationError } from '@redwoodjs/api'
 
 import { AccountNameMaxLength } from 'src/constants/account'
+import { CerberusAdminTuple } from 'src/constants/permission'
+
+// import { checkTuple } from 'src/helpers/keto'
 
 import { logger } from 'src/lib/logger'
 
@@ -54,6 +57,25 @@ export const validateAuth = (service: string) => {
   // Perform DB assertion that organization exist
 }
 
-export const validateIsAdmin = (service: string) => {
+/**
+ * @throws
+ *  * 'authorization' - When the Keto `check` fails.
+ */
+export const validateIsAdmin = (_service: string) => {
   const id = context.currentUser.id as string
+
+  const { namespace, object, relation } = CerberusAdminTuple
+
+  const _tuple = {
+    namespace,
+    object,
+    relation,
+    subject: id,
+  }
+
+  const res = true // await checkTuple(tuple)
+
+  if (!res) {
+    throw new AuthenticationError('authorization')
+  }
 }
