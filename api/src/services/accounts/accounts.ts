@@ -2,7 +2,7 @@ import type { Account } from '@prisma/client'
 import { UserInputError } from '@redwoodjs/graphql-server'
 import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 
-import { sendInviteEmail } from 'src/helpers/email'
+import { sendInviteEmail } from 'src/helpers/email/email'
 
 import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
@@ -14,33 +14,33 @@ import { organization as getOrganization } from 'src/services/organizations'
 import { randomStr } from 'src/util/randomStr'
 
 import {
-  validateCurrentUser,
-  validateAccountId,
+  validateAccountEmail,
+  validateAccountID,
   validateAccountName,
-  validateAccountOrganization,
 } from 'src/validators/account'
-import { validateEmail } from 'src/validators/email'
+import { reject } from 'src/validators/rejector'
+import {
+  validateUser,
+  validateUserID,
+  validateUserName,
+  validateUserOrg,
+} from 'src/validators/user/user'
 
-//
+/* eslint-disable prettier/prettier */
+const valUpdateEmail = (s, { email }) => email && validateAccountEmail(s, { email })
+const valUpdateName = (s, { name }) => name && validateAccountName(s, { name })
+
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(validateCurrentUser)
-  rules.add(validateAccountOrganization, { except: ['currentAccount'] })
-  rules.add(validateAccountId, { only: ['currentAccount'] })
-  rules.add((s, { name }) => name && validateAccountName(s, { name }), {
-    only: ['updateAccount'],
-  })
-  rules.add(
-    (s, _i) => validateAccountName(s, { name: getContextUser().name }),
-    { only: ['inviteAccount'] }
-  )
-  rules.add((s, { email }) => email && validateEmail(s, { email }), {
-    only: ['updateAccount'],
-  })
-  rules.add(validateEmail, { only: ['inviteAccount'] })
+  rules.add(validateUser)
+  rules.add(validateUserOrg)
+  rules.add(validateUserID, { only: ['currentAccount', 'deleteAccount'] })
+  rules.add([validateUserName, validateAccountEmail], { only: ['inviteAccount'] })
+  rules.add(validateAccountID, { only: ['account', 'updateAccount', 'deleteAccount'] })
+  rules.add([valUpdateEmail, valUpdateName], { only: ['updateAccount'] })
+  rules.add(reject, { only: ['checkAccountExist'] })
 }
-//
+/* eslint-enable prettier/prettier */
 
-// == Helpers
 export const removeAuthFields = (acc: Account) => {
   if (acc) {
     delete acc.hashedPassword
@@ -48,55 +48,42 @@ export const removeAuthFields = (acc: Account) => {
   }
   return acc
 }
-//
 
-// == C
 /**
  * @throws
- *  * 'account-email-taken' - If `email` is already in use by another member.
- *  * 'account-create-confirm' - When an error occurs creating the invitation.
  *  * 'account-email-send' - When an error occurs sending the invitation email.
  */
 export const inviteAccount = async ({ email }) => {
-  if (await checkAccountExist({ email })) {
-    throw new UserInputError('account-email-taken')
-  }
-
   const organization = await getOrganization()
   const organizationId = organization.id
   const organizationName = organization.name
-
   const name = getContextUser().name
-
   const code = randomStr(36)
 
-  try {
-    await createInviteConfirm({ code, email, organizationId })
-  } catch (err) {
-    logger.error({ err }, 'Error creating invitation confirmation.')
-    throw new UserInputError('account-create-confirm')
-  }
+  const confirm = await createInviteConfirm({ code, email, organizationId })
 
-  const data = {
-    code,
-    name,
-    organizationName,
-  }
   try {
-    await sendInviteEmail({ data, email })
+    const data = {
+      code,
+      name,
+      organizationName,
+    }
+    const res = await sendInviteEmail({ data, email })
+    logger.info({ res })
   } catch (err) {
     logger.error({ err }, 'Error sending invitation email.')
+
+    await db.account_Confirmation.delete({ where: { id: confirm.id } })
+
     throw new UserInputError('account-email-send')
   }
 
   return true
 }
-//
 
-// == R
 /**
  * @throws
- *  * 'account-get' - When an error occurs retrieving an account from the DB.
+ *  * 'account-read' - When an error occurs retrieving an account from the DB.
  */
 export const account = async ({ id }: { id: string }) => {
   const organizationId = getContextUser().organizationId
@@ -112,7 +99,7 @@ export const account = async ({ id }: { id: string }) => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting an account.')
-    throw new UserInputError('account-get')
+    throw new UserInputError('account-read')
   }
 
   res = removeAuthFields(res)
@@ -122,7 +109,7 @@ export const account = async ({ id }: { id: string }) => {
 
 /**
  * @throws
- *  * 'account-get' - When an error occurs retrieving accounts from the DB.
+ *  * 'account-read' - When an error occurs retrieving accounts from the DB.
  */
 export const accounts = async () => {
   const organizationId = getContextUser().organizationId
@@ -135,7 +122,7 @@ export const accounts = async () => {
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting accounts.')
-    throw new UserInputError('account-get')
+    throw new UserInputError('account-read')
   }
 
   res = res.map((acc) => removeAuthFields(acc))
@@ -159,73 +146,21 @@ export const checkAccountExist = async ({
 }
 
 /**
- * Check that `accountId` is an Account `id` which belongs to the same organization as `invokerOrganizationId`.
- *
- * @param accountId
- * @param invokerOrganizationId
  * @throws
- *  * 'account-organization-match'
+ *  * 'account-read' - When an error occurs retrieving an account from the DB.
  */
-export const checkOrgsMatch = async (
-  accountId: string,
-  invokerOrganizationId: string
-) => {
-  const updateOrg = await db.account.findUnique({
-    select: { organizationId: true },
-    where: { id: accountId },
-  })
-  const searchOrganizationId = updateOrg.organizationId
+export const currentAccount = async () => getContextUser()
 
-  return searchOrganizationId === invokerOrganizationId
-}
-
-/**
- * @throws
- *  * 'account-get' - When an error occurs retrieving an account from the DB.
- */
-export const currentAccount = async () => {
-  const id = getContextUser().id
-
-  let res: Account
-
-  try {
-    res = await db.account.findUnique({
-      where: { id },
-      include: { organization: true },
-    })
-  } catch (err) {
-    logger.error({ err }, 'Prisma error getting currentAccount.')
-    throw new UserInputError('account-get')
-  }
-
-  res = removeAuthFields(res)
-
-  return res
-}
-//
-
-// == U
 export interface UpdateAccountArgs {
   id: string
-  email: string
-  name: string
+  email?: string
+  name?: string
 }
 /**
  * @throws
- *  * 'account-organization-match' - When the organization the account belongs to does not match the current user's.
  *  * 'account-update' - When an error occures updating the Account in the DB.
  */
 export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
-  if (email) {
-    if (await checkAccountExist({ email })) {
-      throw new UserInputError('account-email-taken')
-    }
-  }
-
-  if (!(await checkOrgsMatch(id, getContextUser().organizationId))) {
-    throw new UserInputError('account-organization-match')
-  }
-
   let res: Account
 
   try {
@@ -242,29 +177,20 @@ export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
 
   return res
 }
-//
 
-// == D
 export interface DeleteAccountArgs {
   id: string
 }
 /**
  * @throws
  *  * 'account-delete-self' - When `context.currentUser.id === id`; preventing the deletion of the invokers account.
- *  * 'account-organization-match' - When the organization the account belongs to does not match the current user's.
  *  * 'account-delete' - When an error occures deleting the Account from the DB.
  */
 export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
-  const currentAccount = getContextUser()
-  const currentId = currentAccount.id
-  const organizationId = currentAccount.organizationId
+  const currentId = getContextUser().id
 
   if (currentId === id) {
     throw new UserInputError('account-delete-self')
-  }
-
-  if (!(await checkOrgsMatch(id, organizationId))) {
-    throw new UserInputError('account-organization-match')
   }
 
   let res: Account
@@ -284,4 +210,3 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
 
   return res
 }
-//

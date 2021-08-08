@@ -1,93 +1,128 @@
-import type { Account } from '@prisma/client'
+import type { Account, Organization } from '@prisma/client'
+
 import { db } from 'src/lib/db'
 
 import {
   account,
   accounts,
   currentAccount,
+  deleteAccount,
   inviteAccount,
+  removeAuthFields,
   updateAccount,
 } from './accounts'
-
 import type { AccountStandard } from './accounts.scenarios'
 
-const TakenError: Error = {
-  name: 'UserInputError',
-  message: 'account-email-taken',
+import { sendInviteEmail as send } from 'src/helpers/email'
+jest.mock('../../helpers/email/email')
+// @ts-expect-error nope
+const sendInviteEmail = <jest.Mock<typeof send>>send
+
+//
+
+const AccountInviteEmailSend = {
+  name: 'ValidationError',
+  message: 'account-email-send',
 }
-
-const UpdateOrgError: Error = {
-  name: 'UserInputError',
-  message: 'account-organization-match',
+//
+const _AccountRead = {
+  name: 'ValidationError',
+  message: 'account-read',
 }
-
-jest.setTimeout(100000)
-
-/**
- * Remove the `hashedPassword` and `salt` fields from a specific `account`.
- *
- * @param scenario - The scenario provided by RedwoodJS for each test's invocation.
- * @param key - The account being retrieved.
- * @example safeAccount(scenario, 'one')
- */
-const safeAccount = (scenario: AccountStandard, key: string) => {
-  const res = scenario.account[key] as Account
-
-  delete res.hashedPassword
-  delete res.salt
-
-  return res
+//
+const AccountDeleteSelf = {
+  name: 'UserInputError',
+  message: 'account-delete-self',
 }
 
 describe('account service', () => {
+  describe('removeAuthFields', () => {
+    scenario(
+      'removes sensitive fields from given object',
+      async (scenario: AccountStandard) => {
+        const acc = scenario.account.one as Account
+
+        const res = removeAuthFields(acc)
+
+        expect(res.hashedPassword).toBeUndefined()
+        expect(res.salt).toBeUndefined()
+      }
+    )
+  })
+
   describe('create', () => {
     describe('inviteAccount', () => {
       scenario(
-        'throws when an email already exist',
+        'throws when failing to send a confirmation email',
         async (scenario: AccountStandard) => {
-          const email = scenario.account.one.email
+          const acc = scenario.account.one as Account
+          const name = acc.name
+          const organizationId = acc.organizationId
+          mockCurrentUser({ name, organizationId })
 
-          expect(async () => {
-            await inviteAccount({ email })
-          }).rejects.toThrow(TakenError)
+          const email = 'anunknownemail@example.net'
+
+          // @ts-expect-error this
+          sendInviteEmail.mockRejectedValueOnce(new Error('oh no!'))
+
+          expect(inviteAccount({ email })).rejects.toThrow(
+            AccountInviteEmailSend
+          )
         }
       )
 
       scenario(
-        "saves the invited member's email",
+        'removes the created confirmation if failing to send email',
         async (scenario: AccountStandard) => {
-          const one = scenario.account.one as Account
-          const organizationId = one.organizationId
-          mockCurrentUser({ organizationId })
+          const acc = scenario.account.one as Account
+          const name = acc.name
+          const organizationId = acc.organizationId
+          mockCurrentUser({ name, organizationId })
 
-          const email = 'anUnusedemail@example.com'
+          const email = 'anunknownemail@example.net'
 
-          const inviteRes = await inviteAccount({ email })
-          const assertRes = await db.account_Confirmation.findFirst({
+          // @ts-expect-error this
+          sendInviteEmail.mockRejectedValueOnce(new Error('oh no!'))
+
+          const res = await db.account_Confirmation.findFirst({
             where: { email },
           })
 
-          expect(inviteRes).toBeTruthy()
-          expect(assertRes.email).toBe(email)
+          expect(inviteAccount({ email })).rejects.toThrow(
+            AccountInviteEmailSend
+          )
+          expect(res).toBeNull()
         }
       )
 
       scenario(
-        'generates a confirmation code',
+        'uses currentUser to create an invitation',
         async (scenario: AccountStandard) => {
-          const one = scenario.account.one as Account
-          const organizationId = one.organizationId
-          mockCurrentUser({ organizationId })
+          const acc = scenario.account.one as Account
+          const name = acc.name
+          const organization = scenario.organization.one as Organization
+          const organizationId = acc.organizationId
+          const organizationName = organization.name
+          mockCurrentUser({ name, organizationId })
 
-          const email = 'anUnusedemail@example.com'
+          const email = 'anUnknownEmail@example.net'
 
-          const inviteRes = await inviteAccount({ email })
-          const assertRes = await db.account_Confirmation.findFirst({
+          // @ts-expect-error this
+          sendInviteEmail.mockReturnValueOnce(true)
+
+          await inviteAccount({ email })
+
+          const res = await db.account_Confirmation.findFirst({
             where: { email },
           })
+          const code = res.code
 
-          expect(inviteRes).toBeTruthy()
-          expect(assertRes.code).toBeDefined()
+          expect(res.organizationId).toBe(organizationId)
+          expect(sendInviteEmail).toHaveBeenCalledTimes(1)
+          expect(sendInviteEmail).toHaveBeenCalledWith({
+            data: { code, name, organizationName },
+            email,
+          })
         }
       )
     })
@@ -96,161 +131,90 @@ describe('account service', () => {
   describe('read', () => {
     describe('account', () => {
       scenario(
-        'returns null when the account does not exist',
+        'retrieves an account using its ID',
         async (scenario: AccountStandard) => {
           const acc = scenario.account.one as Account
-          const id = 'who would have this ID?'
           const organizationId = acc.organizationId
-
           mockCurrentUser({ organizationId })
+
+          const resAcc = scenario.account.two as Account
+          const id = resAcc.id
+          delete resAcc.hashedPassword
+          delete resAcc.salt
+
+          const res = await account({ id })
+
+          expect(res).toEqual(expect.objectContaining<Account>(resAcc))
+        }
+      )
+
+      scenario(
+        'returns null when the account cannot be found',
+        async (scenario: AccountStandard) => {
+          const acc = scenario.account.one as Account
+          const organizationId = acc.organizationId
+          mockCurrentUser({ organizationId })
+
+          const resAcc = scenario.account.three as Account
+          const id = resAcc.id
+          delete resAcc.hashedPassword
+          delete resAcc.salt
 
           const res = await account({ id })
 
           expect(res).toBeNull()
-        }
-      )
 
-      scenario(
-        'returns the account which satisfies the query',
-        async (scenario: AccountStandard) => {
-          const acc = safeAccount(scenario, 'one')
-          const id = acc.id
-          const organizationId = acc.organizationId
+          const res2 = await account({ id: '423252' })
 
-          mockCurrentUser({ organizationId })
-
-          const res = await account({ id })
-
-          expect(res).toEqual(expect.objectContaining<Account>(acc))
-        }
-      )
-
-      scenario(
-        'removes the "hashedPassword" and "salt" from an account',
-        async (scenario: AccountStandard) => {
-          const acc = safeAccount(scenario, 'one')
-          const id = acc.id
-          const organizationId = acc.organizationId
-
-          mockCurrentUser({ organizationId })
-
-          const res = await account({ id })
-
-          expect(res).toEqual(expect.objectContaining<Account>(acc))
-          expect(res.hashedPassword).toBeUndefined()
-          expect(res.salt).toBeUndefined()
-        }
-      )
-
-      scenario(
-        "only retrieves an account belonging to the invoker's organization",
-        async (scenario: AccountStandard) => {
-          const orgAcc = scenario.account.three as Account
-          const organizationId = orgAcc.organizationId
-          mockCurrentUser({ organizationId })
-
-          const queryAcc = scenario.account.one as Account
-          const id = queryAcc.id
-
-          const res = await account({ id })
-
-          expect(res).toBeNull()
+          expect(res2).toBeNull()
         }
       )
     })
 
     describe('accounts', () => {
       scenario(
-        'returns an empty array when no users can be found',
+        'retrieves all accounts belonging to the invokers organization',
+        async (scenario: AccountStandard) => {
+          const acc1 = removeAuthFields(scenario.account.one)
+          const acc2 = removeAuthFields(scenario.account.two)
+          const acc3 = removeAuthFields(scenario.account.three)
+
+          const organizationId = acc1.organizationId
+          mockCurrentUser({ organizationId })
+
+          const res = await accounts()
+
+          expect(res).toEqual(expect.arrayContaining([acc1, acc2]))
+          expect(res).not.toEqual(expect.arrayContaining([acc3]))
+        }
+      )
+
+      scenario(
+        'returns an empty array when no accounts are found',
         async (_scenario: AccountStandard) => {
-          mockCurrentUser({ organizationId: 'if only I were a real boy' })
+          const organizationId = '12523423'
+          mockCurrentUser({ organizationId })
 
           const res = await accounts()
 
           expect(res).toEqual(expect.arrayContaining([]))
         }
       )
-
-      scenario(
-        "returns a list of the accounts belonging to the invoker's organization",
-        async (scenario: AccountStandard) => {
-          const acc1 = safeAccount(scenario, 'one')
-          // ==
-          const acc2 = safeAccount(scenario, 'two')
-          // ==
-          const acc3 = safeAccount(scenario, 'three')
-
-          const organizationId = acc1.organizationId
-          mockCurrentUser({ organizationId })
-
-          const res = await accounts()
-
-          expect(res).toEqual(expect.arrayContaining<Account>([acc1, acc2]))
-          expect(res).not.toEqual(expect.arrayContaining<Account>([acc3]))
-        }
-      )
-
-      scenario(
-        'removes "hashedPassword" and "salt" from all retrieved accounts',
-        async (scenario: AccountStandard) => {
-          const acc1 = safeAccount(scenario, 'one')
-
-          const organizationId = acc1.organizationId
-          mockCurrentUser({ organizationId })
-
-          const res = await accounts()
-
-          res.forEach((acc) => {
-            expect(acc.hashedPassword).toBeUndefined()
-            expect(acc.salt).toBeUndefined()
-          })
-        }
-      )
     })
 
     describe('currentAccount', () => {
       scenario(
-        'retrieves the account of the invoker',
+        'retrieves the invokers account',
         async (scenario: AccountStandard) => {
-          const acc = safeAccount(scenario, 'one')
-          const id = acc.id
-          mockCurrentUser({ id })
+          const acc = scenario.account.one as Account
+          delete acc.hashedPassword
+          delete acc.salt
+
+          mockCurrentUser(acc)
 
           const res = await currentAccount()
 
-          expect(res).toEqual(expect.objectContaining<Account>(acc))
-        }
-      )
-
-      scenario(
-        'retrieves only the account of the invoker',
-        async (scenario: AccountStandard) => {
-          const acc1 = safeAccount(scenario, 'one')
-          const id = acc1.id
-          mockCurrentUser({ id })
-
-          const acc2 = safeAccount(scenario, 'two')
-          const acc3 = safeAccount(scenario, 'three')
-
-          const res = await currentAccount()
-
-          expect(res).toEqual(expect.objectContaining<Account>(acc1))
-          expect(res).not.toEqual(expect.objectContaining<Account>(acc2))
-          expect(res).not.toEqual(expect.objectContaining<Account>(acc3))
-        }
-      )
-
-      scenario(
-        'removes "hashedPassword" and "salt" from the account',
-        async (scenario: AccountStandard) => {
-          const acc = safeAccount(scenario, 'one')
-          const id = acc.id
-          mockCurrentUser({ id })
-
-          const res = await currentAccount()
-
-          expect(res.hashedPassword).toBeUndefined()
-          expect(res.salt).toBeUndefined()
+          expect(res).toBe(acc)
         }
       )
     })
@@ -258,26 +222,60 @@ describe('account service', () => {
 
   describe('update', () => {
     scenario(
-      "throws when the currentUser's organization does not match the account being updated",
+      "updates only an account's `email`",
       async (scenario: AccountStandard) => {
-        const currentAcc = scenario.account.one as Account
-        const currentId = currentAcc.id
-        mockCurrentUser({ id: currentId })
+        const updatee = scenario.account.one as Account
+        const id = updatee.id
 
-        const updateAcc = scenario.account.three as Account
-        const id = updateAcc.id
+        const email = 'my_new_email@example.net'
 
-        const email = 'testemail@example.com'
-        const name = 'Check this new name'
+        const res = await updateAccount({ email, id })
 
-        expect(updateAccount({ id, email, name })).rejects.toThrow(
-          UpdateOrgError
-        )
+        expect(res.email).not.toBe(updatee.email)
+        expect(res.name).toBe(updatee.name)
+        expect(res.email).toBe(email)
+      }
+    )
 
-        const res = await db.account.findUnique({ where: { id } })
+    scenario(
+      "updates only an account's `name`",
+      async (scenario: AccountStandard) => {
+        const updatee = scenario.account.one as Account
+        const id = updatee.id
 
-        expect(res.email).toBe(updateAcc.email)
-        expect(res.name).toBe(updateAcc.name)
+        const name = 'Clark Kent'
+
+        const res = await updateAccount({ name, id })
+
+        expect(res.email).toBe(updatee.email)
+        expect(res.name).not.toBe(updatee.name)
+        expect(res.name).toBe(name)
+      }
+    )
+  })
+
+  describe('delete', () => {
+    scenario(
+      "throws when delete id is the invoker's id",
+      async (scenario: AccountStandard) => {
+        const acc = scenario.account.one as Account
+        const id = acc.id
+
+        expect(deleteAccount({ id })).rejects.toThrow(AccountDeleteSelf)
+      }
+    )
+
+    scenario(
+      'removes the given account from the organizations',
+      async (scenario: AccountStandard) => {
+        const acc = scenario.account.two as Account
+        const id = acc.id
+
+        const res = await deleteAccount({ id })
+        const dbRes = await db.account.findUnique({ where: { id } })
+
+        expect(res.id).toBe(id)
+        expect(dbRes).toBeNull()
       }
     )
   })
