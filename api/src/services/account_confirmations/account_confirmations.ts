@@ -29,8 +29,10 @@ export const createInviteConfirm = async ({
   email,
   organizationId,
 }: CreateInviteConfirmArgs) => {
+  let res: Account_Confirmation
+
   try {
-    await db.account_Confirmation.create({
+    res = await db.account_Confirmation.create({
       data: {
         code,
         email,
@@ -42,7 +44,7 @@ export const createInviteConfirm = async ({
     throw new UserInputError('account-confirmation-create')
   }
 
-  return true
+  return res
 }
 
 export interface CreateSignupConfirmArgs {
@@ -57,8 +59,10 @@ export const createSignupConfirm = async ({
   code,
   email,
 }: CreateSignupConfirmArgs) => {
+  let res: Account_Confirmation
+
   try {
-    await db.account_Confirmation.create({
+    res = await db.account_Confirmation.create({
       data: {
         code,
         email,
@@ -69,7 +73,7 @@ export const createSignupConfirm = async ({
     throw new UserInputError('account-confirmation-create')
   }
 
-  return true
+  return res
 }
 //
 
