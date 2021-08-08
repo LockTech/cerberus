@@ -45,13 +45,7 @@ export const sendMail = async ({ body, subject, to }: SendMailOptions) => {
 // ==
 export interface SendTemplateFileMailOptions
   extends Omit<SendMailOptions, 'body'> {
-  /**
-   * The data to use when templating the file located at `path`.
-   */
   data: TemplateData
-  /**
-   * Path to a file which will be templated from, using [`SquirrellyJS`](https://squirrelly.js.org/).
-   */
   path: string
 }
 /**
@@ -73,9 +67,6 @@ export const templateFileSendMail = async ({
 
 // ==
 interface SendInviteEmailData extends TemplateData {
-  /**
-   * A unique code to include in the email, used to verify the invitation at a later date.
-   */
   code: string
   /**
    * The name of the member inviting another member.
@@ -107,13 +98,7 @@ export const sendInviteEmail = async ({
 
 // ==
 interface SendSignupEmailData extends TemplateData {
-  /**
-   * A unique code to include in the email, used to verify the signup at a later date.
-   */
   code: string
-  /**
-   * The email being signed up.
-   */
   email: string
 }
 interface SendSignupEmailOptions {
