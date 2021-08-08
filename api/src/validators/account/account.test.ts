@@ -2,7 +2,11 @@ import {
   AccountEmailMaxLength,
   AccountNameMaxLength,
 } from 'src/constants/account'
-import { validateAccountEmail, validateAccountName } from './account'
+import {
+  validateAccountEmail,
+  validateAccountID,
+  validateAccountName,
+} from './account'
 
 const Service = 'Foo'
 
@@ -17,6 +21,11 @@ const AccEmailLength = {
 const AccEmailReserved = {
   name: 'ValidationError',
   message: 'account-email-reserved',
+}
+//
+const AccIDInvalid = {
+  name: 'ValidationError',
+  message: 'account-id-invalid',
 }
 //
 const AccNameInvalid = {
@@ -131,6 +140,55 @@ describe('account validator', () => {
           email: 'fo< a href >adwk@example.com',
         })
       ).toThrow(AccEmailReserved)
+    })
+  })
+
+  describe('account id', () => {
+    it('throws when `name` is not a valid UUID', () => {
+      expect(() => validateAccountID(Service, { id: undefined })).toThrow(
+        AccIDInvalid
+      )
+      //
+      expect(() => validateAccountID(Service, { id: null })).toThrow(
+        AccIDInvalid
+      )
+      //
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountID(Service, { id: 423 })).toThrow(
+        AccIDInvalid
+      )
+      //
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountID(Service, { id: () => 323 })).toThrow(
+        AccIDInvalid
+      )
+      //
+      expect(() =>
+        // @ts-expect-error checking failing functionality
+        validateAccountID(Service, { id: () => '423' })
+      ).toThrow(AccIDInvalid)
+      //
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountID(Service, { id: true })).toThrow(
+        AccIDInvalid
+      )
+      //
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountID(Service, { id: false })).toThrow(
+        AccIDInvalid
+      )
+      //
+      expect(() => validateAccountID(Service, { id: '4232' })).toThrow(
+        AccIDInvalid
+      )
+      //
+      expect(() => validateAccountID(Service, { id: 'sfs323x' })).toThrow(
+        AccIDInvalid
+      )
+      //
+      expect(() => validateAccountID(Service, { id: 'aae322f-a' })).toThrow(
+        AccIDInvalid
+      )
     })
   })
 

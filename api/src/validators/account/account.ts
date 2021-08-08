@@ -1,3 +1,4 @@
+import { validate as validateUUID } from 'uuid'
 import { ValidationError } from '@redwoodjs/api'
 
 import {
@@ -36,6 +37,22 @@ export const validateAccountEmail = (
     logger.error({ service }, 'Error validating account email.')
     throw new ValidationError('account-email-reserved')
   }
+}
+
+interface IDInput {
+  id: string
+}
+/**
+ * @throws
+ *  * 'account-id-invalid' - When `name` is not a string.
+ */
+export const validateAccountID = (service: string, { id }: IDInput) => {
+  if (!isStr(id) || !validateUUID(id)) {
+    logger.error({ service }, 'Error validating account id.')
+    throw new ValidationError('account-id-invalid')
+  }
+
+  // use DB to validate context.currentUser.id has access to id
 }
 
 interface NameInput {
