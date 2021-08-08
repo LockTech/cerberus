@@ -6,9 +6,11 @@
     "@redwoodjs/api": "^0.35.2",
     "@redwoodjs/graphql-server": "^0.35.2",
     "nodemailer": "^6.6.3",
-    "squirrelly": "^8.0.8"
+    "squirrelly": "^8.0.8",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/nodemailer": "^6.4.4"
+    "@types/nodemailer": "^6.4.4",
+    "@types/uuid": "^8.3.1"
   }
 }

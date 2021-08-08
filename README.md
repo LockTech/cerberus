@@ -67,6 +67,7 @@ In addition to the dependencies outlined in [RedwoodJS' introduction](https://re
 
 * [Nodemailer](https://nodemailer.com/about/)
 * [SquirrellyJS](https://squirrelly.js.org/)
+* [UUID](https://www.npmjs.com/package/uuid) ([types](https://www.npmjs.com/package/@types/uuid))
 
 ### Web Side
 
