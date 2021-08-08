@@ -20,7 +20,7 @@ import {
 } from 'src/validators/account'
 import { reject } from 'src/validators/rejector'
 import {
-  validateUser,
+  validateAuth,
   validateUserID,
   validateUserName,
   validateUserOrg,
@@ -31,7 +31,7 @@ const valUpdateEmail = (s, { email }) => email && validateAccountEmail(s, { emai
 const valUpdateName = (s, { name }) => name && validateAccountName(s, { name })
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(validateUser)
+  rules.add(validateAuth)
   rules.add(validateUserOrg)
   rules.add(validateUserID, { only: ['currentAccount', 'deleteAccount'] })
   rules.add([validateUserName, validateAccountEmail], { only: ['inviteAccount'] })

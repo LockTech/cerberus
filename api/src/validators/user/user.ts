@@ -12,7 +12,7 @@ import { isStr } from 'src/util/asserters'
  * @throws
  *  * 'user-undefined' - When `context.currentUser` is undefined or null
  */
-export const validateUser = (service: string) => {
+export const validateAuth = (service: string) => {
   const contextUser = context.currentUser
   if (contextUser === undefined || contextUser === null) {
     logger.error({ service }, 'Error validating user.')

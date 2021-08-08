@@ -1,7 +1,7 @@
 import { AccountNameMaxLength } from 'src/constants/account'
 
 import {
-  validateUser,
+  validateAuth,
   validateUserID,
   validateUserName,
   validateUserOrg,
@@ -37,11 +37,11 @@ describe('user validator', () => {
   describe('user', () => {
     it('throws when `context.currentUser` is undefined', () => {
       mockCurrentUser(undefined)
-      expect(() => validateUser(Service)).toThrow(UserUndefinedError)
+      expect(() => validateAuth(Service)).toThrow(UserUndefinedError)
     })
     it('throws when `context.currentUser` is null', () => {
       mockCurrentUser(null)
-      expect(() => validateUser(Service)).toThrow(UserUndefinedError)
+      expect(() => validateAuth(Service)).toThrow(UserUndefinedError)
     })
   })
   describe('user id', () => {
