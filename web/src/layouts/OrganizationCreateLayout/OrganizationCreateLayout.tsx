@@ -1,4 +1,4 @@
-import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
+import { useAuth } from '@redwoodjs/auth'
 
 import OrganizationCreateModal from 'src/components/OrganizationCreateModal'
 
@@ -9,11 +9,11 @@ type CreateOrganizationLayoutProps = {
 const CreateOrganizationLayout = ({
   children,
 }: CreateOrganizationLayoutProps) => {
-  const currentAccount = useCurrentAccount()
+  const { currentUser } = useAuth()
 
   return (
     <>
-      <OrganizationCreateModal open={currentAccount?.organization === null} />
+      <OrganizationCreateModal open={currentUser?.organizationId === null} />
       {children}
     </>
   )
