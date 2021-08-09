@@ -1,25 +1,27 @@
 import type { APIGatewayEvent, Context } from 'aws-lambda'
-import type { Permission } from '@prisma/client'
 
+import { CRUDHandler } from 'src/lib/crud-handler'
+import type { CRUDHandlerOptions } from 'src/lib/crud-handler'
 import { logger } from 'src/lib/logger'
 
 import { createPermission, permissions } from 'src/services/permissions'
-import { validateJSON, validateMethod } from 'src/validators/function/function'
 
 import { validatePermissionTuple } from 'src/validators/permission'
 
-// ==
-const headers = {
-  'Content-Type': 'application/json',
+const options: CRUDHandlerOptions = {
+  resolvers: {
+    DELETE: permissions,
+    GET: permissions,
+    POST: createPermission,
+    PUT: permissions,
+  },
+  validators: {
+    DELETE: [],
+    GET: [],
+    POST: [validatePermissionTuple],
+    PUT: [],
+  },
 }
-
-const handleError = (err: Error) => ({
-  statusCode: 500,
-  headers,
-  body: JSON.stringify(err),
-})
-//
-
 // ==
 /**
  * The `body` of the request should be a valid [PermissionTuple](https://github.com/LockTech/cerberus/wiki/Glossary).
@@ -31,57 +33,13 @@ const handleError = (err: Error) => ({
  * @throws
  *  * 'permission-tuple-invalid' - If fields are missing or invalid on `event.body`
  */
-export const handler = async (event: APIGatewayEvent, _context: Context) => {
+export const handler = async (event: APIGatewayEvent, context: Context) => {
   logger.trace('Invoking permission function.')
 
-  // Validate incoming request
-  try {
-    validateMethod('permission-function', event)
-    validateJSON('permission-function', event)
-  } catch (err) {
-    return handleError(err)
-  }
+  const handler = new CRUDHandler(options)
 
-  // Authenticate incoming request?
-  //
+  const res = await handler.invoke(event, context)
 
-  //
-  const payload = JSON.parse(event.body || '{}')
-  const httpMethod = event.httpMethod
-
-  let res: Permission | Permission[]
-
-  // Handle incoming request
-  try {
-    switch (httpMethod) {
-      case 'GET': {
-        logger.debug({ payload }, 'Getting permissions.')
-
-        res = await permissions()
-
-        break
-      }
-      case 'POST': {
-        logger.debug({ payload }, 'Creating permission.')
-
-        validatePermissionTuple('permission-function', payload)
-
-        res = await createPermission(payload)
-
-        break
-      }
-    }
-  } catch (err) {
-    return handleError(err)
-  }
-
-  //
-  logger.info({ res }, 'Successfully invoked permission function.')
-
-  return {
-    statusCode: 200,
-    headers,
-    body: JSON.stringify(res),
-  }
+  return res
 }
 //
