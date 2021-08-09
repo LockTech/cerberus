@@ -243,6 +243,8 @@ describe('account service', () => {
         const acc = scenario.account.one as Account
         const id = acc.id
 
+        mockCurrentUser({ id })
+
         expect(deleteAccount({ id })).rejects.toThrow(AccountDeleteSelf)
       }
     )
@@ -250,6 +252,10 @@ describe('account service', () => {
     scenario(
       'removes the given account from the organizations',
       async (scenario: AccountStandard) => {
+        const invoker = scenario.account.one as Account
+        const invokerId = invoker.id
+        mockCurrentUser({ id: invokerId })
+
         const acc = scenario.account.two as Account
         const id = acc.id
 
