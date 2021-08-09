@@ -1,24 +1,15 @@
-import type { APIGatewayEvent, Context } from 'aws-lambda'
+import type { APIGatewayEvent, Context, ProxyResult } from 'aws-lambda'
 import type { Resolver, RuleValidator } from '@redwoodjs/api'
 
 import { logger } from 'src/lib/logger'
 
 import { isFunc } from 'src/util/asserters'
+import { returnFunctionError, returnFunctionSuccess } from 'src/util/function'
 
-const headers = {
-  'content-type': 'application/json',
-}
-
-const handleError = (err: Error) => {
-  const name = err.name
-  const message = err.message
-
-  return {
-    statusCode: 500,
-    headers,
-    body: JSON.stringify({ message, name }),
-  }
-}
+import {
+  validateHTTPMethod,
+  validateJSONBody,
+} from 'src/validators/function/function'
 
 const WebhookDefaults: Record<CRUDMethod, boolean> = {
   DELETE: true,
@@ -27,7 +18,7 @@ const WebhookDefaults: Record<CRUDMethod, boolean> = {
   PUT: true,
 }
 
-export type CRUDMethod = 'POST' | 'GET' | 'PUT' | 'DELETE'
+export type CRUDMethod = 'DELETE' | 'GET' | 'POST' | 'PUT'
 
 export interface CRUDHandlerOptions {
   resolvers: Record<CRUDMethod, Resolver>
@@ -35,6 +26,38 @@ export interface CRUDHandlerOptions {
   webhooks?: Record<CRUDMethod, boolean>
 }
 
+/**
+ * Provides minimal mapping between service-endpoints (`resolvers`) and common CRUD methods; designed to be used with a serverless function,
+ * removing the need to manually call services in response to a particular method being invoked.
+ *
+ * `validators` used by a service's `beforeResolver` can be reused.
+ *
+ * @example
+ *  const options: CRUDHandlerOptions = {
+ *    resolvers: {
+ *      DELETE: deletePermission,
+ *      GET: permissions,
+ *      POST: createPermission,
+ *      PUT: updatePermission,
+ *    },
+ *    validators: {
+ *      DELETE: [...],
+ *      GET: [...],
+ *      POST: [validatePermissionTuple],
+ *      PUT: [...],
+ *    },
+ *  }
+ *
+ *  export const handler = async (event: APIGatewayEvent, context: Context) => {
+ *    logger.trace('Invoking permission function.')
+ *
+ *    const handler = new CRUDHandler(options)
+ *
+ *    const res = await handler.invoke(event, context)
+ *
+ *    return res
+ *  }
+ */
 export class CRUDHandler {
   constructor(private options: CRUDHandlerOptions) {
     this.options.webhooks = {
@@ -43,26 +66,29 @@ export class CRUDHandler {
     }
   }
 
-  async invoke(event: APIGatewayEvent, _context: Context) {
+  async invoke(event: APIGatewayEvent, _c: Context): Promise<ProxyResult> {
+    validateJSONBody('CRUDHandler', event)
+    validateHTTPMethod('CRUDHandler', event)
+
     const method = event.httpMethod.toUpperCase() as CRUDMethod
 
+    const validators = this.options.validators[method]
     const resolver = this.options.resolvers[method]
     const resolverName = resolver.name
-    const validators = this.options.validators[method]
 
     if (!Array.isArray(validators)) {
       logger.error(
         { method, resolverName },
         'CRUDHandler recieved an invalid validator mapping; expected an empty array or an array with (asyncronous) functions.'
       )
-      return handleError(new Error('Invalid validation mapping.'))
+      return returnFunctionError(new Error('Invalid validation mapping.'))
     }
     if (!isFunc(resolver)) {
       logger.error(
         { method, resolverName },
         'CRUDHandler recieved an invalid resolver mapping; expected an (asyncronous) function.'
       )
-      return handleError(new Error('Invalid resolver mapping.'))
+      return returnFunctionError(new Error('Invalid resolver mapping.'))
     }
 
     const body = event.body ? JSON.parse(event.body) : {}
@@ -71,19 +97,14 @@ export class CRUDHandler {
       validators !== [] &&
         (await this._validateMethod(resolverName, validators, body))
     } catch (err) {
-      return handleError(err)
+      return returnFunctionError(err)
     }
 
     try {
       const res = await this._executeResolver(resolver, body)
-
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify(res),
-      }
+      return returnFunctionSuccess(res)
     } catch (err) {
-      return handleError(err)
+      return returnFunctionError(err)
     }
   }
 

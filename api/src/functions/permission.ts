@@ -1,7 +1,8 @@
 import type { APIGatewayEvent, Context } from 'aws-lambda'
 
-import { CRUDHandler } from 'src/lib/crud-handler'
-import type { CRUDHandlerOptions } from 'src/lib/crud-handler'
+import { CRUDHandler } from 'src/helpers/crud-handler'
+import type { CRUDHandlerOptions } from 'src/helpers/crud-handler'
+
 import { logger } from 'src/lib/logger'
 
 import { createPermission, permissions } from 'src/services/permissions'
