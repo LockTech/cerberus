@@ -22,17 +22,7 @@ const options: CRUDHandlerOptions = {
     PUT: [],
   },
 }
-// ==
-/**
- * The `body` of the request should be a valid [PermissionTuple](https://github.com/LockTech/cerberus/wiki/Glossary).
- *
- * @typedef { import('aws-lambda').APIGatewayEvent } APIGatewayEvent
- * @typedef { import('aws-lambda').Context } Context
- * @param { APIGatewayEvent } event - an object which contains information from the invoker.
- * @param { Context } context - contains information about the invocation, function, and execution environment.
- * @throws
- *  * 'permission-tuple-invalid' - If fields are missing or invalid on `event.body`
- */
+
 export const handler = async (event: APIGatewayEvent, context: Context) => {
   logger.trace('Invoking permission function.')
 
@@ -42,4 +32,3 @@ export const handler = async (event: APIGatewayEvent, context: Context) => {
 
   return res
 }
-//
