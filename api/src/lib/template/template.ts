@@ -1,5 +1,4 @@
 import { getConfig, render } from 'squirrelly'
-import { logger } from '../logger'
 
 export interface TemplateData extends Record<string, unknown> {}
 
@@ -11,7 +10,5 @@ const config = getConfig({})
  * **IMPORTANT:** `data` is **NOT** escaped by this function.
  * You are responsible for ensuring any data a user has input is sanatized or rejected prior.
  */
-export const template = (str: string, data: TemplateData) => {
-  logger.debug({ data }, 'Templating string using data.')
-  return render(str, data, config)
-}
+export const template = (str: string, data: TemplateData) =>
+  render(str, data, config)
