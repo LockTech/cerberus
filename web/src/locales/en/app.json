@@ -158,18 +158,6 @@
       "privacy": "Our Privacy Policy"
     }
   },
-  "CurrentAccount": {
-    "hook": {
-      "loading": "Fetching your account.",
-      "success": "Successfully fetched your account.",
-      "errors": {
-        "account-get": "Error fetching your account."
-      }
-    },
-    "Layout": {
-      "loading": "Loading your account."
-    }
-  },
   "Danger": {
     "Card": {
       "title": "Danger",
