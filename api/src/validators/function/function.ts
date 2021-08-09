@@ -3,35 +3,35 @@ import { ValidationError } from '@redwoodjs/graphql-server'
 
 import { isDefined, isStr } from 'src/util/asserters'
 
-const JSONHeaderKey = 'content-type'
-const JSONHeader = 'application/json'
+import {
+  FunctionHeaderMediaTypeKey,
+  FunctionHeaderMediaType,
+} from 'src/constants/function'
 
 /**
  * @throws
- *  * 'function-invalid-body' - When `body` is defined and not a valid string.
- *  * 'function-invalid-mediatype' - When `headers.Content-Type` is not `JSONHeader` ('application/json').
+ *  * 'function-body-invalid' - When `body` is defined and not a string.
+ *  * 'function-mediatype-invalid' - When `headers[FunctionHeaderKey]` is defined and not `FunctionHeader` ('application/json').
  */
-export const validateJSON = (
-  _service: string,
+export const validateJSONBody = (
+  _s: string,
   { body, headers }: APIGatewayEvent
 ) => {
-  if (isDefined(body) && !isStr(body)) {
-    throw new ValidationError('function-invalid-body')
-  }
+  if (isDefined(body) && !isStr(body))
+    throw new ValidationError('function-body-invalid')
 
-  const contentType = headers[JSONHeaderKey]
+  const contentType = headers[FunctionHeaderMediaTypeKey]
 
-  if (isDefined(contentType) && contentType !== JSONHeader) {
-    throw new ValidationError('function-invalid-mediatype')
-  }
+  if (isDefined(contentType) && contentType !== FunctionHeaderMediaType)
+    throw new ValidationError('function-mediatype-invalid')
 }
 
 /**
  * @throws
- *  * 'function-method-invalid' - When `httpMethod` is not 'POST', 'GET', 'DELETE', or 'PUT'
+ *  * 'function-method-invalid' - When `httpMethod` is not - 'DELETE', 'GET', 'POST', or 'PUT'
  */
-export const validateMethod = (
-  _service: string,
+export const validateHTTPMethod = (
+  _s: string,
   { httpMethod }: APIGatewayEvent
 ) => {
   if (
@@ -39,7 +39,6 @@ export const validateMethod = (
     httpMethod !== 'GET' &&
     httpMethod !== 'DELETE' &&
     httpMethod !== 'PUT'
-  ) {
+  )
     throw new ValidationError('function-method-invalid')
-  }
 }
