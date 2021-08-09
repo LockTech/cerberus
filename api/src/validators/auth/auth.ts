@@ -6,8 +6,6 @@ import { CerberusAdminTuple } from 'src/constants/permission'
 
 // import { checkTuple } from 'src/helpers/keto'
 
-import { logger } from 'src/lib/logger'
-
 import { isStr } from 'src/util/asserters'
 
 /**
@@ -19,41 +17,32 @@ import { isStr } from 'src/util/asserters'
  *  * 'auth-name-length' - When `context.currentUser.name.length` is <= 0 or > `AccountNameMaxLength`.
  *  * 'auth-organization-invalid' - When `context.currentUser.organizationId` is not a valid v4 UUID
  */
-export const validateAuth = (service: string) => {
+export const validateAuth = (_service: string) => {
   const currentUser = context.currentUser
-  if (currentUser === undefined || currentUser === null) {
-    logger.error({ service }, 'Error validating user.')
+
+  if (currentUser === undefined || currentUser === null)
     throw new ValidationError('auth-undefined')
-  }
 
   // ID
   const id = currentUser.id as string
 
-  if (!isStr(id) || !validateUUID(id)) {
-    logger.error({ service }, "Error validating user's ID.")
+  if (!isStr(id) || !validateUUID(id))
     throw new ValidationError('auth-id-invalid')
-  }
 
   // Name
   const name = currentUser.name as string
 
-  if (!isStr(name)) {
-    logger.warn({ service }, "Error validating user's name.")
-    throw new ValidationError('auth-name-invalid')
-  }
+  if (!isStr(name)) throw new ValidationError('auth-name-invalid')
 
-  if (name.length <= 0 || name.length > AccountNameMaxLength) {
-    logger.warn({ service }, "Error validating user's name.")
+  if (name.length <= 0 || name.length > AccountNameMaxLength)
     throw new ValidationError('auth-name-length')
-  }
 
   // OrganizationId
   const organizationId = currentUser.organizationId as string
 
-  if (!isStr(organizationId) || !validateUUID(organizationId)) {
-    logger.error({ service }, "Error validating user's organization.")
+  if (!isStr(organizationId) || !validateUUID(organizationId))
     throw new ValidationError('auth-organization-invalid')
-  }
+
   // Perform DB assertion that organization exist
 }
 
@@ -75,7 +64,5 @@ export const validateIsAdmin = (_service: string) => {
 
   const res = true // await checkTuple(tuple)
 
-  if (!res) {
-    throw new AuthenticationError('authorization')
-  }
+  if (!res) throw new AuthenticationError('authorization')
 }

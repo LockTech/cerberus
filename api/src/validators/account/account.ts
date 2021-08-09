@@ -7,7 +7,6 @@ import {
   AccountEmailValidRegEx,
 } from 'src/constants/account'
 
-import { logger } from 'src/lib/logger'
 import { isStr } from 'src/util/asserters'
 
 interface EmailInput {
@@ -24,20 +23,13 @@ export const validateAccountEmail = (
   service: string,
   { email }: EmailInput
 ) => {
-  if (!isStr(email)) {
-    logger.error({ service }, 'Error validating account email.')
-    throw new ValidationError('account-email-invalid')
-  }
+  if (!isStr(email)) throw new ValidationError('account-email-invalid')
 
-  if (email.length <= 0 || email.length > AccountEmailMaxLength) {
-    logger.error({ service }, 'Error validating account email.')
+  if (email.length <= 0 || email.length > AccountEmailMaxLength)
     throw new ValidationError('account-email-length')
-  }
 
-  if (email.match(AccountEmailValidRegEx) === null) {
-    logger.error({ service }, 'Error validating account email.')
+  if (email.match(AccountEmailValidRegEx) === null)
     throw new ValidationError('account-email-reserved')
-  }
 
   // perform DB check for email's existing use
 }
@@ -51,10 +43,8 @@ interface IDInput {
  *  * 'account-id-match' - When `id` does not belong to the same organization as `context.currentUser.id`
  */
 export const validateAccountID = (service: string, { id }: IDInput) => {
-  if (!isStr(id) || !validateUUID(id)) {
-    logger.error({ service }, 'Error validating account id.')
+  if (!isStr(id) || !validateUUID(id))
     throw new ValidationError('account-id-invalid')
-  }
 
   // use DB to validate context.currentUser.id has access to id
 }
@@ -68,13 +58,8 @@ interface NameInput {
  *  * 'account-name-length' - When `name` is less than 1 or greater than `AccountNameMaxLength` characters long.
  */
 export const validateAccountName = (service: string, { name }: NameInput) => {
-  if (!isStr(name)) {
-    logger.error({ service }, 'Error validating account name.')
-    throw new ValidationError('account-name-invalid')
-  }
+  if (!isStr(name)) throw new ValidationError('account-name-invalid')
 
-  if (name.length <= 0 || name.length > AccountNameMaxLength) {
-    logger.error({ service }, 'Error validating account name.')
+  if (name.length <= 0 || name.length > AccountNameMaxLength)
     throw new ValidationError('account-name-length')
-  }
 }
