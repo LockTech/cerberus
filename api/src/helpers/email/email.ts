@@ -9,7 +9,7 @@ import { readFile } from 'src/util/readFile'
 
 const from = process.env.EMAIL_FROM
 
-const EmailDirectory = resolve(__dirname, '../../emails')
+const EmailDirectory = resolve(__dirname, '../../../emails')
 
 const EmailInviteFilePath = `${EmailDirectory}/invite.html`
 const EmailInviteSubject = process.env.EMAIL_INVITE_SUBJECT
