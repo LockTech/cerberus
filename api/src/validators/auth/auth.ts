@@ -37,7 +37,7 @@ export const validateAuth = (_service: string) => {
   if (name.length <= 0 || name.length > AccountNameMaxLength)
     throw new ValidationError('auth-name-length')
 
-  // OrganizationId
+  // Organization
   const organizationId = currentUser.organizationId as string
 
   if (!isStr(organizationId) || !validateUUID(organizationId))
