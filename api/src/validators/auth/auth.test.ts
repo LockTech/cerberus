@@ -28,6 +28,12 @@ const AuthOrgInvalidError = {
   message: 'auth-organization-invalid',
 }
 
+//
+const id = '8dcf1ebf-cb28-4a09-8265-21a50946a50b'
+const name = 'John Doe'
+const organizationId = '99eb8558-b92a-4337-86d4-dcb885713e51'
+//
+
 describe('auth validator', () => {
   describe('currentUser', () => {
     it('throws when `context.currentUser` is undefined', () => {
@@ -41,69 +47,73 @@ describe('auth validator', () => {
   })
   describe('id', () => {
     it('throws when `context.currentUser.id` is an invalid UUID', () => {
-      mockCurrentUser({ id: undefined })
+      mockCurrentUser({ name, organizationId, id: undefined })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
-      mockCurrentUser({ id: null })
+      mockCurrentUser({ name, organizationId, id: null })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
-      mockCurrentUser({ id: '' })
+      mockCurrentUser({ name, organizationId, id: '' })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
-      mockCurrentUser({ id: '1' })
+      mockCurrentUser({ name, organizationId, id: '1' })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
-      mockCurrentUser({ id: 1 })
+      mockCurrentUser({ name, organizationId, id: 1 })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
-      mockCurrentUser({ id: true })
+      mockCurrentUser({ name, organizationId, id: true })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
-      mockCurrentUser({ id: false })
+      mockCurrentUser({ name, organizationId, id: false })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
-      mockCurrentUser({ id: false })
+      mockCurrentUser({ name, organizationId, id: false })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
-      mockCurrentUser({ id: () => '2342332424' })
+      mockCurrentUser({ name, organizationId, id: () => '2342332424' })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
-      mockCurrentUser({ id: '2342332424' })
+      mockCurrentUser({ name, organizationId, id: '2342332424' })
       expect(() => validateAuth(Service)).toThrow(AuthIDError)
       //
     })
   })
   describe('name', () => {
     it('throws when `context.currentUser.name` is not a string', () => {
-      mockCurrentUser({ name: undefined })
+      mockCurrentUser({ id, organizationId, name: undefined })
       expect(() => validateAuth(Service)).toThrow(AuthNameInvalidError)
       //
-      mockCurrentUser({ name: null })
+      mockCurrentUser({ id, organizationId, name: null })
       expect(() => validateAuth(Service)).toThrow(AuthNameInvalidError)
       //
-      mockCurrentUser({ name: 1 })
+      mockCurrentUser({ id, organizationId, name: 1 })
       expect(() => validateAuth(Service)).toThrow(AuthNameInvalidError)
       //
-      mockCurrentUser({ name: () => 4 })
+      mockCurrentUser({ id, organizationId, name: () => 4 })
       expect(() => validateAuth(Service)).toThrow(AuthNameInvalidError)
       //
-      mockCurrentUser({ name: true })
+      mockCurrentUser({ id, organizationId, name: true })
       expect(() => validateAuth(Service)).toThrow(AuthNameInvalidError)
       //
-      mockCurrentUser({ name: false })
+      mockCurrentUser({ id, organizationId, name: false })
       expect(() => validateAuth(Service)).toThrow(AuthNameInvalidError)
     })
     it('throws when `context.currentUser.name` is 0 characters long', () => {
-      mockCurrentUser({ name: '' })
+      mockCurrentUser({ id, organizationId, name: '' })
       expect(() => validateAuth(Service)).toThrow(AuthNameLenError)
     })
     it(`throws when \`context.currentUser.name\` is greater than ${AccountNameMaxLength} characters long`, () => {
       mockCurrentUser({
+        id,
+        organizationId,
         name: 'asdadawawdawdawdawdawdAwbdawdaawefsfesefesbesefbasefabwerawerabweraweraweras',
       })
       expect(() => validateAuth(Service)).toThrow(AuthNameLenError)
       //
       mockCurrentUser({
+        id,
+        organizationId,
         name: 'asdadawawdawdawdawdawdAwbdawdaawefsfesefesbesefbasefabwerawerabwerawera',
       })
       expect(() => validateAuth(Service)).toThrow(AuthNameLenError)
@@ -111,34 +121,34 @@ describe('auth validator', () => {
   })
   describe('organization', () => {
     it('throws when `context.currentUser.organizationId` is an invalid UUID', () => {
-      mockCurrentUser({ organizationId: undefined })
+      mockCurrentUser({ id, name, organizationId: undefined })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
-      mockCurrentUser({ organizationId: null })
+      mockCurrentUser({ id, name, organizationId: null })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
-      mockCurrentUser({ organizationId: '' })
+      mockCurrentUser({ id, name, organizationId: '' })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
-      mockCurrentUser({ organizationId: '1' })
+      mockCurrentUser({ id, name, organizationId: '1' })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
-      mockCurrentUser({ organizationId: 1 })
+      mockCurrentUser({ id, name, organizationId: 1 })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
-      mockCurrentUser({ organizationId: true })
+      mockCurrentUser({ id, name, organizationId: true })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
-      mockCurrentUser({ organizationId: false })
+      mockCurrentUser({ id, name, organizationId: false })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
-      mockCurrentUser({ organizationId: false })
+      mockCurrentUser({ id, name, organizationId: false })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
-      mockCurrentUser({ organizationId: () => '2342332424' })
+      mockCurrentUser({ id, name, organizationId: () => '2342332424' })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
-      mockCurrentUser({ organizationId: '2342332424' })
+      mockCurrentUser({ id, name, organizationId: '2342332424' })
       expect(() => validateAuth(Service)).toThrow(AuthOrgInvalidError)
       //
     })
