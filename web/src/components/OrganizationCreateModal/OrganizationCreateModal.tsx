@@ -1,11 +1,11 @@
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from '@apollo/client'
 import { FieldError, Form, Label, Submit, TextField } from '@redwoodjs/forms'
 import { toast } from '@redwoodjs/web/toast'
 
 import Modal from 'src/components/Modal'
-import { useCallback } from 'react'
-import { QUERY } from 'src/hooks/useCurrentAccount'
+import { useAuth } from '@redwoodjs/auth'
 
 export const MUTATION = gql`
   mutation CreateOrganizationMutation($name: String!, $adminRoleName: String!) {
@@ -33,13 +33,16 @@ export interface OrganizationCreateModal {
 const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
   const { t } = useTranslation()
 
+  const { reauthenticate } = useAuth()
+
   const onCompleted = useCallback(
-    (result: CreateOrganizationMutationResult) => {
-      console.log(result)
+    async (_result: CreateOrganizationMutationResult) => {
+      await reauthenticate()
+
       toast.dismiss()
       toast.success(t('Organization.Create.Modal.success'))
     },
-    [t]
+    [reauthenticate, t]
   )
   const onError = useCallback(
     (error: Error) => {
@@ -54,7 +57,6 @@ const OrganizationCreateModal = ({ open }: OrganizationCreateModal) => {
   const [mutate, { loading }] = useMutation(MUTATION, {
     onCompleted,
     onError,
-    refetchQueries: [{ query: QUERY }],
   })
 
   const onSubmit = useCallback(

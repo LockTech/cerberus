@@ -2,10 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 import LoadingSpinner from 'src/components/LoadingSpinner/LoadingSpinner'
 
-import {
-  useCurrentAccount,
-  useQueryCurrentAccount,
-} from 'src/hooks/useCurrentAccount'
+import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
 
 import './CurrentAccountLayout.css'
 
@@ -15,8 +12,6 @@ type CurrentAccountLayoutProps = {
 
 const CurrentAccountLayout = ({ children }: CurrentAccountLayoutProps) => {
   const { t } = useTranslation()
-
-  useQueryCurrentAccount()
 
   const currentAccount = useCurrentAccount()
 

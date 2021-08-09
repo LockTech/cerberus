@@ -8,12 +8,11 @@ import { toast } from '@redwoodjs/web/toast'
 
 import OrganizationSettingsDangerCard from 'src/components/OrganizationSettingsDangerCard'
 
-import { QUERY as CurrentAccountQuery } from 'src/hooks/useCurrentAccount'
-
 import type {
   OrganizationUpdateQuery,
   OrganizationUpdateMutation,
 } from 'types/graphql'
+import { useAuth } from '@redwoodjs/auth'
 
 export const MUTATION = gql`
   mutation OrganizationUpdateMutation($name: String!) {
@@ -56,15 +55,19 @@ export const Success = ({
 
   const { t } = useTranslation()
 
+  const { reauthenticate } = useAuth()
+
   const onCompleted = useCallback(
-    (data: OrganizationUpdateMutation) => {
+    async (data: OrganizationUpdateMutation) => {
+      await reauthenticate()
+
       toast.dismiss()
       toast.success(t('Organization.Update.Cell.Success.success'))
 
       const name = data.organization.name
       reset({ name })
     },
-    [reset, t]
+    [reauthenticate, reset, t]
   )
   const onError = useCallback(
     (error: Error) => {
@@ -82,7 +85,7 @@ export const Success = ({
   const [mutate, { loading }] = useMutation(MUTATION, {
     onCompleted,
     onError,
-    refetchQueries: [{ query: QUERY }, { query: CurrentAccountQuery }],
+    refetchQueries: [{ query: QUERY }],
   })
 
   const onSubmit = useCallback(
