@@ -51,8 +51,6 @@ const ColorModeLayout = ({ children }: ColorModeLayoutProps) => {
     return delChangePreference()
   }, [colorMode, delChangePreference, onChangePreference, setColorMode])
 
-  console.log(colorMode)
-
   return <>{children}</>
 }
 
