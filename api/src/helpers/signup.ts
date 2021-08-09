@@ -12,9 +12,10 @@ import {
 
 import { isStr, isUndefined } from 'src/util/asserters'
 import { randomStr } from 'src/util/randomStr'
-import { validateAccountName } from 'src/validators/account'
-
-import { validateEmail } from 'src/validators/email'
+import {
+  validateAccountEmail,
+  validateAccountName,
+} from 'src/validators/account'
 
 // ==
 const InviteRes = false
@@ -87,12 +88,7 @@ const handleSignup = async ({
   const code = randomStr(8)
 
   // confirmation
-  try {
-    await createSignupConfirm({ code, email })
-  } catch (err) {
-    logger.error({ err }, 'Error creating signup confirmation.')
-    throw new UserInputError('signup-confirm-create')
-  }
+  await createSignupConfirm({ code, email })
 
   // email
   try {
@@ -147,7 +143,7 @@ export const signupHandler = async ({
 }: SignupHandlerOptions) => {
   logger.debug({ email, code, name, ...rest }, 'Handling signup.')
 
-  validateEmail('signupHandler', { email })
+  validateAccountEmail('signupHandler', { email })
   validateAccountName('signupHandler', { name })
 
   // Invite
