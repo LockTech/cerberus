@@ -5,7 +5,6 @@ import { db } from 'src/lib/db'
 import {
   account,
   accounts,
-  currentAccount,
   deleteAccount,
   inviteAccount,
   removeAuthFields,
@@ -198,23 +197,6 @@ describe('account service', () => {
           const res = await accounts()
 
           expect(res).toEqual(expect.arrayContaining([]))
-        }
-      )
-    })
-
-    describe('currentAccount', () => {
-      scenario(
-        'retrieves the invokers account',
-        async (scenario: AccountStandard) => {
-          const acc = scenario.account.one as Account
-          delete acc.hashedPassword
-          delete acc.salt
-
-          mockCurrentUser(acc)
-
-          const res = await currentAccount()
-
-          expect(res).toBe(acc)
         }
       )
     })

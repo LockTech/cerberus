@@ -139,12 +139,6 @@ export const checkAccountExist = async ({
   return res >= 1
 }
 
-/**
- * @throws
- *  * 'account-read' - When an error occurs retrieving an account from the DB.
- */
-export const currentAccount = async () => getContextUser()
-
 export interface UpdateAccountArgs {
   id: string
   email?: string

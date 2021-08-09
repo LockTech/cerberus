@@ -13,7 +13,6 @@ export const schema = gql`
   type Query {
     account(id: ID!): Account!
     accounts: [Account!]!
-    currentAccount: Account!
   }
 
   type Mutation {

@@ -1,21 +1,22 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { Menu, Transition } from '@headlessui/react'
 import { CogIcon, LogoutIcon, UserCircleIcon } from '@heroicons/react/solid'
 import { useAuth } from '@redwoodjs/auth'
 
-import { CurrentAccountAtom } from 'src/atoms/CurrentAccount'
 import { AppSettingsModalAtom } from 'src/atoms/AppSettingsModal'
 
 import AppSettingsModal from 'src/components/AppSettingsModal'
+
+import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
 
 import './AccountMenu.css'
 
 const AccountMenu = () => {
   const { t } = useTranslation()
 
-  const currentAccount = useRecoilValue(CurrentAccountAtom)
+  const currentAccount = useCurrentAccount()
   const setSettingsModalOpen = useSetRecoilState(AppSettingsModalAtom)
 
   const { logOut } = useAuth()
