@@ -7,7 +7,6 @@ import { signupHandler } from 'src/helpers/signup'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
-// ==
 const authModelAccessor = 'account'
 const authFields = {
   id: 'id',
@@ -16,9 +15,7 @@ const authFields = {
   salt: 'salt',
 }
 const loginExpires = 60 * 60 * 24 // * 365 * 10,
-//
 
-// ==
 const initAuthHandler = (event: APIGatewayEvent, context: GlobalContext) =>
   new DbAuthHandler(event, context, {
     db,
@@ -27,9 +24,7 @@ const initAuthHandler = (event: APIGatewayEvent, context: GlobalContext) =>
     signupHandler,
     loginExpires,
   })
-//
 
-// ==
 export const handler = async (
   event: APIGatewayEvent,
   context: GlobalContext
@@ -43,4 +38,3 @@ export const handler = async (
 
   return res
 }
-//
