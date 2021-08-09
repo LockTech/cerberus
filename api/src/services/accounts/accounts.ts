@@ -62,8 +62,7 @@ export const inviteAccount = async ({ email }) => {
       name,
       organizationName,
     }
-    const res = await sendInviteEmail({ data, email })
-    logger.info({ res })
+    await sendInviteEmail({ data, email })
   } catch (err) {
     logger.error({ err }, 'Error sending invitation email.')
 
