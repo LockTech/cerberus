@@ -22,7 +22,7 @@ export const validateJSONBody = (
 
   const contentType = headers[FunctionHeaderMediaTypeKey]
 
-  if (isDefined(contentType) && contentType !== FunctionHeaderMediaType)
+  if (!isDefined(contentType) || contentType !== FunctionHeaderMediaType)
     throw new ValidationError('function-mediatype-invalid')
 }
 
@@ -35,9 +35,9 @@ export const validateHTTPMethod = (
   { httpMethod }: APIGatewayEvent
 ) => {
   if (
-    httpMethod !== 'POST' &&
-    httpMethod !== 'GET' &&
     httpMethod !== 'DELETE' &&
+    httpMethod !== 'GET' &&
+    httpMethod !== 'POST' &&
     httpMethod !== 'PUT'
   )
     throw new ValidationError('function-method-invalid')
