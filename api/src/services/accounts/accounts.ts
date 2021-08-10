@@ -35,6 +35,15 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 }
 /* eslint-enable prettier/prettier */
 
+/**
+ * Patch function to remove sensitive fields from an `Account` object.
+ *
+ * Removes:
+ *  * `hashedPassword`
+ *  * `salt`
+ *
+ * TODO: Delete once Prisma issue [#7380](https://github.com/prisma/prisma/issues/7380) is merged
+ */
 export const removeAuthFields = (acc: Account) => {
   if (acc) {
     delete acc.hashedPassword
@@ -170,7 +179,7 @@ export interface DeleteAccountArgs {
 }
 /**
  * @throws
- *  * 'account-delete-self' - When `context.currentUser.id === id`; preventing the deletion of the invokers account.
+ *  * 'account-delete-self' - When `context.currentUser.id === id`; preventing the self-deletion of the invokers account.
  *  * 'account-delete' - When an error occures deleting the Account from the DB.
  */
 export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
