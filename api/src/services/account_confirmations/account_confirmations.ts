@@ -7,14 +7,11 @@ import { logger } from 'src/lib/logger'
 
 import { reject } from 'src/validators/reject'
 
-//
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(reject, { except: ['confirmSignup'] })
   rules.skip({ only: ['confirmSignup'] })
 }
-//
 
-// == C
 export interface CreateInviteConfirmArgs {
   code: string
   email: string
@@ -75,9 +72,7 @@ export const createSignupConfirm = async ({
 
   return res
 }
-//
 
-// == R
 export interface ConfirmInvitationArgs {
   code: string
   email: string
@@ -194,4 +189,3 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
 
   return true
 }
-//
