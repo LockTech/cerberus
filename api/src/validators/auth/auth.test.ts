@@ -1,5 +1,7 @@
 import { AccountNameMaxLength } from 'src/constants/account'
 
+import { randomStr } from 'src/util/randomStr'
+
 import {
   validateCurrentUser,
   validateAuthId,
@@ -105,7 +107,7 @@ describe('auth validator', () => {
     })
     it(`throws when \`context.currentUser.name\` is greater than ${AccountNameMaxLength} characters long`, () => {
       mockCurrentUser({
-        name: 'asdadawawdawdawdawdawdAwbdawdaawefsfesefesbesefbasefabwerawerabweraweraweras',
+        name: randomStr(AccountNameMaxLength) + 10,
       })
       expect(() => validateAuthName(Service)).toThrow(AuthNameLenError)
     })

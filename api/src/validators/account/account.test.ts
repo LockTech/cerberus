@@ -2,6 +2,9 @@ import {
   AccountEmailMaxLength,
   AccountNameMaxLength,
 } from 'src/constants/account'
+
+import { randomStr } from 'src/util/randomStr'
+
 import {
   validateAccountEmail,
   validateAccountID,
@@ -86,8 +89,7 @@ describe('account validator', () => {
     it(`throws when \`email\` is greater than ${AccountEmailMaxLength} characters long`, () => {
       expect(() =>
         validateAccountEmail(Service, {
-          email:
-            'sawdawdawdawdawdasadwdasadwawwefsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsfsawdawdawdawdawdasadwdasadwawwefsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsfsawdawdawdawdawdasadwdasadwawwefsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsffsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsf',
+          email: randomStr(AccountEmailMaxLength + 10),
         })
       ).toThrow(AccEmailLength)
     })
@@ -240,7 +242,7 @@ describe('account validator', () => {
     it(`throws when \`name\` is greater than ${AccountNameMaxLength} characters long`, () => {
       expect(() =>
         validateAccountName(Service, {
-          name: 'sawdawdawdawdawdasadwdasadwawwefsesfesnefsesefsefasefawernw34wn34w34w34wafsfsefsf',
+          name: randomStr(AccountNameMaxLength + 10),
         })
       ).toThrow(AccNameLength)
     })

@@ -1,5 +1,7 @@
 import { OrganizationMaxNameLength } from 'src/constants/organization'
 
+import { randomStr } from 'src/util/randomStr'
+
 import {
   validateOrganizationId,
   validateOrganizationName,
@@ -45,7 +47,7 @@ describe('organization validator', () => {
 
     it(`throws when \`name\` is greater than ${OrganizationMaxNameLength} characters long`, () => {
       expect(() => validateOrganizationName(Service, {
-        name: 'dfsdsvsdvsvaafawefawefawef34wefssvxeraw3awfaefzsdvsdrgae4tawerawer'
+        name: randomStr(OrganizationMaxNameLength + 10)
       })).toThrow(NameLength)
     })
   })
