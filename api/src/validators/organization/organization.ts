@@ -1,29 +1,39 @@
-import { ValidationError } from '@redwoodjs/graphql-server'
+import { validate as validateUUID } from 'uuid'
+import { ValidationError } from '@redwoodjs/api'
+
+import { OrganizationMaxNameLength } from 'src/constants/organization'
+
 import { isStr } from 'src/util/asserters'
-
-const MaxNameLength = 60
-
-export const validateOrganizationExist = () => {
-  // FIXME: pending Redwood 0.36, support for async beforeResolvers
-}
 
 interface NameInput {
   name: string
 }
 /**
  * @throws
- *  * 'organization-name-invalid' - When `name` is not a string or equals ''
- *  * 'organization-name-length' - When `name.length` is greater than `MaxNameLength` (default: 60)
+ *  * 'organization-name-invalid' - When `name` is not a string
+ *  * 'organization-name-length' - When `name` is less than 0 or greater than `OrganizationMaxNameLength` characters long
+ *  * 'organization-name-taken' - When `name` is in use by another organization
  */
-export const validateOrganizationName = (
-  _service: string,
-  { name }: NameInput
-) => {
-  if (!isStr(name) || name === '') {
-    throw new ValidationError('organization-name-invalid')
-  }
+export const validateOrganizationName = (s: string, { name }: NameInput) => {
+  if (!isStr(name)) throw new ValidationError('organization-name-invalid')
 
-  if (name.length > MaxNameLength) {
+  if (name.length <= 0 || name.length > OrganizationMaxNameLength)
     throw new ValidationError('organization-name-length')
-  }
+
+  // perform db check for name uniqueness
+}
+
+interface IDInput {
+  id: string
+}
+/**
+ * @throws
+ *  * 'organization-id-invalid' - When `id` is not a valid UUID
+ *  * 'organization-id-exist' - When `id` does not belong to an organization which exist
+ */
+export const validateOrganizationId = (s: string, { id }: IDInput) => {
+  if (!isStr(id) || !validateUUID(id))
+    throw new ValidationError('organization-id-invalid')
+
+  // perform db check that id belongs to an organization
 }
