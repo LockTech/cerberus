@@ -14,4 +14,6 @@ export const validatePermissionTuple = (
 ) => {
   if (!isPermissionTuple(tuple))
     throw new ValidationError('permission-tuple-invalid')
+
+  // perform db operation to assert permission is unique?
 }
