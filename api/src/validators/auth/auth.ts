@@ -9,35 +9,54 @@ import { CerberusAdminTuple } from 'src/constants/permission'
 import { isStr } from 'src/util/asserters'
 
 /**
- * @param service
  * @throws
  *  * 'auth-undefined' - When `context.currentUser` is undefined or null
- *  * 'auth-id-invalid' - When `context.currentUser.id` is not a valid v4 UUID.
- *  * 'auth-name-invalid' - When `context.currentUser.name` is not a string or is an empty string (`''`)
- *  * 'auth-name-length' - When `context.currentUser.name.length` is <= 0 or > `AccountNameMaxLength`.
- *  * 'auth-organization-invalid' - When `context.currentUser.organizationId` is not a valid v4 UUID
  */
-export const validateAuth = (_service: string) => {
+export const validateCurrentUser = (_s: string) => {
   const currentUser = context.currentUser
 
   if (currentUser === undefined || currentUser === null)
     throw new ValidationError('auth-undefined')
+}
 
-  // ID
+/**
+ * @throws
+ *  * 'auth-id-invalid' - When `context.currentUser.id` is not a valid v4 UUID
+ */
+export const validateAuthId = (s: string) => {
+  validateCurrentUser(s)
+  const currentUser = context.currentUser
+
   const id = currentUser.id as string
-
   if (!isStr(id) || !validateUUID(id))
     throw new ValidationError('auth-id-invalid')
+}
 
-  // Name
+/**
+ * @throws
+ *  * 'auth-name-invalid' - When `context.currentUser.name` is not a string or is an empty string (`''`)
+ *  * 'auth-name-length' - When `context.currentUser.name.length` is <= 0 or > `AccountNameMaxLength`.
+ */
+export const validateAuthName = (s: string) => {
+  validateCurrentUser(s)
+  const currentUser = context.currentUser
+
   const name = currentUser.name as string
 
   if (!isStr(name)) throw new ValidationError('auth-name-invalid')
 
   if (name.length <= 0 || name.length > AccountNameMaxLength)
     throw new ValidationError('auth-name-length')
+}
 
-  // Organization
+/**
+ * @throws
+ *  * 'auth-organization-invalid' - When `context.currentUser.organizationId` is not a valid v4 UUID
+ */
+export const validateAuthOrganization = (s: string) => {
+  validateCurrentUser(s)
+  const currentUser = context.currentUser
+
   const organizationId = currentUser.organizationId as string
 
   if (!isStr(organizationId) || !validateUUID(organizationId))
@@ -47,10 +66,19 @@ export const validateAuth = (_service: string) => {
 }
 
 /**
+ * Shorthand for including all `auth` validators, **except** `validateIsAdmin`.
+ */
+export const validateAuth = (s: string) => {
+  validateAuthId(s)
+  validateAuthName(s)
+  validateAuthOrganization(s)
+}
+
+/**
  * @throws
  *  * 'authorization' - When the Keto `check` fails.
  */
-export const validateIsAdmin = (_service: string) => {
+export const validateIsAdmin = (_s: string) => {
   const id = context.currentUser.id as string
 
   const { namespace, object, relation } = CerberusAdminTuple
