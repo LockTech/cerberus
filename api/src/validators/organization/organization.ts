@@ -5,9 +5,8 @@ import { OrganizationMaxNameLength } from 'src/constants/organization'
 
 import { isStr } from 'src/util/asserters'
 
-interface NameInput {
-  name: string
-}
+import type { IDInput, NameInput } from 'types/inputs'
+
 /**
  * @throws
  *  * 'organization-name-invalid' - When `name` is not a string
@@ -23,9 +22,6 @@ export const validateOrganizationName = (s: string, { name }: NameInput) => {
   // perform db check for name uniqueness
 }
 
-interface IDInput {
-  id: string
-}
 /**
  * @throws
  *  * 'organization-id-invalid' - When `id` is not a valid UUID

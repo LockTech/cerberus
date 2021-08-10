@@ -9,9 +9,8 @@ import {
 
 import { isStr } from 'src/util/asserters'
 
-interface EmailInput {
-  email: string
-}
+import type { EmailInput, IDInput, NameInput } from 'types/inputs'
+
 /**
  * @throws
  *  * 'account-email-invalid' - When `email` is not a string.
@@ -34,9 +33,6 @@ export const validateAccountEmail = (
   // perform DB check for email's existing use
 }
 
-interface IDInput {
-  id: string
-}
 /**
  * @throws
  *  * 'account-id-invalid' - When `id` is not a valid UUID.
@@ -49,9 +45,6 @@ export const validateAccountID = (service: string, { id }: IDInput) => {
   // use DB to validate context.currentUser.id has access to id
 }
 
-interface NameInput {
-  name: string
-}
 /**
  * @throws
  *  * 'account-name-invalid' - When `name` is not a string.
