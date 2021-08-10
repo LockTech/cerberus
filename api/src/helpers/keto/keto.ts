@@ -1,9 +1,9 @@
 import { UserInputError } from '@redwoodjs/api'
 
 import { CheckURL, DeleteURL, WriteURL } from 'src/constants/keto'
-
-import { fetch } from 'src/lib/fetch'
 import { logger } from 'src/lib/logger'
+
+import { fetch } from 'src/util/fetch'
 
 export interface KetoRelationTuple {
   namespace: string

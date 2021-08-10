@@ -21,7 +21,6 @@ type UnknownHeaders = Record<string, unknown>
 type UnknownBody = unknown
 
 class fetch {
-  // ==
   /**
    * A wrapper around `cross-fetch` which provides a simplified and more declarative interface for making requests.
    *
@@ -50,7 +49,7 @@ class fetch {
     //
     const fetchLogger = logger.child({ url, method, body, headers })
 
-    fetchLogger.trace('Attempting to perform Network Operation.')
+    fetchLogger.trace('Network operation invoked.')
 
     // Perform network operation
     //
@@ -71,10 +70,7 @@ class fetch {
 
       const res = (bodyUsed && (await json())) || {}
 
-      fetchLogger.error(
-        { res, status, statusText },
-        'Error performing Network Operation; did not recieve "status" 200.'
-      )
+      fetchLogger.error({ res, status, statusText }, 'Network operation error.')
       throw new ValidationError('fetch-error')
     }
 
@@ -82,74 +78,28 @@ class fetch {
     //
     const res = netRes.bodyUsed && (await netRes.json())
 
-    fetchLogger.info(
-      { res, status },
-      'Successfully transformed JSON from Network Operation.'
-    )
+    fetchLogger.info({ res, status }, 'Network operation successful')
 
     return res as T
   }
-  //
 
-  // ==
-  /**
-   * Wrapper around this classes `fetch` method, providing support for GET requests.
-   *
-   * @param url
-   * @param body
-   * @returns The `Response`, typed according to the provided `generic`.
-   */
-  static async GET<T>(url: string, headers?: UnknownHeaders) {
-    return await this.fetch<T>(url, FetchMethods.GET, undefined, headers)
-  }
-  //
+  static GET = async <T>(url: string, headers?: UnknownHeaders) =>
+    await this.fetch<T>(url, FetchMethods.GET, undefined, headers)
 
-  // ==
-  /**
-   * Wrapper around this classes `fetch` method, providing support for POST requests.
-   *
-   * @param url
-   * @param body
-   * @returns The `Response`, typed according to the provided `generic`.
-   */
-  static async POST<T>(
+  static POST = async <T>(
     url: string,
     body: UnknownBody,
     headers?: UnknownHeaders
-  ) {
-    return await this.fetch<T>(url, FetchMethods.POST, body, headers)
-  }
-  //
+  ) => await this.fetch<T>(url, FetchMethods.POST, body, headers)
 
-  // ==
-  /**
-   * Wrapper around this classes `fetch` method, providing support for PUT requests.
-   *
-   * @param url
-   * @param body
-   * @returns The `Response`, typed according to the provided `generic`.
-   */
-  static async PUT<T>(
+  static PUT = async <T>(
     url: string,
     body: UnknownBody,
     headers?: UnknownHeaders
-  ) {
-    return await this.fetch<T>(url, FetchMethods.PUT, body, headers)
-  }
-  //
+  ) => await this.fetch<T>(url, FetchMethods.PUT, body, headers)
 
-  // ==
-  /**
-   * Wrapper around this classes `fetch` method, providing support for DELETE requests.
-   *
-   * @param url
-   * @param body
-   * @returns The `Response`, typed according to the provided `generic`.
-   */
-  static async DELETE<T>(url: string, headers?: UnknownHeaders) {
-    return await this.fetch<T>(url, FetchMethods.DELETE, undefined, headers)
-  }
-  //
+  static DELETE = async <T>(url: string, headers?: UnknownHeaders) =>
+    await this.fetch<T>(url, FetchMethods.DELETE, undefined, headers)
 }
 
 export { fetch, FetchMethods }
