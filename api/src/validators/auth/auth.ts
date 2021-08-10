@@ -66,15 +66,6 @@ export const validateAuthOrganization = (s: string) => {
 }
 
 /**
- * Shorthand for including all `auth` validators, **except** `validateIsAdmin`.
- */
-export const validateAuth = (s: string) => {
-  validateAuthId(s)
-  validateAuthName(s)
-  validateAuthOrganization(s)
-}
-
-/**
  * @throws
  *  * 'authorization' - When the Keto `check` fails.
  */
@@ -93,4 +84,18 @@ export const validateIsAdmin = (_s: string) => {
   const res = true // await checkTuple(tuple)
 
   if (!res) throw new AuthenticationError('authorization')
+}
+
+/**
+ * Shorthand for including all `auth` validators, including:
+ * * `validateCurrentUser` (implicitly)
+ * * `validateAuthId`
+ * * `validateAuthName`
+ * * `validateIsAdmin`
+ */
+export const validateAuth = (s: string) => {
+  validateAuthId(s)
+  validateAuthName(s)
+  validateAuthOrganization(s)
+  // await validateIsAdmin(s)
 }

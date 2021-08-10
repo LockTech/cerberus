@@ -5,12 +5,11 @@ import type { BeforeResolverSpecType } from '@redwoodjs/api'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
-import { validateAuth, validateIsAdmin } from 'src/validators/auth'
+import { validateAuth } from 'src/validators/auth'
 import { reject } from 'src/validators/reject'
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateAuth)
-  rules.add(validateIsAdmin)
   rules.add(reject, { only: ['createPermission'] })
 }
 

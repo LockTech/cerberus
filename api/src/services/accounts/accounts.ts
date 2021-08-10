@@ -13,7 +13,7 @@ import { organization as getOrganization } from 'src/services/organizations'
 
 import { randomStr } from 'src/util/randomStr'
 
-import { validateAuth, validateIsAdmin } from 'src/validators/auth'
+import { validateAuth } from 'src/validators/auth'
 import {
   validateAccountEmail,
   validateAccountID,
@@ -27,7 +27,6 @@ const valUpdateName = (s, { name }) => name && validateAccountName(s, { name })
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateAuth)
-  rules.add(validateIsAdmin)
   rules.add(validateAccountEmail, { only: ['inviteAccount'] })
   rules.add(validateAccountID, { only: ['account', 'updateAccount', 'deleteAccount'] })
   rules.add([valUpdateEmail, valUpdateName], { only: ['updateAccount'] })
