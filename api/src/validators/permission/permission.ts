@@ -2,7 +2,7 @@ import { ValidationError } from '@redwoodjs/api'
 
 import type { PermissionTuple } from 'src/constants/permission'
 
-import { isPermissionTuple } from 'src/util/asserters/asserters'
+import { isPermissionTuple } from 'src/util/asserters'
 
 /**
  * @throws
