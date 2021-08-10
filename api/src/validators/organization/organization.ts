@@ -11,7 +11,7 @@ interface NameInput {
 /**
  * @throws
  *  * 'organization-name-invalid' - When `name` is not a string
- *  * 'organization-name-length' - When `name` is less than 0 or greater than `OrganizationMaxNameLength` characters long
+ *  * 'organization-name-length' - When `name` is less than or 0 or greater than `OrganizationMaxNameLength` characters long
  *  * 'organization-name-taken' - When `name` is in use by another organization
  */
 export const validateOrganizationName = (s: string, { name }: NameInput) => {
