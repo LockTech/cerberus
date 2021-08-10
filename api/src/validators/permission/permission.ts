@@ -1,50 +1,17 @@
 import { ValidationError } from '@redwoodjs/api'
 
-import { isDefined, isStr } from 'src/util/asserters'
+import type { PermissionTuple } from 'src/constants/permission'
 
-// ==
-export interface IsPermissionTupleArgs {
-  application: string
-  namespace: string
-  object: string
-  relation: string
-}
-export const isPermissionTuple = ({
-  application,
-  namespace,
-  object,
-  relation,
-}: IsPermissionTupleArgs) => {
-  if (
-    !isStr(application) ||
-    application === '' ||
-    !isStr(namespace) ||
-    namespace === '' ||
-    (isDefined(object) && !isStr(object)) ||
-    (isDefined(relation) && !isStr(relation))
-  )
-    return false
-  return true
-}
-//
+import { isPermissionTuple } from 'src/util/asserters/asserters'
 
-// ==
-export interface ValidatePermissionTupleArgs {
-  application: string
-  namespace: string
-  object: string
-  relation: string
-}
 /**
  * @throws
- *  * 'permission-tuple-invalid' - When fields are missing or invalid on the permission tuple.
+ *  * 'permission-tuple-invalid' - When `tuple` is not a valid `PermissionTuple`.
  */
 export const validatePermissionTuple = (
   _service: string,
-  tuple: ValidatePermissionTupleArgs
+  tuple: PermissionTuple
 ) => {
-  if (!isPermissionTuple(tuple)) {
+  if (!isPermissionTuple(tuple))
     throw new ValidationError('permission-tuple-invalid')
-  }
 }
-//
