@@ -5,30 +5,19 @@ import type { BeforeResolverSpecType } from '@redwoodjs/api'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
-import {
-  validateAccountOrganization,
-  validateCurrentUser,
-} from 'src/validators/account'
+import { validateAuth, validateIsAdmin } from 'src/validators/auth'
 import { reject } from 'src/validators/reject'
 
-//
-export interface PermissionTuple {
-  application: string
-  namespace: string
-  object: string
-  relation: string
-}
-//
-
-// ==
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(validateCurrentUser)
-  rules.add(validateAccountOrganization)
+  rules.add(validateAuth)
+  rules.add(validateIsAdmin)
   rules.add(reject, { only: ['createPermission'] })
 }
-//
 
-// == C
+/**
+ * @throws
+ *  * 'permission-create' - When an error occurs creating the permission in the DB.
+ */
 export interface CreatePermissionArgs {
   application: string
   namespace: string
@@ -47,9 +36,11 @@ export const createPermission = async (data: CreatePermissionArgs) => {
 
   return res
 }
-//
 
-// == R
+/**
+ * @throws
+ *  * 'permission-get' - When an error occurs getting the permission from the DB.
+ */
 export const permissions = async () => {
   let res: Permission[]
 
@@ -62,4 +53,3 @@ export const permissions = async () => {
 
   return res
 }
-//
