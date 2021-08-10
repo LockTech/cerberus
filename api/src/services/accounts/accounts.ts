@@ -19,7 +19,7 @@ import {
   validateAccountID,
   validateAccountName,
 } from 'src/validators/account'
-import { reject } from 'src/validators/rejector'
+import { reject } from 'src/validators/reject'
 
 /* eslint-disable prettier/prettier */
 const valUpdateEmail = (s, { email }) => email && validateAccountEmail(s, { email })

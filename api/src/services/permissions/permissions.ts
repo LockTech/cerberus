@@ -9,7 +9,7 @@ import {
   validateAccountOrganization,
   validateCurrentUser,
 } from 'src/validators/account'
-import { reject } from 'src/validators/rejector'
+import { reject } from 'src/validators/reject'
 
 //
 export interface PermissionTuple {

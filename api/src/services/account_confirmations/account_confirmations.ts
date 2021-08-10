@@ -5,7 +5,7 @@ import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
-import { reject } from 'src/validators/rejector'
+import { reject } from 'src/validators/reject'
 
 //
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
