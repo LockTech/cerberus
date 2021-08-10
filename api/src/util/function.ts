@@ -19,7 +19,10 @@ export const returnFunctionSuccess = (res: unknown): ProxyResult => ({
 /**
  * Convert an `Error` into a response which can be returned by serverless functions.
  *
- * @param err The `Error` to return
+ * Takes care of adding `headers` and an appropriate (500) `statusCode` to the response.
+ * The given `Error` will be used to fill-out the response's body.
+ *
+ * @param err The `Error` to be used as the `body` of the response
  * @returns `ProxyResult`
  */
 export const returnFunctionError = (err: Error): ProxyResult => {
@@ -29,6 +32,6 @@ export const returnFunctionError = (err: Error): ProxyResult => {
   return {
     statusCode: 500,
     headers,
-    body: JSON.stringify({ message, name }),
+    body: JSON.stringify({ name, message }),
   }
 }
