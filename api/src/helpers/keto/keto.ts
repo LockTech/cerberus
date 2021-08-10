@@ -1,23 +1,20 @@
 import { UserInputError } from '@redwoodjs/api'
 
+import { CheckURL, DeleteURL, WriteURL } from 'src/constants/keto'
+
 import { fetch } from 'src/lib/fetch'
 import { logger } from 'src/lib/logger'
 
-const KetoURL = process.env.KETO_URL
-const CheckURL = `${KetoURL}/check`
-const DeleteURL = `${KetoURL}/relation-tuples`
-const WriteURL = `${KetoURL}/relation-tuples`
-
-// ==
 export interface KetoRelationTuple {
   namespace: string
   object: string
   relation: string
   subject: string
 }
-//
-
-// == C
+/**
+ * @throws
+ *  * 'keto-tuple-write' - When an error occurs writing the relation tuple to the configured Keto instance.
+ */
 export const writeTuple = async (tuple: KetoRelationTuple) => {
   let res: KetoRelationTuple
 
@@ -30,19 +27,21 @@ export const writeTuple = async (tuple: KetoRelationTuple) => {
 
   return res
 }
-//
 
-// == R
 interface CheckTupleResult {
   allowed: boolean
 }
+/**
+ * @throws
+ *  * 'keto-tuple-delete' - When an error occurs checking the relation tuple using the configured Keto instance.
+ */
 export const checkTuple = async (tuple: KetoRelationTuple) => {
   let res: CheckTupleResult
 
   try {
     res = await fetch.POST<CheckTupleResult>(CheckURL, tuple)
   } catch (err) {
-    logger.error({ err }, 'Error writing Keto relation-tuple.')
+    logger.error({ err }, 'Error checking Keto relation-tuple.')
     throw new UserInputError('keto-tuple-check')
   }
 
@@ -53,16 +52,16 @@ export const checkTuple = async (tuple: KetoRelationTuple) => {
  * @deprecated Pending implementation
  */
 export const readTuple = async () => {}
-//
 
-// == U
 /**
  * @deprecated Pending implementation
  */
 export const patchTuple = async () => {}
-//
 
-// == D
+/**
+ * @throws
+ *  * 'keto-tuple-delete' - When an error occurs deleting the relation tuple from the configured Keto instance.
+ */
 export const deleteTuple = async ({
   namespace,
   object,
@@ -76,10 +75,9 @@ export const deleteTuple = async ({
       `${DeleteURL}?namespace=${namespace}&object=${object}&relation=${relation}&subject=${subject}`
     )
   } catch (err) {
-    logger.error({ err }, 'Error writing Keto relation-tuple.')
+    logger.error({ err }, 'Error deleting Keto relation-tuple.')
     throw new UserInputError('keto-tuple-delete')
   }
 
   return res
 }
-//
