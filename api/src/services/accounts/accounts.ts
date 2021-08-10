@@ -22,8 +22,8 @@ import {
 import { reject } from 'src/validators/reject'
 
 /* eslint-disable prettier/prettier */
-const valUpdateEmail = (s, { email }) => email && validateAccountEmail(s, { email })
-const valUpdateName = (s, { name }) => name && validateAccountName(s, { name })
+const valUpdateEmail = (s: string, { email }) => email && validateAccountEmail(s, { email })
+const valUpdateName = (s: string, { name }) => name && validateAccountName(s, { name })
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateAuth)
