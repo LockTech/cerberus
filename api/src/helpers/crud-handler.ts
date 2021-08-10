@@ -6,10 +6,7 @@ import { logger } from 'src/lib/logger'
 import { isFunc } from 'src/util/asserters'
 import { returnFunctionError, returnFunctionSuccess } from 'src/util/function'
 
-import {
-  validateHTTPMethod,
-  validateJSONBody,
-} from 'src/validators/function/function'
+import { validateHTTPMethod, validateJSONBody } from 'src/validators/function'
 
 const WebhookDefaults: Record<CRUDMethod, boolean> = {
   DELETE: true,

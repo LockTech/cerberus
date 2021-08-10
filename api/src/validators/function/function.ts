@@ -1,12 +1,12 @@
 import type { APIGatewayEvent } from 'aws-lambda'
 import { ValidationError } from '@redwoodjs/graphql-server'
 
-import { isDefined, isStr } from 'src/util/asserters'
-
 import {
   FunctionHeaderMediaTypeKey,
   FunctionHeaderMediaType,
 } from 'src/constants/function'
+
+import { isDefined, isStr } from 'src/util/asserters'
 
 /**
  * @throws

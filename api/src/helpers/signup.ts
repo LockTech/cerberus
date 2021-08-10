@@ -12,6 +12,7 @@ import {
 
 import { isStr, isUndefined } from 'src/util/asserters'
 import { randomStr } from 'src/util/randomStr'
+
 import {
   validateAccountEmail,
   validateAccountName,
