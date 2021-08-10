@@ -4,4 +4,5 @@ export default async () => {
   const res = await permissions()
 
   console.log({ res })
+  process.exit()
 }
