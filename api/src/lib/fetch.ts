@@ -40,7 +40,7 @@ class fetch {
    * @throws
    *  * 'fetch-error' - If `response.status` is out of the success range (200).
    */
-  static async fetch<T = Record<string, string>>(
+  static async fetch<T = Record<string, unknown>>(
     url: string,
     method: FetchMethods,
     body: UnknownBody,
