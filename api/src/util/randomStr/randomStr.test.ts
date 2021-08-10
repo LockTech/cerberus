@@ -1,4 +1,4 @@
-import { randomStr } from './randomStr'
+import { randomStr, RandomStrMaxLength } from './randomStr'
 
 describe('randomStr util', () => {
   it('generates a random string of uppercase, alphanumeric characters', () => {
@@ -23,10 +23,10 @@ describe('randomStr util', () => {
     expect(res.length).toBe(1)
   })
 
-  it('ensures length is less than 254', () => {
-    const res = randomStr(255)
+  it(`ensures length is less than ${RandomStrMaxLength}`, () => {
+    const res = randomStr(RandomStrMaxLength + 10)
 
     expect(res).toBeDefined()
-    expect(res.length).toBe(254)
+    expect(res.length).toBe(RandomStrMaxLength)
   })
 })
