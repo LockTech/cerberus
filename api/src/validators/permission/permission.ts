@@ -8,10 +8,7 @@ import { isPermissionTuple } from 'src/util/asserters'
  * @throws
  *  * 'permission-tuple-invalid' - When `tuple` is not a valid `PermissionTuple`.
  */
-export const validatePermissionTuple = (
-  _service: string,
-  tuple: PermissionTuple
-) => {
+export const validatePermissionTuple = (_s: string, tuple: PermissionTuple) => {
   if (!isPermissionTuple(tuple))
     throw new ValidationError('permission-tuple-invalid')
 
