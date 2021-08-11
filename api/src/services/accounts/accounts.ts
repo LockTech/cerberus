@@ -26,11 +26,11 @@ const valUpdateEmail = (s: string, { email }) => email && validateAccountEmail(s
 const valUpdateName = (s: string, { name }) => name && validateAccountName(s, { name })
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
+  rules.add(reject, { only: ['checkAccountExist'] })
   rules.add(validateAuth)
   rules.add(validateAccountEmail, { only: ['inviteAccount'] })
   rules.add(validateAccountID, { only: ['account', 'updateAccount', 'deleteAccount'] })
   rules.add([valUpdateEmail, valUpdateName], { only: ['updateAccount'] })
-  rules.add(reject, { only: ['checkAccountExist'] })
 }
 /* eslint-enable prettier/prettier */
 
