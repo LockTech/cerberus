@@ -1,4 +1,7 @@
+import { CheckURL, DeleteURL, WriteURL } from 'src/constants/keto'
+
 import { fetch } from 'src/util/fetch'
+
 import { checkTuple, deleteTuple, handleKetoError, writeTuple } from './keto'
 
 jest.mock('../../util/fetch')
@@ -80,6 +83,22 @@ describe('keto helper', () => {
 
       expect(writeTuple(tuple)).rejects.toThrow(KetoError)
     })
+
+    it('calls the `PUT` endpoint once', async () => {
+      mockedFetch.PUT.mockResolvedValue(OkResponse)
+
+      await writeTuple(tuple)
+
+      expect(mockedFetch.PUT).toHaveBeenCalledTimes(1)
+    })
+
+    it('makes a request against the correct endpoint', async () => {
+      mockedFetch.PUT.mockResolvedValue(OkResponse)
+
+      await writeTuple(tuple)
+
+      expect(mockedFetch.PUT).toHaveBeenCalledWith(WriteURL, tuple)
+    })
   })
 
   describe('checkTuple', () => {
@@ -104,6 +123,22 @@ describe('keto helper', () => {
 
       expect(writeTuple(tuple)).rejects.toThrow(KetoError)
     })
+
+    it('calls the `POST` endpoint once', async () => {
+      mockedFetch.POST.mockResolvedValue(AllowedResponse)
+
+      await checkTuple(tuple)
+
+      expect(mockedFetch.POST).toHaveBeenCalledTimes(1)
+    })
+
+    it('makes a request against the correct endpoint', async () => {
+      mockedFetch.POST.mockResolvedValue(AllowedResponse)
+
+      await checkTuple(tuple)
+
+      expect(mockedFetch.POST).toHaveBeenCalledWith(CheckURL, tuple)
+    })
   })
 
   describe('deleteTuple', () => {
@@ -119,6 +154,26 @@ describe('keto helper', () => {
       mockedFetch.PUT.mockResolvedValue(ErrorResponse)
 
       expect(writeTuple(tuple)).rejects.toThrow(KetoError)
+    })
+
+    it('calls the `DELETE` endpoint once', async () => {
+      mockedFetch.DELETE.mockResolvedValue(NullResponse)
+
+      await deleteTuple(tuple)
+
+      expect(mockedFetch.DELETE).toHaveBeenCalledTimes(1)
+    })
+
+    it('makes a request against the correct endpoint', async () => {
+      mockedFetch.DELETE.mockResolvedValue(NullResponse)
+
+      await deleteTuple(tuple)
+
+      const { namespace, object, relation, subject } = tuple
+
+      expect(mockedFetch.DELETE).toHaveBeenCalledWith(
+        `${DeleteURL}?namespace=${namespace}&object=${object}&relation=${relation}&subject=${subject}`
+      )
     })
   })
 })
