@@ -1,6 +1,8 @@
 import type { APIGatewayEvent, Context, ProxyResult } from 'aws-lambda'
 import type { Resolver, RuleValidator } from '@redwoodjs/api'
 
+import { FunctionDefaultHeaders as headers } from 'src/constants/function'
+
 import { logger } from 'src/lib/logger'
 
 import { isFunc } from 'src/util/asserters'
@@ -28,6 +30,8 @@ export interface CRUDHandlerOptions {
  * removing the need to manually call services in response to a particular method being invoked.
  *
  * `validators` used by a service's `beforeResolver` can be reused.
+ *
+ * To not use a resolver, pass the value `undefined`.
  *
  * @example
  *  const options: CRUDHandlerOptions = {
@@ -79,6 +83,13 @@ export class CRUDHandler {
         'CRUDHandler recieved an invalid validator mapping; expected an empty array or an array with (asyncronous) functions.'
       )
       return returnFunctionError(new Error('Invalid validation mapping.'))
+    }
+    if (resolver === undefined) {
+      return {
+        statusCode: 404,
+        headers,
+        body: null,
+      }
     }
     if (!isFunc(resolver)) {
       logger.error(

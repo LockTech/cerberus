@@ -11,10 +11,10 @@ import { validatePermissionTuple } from 'src/validators/permission'
 
 const options: CRUDHandlerOptions = {
   resolvers: {
-    DELETE: permissions,
+    DELETE: undefined,
     GET: permissions,
     POST: createPermission,
-    PUT: permissions,
+    PUT: undefined,
   },
   validators: {
     DELETE: [],
