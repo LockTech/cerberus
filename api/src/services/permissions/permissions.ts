@@ -7,10 +7,12 @@ import { logger } from 'src/lib/logger'
 
 import { validateAuth } from 'src/validators/auth'
 import { reject } from 'src/validators/reject'
+import { validatePermissionId } from 'src/validators/permission'
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(validateAuth)
   rules.add(reject, { only: ['createPermission'] })
+  rules.add(validateAuth)
+  rules.add(validatePermissionId, { only: ['permission'] })
 }
 
 /**
@@ -31,6 +33,26 @@ export const createPermission = async (data: CreatePermissionArgs) => {
   } catch (err) {
     logger.error({ err }, 'Prisma error creating permission.')
     throw new UserInputError('permission-create')
+  }
+
+  return res
+}
+
+export interface PermissionArgs {
+  id: string
+}
+/**
+ * @throws
+ *  * 'permission-get' - When an error occurs getting the permission from the DB.
+ */
+export const permission = async ({ id }: PermissionArgs) => {
+  let res: Permission
+
+  try {
+    res = await db.permission.findUnique({ where: { id } })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error getting permission.')
+    throw new UserInputError('permission-get')
   }
 
   return res

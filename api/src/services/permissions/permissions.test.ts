@@ -1,4 +1,6 @@
+import { validate as validateUUID } from 'uuid'
 import type { Permission } from '@prisma/client'
+
 import { db } from 'src/lib/db'
 
 import { createPermission, permissions } from './permissions'
@@ -18,12 +20,16 @@ const Tuple = {
 describe('permissions service', () => {
   describe('create', () => {
     scenario(
-      'creates a new permission using a given PermissionTuple',
-      async (_scenario: PermissionStandard) => {
-        const res = await createPermission(Tuple)
+      'throws when encountering a prisma error',
+      async (scenario: PermissionStandard) => {
+        const perm = scenario.permission.one as Permission
+        const application = perm.application
+        const namespace = perm.namespace
+        const object = perm.object
+        const relation = perm.relation
+        const tuple = { application, namespace, object, relation }
 
-        // @ts-expect-error checking for partial object
-        expect(res).toEqual(expect.objectContaining<Permission>(Tuple))
+        expect(createPermission(tuple)).rejects.toThrow(Create)
       }
     )
 
@@ -41,16 +47,22 @@ describe('permissions service', () => {
     )
 
     scenario(
-      'throws when encountering a prisma error',
-      async (scenario: PermissionStandard) => {
-        const perm = scenario.permission.one as Permission
-        const application = perm.application
-        const namespace = perm.namespace
-        const object = perm.object
-        const relation = perm.relation
-        const tuple = { application, namespace, object, relation }
+      'creates a new permission using a given PermissionTuple',
+      async (_scenario: PermissionStandard) => {
+        const res = await createPermission(Tuple)
 
-        expect(createPermission(tuple)).rejects.toThrow(Create)
+        // @ts-expect-error checking for partial object
+        expect(res).toEqual(expect.objectContaining<Permission>(Tuple))
+      }
+    )
+
+    scenario(
+      'creates a new permission assigning it a UUID',
+      async (_scenario: PermissionStandard) => {
+        const res = await createPermission(Tuple)
+
+        expect(res.id).toBeDefined()
+        expect(validateUUID(res.id)).toBeTruthy()
       }
     )
   })
