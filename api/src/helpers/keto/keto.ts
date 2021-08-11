@@ -4,6 +4,25 @@ import { CheckURL, DeleteURL, WriteURL } from 'src/constants/keto'
 import { logger } from 'src/lib/logger'
 
 import { fetch } from 'src/util/fetch'
+import type { Response } from 'src/util/fetch'
+
+/**
+ * @throws
+ *  * 'keto-error' - When `ok` is `false`; i.e. `status` is not in the 199 < x < 300 range
+ */
+export const handleKetoError = <T>({
+  ok,
+  res,
+  status,
+  statusText,
+}: Response<T>): T => {
+  if (!ok) {
+    logger.error({ res, status, statusText }, 'Keto instance error')
+    throw new UserInputError('keto-error')
+  }
+
+  return res as T
+}
 
 export interface KetoRelationTuple {
   namespace: string
@@ -11,19 +30,22 @@ export interface KetoRelationTuple {
   relation: string
   subject: string
 }
+
 /**
  * @throws
  *  * 'keto-tuple-write' - When an error occurs writing the relation tuple to the configured Keto instance.
  */
 export const writeTuple = async (tuple: KetoRelationTuple) => {
-  let res: KetoRelationTuple
+  let netRes: Response<KetoRelationTuple>
 
   try {
-    res = await fetch.PUT<KetoRelationTuple>(WriteURL, tuple)
+    netRes = await fetch.PUT<KetoRelationTuple>(WriteURL, tuple)
   } catch (err) {
-    logger.error({ err }, 'Error writing Keto relation-tuple.')
+    logger.error({ err }, 'Keto network error writing tuple.')
     throw new UserInputError('keto-tuple-write')
   }
+
+  const res = handleKetoError(netRes)
 
   return res
 }
@@ -36,14 +58,16 @@ interface CheckTupleResult {
  *  * 'keto-tuple-delete' - When an error occurs checking the relation tuple using the configured Keto instance.
  */
 export const checkTuple = async (tuple: KetoRelationTuple) => {
-  let res: CheckTupleResult
+  let netRes: Response<CheckTupleResult>
 
   try {
-    res = await fetch.POST<CheckTupleResult>(CheckURL, tuple)
+    netRes = await fetch.POST<CheckTupleResult>(CheckURL, tuple)
   } catch (err) {
-    logger.error({ err }, 'Error checking Keto relation-tuple.')
+    logger.error({ err }, 'Keto network error checking tuple.')
     throw new UserInputError('keto-tuple-check')
   }
+
+  const res = handleKetoError(netRes)
 
   return res.allowed
 }
@@ -68,16 +92,18 @@ export const deleteTuple = async ({
   relation,
   subject,
 }: KetoRelationTuple) => {
-  let res: null
+  let netRes: Response<null>
 
   try {
-    res = await fetch.DELETE<null>(
+    netRes = await fetch.DELETE(
       `${DeleteURL}?namespace=${namespace}&object=${object}&relation=${relation}&subject=${subject}`
     )
   } catch (err) {
-    logger.error({ err }, 'Error deleting Keto relation-tuple.')
+    logger.error({ err }, 'Keto network error deleting tuple.')
     throw new UserInputError('keto-tuple-delete')
   }
+
+  const res = handleKetoError(netRes)
 
   return res
 }
