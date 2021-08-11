@@ -18,5 +18,6 @@ export const schema = gql`
   type Mutation {
     createRole(name: String!): Role!
     deleteRole(id: String!): Role!
+    updateRole(id: String!, name: String!): Role!
   }
 `
