@@ -10,6 +10,7 @@ export const standard = defineScenario({
       name: 'Example Inc.',
     },
   },
+  // @ts-expect-error only need three accounts
   account: {
     one: {
       email: 'foo.bar@acme.corp',
@@ -39,6 +40,7 @@ export const standard = defineScenario({
       verified: false,
     },
   },
+  // @ts-expect-error only need three permissions
   permission: {
     one: {
       id: '3c456ca9-1f9e-4326-9046-f10469cb73c9',
@@ -111,6 +113,19 @@ export const standard = defineScenario({
           { id: '8b33c04a-0ba0-46c8-9236-5459d76d4f8b' },
           { id: '427579a9-fb7c-4781-80d9-6dc72e348c14' },
         ],
+      },
+    },
+    four: {
+      name: 'Helper',
+      organization: {
+        connect: {
+          id: '6a82a1cc-1e2f-47d6-a3e7-ce31c71450fa',
+        },
+      },
+      accounts: {
+        connect: {
+          id: '13d994a8-dad1-4c13-9547-f07436e61e76',
+        },
       },
     },
   },

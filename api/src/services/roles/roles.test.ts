@@ -227,6 +227,50 @@ describe('role service', () => {
     )
 
     scenario(
+      'removes the given role even if it has no assigned accounts',
+      async (scenario: RoleStandard) => {
+        // @ts-expect-error jest typings
+        deleteTuple.mockResolvedValue(null)
+
+        const org = scenario.organization.one as Organization
+        const organizationId = org.id
+
+        mockCurrentUser({ organizationId })
+
+        const role = scenario.role.two as Role
+        const id = role.id
+
+        await deleteRole({ id })
+
+        const dbRes = await db.role.findUnique({ where: { id } })
+
+        expect(dbRes).toBeNull()
+      }
+    )
+
+    scenario(
+      'removes the given role even if it has no assigned permissions',
+      async (scenario: RoleStandard) => {
+        // @ts-expect-error jest typings
+        deleteTuple.mockResolvedValue(null)
+
+        const org = scenario.organization.one as Organization
+        const organizationId = org.id
+
+        mockCurrentUser({ organizationId })
+
+        const role = scenario.role.four as Role
+        const id = role.id
+
+        await deleteRole({ id })
+
+        const dbRes = await db.role.findUnique({ where: { id } })
+
+        expect(dbRes).toBeNull()
+      }
+    )
+
+    scenario(
       'returns the deleted role as the response',
       async (scenario: RoleStandard) => {
         // @ts-expect-error jest typings
@@ -370,7 +414,7 @@ describe('role service', () => {
       )
 
       scenario(
-        'deletes all roles from all accounts',
+        'attempts to delete all account relation-tuples from Keto',
         async (scenario: RoleStandard) => {
           const role = scenario.role.one as Role
           const roleId = role.id
@@ -393,6 +437,80 @@ describe('role service', () => {
       )
 
       scenario(
+        'attempts to delete all relation-tuples in the expected order',
+        async (scenario: RoleStandard) => {
+          const role1 = scenario.role.one as Role
+          const role1Id = role1.id
+          const role2 = scenario.role.two as Role
+          const role2Id = role2.id
+          const role4 = scenario.role.four as Role
+          const role4Id = role4.id
+
+          const acc1 = scenario.account.one as Account
+          const acc1Id = acc1.id
+          const acc2 = scenario.account.two as Account
+          const acc2Id = acc2.id
+
+          const perm1 = scenario.permission.one as Permission
+          const tuple1 = {
+            namespace: perm1.namespace,
+            object: perm1.object,
+            relation: perm1.relation,
+          }
+          const perm2 = scenario.permission.two as Permission
+          const tuple2 = {
+            namespace: perm2.namespace,
+            object: perm2.object,
+            relation: perm2.relation,
+          }
+          const perm3 = scenario.permission.three as Permission
+          const tuple3 = {
+            namespace: perm3.namespace,
+            object: perm3.object,
+            relation: perm3.relation,
+          }
+
+          const organization = scenario.organization.one as Organization
+          const organizationId = organization.id
+          mockCurrentUser({ organizationId })
+
+          // @ts-expect-error jest typings
+          deleteTuple.mockResolvedValue(null)
+
+          await deleteAllRoles()
+
+          expect(deleteTuple).toHaveBeenNthCalledWith(1, {
+            ...tuple1,
+            subject: buildPermissionSubjectSet(role1Id),
+          })
+          expect(deleteTuple).toHaveBeenNthCalledWith(2, {
+            ...tuple2,
+            subject: buildPermissionSubjectSet(role1Id),
+          })
+          expect(deleteTuple).toHaveBeenNthCalledWith(3, {
+            ...tuple3,
+            subject: buildPermissionSubjectSet(role1Id),
+          })
+          expect(deleteTuple).toHaveBeenNthCalledWith(3, {
+            ...tuple3,
+            subject: buildPermissionSubjectSet(role1Id),
+          })
+          expect(deleteTuple).toHaveBeenNthCalledWith(
+            4,
+            buildAccountRoleTuple(acc1Id, role1Id)
+          )
+          expect(deleteTuple).toHaveBeenNthCalledWith(5, {
+            ...tuple3,
+            subject: buildPermissionSubjectSet(role2Id),
+          })
+          expect(deleteTuple).toHaveBeenNthCalledWith(
+            6,
+            buildAccountRoleTuple(acc2Id, role4Id)
+          )
+        }
+      )
+
+      scenario(
         'attempts to delete the expected number of relation-tuples',
         async (scenario: RoleStandard) => {
           const role = scenario.role.one as Role
@@ -405,7 +523,7 @@ describe('role service', () => {
 
           await deleteAllRoles()
 
-          expect(deleteTuple).toHaveBeenCalledTimes(5)
+          expect(deleteTuple).toHaveBeenCalledTimes(6)
         }
       )
     })
