@@ -1,3 +1,5 @@
+import { CerberusAdminTuple } from 'src/constants/permission'
+
 export const standard = defineScenario({
   organization: {
     one: {
@@ -7,6 +9,12 @@ export const standard = defineScenario({
     two: {
       id: 'e5a15b0b-06a8-4773-9812-0ce5d6e8b7d2',
       name: 'Example Inc.',
+    },
+  },
+  // @ts-expect-error only need 1 permission
+  permission: {
+    one: {
+      ...CerberusAdminTuple,
     },
   },
   account: {

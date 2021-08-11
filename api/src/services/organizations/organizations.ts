@@ -1,199 +1,117 @@
-import type { Organization } from '@prisma/client'
-import { UserInputError } from '@redwoodjs/graphql-server'
-import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
+import type { Account, Organization } from '@prisma/client'
+import {
+  BeforeResolverSpecType,
+  setContext,
+  UserInputError,
+} from '@redwoodjs/api'
 
-import { db } from 'src/lib/db'
+import { CerberusAdminTuple } from 'src/constants/permission'
+
 import { getContextUser } from 'src/lib/context'
+import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
-import { accounts, deleteAccount } from 'src/services/accounts'
-
+import { permission as getPermission } from 'src/services/permissions'
 import {
-  validateCurrentUser,
-  validateAccountOrganization,
-  validateAccountId,
-} from 'src/validators/account'
-import {
-  validateOrganizationExist,
-  validateOrganizationName,
-} from 'src/validators/organization'
+  addPermToRole,
+  addRoleToAccount,
+  createRole,
+  deleteRole,
+} from 'src/services/roles'
 
-// ==
+import { validateAuth, validateAuthId } from 'src/validators/auth'
+import { validateOrganizationName } from 'src/validators/organization/organization'
+import { validateRoleName } from 'src/validators/role'
+
+/* eslint-disable prettier/prettier */
+const valCreateRoleName = (s: string, { adminRoleName }) => validateRoleName(s, { name: adminRoleName })
+const valUpdateRoleName = (s: string, { name }) => name && validateOrganizationName(s, { name })
+
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add([validateCurrentUser])
-  rules.add([validateAccountId], { only: ['createOrganization'] })
-  rules.add([validateAccountOrganization], { except: ['createOrganization'] })
-  rules.add([validateOrganizationExist], { except: ['createOrganization'] })
-  rules.add([validateOrganizationName], {
-    only: ['createOrganization', 'updateOrganization'],
-  })
+  rules.add(validateAuth, { except: ['createOrganization'] })
+  rules.add([validateAuthId, validateOrganizationName, valCreateRoleName], { only: ['createOrganization'] })
+  rules.add([valUpdateRoleName], { only: ['updateOrganization'] })
 }
-//
+/* eslint-enable prettier/prettier */
 
-// == C
-//
 export interface CreateOrganizationArgs {
   name: string
+  adminRoleName: string
 }
-/**
- * @throws
- *  * 'organization-name-taken' - When `name` is in use by another organization; case insensitive.
- *  * 'organization-already-member' - When the creating account is already a member of an organization.
- *  * 'organization-create' - When the organization cannot be created in the DB.
- */
-export const createOrganization = async ({ name }: CreateOrganizationArgs) => {
-  if (await checkOrganizationExist({ name })) {
-    throw new UserInputError('organization-name-taken')
-  }
+export const createOrganization = async ({
+  name,
+  adminRoleName,
+}: CreateOrganizationArgs) => {
+  const currentUser = getContextUser()
+  const accountId = currentUser.id
 
-  const currentAccount = getContextUser()
-  const accountOrgId = currentAccount.organizationId
-  const accountId = currentAccount.id
-
-  if (accountOrgId !== null) {
-    throw new Error('organization-already-member')
-  }
-
-  let res: Organization
+  let res: Account & { organization: Organization }
 
   try {
-    res = await db.organization.create({
+    res = await db.account.update({
       data: {
-        name,
+        organization: {
+          create: {
+            name,
+          },
+        },
       },
+      include: {
+        organization: true,
+      },
+      where: { id: accountId },
     })
 
-    const organizationId = res.id
-
-    await db.account.update({
-      data: {
-        organizationId,
-      },
-      where: {
-        id: accountId,
-      },
+    setContext({
+      currentUser: { ...currentUser, organizationId: res.organization.id },
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error creating organization.')
-    throw new Error('organization-create')
+    throw new UserInputError('organization-create')
   }
 
-  return res
-}
-//
+  let role = await createRole({ name: adminRoleName })
+  const roleId = role.id
 
-// == R
-//
-interface CheckOrganizationExistArgs {
-  name?: string
-}
-const checkOrganizationExist = async ({ name }: CheckOrganizationExistArgs) => {
-  let count: number
+  const permission = await getPermission({ tuple: CerberusAdminTuple })
+  const permissionId = permission.id
 
+  // perm->role
   try {
-    count = await db.organization.count({
-      where: {
-        name: {
-          equals: name,
-          mode: 'insensitive',
+    role = await addPermToRole({ permissionId, roleId })
+  } catch (err) {
+    logger.error({ err }, 'Error adding admin permission to role.')
+
+    await db.account.update({
+      data: {
+        organization: {
+          delete: true,
         },
       },
+      where: { id: accountId },
     })
-  } catch (err) {
-    logger.error({ err }, 'Prisma error checking organization exist.')
-    throw new Error('check')
+
+    throw err
   }
-
-  return count !== 0
-}
-
-/**
- * @throws
- *  * 'organization-get' - When an error occurs trying to retrieving the organization from the DB.
- */
-export const organization = async () => {
-  const id = getContextUser().organizationId
-
-  let res: Organization
-
+  // role->account
   try {
-    res = await db.organization.findUnique({
-      where: { id },
-    })
+    role = await addRoleToAccount({ accountId, roleId })
   } catch (err) {
-    logger.error({ err }, 'Prisma error getting organization.')
-    throw new UserInputError('organization-get')
-  }
+    logger.error({ err }, 'Error adding admin role to account.')
 
-  return res
-}
-//
+    await deleteRole({ id: roleId })
 
-// == U
-//
-export interface UpdateOrganizationArgs {
-  name?: string
-}
-/**
- * @throws
- *  * 'organization-name-taken' - When `name` is in use by another organization; case insensitive.
- *  * 'organization-update' - When there is an error updating the organization in the DB.
- */
-export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
-  if (await checkOrganizationExist({ name })) {
-    throw new UserInputError('organization-name-taken')
-  }
-
-  const id = getContextUser().organizationId
-
-  let res: Organization
-
-  try {
-    res = await db.organization.update({
-      data: { name },
-      where: { id },
+    await db.account.update({
+      data: {
+        organization: {
+          delete: true,
+        },
+      },
+      where: { id: accountId },
     })
-  } catch (err) {
-    logger.error({ err }, 'Prisma error updating organization.')
-    throw new UserInputError('organization-update')
+
+    throw err
   }
 
-  return res
+  return res.organization
 }
-//
-
-// == D
-//
-export const deleteOrganization = async () => {
-  const accountList = await accounts()
-
-  // accounts
-  try {
-    accountList.forEach(async (account) => {
-      const id = account.id
-      await deleteAccount({ id })
-    })
-  } catch (err) {
-    logger.error({ err }, 'Prisma error deleting organization accounts.')
-    throw new UserInputError('organization-delete-accounts')
-  }
-
-  // roles
-
-  const id = getContextUser().organizationId
-
-  let res: Organization
-
-  // organization
-  try {
-    res = await db.organization.delete({
-      where: { id },
-    })
-  } catch (err) {
-    logger.error({ err }, 'Prisma error deleting organization.')
-    throw new UserInputError('organization-delete')
-  }
-
-  return res
-}
-//
