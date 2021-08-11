@@ -1,16 +1,29 @@
 import { validate as validateUUID } from 'uuid'
-import type { Organization, Role } from '@prisma/client'
+import type { Account, Organization, Permission, Role } from '@prisma/client'
 
 import { db } from 'src/lib/db'
 
+import { deleteTuple, writeTuple } from 'src/helpers/keto'
+
 import {
+  buildPermissionSubjectSet,
+  buildAccountRoleTuple,
+  //
   createRole,
-  deleteRole,
   role as getRole,
   roles,
   updateRole,
+  deleteRole,
+  deleteAllRoles,
+  //
+  addPermToRole,
+  addRoleToAccount,
+  delPermFromRole,
+  delRoleFromAccount,
 } from './roles'
 import type { RoleStandard } from './roles.scenarios'
+
+jest.mock('../../helpers/keto/keto')
 
 const Create = {
   name: 'UserInputError',
@@ -194,6 +207,31 @@ describe('role service', () => {
     scenario(
       'removes the given role from the database',
       async (scenario: RoleStandard) => {
+        // @ts-expect-error jest typings
+        deleteTuple.mockResolvedValue(null)
+
+        const org = scenario.organization.one as Organization
+        const organizationId = org.id
+
+        mockCurrentUser({ organizationId })
+
+        const role = scenario.role.one as Role
+        const id = role.id
+
+        await deleteRole({ id })
+
+        const dbRes = await db.role.findUnique({ where: { id } })
+
+        expect(dbRes).toBeNull()
+      }
+    )
+
+    scenario(
+      'returns the deleted role as the response',
+      async (scenario: RoleStandard) => {
+        // @ts-expect-error jest typings
+        deleteTuple.mockResolvedValue(null)
+
         const org = scenario.organization.one as Organization
         const organizationId = org.id
 
@@ -204,11 +242,396 @@ describe('role service', () => {
 
         const res = await deleteRole({ id })
 
-        const dbRes = await db.role.findUnique({ where: { id } })
-
         expect(res).toEqual(expect.objectContaining<Role>(role))
-        expect(dbRes).toBeNull()
       }
     )
+
+    scenario(
+      "attempts to delete each role's relation-tuple",
+      async (scenario: RoleStandard) => {
+        // @ts-expect-error jest typings
+        deleteTuple.mockResolvedValue(null)
+
+        const role = scenario.role.one as Role
+        const id = role.id
+        const organizationId = role.organizationId
+
+        const permCount = 3
+        const accountCount = 1
+
+        const acc = scenario.account.one as Account
+        const accId = acc.id
+        const accTuple = buildAccountRoleTuple(accId, id)
+
+        const perm = scenario.permission.one as Permission
+        const { namespace, object, relation } = perm
+        const permTuple = {
+          namespace,
+          object,
+          relation,
+          subject: buildPermissionSubjectSet(id),
+        }
+
+        mockCurrentUser({ organizationId })
+
+        await deleteRole({ id })
+
+        expect(deleteTuple).toHaveBeenCalledTimes(accountCount + permCount)
+        expect(deleteTuple).toHaveBeenNthCalledWith(1, permTuple)
+        expect(deleteTuple).toHaveBeenNthCalledWith(4, accTuple)
+      }
+    )
+
+    describe('deleteAll', () => {
+      scenario(
+        'deletes all permissions from all roles',
+        async (scenario: RoleStandard) => {
+          const role = scenario.role.one as Role
+          const organizationId = role.organizationId
+
+          mockCurrentUser({ organizationId })
+
+          const perm1 = scenario.permission.one as Permission
+          const application = perm1.application
+          const perm2 = scenario.permission.two as Permission
+          const perm3 = scenario.permission.three as Permission
+
+          await deleteAllRoles()
+
+          const permDbRes = await db.permission.findMany({
+            where: {
+              application,
+            },
+          })
+          const roleDbRes = await db.role.findMany({
+            where: { organizationId },
+          })
+
+          expect(permDbRes).toEqual(
+            expect.arrayContaining([perm1, perm2, perm3])
+          )
+          expect(roleDbRes).toEqual(expect.arrayContaining([]))
+        }
+      )
+
+      scenario(
+        'attempts to delete all permission relation-tuples from Keto',
+        async (scenario: RoleStandard) => {
+          const role = scenario.role.one as Role
+          const roleId = role.id
+          const organizationId = role.organizationId
+
+          mockCurrentUser({ organizationId })
+
+          const perm = scenario.permission.one as Permission
+          const { namespace, object, relation } = perm
+
+          // @ts-expect-error jest typings
+          deleteTuple.mockResolvedValue(null)
+
+          await deleteAllRoles()
+
+          const tuple = {
+            namespace,
+            object,
+            relation,
+            subject: buildPermissionSubjectSet(roleId),
+          }
+
+          expect(deleteTuple).toHaveBeenCalledWith(tuple)
+        }
+      )
+
+      scenario(
+        'deletes all roles from all accounts',
+        async (scenario: RoleStandard) => {
+          const role = scenario.role.one as Role
+          const organizationId = role.organizationId
+
+          mockCurrentUser({ organizationId })
+
+          const acc1 = scenario.account.one as Account
+          const acc2 = scenario.account.two as Account
+
+          await deleteAllRoles()
+
+          const accDbRes = await db.account.findMany({
+            where: {
+              organizationId,
+            },
+          })
+          const roleDbRes = await db.role.findMany({
+            where: { organizationId },
+          })
+
+          expect(accDbRes).toEqual(expect.arrayContaining([acc1, acc2]))
+          expect(roleDbRes).toEqual(expect.arrayContaining([]))
+        }
+      )
+
+      scenario(
+        'deletes all roles from all accounts',
+        async (scenario: RoleStandard) => {
+          const role = scenario.role.one as Role
+          const roleId = role.id
+          const organizationId = role.organizationId
+
+          mockCurrentUser({ organizationId })
+
+          const acc = scenario.account.one as Account
+          const accountId = acc.id
+
+          // @ts-expect-error jest typings
+          deleteTuple.mockResolvedValue(null)
+
+          await deleteAllRoles()
+
+          expect(deleteTuple).toHaveBeenCalledWith(
+            buildAccountRoleTuple(accountId, roleId)
+          )
+        }
+      )
+
+      scenario(
+        'attempts to delete the expected number of relation-tuples',
+        async (scenario: RoleStandard) => {
+          const role = scenario.role.one as Role
+          const organizationId = role.organizationId
+
+          mockCurrentUser({ organizationId })
+
+          // @ts-expect-error jest typings
+          deleteTuple.mockResolvedValue(null)
+
+          await deleteAllRoles()
+
+          expect(deleteTuple).toHaveBeenCalledTimes(5)
+        }
+      )
+    })
+  })
+
+  describe('accounts', () => {
+    describe('addRoleToAccount', () => {
+      scenario(
+        'adds the specified role to the given account',
+        async (scenario: RoleStandard) => {
+          const acc = scenario.account.two as Account
+          const accountId = acc.id
+
+          const role = scenario.role.two as Role
+          const roleId = role.id
+
+          // @ts-expect-error jest typings
+          writeTuple.mockResolvedValue({})
+
+          await addRoleToAccount({ accountId, roleId })
+
+          const dbRes = await db.account.findFirst({
+            where: {
+              id: accountId,
+              roles: {
+                some: {
+                  id: roleId,
+                },
+              },
+            },
+          })
+
+          expect(dbRes).toEqual(expect.objectContaining(acc))
+        }
+      )
+
+      scenario(
+        'attempts to write a relation-tuple to Keto',
+        async (scenario: RoleStandard) => {
+          const acc = scenario.account.two as Account
+          const accountId = acc.id
+
+          const role = scenario.role.two as Role
+          const roleId = role.id
+
+          // @ts-expect-error jest typings
+          writeTuple.mockResolvedValue({})
+
+          await addRoleToAccount({ accountId, roleId })
+
+          expect(writeTuple).toHaveBeenCalledTimes(1)
+          expect(writeTuple).toHaveBeenCalledWith(
+            buildAccountRoleTuple(accountId, roleId)
+          )
+        }
+      )
+    })
+
+    describe('delRoleFromAccount', () => {
+      scenario(
+        'deletes the specified role from the given account',
+        async (scenario: RoleStandard) => {
+          const acc = scenario.account.two as Account
+          const accountId = acc.id
+
+          const role = scenario.role.two as Role
+          const roleId = role.id
+
+          // @ts-expect-error jest typings
+          deleteTuple.mockResolvedValue({})
+
+          await delRoleFromAccount({ accountId, roleId })
+
+          const dbRes = await db.account.findFirst({
+            where: {
+              id: accountId,
+              roles: {
+                some: {
+                  id: roleId,
+                },
+              },
+            },
+          })
+
+          expect(dbRes).toBeNull()
+        }
+      )
+
+      scenario(
+        'attempts to delete a relation-tuple from Keto',
+        async (scenario: RoleStandard) => {
+          const acc = scenario.account.two as Account
+          const accountId = acc.id
+
+          const role = scenario.role.two as Role
+          const roleId = role.id
+
+          // @ts-expect-error jest typings
+          deleteTuple.mockResolvedValue({})
+
+          await delRoleFromAccount({ accountId, roleId })
+
+          expect(deleteTuple).toHaveBeenCalledTimes(1)
+          expect(deleteTuple).toHaveBeenCalledWith(
+            buildAccountRoleTuple(accountId, roleId)
+          )
+        }
+      )
+    })
+  })
+
+  describe('permissions', () => {
+    describe('addPermToRole', () => {
+      scenario(
+        'adds the specified permission to the given role',
+        async (scenario: RoleStandard) => {
+          const perm = scenario.permission.two as Permission
+          const permissionId = perm.id
+
+          const role = scenario.role.two as Role
+          const roleId = role.id
+
+          // @ts-expect-error jest typings
+          writeTuple.mockResolvedValue({})
+
+          await addPermToRole({ permissionId, roleId })
+
+          const dbRes = await db.permission.findFirst({
+            where: {
+              id: permissionId,
+              roles: {
+                some: {
+                  id: roleId,
+                },
+              },
+            },
+          })
+
+          expect(dbRes).toEqual(expect.objectContaining(perm))
+        }
+      )
+
+      scenario(
+        'attempts to write a relation-tuple to Keto',
+        async (scenario: RoleStandard) => {
+          const perm = scenario.permission.two as Permission
+          const permissionId = perm.id
+          const { namespace, object, relation } = perm
+
+          const role = scenario.role.two as Role
+          const roleId = role.id
+
+          // @ts-expect-error jest typings
+          writeTuple.mockResolvedValue({})
+
+          await addPermToRole({ permissionId, roleId })
+
+          const tuple = {
+            namespace,
+            object,
+            relation,
+            subject: buildPermissionSubjectSet(roleId),
+          }
+
+          expect(writeTuple).toHaveBeenCalledTimes(1)
+          expect(writeTuple).toHaveBeenCalledWith(tuple)
+        }
+      )
+    })
+
+    describe('delPermFromRole', () => {
+      scenario(
+        'deletes the specified permission from the given role',
+        async (scenario: RoleStandard) => {
+          const perm = scenario.permission.two as Permission
+          const permissionId = perm.id
+
+          const role = scenario.role.two as Role
+          const roleId = role.id
+
+          // @ts-expect-error jest typings
+          deleteTuple.mockResolvedValue({})
+
+          await delPermFromRole({ permissionId, roleId })
+
+          const dbRes = await db.permission.findFirst({
+            where: {
+              id: permissionId,
+              roles: {
+                some: {
+                  id: roleId,
+                },
+              },
+            },
+          })
+
+          expect(dbRes).toBeNull()
+        }
+      )
+
+      scenario(
+        'attempts to delete a relation-tuple from Keto',
+        async (scenario: RoleStandard) => {
+          const perm = scenario.permission.two as Permission
+          const permissionId = perm.id
+          const { namespace, object, relation } = perm
+
+          const role = scenario.role.two as Role
+          const roleId = role.id
+
+          // @ts-expect-error jest typings
+          deleteTuple.mockResolvedValue({})
+
+          await delPermFromRole({ permissionId, roleId })
+
+          const tuple = {
+            namespace,
+            object,
+            relation,
+            subject: buildPermissionSubjectSet(roleId),
+          }
+
+          expect(deleteTuple).toHaveBeenCalledTimes(1)
+          expect(deleteTuple).toHaveBeenCalledWith(tuple)
+        }
+      )
+    })
   })
 })

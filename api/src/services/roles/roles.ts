@@ -31,13 +31,13 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 }
 /* eslint-enable prettier/prettier */
 
-const buildAccountRoleTuple = (accountId: string, roleId: string) => ({
+export const buildAccountRoleTuple = (accountId: string, roleId: string) => ({
   namespace: 'cerberus_roles',
   object: roleId,
   relation: 'has',
   subject: accountId,
 })
-const buildPermissionSubjectSet = (roleId: string) =>
+export const buildPermissionSubjectSet = (roleId: string) =>
   `cerberus_roles:${roleId}#`
 
 export interface CreateRoleArgs {
