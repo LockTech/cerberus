@@ -1,26 +1,23 @@
 import { readFileSync } from 'fs'
 
-import { logger } from 'src/lib/logger'
-
 import { isStr } from 'src/util/asserters'
 
 /**
- * Read a file at `path`, converting the results to a `string`.
+ * @throws
+ *  * 'file-path' - When `path` is not a string
+ *  * 'file-read' - When reading the file at `path` and converting it to a `string` fails.
  */
 export const readFile = (path: string) => {
   if (!isStr(path)) {
-    throw new Error('Invalid file path.')
+    throw new Error('file-path')
   }
-
-  logger.debug({ path }, 'Reading a file from disk.')
 
   let res: string
 
   try {
     res = readFileSync(path).toString()
   } catch (err) {
-    logger.error({ err, path }, 'Error trying to read file.')
-    throw new Error('Error trying to read file.')
+    throw new Error('file-read')
   }
 
   return res
