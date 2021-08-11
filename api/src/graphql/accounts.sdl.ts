@@ -6,13 +6,14 @@ export const schema = gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     lastLoginAt: DateTime!
-    organizationId: String
+    organizationId: ID
     organization: Organization
+    roles: [Role]!
   }
 
   type Query {
     account(id: ID!): Account!
-    accounts: [Account!]!
+    accounts: [Account]!
   }
 
   type Mutation {
