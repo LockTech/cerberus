@@ -1,7 +1,4 @@
-import { ValidationError } from '@redwoodjs/api'
 import CrossFetch from 'cross-fetch'
-
-import { logger } from 'src/lib/logger'
 
 import { isDefined } from 'src/util/asserters'
 
@@ -17,24 +14,21 @@ enum FetchMethods {
   // PATCH = 'PATCH',
 }
 
+export type Response<T> = {
+  ok: boolean
+  res: T
+  status: number
+  statusText: string
+}
+
 type UnknownHeaders = Record<string, unknown>
 type UnknownBody = unknown
 
 class fetch {
   /**
-   * A wrapper around `cross-fetch` which provides a simplified and more declarative interface for making requests.
-   *
-   * The request will be sent with the header `Content-Type` set to `'application/json'`.
-   *
-   * For the response, `Accepts` will be set to `'application/json'`.
-   *
-   * The method will automatically apply JSON transformations to the `body` of the request and response.
-   *
-   * A `generic` can be provided to offer better TypeScript support.
-   *
-   * @param url The resource to issue the request against
-   * @param method The HTTP method defining the action to be performed
-   * @param body An `unknown` object to be used as the body of the request.
+   * @param url
+   * @param method
+   * @param body The body of the request, given as a JS object or array.
    * @returns The `Response` given by the resource, typed according to the provided `generic`.
    * @throws
    *  * 'fetch-error' - If `response.status` is out of the success range (200).
@@ -45,14 +39,6 @@ class fetch {
     body: UnknownBody,
     headers?: UnknownHeaders
   ) {
-    // Setup logger
-    //
-    const fetchLogger = logger.child({ url, method, body, headers })
-
-    fetchLogger.trace('Network operation invoked.')
-
-    // Perform network operation
-    //
     const netRes = await CrossFetch(url, {
       method,
       body: isDefined(body) ? JSON.stringify(body) : null,
@@ -63,24 +49,12 @@ class fetch {
         ...headers,
       },
     })
-    const status = netRes.status
 
-    if (status < 200 || status >= 300) {
-      const { bodyUsed, json, statusText } = netRes
+    const { bodyUsed, json, ok, status, statusText } = netRes
 
-      const res = (bodyUsed && (await json())) || {}
+    const res = (bodyUsed && (await json())) || {}
 
-      fetchLogger.error({ res, status, statusText }, 'Network operation error.')
-      throw new ValidationError('fetch-error')
-    }
-
-    // Response
-    //
-    const res = netRes.bodyUsed && (await netRes.json())
-
-    fetchLogger.info({ res, status }, 'Network operation successful')
-
-    return res as T
+    return { ok, res, status, statusText } as Response<T>
   }
 
   static GET = async <T>(url: string, headers?: UnknownHeaders) =>
