@@ -2,6 +2,7 @@ import type { Permission } from '@prisma/client'
 import { UserInputError } from '@redwoodjs/api'
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
+import { PermissionUndefinedTuple } from 'src/constants/permission'
 import type { PermissionTuple } from 'src/constants/permission'
 
 import { db } from 'src/lib/db'
@@ -23,7 +24,7 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateAuth)
   rules.add([valGetPermissionId, valGetPermissionTuple], { only: ['permission'] })
 }
-/* eslint-disable prettier/prettier */
+/* eslint-enable prettier/prettier */
 
 /**
  * @throws
@@ -56,7 +57,15 @@ export interface PermissionArgs {
  * @throws
  *  * 'permission-get' - When an error occurs getting the permission from the DB.
  */
-export const permission = async ({ id, tuple: { application, namespace, object, relation } }: PermissionArgs) => {
+export const permission = async ({
+  id,
+  tuple: {
+    application,
+    namespace,
+    object,
+    relation,
+  } = PermissionUndefinedTuple,
+}: PermissionArgs) => {
   let res: Permission
 
   try {
@@ -67,7 +76,7 @@ export const permission = async ({ id, tuple: { application, namespace, object, 
         namespace,
         object,
         relation,
-      }
+      },
     })
   } catch (err) {
     logger.error({ err }, 'Prisma error getting permission.')
