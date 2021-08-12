@@ -1,5 +1,7 @@
 import { ValidationError, UserInputError } from '@redwoodjs/graphql-server'
 
+import { SignupRes, SignupInviteRes } from 'src/constants/signup'
+
 import { sendSignupEmail } from 'src/helpers/email'
 
 import { db } from 'src/lib/db'
@@ -19,11 +21,6 @@ import {
 } from 'src/validators/account'
 
 // ==
-const InviteRes = false
-const SignupRes = false
-//
-
-// ==
 interface HandleInvitationOptions {
   code: string
   email: string
@@ -36,14 +33,15 @@ interface HandleInvitationOptions {
  *  * 'invite-code-invalid' - When the invitation code given is invalid.
  *  * 'invite-create-account' - When an errror occurs creating the account in the DB.
  */
-const handleInvitation = async ({
+export const handleInvitation = async ({
   code,
   email,
   name,
   hashedPassword,
   salt,
 }: HandleInvitationOptions) => {
-  if (!(await confirmInvitation({ code, email }))) {
+  const isValid = await confirmInvitation({ code, email })
+  if (!isValid) {
     throw new UserInputError('invite-code-invalid')
   }
 
@@ -63,7 +61,7 @@ const handleInvitation = async ({
     throw new UserInputError('invite-create-account')
   }
 
-  return InviteRes
+  return SignupInviteRes
 }
 //
 
@@ -80,7 +78,7 @@ interface HandleSignupOptions {
  *  * 'signup-email-send' - When an error occurs sending the confirmation email.
  *  * 'signup-create-account' - When an error occurs creating the account in the DB.
  */
-const handleSignup = async ({
+export const handleSignup = async ({
   email,
   name,
   hashedPassword,
@@ -142,26 +140,12 @@ export const signupHandler = async ({
   userAttributes: { code, name },
   ...rest
 }: SignupHandlerOptions) => {
-  logger.debug({ email, code, name, ...rest }, 'Handling signup.')
-
   validateAccountEmail('signupHandler', { email })
   validateAccountName('signupHandler', { name })
 
-  // Invite
-  if (isStr(code)) {
-    logger.info('Attempting to accept an invitation.')
-    return await handleInvitation({ code, email, name, ...rest })
-  }
-
-  // Signup
-  else if (isUndefined(code)) {
-    logger.info('Attempting to signup a new account.')
-    return await handleSignup({ email, name, ...rest })
-  }
-
-  // Error
-  else {
-    logger.warn('Recieved a non-string value for signup "code".')
-    throw new ValidationError('signup-invalid-code')
-  }
+  /* eslint-disable prettier/prettier */
+  if (isStr(code)) return await handleInvitation({ code, email, name, ...rest })
+  else if (isUndefined(code)) return await handleSignup({ email, name, ...rest })
+  else throw new ValidationError('signup-invalid-code')
+  /* eslint-enable prettier/prettier */
 }
