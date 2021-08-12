@@ -3,7 +3,7 @@ export const schema = gql`
     id: ID!
     code: String!
     email: String!
-    organizationId: String
+    organizationId: ID
     created_at: DateTime!
   }
 

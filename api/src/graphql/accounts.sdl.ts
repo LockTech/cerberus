@@ -8,16 +8,16 @@ export const schema = gql`
     lastLoginAt: DateTime!
     organizationId: ID
     organization: Organization
-    roles: [Role]!
+    roles: [Role!]!
   }
 
   type Query {
     account(id: ID!): Account!
-    accounts: [Account]!
+    accounts: [Account!]!
   }
 
   type Mutation {
-    inviteAccount(email: String!): Boolean
+    inviteAccount(email: String!): Boolean!
     updateAccount(id: ID!, email: String, name: String): Account!
   }
 `
