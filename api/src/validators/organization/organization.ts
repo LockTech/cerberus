@@ -19,7 +19,7 @@ export const validateOrganizationName = (s: string, { name }: NameInput) => {
   if (name.length <= 0 || name.length > OrganizationMaxNameLength)
     throw new ValidationError('organization-name-length')
 
-  // perform db check for name uniqueness
+  // perform db check for name uniqueness case insensitive
 }
 
 /**
