@@ -74,7 +74,6 @@ interface HandleSignupOptions {
 }
 /**
  * @throws
- *  * 'signup-create-confirm' - When an error occurs creating the signup confirmation.
  *  * 'signup-email-send' - When an error occurs sending the confirmation email.
  *  * 'signup-create-account' - When an error occurs creating the account in the DB.
  */

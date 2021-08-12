@@ -1,3 +1,4 @@
+import { SignupInviteRes, SignupRes } from 'src/constants/signup'
 import { sendSignupEmail } from 'src/helpers/email'
 
 import { db } from 'src/lib/db'
@@ -66,6 +67,15 @@ describe('signup helper', () => {
       expect(res.email).toBe(email)
       expect(res.name).toBe(name)
     })
+
+    it(`returns with the value of ${SignupInviteRes}`, async () => {
+      // @ts-expect-error jest types
+      confirmInvitation.mockResolvedValue(true)
+
+      const res = await handleInvitation(TestInput)
+
+      expect(res).toBe(SignupInviteRes)
+    })
   })
 
   describe('handleSignup', () => {
@@ -125,9 +135,21 @@ describe('signup helper', () => {
       expect(dbRes.email).toBe(email)
       expect(dbRes.name).toBe(name)
     })
-  })
 
-  describe('signupHandler', () => {
-    it('', () => {})
+    it(`returns with the value of ${SignupRes}`, async () => {
+      // @ts-expect-error jest types
+      createSignupConfirm.mockResolvedValue(true)
+      // @ts-expect-error jest types
+      sendSignupEmail.mockResolvedValue(true)
+
+      const { code } = TestInput
+
+      // @ts-expect-error jest types
+      randomStr.mockReturnValue(code)
+
+      const res = await handleSignup(TestInput)
+
+      expect(res).toBe(SignupRes)
+    })
   })
 })
