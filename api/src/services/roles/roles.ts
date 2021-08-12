@@ -198,7 +198,10 @@ export const deleteAllRoles = async () => {
     roles.forEach((role) => {
       const id = role.id
       role.permissions.forEach(async (perm) => {
-        await deleteTuple({ ...perm, subject: KetoBuildPermissionSubjectSet(id) })
+        await deleteTuple({
+          ...perm,
+          subject: KetoBuildPermissionSubjectSet(id),
+        })
       })
       role.accounts.forEach(async (account) => {
         await deleteTuple(KetoBuildAccountTuple(account.id, id))
