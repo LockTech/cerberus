@@ -115,3 +115,22 @@ export const createOrganization = async ({
 
   return res.organization
 }
+
+/**
+ * @throws
+ *  * 'organization-get' - When an error occurs retrieving the organization from the database.
+ */
+export const organization = async () => {
+  const id = getContextUser().organizationId
+
+  let res: Organization
+
+  try {
+    res = await db.organization.findUnique({ where: { id } })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error getting organization.')
+    throw new UserInputError('organization-get')
+  }
+
+  return res
+}

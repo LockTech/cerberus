@@ -1,8 +1,11 @@
-import type { Account } from '@prisma/client'
+import type { Account, Organization } from '@prisma/client'
 
 import { db } from 'src/lib/db'
 
-import { createOrganization } from './organizations'
+import {
+  createOrganization,
+  organization as getOrganization,
+} from './organizations'
 import { OrganizationStandard } from './organizations.scenarios'
 
 describe('organizations service', () => {
@@ -25,5 +28,24 @@ describe('organizations service', () => {
         expect(dbRes.name).toBe(name)
       }
     )
+  })
+
+  describe('read', () => {
+    describe('organization', () => {
+      scenario(
+        "retrieves the currentUser's organization",
+        async (scenario: OrganizationStandard) => {
+          const account = scenario.account.two as Account
+          const accountId = account.id
+          mockCurrentUser({ id: accountId })
+
+          const org = scenario.organization.one as Organization
+
+          const res = await getOrganization()
+
+          expect(res).toEqual(expect.objectContaining(org))
+        }
+      )
+    })
   })
 })
