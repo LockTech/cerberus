@@ -29,7 +29,7 @@ const valUpdateEmail = (s: string, { email }) => email && validateAccountEmail(s
 const valUpdateName = (s: string, { name }) => name && validateAccountName(s, { name })
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { only: ['checkAccountExist', 'deleteAllAccounts'] })
+  rules.add(reject, { only: ['deleteAllAccounts'] })
   rules.add(validateAuth)
   rules.add(validateAccountEmail, { only: ['inviteAccount'] })
   rules.add(validateAccountID, { only: ['account', 'updateAccount', 'deleteAccount'] })
@@ -132,21 +132,6 @@ export const accounts = async () => {
   res = res.map((acc) => removeAuthFields(acc))
 
   return res
-}
-
-interface CheckAccountExistArgs {
-  id?: string
-  email?: string
-  organizationId?: string
-}
-export const checkAccountExist = async ({
-  email,
-  id,
-  organizationId,
-}: CheckAccountExistArgs) => {
-  const res = await db.account.count({ where: { email, id, organizationId } })
-
-  return res >= 1
 }
 
 export interface UpdateAccountArgs {
