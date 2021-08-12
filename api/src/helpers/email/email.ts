@@ -1,21 +1,16 @@
-import { resolve } from 'path'
+import {
+  EmailFrom as from,
+  EmailInviteFilePath,
+  EmailInviteSubject,
+  EmailSignupFilePath,
+  EmailSignupSubject,
+} from 'src/constants/email'
 
-import { logger } from 'src/lib/logger'
 import { transporter } from 'src/lib/smtp'
 import { template } from 'src/lib/template'
 import type { TemplateData } from 'src/lib/template'
 
 import { readFile } from 'src/util/readFile'
-
-const from = process.env.EMAIL_FROM
-
-const EmailDirectory = resolve(__dirname, '../../../emails')
-
-const EmailInviteFilePath = `${EmailDirectory}/invite.html`
-const EmailInviteSubject = process.env.EMAIL_INVITE_SUBJECT
-
-const EmailSignupFilePath = `${EmailDirectory}/signup.html`
-const EmailSignupSubject = process.env.EMAIL_SIGNUP_SUBJECT
 
 // ==
 export interface SendMailOptions {
@@ -30,16 +25,13 @@ export interface SendMailOptions {
  *
  * `body` should be an already templated string; **any user generated values have already been escaped**.
  */
-export const sendMail = async ({ body, subject, to }: SendMailOptions) => {
-  logger.debug({ subject, to }, 'Sending an email.')
-
+export const sendMail = async ({ body, subject, to }: SendMailOptions) =>
   await transporter.sendMail({
     from,
     html: body,
     subject,
     to,
   })
-}
 //
 
 // ==
@@ -86,14 +78,13 @@ interface SendInviteEmailOptions {
 export const sendInviteEmail = async ({
   data,
   email,
-}: SendInviteEmailOptions) => {
+}: SendInviteEmailOptions) =>
   await templateFileSendMail({
     data,
     path: EmailInviteFilePath,
     subject: EmailInviteSubject,
     to: email,
   })
-}
 //
 
 // ==
@@ -112,12 +103,11 @@ interface SendSignupEmailOptions {
 export const sendSignupEmail = async ({
   data,
   email,
-}: SendSignupEmailOptions) => {
+}: SendSignupEmailOptions) =>
   await templateFileSendMail({
     data,
     path: EmailSignupFilePath,
     subject: EmailSignupSubject,
     to: email,
   })
-}
 //
