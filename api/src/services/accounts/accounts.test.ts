@@ -1,4 +1,6 @@
-import type { Account, Organization } from '@prisma/client'
+import type { Account, Organization, Role } from '@prisma/client'
+
+import { KetoBuildAccountTuple } from 'src/constants/keto'
 
 import { db } from 'src/lib/db'
 
@@ -16,6 +18,9 @@ import { sendInviteEmail as send } from 'src/helpers/email'
 jest.mock('../../helpers/email/email')
 // @ts-expect-error nope
 const sendInviteEmail = <jest.Mock<typeof send>>send
+
+import { deleteTuple } from 'src/helpers/keto'
+jest.mock('../../helpers/keto/keto')
 
 //
 
@@ -264,6 +269,59 @@ describe('account service', () => {
 
         expect(res.id).toBe(id)
         expect(dbRes).toBeNull()
+      }
+    )
+
+    scenario(
+      "removes the account's connection to its roles",
+      async (scenario: AccountStandard) => {
+        const invoker = scenario.account.two as Account
+        const invokerId = invoker.id
+        mockCurrentUser({ id: invokerId })
+
+        const acc = scenario.account.one as Account
+        const id = acc.id
+
+        const role = scenario.role.one as Role
+        const roleId = role.id
+
+        // @ts-expect-error jest typings
+        deleteTuple.mockResolvedValue(null)
+
+        await deleteAccount({ id })
+
+        const roleRes = await db.role.findUnique({ where: { id: roleId } })
+        const roleNullRes = await db.role.findFirst({
+          where: { id: roleId, accounts: { some: { id } } },
+        })
+
+        expect(roleRes).toEqual(expect.objectContaining(role))
+        expect(roleNullRes).toBeNull()
+      }
+    )
+
+    scenario(
+      "attempts to delete the account's role relation tuple",
+      async (scenario: AccountStandard) => {
+        const invoker = scenario.account.two as Account
+        const invokerId = invoker.id
+        mockCurrentUser({ id: invokerId })
+
+        const acc = scenario.account.one as Account
+        const id = acc.id
+
+        const role = scenario.role.one as Role
+        const roleId = role.id
+
+        // @ts-expect-error jest typings
+        deleteTuple.mockResolvedValue(null)
+
+        await deleteAccount({ id })
+
+        expect(deleteTuple).toHaveBeenCalledTimes(1)
+        expect(deleteTuple).toHaveBeenCalledWith(
+          KetoBuildAccountTuple(id, roleId)
+        )
       }
     )
   })

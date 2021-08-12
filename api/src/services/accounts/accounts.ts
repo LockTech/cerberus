@@ -2,7 +2,10 @@ import type { Account } from '@prisma/client'
 import { UserInputError } from '@redwoodjs/graphql-server'
 import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 
-import { sendInviteEmail } from 'src/helpers/email/email'
+import { KetoBuildAccountTuple } from 'src/constants/keto'
+
+import { sendInviteEmail } from 'src/helpers/email'
+import { deleteTuple } from 'src/helpers/keto'
 
 import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
@@ -26,7 +29,7 @@ const valUpdateEmail = (s: string, { email }) => email && validateAccountEmail(s
 const valUpdateName = (s: string, { name }) => name && validateAccountName(s, { name })
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { only: ['checkAccountExist'] })
+  rules.add(reject, { only: ['checkAccountExist', 'deleteAllAccounts'] })
   rules.add(validateAuth)
   rules.add(validateAccountEmail, { only: ['inviteAccount'] })
   rules.add(validateAccountID, { only: ['account', 'updateAccount', 'deleteAccount'] })
@@ -188,9 +191,18 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
     throw new UserInputError('account-delete-self')
   }
 
-  let res: Account
+  const account = await db.account.findUnique({
+    select: {
+      roles: true,
+    },
+    where: { id },
+  })
 
-  // remove account roles
+  account.roles.forEach(
+    async (role) => await deleteTuple(KetoBuildAccountTuple(id, role.id))
+  )
+
+  let res: Account
 
   try {
     res = await db.account.delete({
@@ -204,4 +216,31 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
   res = removeAuthFields(res)
 
   return res
+}
+
+export const deleteAllAccounts = async () => {
+  const organizationId = getContextUser().organizationId
+
+  const accounts = await db.account.findMany({
+    select: {
+      id: true,
+      roles: true,
+    },
+    where: { organizationId },
+  })
+
+  accounts.forEach(async (account) =>
+    account.roles.forEach(async (role) =>
+      deleteTuple(KetoBuildAccountTuple(account.id, role.id))
+    )
+  )
+
+  try {
+    await db.account.deleteMany({ where: { organizationId } })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error deleting all accounts.')
+    throw new UserInputError('delete-users')
+  }
+
+  return true
 }

@@ -13,15 +13,32 @@ export const standard = defineScenario({
       name: 'Abandon LLC.',
     },
   },
+  // @ts-expect-error only need 1 role
+  role: {
+    one: {
+      id: '05ed7240-b777-41a0-8eb9-f24207f7be13',
+      name: 'Administrator',
+      organizationId: '0251d504-347b-4880-9783-db6d199e02ee',
+    },
+  },
   account: {
     one: {
       email: 'foo.bar@acme.corp',
       name: 'Foo Bar',
       id: '00fa2b1a-40d1-4c32-be0c-516d86872970',
-      organizationId: '0251d504-347b-4880-9783-db6d199e02ee',
+      organization: {
+        connect: {
+          id: '0251d504-347b-4880-9783-db6d199e02ee',
+        },
+      },
       hashedPassword: '',
       salt: '',
-      verified: false,
+      verified: true,
+      roles: {
+        connect: {
+          id: '05ed7240-b777-41a0-8eb9-f24207f7be13',
+        },
+      },
     },
     two: {
       email: 'foo.baz@acme.corp',
