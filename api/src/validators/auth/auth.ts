@@ -6,7 +6,7 @@ import { CerberusAdminTuple } from 'src/constants/permission'
 
 // import { checkTuple } from 'src/helpers/keto'
 
-import { isStr } from 'src/util/asserters'
+import { isBool, isStr } from 'src/util/asserters'
 
 /**
  * @throws
@@ -67,6 +67,22 @@ export const validateAuthOrganization = (s: string) => {
 
 /**
  * @throws
+ *  * 'auth-invalid' - When `context.currentUser.verified` is not a boolean
+ *  * 'auth-verified' - When `context.currentUser.verified` is `false` or `undefined`
+ */
+export const validateAuthVerified = (s: string) => {
+  validateCurrentUser(s)
+  const currentUser = context.currentUser
+
+  const verified = currentUser.verified
+
+  if (!isBool(verified)) throw new ValidationError('auth-invalid')
+
+  if (!verified) throw new ValidationError('auth-verified')
+}
+
+/**
+ * @throws
  *  * 'authorization' - When the Keto `check` fails.
  */
 export const validateIsAdmin = (_s: string) => {
@@ -94,6 +110,7 @@ export const validateIsAdmin = (_s: string) => {
  * * `validateIsAdmin`
  */
 export const validateAuth = (s: string) => {
+  validateAuthVerified(s)
   validateAuthId(s)
   validateAuthName(s)
   validateAuthOrganization(s)

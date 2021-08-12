@@ -7,6 +7,7 @@ import {
   validateAuthId,
   validateAuthName,
   validateAuthOrganization,
+  validateAuthVerified,
 } from './auth'
 
 const AuthUndefinedError = {
@@ -31,6 +32,15 @@ const AuthNameLenError = {
 const AuthOrgInvalidError = {
   name: 'ValidationError',
   message: 'auth-organization-invalid',
+}
+//
+const AuthVerifiedInvalidError = {
+  name: 'ValidationError',
+  message: 'auth-invalid',
+}
+const AuthVerifiedError = {
+  name: 'ValidationError',
+  message: 'auth-verified',
 }
 
 const Service = 'Foo'
@@ -143,6 +153,43 @@ describe('auth validator', () => {
       //
       mockCurrentUser({ organizationId: '2342332424' })
       expect(() => validateAuthOrganization(Service)).toThrow(AuthOrgInvalidError)
+      //
+    })
+  })
+  describe('verified', () => {
+    it('throws when `context.currentUser.verified` is undefined', () => {
+      mockCurrentUser({ verified: undefined })
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      //
+      mockCurrentUser({ verified: null })
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      //
+    })
+    it('throws when `context.currentUser.verified` is not a "boolean"', () => {
+      mockCurrentUser({ verified: 3 })
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      //
+      mockCurrentUser({ verified: '23' })
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      //
+      mockCurrentUser({ verified: () => 4 })
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      //
+      mockCurrentUser({ verified: () => '4' })
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      //
+      mockCurrentUser({ verified: () => true })
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      //
+    })
+    it('throws when `context.currentUser.verified` is "false"', () => {
+      mockCurrentUser({ verified: false })
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedError)
+      //
+    })
+    it('DOES NOT throw when `context.currentUser.verified` is "true"', () => {
+      mockCurrentUser({ verified: true })
+      expect(() => validateAuthVerified(Service)).not.toThrow(AuthVerifiedError)
       //
     })
   })
