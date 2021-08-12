@@ -1,4 +1,4 @@
-import type { Account, Organization } from '@prisma/client'
+import type { Account, Organization, Permission, Role } from '@prisma/client'
 import {
   BeforeResolverSpecType,
   setContext,
@@ -70,10 +70,34 @@ export const createOrganization = async ({
     throw new UserInputError('organization-create')
   }
 
-  let role = await createRole({ name: adminRoleName })
-  const roleId = role.id
+  const organizationId = res.organization.id
+  let role: Role
 
-  const permission = await getPermission({ tuple: CerberusAdminTuple })
+  try {
+    role = await createRole({ name: adminRoleName })
+  } catch (err) {
+    logger.error({ err }, 'Error creating administrator role.')
+
+    await db.organization.delete({ where: { id: organizationId } })
+
+    throw err
+  }
+
+  const roleId = role.id
+  let permission: Permission
+
+  try {
+    permission = await getPermission({ tuple: CerberusAdminTuple })
+  } catch (err) {
+    logger.error({ err }, 'Error creating administrator role.')
+
+    await deleteRole({ id: roleId })
+
+    await db.organization.delete({ where: { id: organizationId } })
+
+    throw err
+  }
+
   const permissionId = permission.id
 
   // perm->role
@@ -82,14 +106,9 @@ export const createOrganization = async ({
   } catch (err) {
     logger.error({ err }, 'Error adding admin permission to role.')
 
-    await db.account.update({
-      data: {
-        organization: {
-          delete: true,
-        },
-      },
-      where: { id: accountId },
-    })
+    await deleteRole({ id: roleId })
+
+    await db.organization.delete({ where: { id: organizationId } })
 
     throw err
   }
@@ -97,18 +116,12 @@ export const createOrganization = async ({
   try {
     role = await addRoleToAccount({ accountId, roleId })
   } catch (err) {
-    logger.error({ err }, 'Error adding admin role to account.')
+    logger.error({ err, organizationId }, 'Error adding admin role to account.')
 
     await deleteRole({ id: roleId })
 
-    await db.account.update({
-      data: {
-        organization: {
-          delete: true,
-        },
-      },
-      where: { id: accountId },
-    })
+    await db.organization.delete({ where: { id: organizationId } })
+    logger.error({ err, organizationId }, 'tried to delete org')
 
     throw err
   }
