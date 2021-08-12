@@ -4,21 +4,25 @@ import { CerberusAdminTuple } from 'src/constants/permission'
 
 import { db } from 'src/lib/db'
 
+import { deleteAllAccounts } from 'src/services/accounts'
 import {
   addPermToRole,
   addRoleToAccount,
   createRole,
   deleteRole,
+  deleteAllRoles,
 } from 'src/services/roles'
 import { permission as getPermission } from 'src/services/permissions'
 
 import {
   createOrganization,
+  deleteOrganization,
   organization as getOrganization,
   updateOrganization,
 } from './organizations'
 import { OrganizationStandard } from './organizations.scenarios'
 
+jest.mock('../accounts/accounts')
 jest.mock('../roles/roles')
 jest.mock('../permissions/permissions')
 
@@ -393,6 +397,76 @@ describe('organizations service', () => {
 
         expect(res.id).not.toBe(id)
         expect(res.id).toBe(dbRes.id)
+      }
+    )
+  })
+
+  describe('delete', () => {
+    scenario(
+      'throws when an errors occurs deleting all "accounts"',
+      async (scenario: OrganizationStandard) => {
+        const acc = scenario.account.two as Account
+        const organizationId = acc.organizationId
+        mockCurrentUser({ organizationId })
+
+        // @ts-expect-error jest types
+        deleteAllAccounts.mockRejectedValue(new Error('nope'))
+
+        expect(deleteOrganization()).rejects.toThrow()
+      }
+    )
+
+    scenario(
+      'throws when an errors occurs deleting all "roles"',
+      async (scenario: OrganizationStandard) => {
+        const acc = scenario.account.two as Account
+        const organizationId = acc.organizationId
+        mockCurrentUser({ organizationId })
+
+        // @ts-expect-error jest types
+        deleteAllAccounts.mockResolvedValue(true)
+        // @ts-expect-error jest types
+        deleteAllRoles.mockRejectedValue(new Error('nope'))
+
+        expect(deleteOrganization()).rejects.toThrow()
+      }
+    )
+
+    scenario(
+      'rethrows the error ecnountered during "account" or "role" deletion',
+      async (scenario: OrganizationStandard) => {
+        const acc = scenario.account.two as Account
+        const organizationId = acc.organizationId
+        mockCurrentUser({ organizationId })
+
+        // @ts-expect-error jest types
+        deleteAllAccounts.mockResolvedValue(true)
+        // @ts-expect-error jest types
+        deleteAllRoles.mockRejectedValue(new Error('a failure'))
+
+        expect(deleteOrganization()).rejects.toThrow(new Error('a failure'))
+      }
+    )
+
+    scenario(
+      'deletes the organization of currentUser from the database',
+      async (scenario: OrganizationStandard) => {
+        const acc = scenario.account.two as Account
+        const organizationId = acc.organizationId
+        mockCurrentUser({ organizationId })
+
+        // @ts-expect-error jest types
+        deleteAllAccounts.mockResolvedValue(true)
+        // @ts-expect-error jest types
+        deleteAllRoles.mockResolvedValue(true)
+
+        await deleteOrganization()
+
+        const res = await db.organization.findUnique({
+          where: { id: organizationId },
+        })
+
+        expect(res).toBeNull()
       }
     )
   })
