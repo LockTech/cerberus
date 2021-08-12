@@ -15,6 +15,7 @@ import { permission as getPermission } from 'src/services/permissions'
 import {
   createOrganization,
   organization as getOrganization,
+  updateOrganization,
 } from './organizations'
 import { OrganizationStandard } from './organizations.scenarios'
 
@@ -328,5 +329,71 @@ describe('organizations service', () => {
         }
       )
     })
+  })
+
+  describe('update', () => {
+    scenario(
+      'updates the currentUser\'s organization\'s "name"',
+      async (scenario: OrganizationStandard) => {
+        const acc = scenario.account.two as Account
+        const organizationId = acc.organizationId
+
+        mockCurrentUser({ organizationId })
+
+        const name = 'Lorem Industries'
+
+        const res = await updateOrganization({ name })
+
+        const dbRes = await db.organization.findUnique({
+          where: { id: organizationId },
+        })
+
+        expect(res.name).toBe(name)
+        expect(dbRes.name).toBe(name)
+      }
+    )
+
+    scenario(
+      'updates the "updatedAt" field after updating the DB',
+      async (scenario: OrganizationStandard) => {
+        const acc = scenario.account.two as Account
+        const organizationId = acc.organizationId
+
+        mockCurrentUser({ organizationId })
+
+        const name = 'Lorem Industries'
+
+        const dbRes = await db.organization.findUnique({
+          where: { id: organizationId },
+        })
+
+        const res = await updateOrganization({ name })
+
+        expect(res.updatedAt).not.toBe(dbRes.updatedAt)
+      }
+    )
+
+    scenario(
+      'only updates the organization\'s "name"',
+      async (scenario: OrganizationStandard) => {
+        const acc = scenario.account.two as Account
+        const organizationId = acc.organizationId
+
+        mockCurrentUser({ organizationId })
+
+        const name = 'Lorem Industries'
+        const id = '111'
+
+        const dbRes = await db.organization.findUnique({
+          where: { id: organizationId },
+        })
+
+        // @ts-expect-error checking failing functionality
+        const res = await updateOrganization({ id, name })
+
+        expect(res.id).not.toBe(id)
+        expect(res.id).toBe(dbRes.id)
+      }
+    )
   })
 })

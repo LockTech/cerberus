@@ -11,15 +11,21 @@ import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
+import { deleteAllAccounts } from 'src/services/accounts'
 import { permission as getPermission } from 'src/services/permissions'
 import {
   addPermToRole,
   addRoleToAccount,
   createRole,
+  deleteAllRoles,
   deleteRole,
 } from 'src/services/roles'
 
-import { validateAuth, validateAuthId } from 'src/validators/auth'
+import {
+  validateAuth,
+  validateAuthId,
+  validateAuthVerified,
+} from 'src/validators/auth'
 import { validateOrganizationName } from 'src/validators/organization/organization'
 import { validateRoleName } from 'src/validators/role'
 
@@ -29,7 +35,7 @@ const valUpdateRoleName = (s: string, { name }) => name && validateOrganizationN
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateAuth, { except: ['createOrganization'] })
-  rules.add([validateAuthId, validateOrganizationName, valCreateRoleName], { only: ['createOrganization'] })
+  rules.add([validateAuthVerified, validateAuthId, validateOrganizationName, valCreateRoleName], { only: ['createOrganization'] })
   rules.add([valUpdateRoleName], { only: ['updateOrganization'] })
 }
 /* eslint-enable prettier/prettier */
@@ -143,6 +149,54 @@ export const organization = async () => {
   } catch (err) {
     logger.error({ err }, 'Prisma error getting organization.')
     throw new UserInputError('organization-get')
+  }
+
+  return res
+}
+
+export interface UpdateOrganizationArgs {
+  name: string
+}
+/**
+ * @throws
+ *  * 'organization-update' - When an error occurs updating the organization in the DB.
+ */
+export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
+  const id = getContextUser().organizationId
+
+  let res: Organization
+
+  try {
+    res = await db.organization.update({
+      data: { name },
+      where: { id },
+    })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error updating organization.')
+    throw new UserInputError('organization-update')
+  }
+
+  return res
+}
+
+export const deleteOrganization = async () => {
+  // Accounts & Roles
+  try {
+    await deleteAllAccounts()
+    await deleteAllRoles()
+  } catch (err) {
+    logger.error({ err }, 'Error deleting organization accounts or roles.')
+    throw err
+  }
+
+  const id = getContextUser().organizationId
+  let res: Organization
+
+  try {
+    res = await db.organization.delete({ where: { id } })
+  } catch (err) {
+    logger.error({ err }, 'Prisma error deleting organization.')
+    throw new UserInputError('organization-delete')
   }
 
   return res
