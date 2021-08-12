@@ -11,5 +11,5 @@ export const KetoBuildAccountTuple = (accountId: string, roleId: string) => ({
   subject: accountId,
 })
 
-export const KetoBuildPermissionTuple = (roleId: string) =>
+export const KetoBuildPermissionSubjectSet = (roleId: string) =>
   `cerberus_roles:${roleId}#`

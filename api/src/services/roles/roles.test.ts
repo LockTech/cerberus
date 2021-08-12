@@ -1,14 +1,16 @@
 import { validate as validateUUID } from 'uuid'
 import type { Account, Organization, Permission, Role } from '@prisma/client'
 
+import {
+  KetoBuildAccountTuple,
+  KetoBuildPermissionSubjectSet,
+} from 'src/constants/keto'
+
 import { db } from 'src/lib/db'
 
 import { deleteTuple, writeTuple } from 'src/helpers/keto'
 
 import {
-  buildPermissionSubjectSet,
-  buildAccountRoleTuple,
-  //
   createRole,
   role as getRole,
   roles,
@@ -305,7 +307,7 @@ describe('role service', () => {
 
         const acc = scenario.account.one as Account
         const accId = acc.id
-        const accTuple = buildAccountRoleTuple(accId, id)
+        const accTuple = KetoBuildAccountTuple(accId, id)
 
         const perm = scenario.permission.one as Permission
         const { namespace, object, relation } = perm
@@ -313,7 +315,7 @@ describe('role service', () => {
           namespace,
           object,
           relation,
-          subject: buildPermissionSubjectSet(id),
+          subject: KetoBuildPermissionSubjectSet(id),
         }
 
         mockCurrentUser({ organizationId })
@@ -379,7 +381,7 @@ describe('role service', () => {
             namespace,
             object,
             relation,
-            subject: buildPermissionSubjectSet(roleId),
+            subject: KetoBuildPermissionSubjectSet(roleId),
           }
 
           expect(deleteTuple).toHaveBeenCalledWith(tuple)
@@ -431,7 +433,7 @@ describe('role service', () => {
           await deleteAllRoles()
 
           expect(deleteTuple).toHaveBeenCalledWith(
-            buildAccountRoleTuple(accountId, roleId)
+            KetoBuildAccountTuple(accountId, roleId)
           )
         }
       )
@@ -481,31 +483,31 @@ describe('role service', () => {
 
           expect(deleteTuple).toHaveBeenNthCalledWith(1, {
             ...tuple1,
-            subject: buildPermissionSubjectSet(role1Id),
+            subject: KetoBuildPermissionSubjectSet(role1Id),
           })
           expect(deleteTuple).toHaveBeenNthCalledWith(2, {
             ...tuple2,
-            subject: buildPermissionSubjectSet(role1Id),
+            subject: KetoBuildPermissionSubjectSet(role1Id),
           })
           expect(deleteTuple).toHaveBeenNthCalledWith(3, {
             ...tuple3,
-            subject: buildPermissionSubjectSet(role1Id),
+            subject: KetoBuildPermissionSubjectSet(role1Id),
           })
           expect(deleteTuple).toHaveBeenNthCalledWith(3, {
             ...tuple3,
-            subject: buildPermissionSubjectSet(role1Id),
+            subject: KetoBuildPermissionSubjectSet(role1Id),
           })
           expect(deleteTuple).toHaveBeenNthCalledWith(
             4,
-            buildAccountRoleTuple(acc1Id, role1Id)
+            KetoBuildAccountTuple(acc1Id, role1Id)
           )
           expect(deleteTuple).toHaveBeenNthCalledWith(5, {
             ...tuple3,
-            subject: buildPermissionSubjectSet(role2Id),
+            subject: KetoBuildPermissionSubjectSet(role2Id),
           })
           expect(deleteTuple).toHaveBeenNthCalledWith(
             6,
-            buildAccountRoleTuple(acc2Id, role4Id)
+            KetoBuildAccountTuple(acc2Id, role4Id)
           )
         }
       )
@@ -576,7 +578,7 @@ describe('role service', () => {
 
           expect(writeTuple).toHaveBeenCalledTimes(1)
           expect(writeTuple).toHaveBeenCalledWith(
-            buildAccountRoleTuple(accountId, roleId)
+            KetoBuildAccountTuple(accountId, roleId)
           )
         }
       )
@@ -628,7 +630,7 @@ describe('role service', () => {
 
           expect(deleteTuple).toHaveBeenCalledTimes(1)
           expect(deleteTuple).toHaveBeenCalledWith(
-            buildAccountRoleTuple(accountId, roleId)
+            KetoBuildAccountTuple(accountId, roleId)
           )
         }
       )
@@ -685,7 +687,7 @@ describe('role service', () => {
             namespace,
             object,
             relation,
-            subject: buildPermissionSubjectSet(roleId),
+            subject: KetoBuildPermissionSubjectSet(roleId),
           }
 
           expect(writeTuple).toHaveBeenCalledTimes(1)
@@ -743,7 +745,7 @@ describe('role service', () => {
             namespace,
             object,
             relation,
-            subject: buildPermissionSubjectSet(roleId),
+            subject: KetoBuildPermissionSubjectSet(roleId),
           }
 
           expect(deleteTuple).toHaveBeenCalledTimes(1)
