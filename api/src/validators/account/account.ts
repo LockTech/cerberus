@@ -30,7 +30,7 @@ export const validateAccountEmail = (
   if (email.match(AccountEmailValidRegEx) === null)
     throw new ValidationError('account-email-reserved')
 
-  // perform DB check for email's existing use
+  // perform DB check for email's existing use case insensitive
 }
 
 /**
