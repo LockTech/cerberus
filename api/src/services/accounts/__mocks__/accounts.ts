@@ -1,0 +1,15 @@
+export const inviteAccount = jest.fn()
+export const account = jest.fn()
+export const accounts = jest.fn()
+export const updateAccount = jest.fn()
+export const deleteAccount = jest.fn()
+export const deleteAllAccounts = jest.fn()
+
+beforeEach(() => {
+  inviteAccount.mockClear()
+  account.mockClear()
+  accounts.mockClear()
+  updateAccount.mockClear()
+  deleteAccount.mockClear()
+  deleteAllAccounts.mockClear()
+})
