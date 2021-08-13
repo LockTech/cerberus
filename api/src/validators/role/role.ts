@@ -1,4 +1,4 @@
-import { validate as validateUUID } from 'uuid'
+import { validate as isUUID } from 'uuid'
 import { ValidationError } from '@redwoodjs/api'
 
 import { RoleMaxNameLength } from 'src/constants/role'
@@ -12,8 +12,7 @@ import type { IDInput, NameInput } from 'types/inputs'
  *  * 'role-id-invalid' - When `id` is not a valid UUID.
  */
 export const validateRoleId = (_s: string, { id }: IDInput) => {
-  if (!isStr(id) || !validateUUID(id))
-    throw new ValidationError('role-id-invalid')
+  if (!isUUID(id)) throw new ValidationError('role-id-invalid')
 
   // assert ID belongs to the invoking organization
 }

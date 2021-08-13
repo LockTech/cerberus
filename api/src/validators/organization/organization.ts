@@ -1,4 +1,4 @@
-import { validate as validateUUID } from 'uuid'
+import { validate as isUUID } from 'uuid'
 import { ValidationError } from '@redwoodjs/api'
 
 import { OrganizationMaxNameLength } from 'src/constants/organization'
@@ -28,8 +28,7 @@ export const validateOrganizationName = (s: string, { name }: NameInput) => {
  *  * 'organization-id-exist' - When `id` does not belong to an organization which exist
  */
 export const validateOrganizationId = (s: string, { id }: IDInput) => {
-  if (!isStr(id) || !validateUUID(id))
-    throw new ValidationError('organization-id-invalid')
+  if (!isUUID(id)) throw new ValidationError('organization-id-invalid')
 
   // perform db check that id belongs to an organization
 }

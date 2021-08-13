@@ -1,4 +1,4 @@
-import { validate as validateUUID } from 'uuid'
+import { validate as isUUID } from 'uuid'
 import { AuthenticationError, context, ValidationError } from '@redwoodjs/api'
 
 import { AccountNameMaxLength } from 'src/constants/account'
@@ -28,8 +28,7 @@ export const validateAuthId = (s: string) => {
   const currentUser = context.currentUser
 
   const id = currentUser.id as string
-  if (!isStr(id) || !validateUUID(id))
-    throw new ValidationError('auth-id-invalid')
+  if (!isUUID(id)) throw new ValidationError('auth-id-invalid')
 }
 
 /**
@@ -59,7 +58,7 @@ export const validateAuthOrganization = (s: string) => {
 
   const organizationId = currentUser.organizationId as string
 
-  if (!isStr(organizationId) || !validateUUID(organizationId))
+  if (!isUUID(organizationId))
     throw new ValidationError('auth-organization-invalid')
 
   // Perform DB assertion that organization exist

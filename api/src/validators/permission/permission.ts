@@ -1,9 +1,9 @@
-import { validate as validateUUID } from 'uuid'
+import { validate as isUUID } from 'uuid'
 import { ValidationError } from '@redwoodjs/api'
 
 import type { PermissionTuple } from 'src/constants/permission'
 
-import { isPermissionTuple, isStr } from 'src/util/asserters'
+import { isPermissionTuple } from 'src/util/asserters'
 
 import type { IDInput } from 'types/inputs'
 
@@ -23,8 +23,7 @@ export const validatePermissionTuple = (_s: string, tuple: PermissionTuple) => {
  *  * 'permission-id-invalid' - When `id` is not a valid UUID.
  */
 export const validatePermissionId = (_s: string, { id }: IDInput) => {
-  if (!isStr(id) || !validateUUID(id))
-    throw new ValidationError('permission-id-invalid')
+  if (!isUUID(id)) throw new ValidationError('permission-id-invalid')
 
   // perform db assertion that `id` belongs to a valid permission
 }

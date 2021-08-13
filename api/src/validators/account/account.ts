@@ -1,4 +1,4 @@
-import { validate as validateUUID } from 'uuid'
+import { validate as isUUID } from 'uuid'
 import { ValidationError } from '@redwoodjs/api'
 
 import {
@@ -39,8 +39,7 @@ export const validateAccountEmail = (
  *  * 'account-id-match' - When `id` does not belong to the same organization as `context.currentUser.id`
  */
 export const validateAccountID = (service: string, { id }: IDInput) => {
-  if (!isStr(id) || !validateUUID(id))
-    throw new ValidationError('account-id-invalid')
+  if (!isUUID(id)) throw new ValidationError('account-id-invalid')
 
   // use DB to validate context.currentUser.id has access to id
 }
