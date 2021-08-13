@@ -21,15 +21,19 @@ import { reject } from 'src/validators/reject'
 import { validateRoleId, validateRoleName } from 'src/validators/role'
 
 /* eslint-disable prettier/prettier */
-const validateRoleAccountId = (s, { accountId }) => validateAccountID(s, { id: accountId })
-const validateRolePermissionId = (s, { permissionId }) => validatePermissionId(s, { id: permissionId })
-const validateRoleIdEx = (s, { roleId }) => validateRoleId(s, { id: roleId })
+const valUpdateRoleName = (s: string, { name }) => name && validateRoleName(s, { name })
+
+const validateRoleAccountId = (s: string, { accountId }) => validateAccountID(s, { id: accountId })
+const validateRolePermissionId = (s: string, { permissionId }) => validatePermissionId(s, { id: permissionId })
+const validateRoleIdEx = (s: string, { roleId }) => validateRoleId(s, { id: roleId })
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(reject, { only: ['deleteAllRoles'] })
   rules.add(validateAuth)
   rules.add(validateRoleId, { only: ['role', 'updateRole', 'deleteRole'] })
-  rules.add(validateRoleName, { only: ['createRole', 'updateRole'] })
+  rules.add(validateRoleName, { only: ['createRole'] })
+  rules.add(valUpdateRoleName, { only: ['updateRole'] })
+  // --
   rules.add(validateRoleAccountId, { only: ['addRoleToAccount', 'delRoleFromAccount'] })
   rules.add(validateRolePermissionId, { only: ['addPermToRole', 'delPermFromRole'] })
   rules.add(validateRoleIdEx, { only: ['addPermToRole', 'addRoleToAccount', 'delPermFromRole', 'delRoleFromAccount'] })
