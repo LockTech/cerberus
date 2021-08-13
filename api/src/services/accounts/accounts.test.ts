@@ -1,5 +1,6 @@
 import type { Account, Organization, Role } from '@prisma/client'
 
+import { AccountRemoveAuthFields } from 'src/constants/account'
 import { KetoBuildAccountTuple } from 'src/constants/keto'
 
 import { sendInviteEmail as send } from 'src/helpers/email'
@@ -12,7 +13,6 @@ import {
   accounts,
   deleteAccount,
   inviteAccount,
-  removeAuthFields,
   updateAccount,
 } from './accounts'
 import type { AccountStandard } from './accounts.scenarios'
@@ -40,13 +40,13 @@ const AccountDeleteSelf = {
 }
 
 describe('account service', () => {
-  describe('removeAuthFields', () => {
+  describe('AccountRemoveAuthFields', () => {
     scenario(
       'removes sensitive fields from given object',
       async (scenario: AccountStandard) => {
         const acc = scenario.account.one as Account
 
-        const res = removeAuthFields(acc)
+        const res = AccountRemoveAuthFields(acc)
 
         expect(res.hashedPassword).toBeUndefined()
         expect(res.salt).toBeUndefined()
@@ -179,9 +179,9 @@ describe('account service', () => {
       scenario(
         'retrieves all accounts belonging to the invokers organization',
         async (scenario: AccountStandard) => {
-          const acc1 = removeAuthFields(scenario.account.one)
-          const acc2 = removeAuthFields(scenario.account.two)
-          const acc3 = removeAuthFields(scenario.account.three)
+          const acc1 = AccountRemoveAuthFields(scenario.account.one)
+          const acc2 = AccountRemoveAuthFields(scenario.account.two)
+          const acc3 = AccountRemoveAuthFields(scenario.account.three)
 
           const organizationId = acc1.organizationId
           mockCurrentUser({ organizationId })
