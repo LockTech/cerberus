@@ -1,16 +1,18 @@
 import type { Account, Organization } from '@prisma/client'
 
+import { AccountRemoveAuthFields } from 'src/constants/account'
+
 import { db } from 'src/lib/db'
 
-import { removeAuthFields } from 'src/services/accounts'
+import type { IDInput } from 'types/inputs'
 
-export const getCurrentUser = async (session) => {
-  let res = await db.account.findUnique({
+export const getCurrentUser = async (session: IDInput) => {
+  let res = await db.account.findFirst({
     include: { organization: true },
-    where: { id: session.id },
+    where: { id: session.id, verified: true, verifiedAt: { not: null } },
   })
 
-  res = removeAuthFields(res) as Account & { organization: Organization }
+  res = AccountRemoveAuthFields(res) as Account & { organization: Organization }
 
   return res
 }
