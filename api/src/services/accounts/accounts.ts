@@ -2,6 +2,7 @@ import type { Account } from '@prisma/client'
 import { UserInputError } from '@redwoodjs/graphql-server'
 import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 
+import { AccountRemoveAuthFields } from 'src/constants/account'
 import { KetoBuildAccountTuple } from 'src/constants/keto'
 
 import { sendInviteEmail } from 'src/helpers/email'
@@ -36,23 +37,6 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add([valUpdateEmail, valUpdateName], { only: ['updateAccount'] })
 }
 /* eslint-enable prettier/prettier */
-
-/**
- * Patch function to remove sensitive fields from an `Account` object.
- *
- * Removes:
- *  * `hashedPassword`
- *  * `salt`
- *
- * TODO: Delete once Prisma issue [#7380](https://github.com/prisma/prisma/issues/7380) is merged
- */
-export const removeAuthFields = (acc: Account) => {
-  if (acc) {
-    delete acc.hashedPassword
-    delete acc.salt
-  }
-  return acc
-}
 
 /**
  * @throws
@@ -106,7 +90,7 @@ export const account = async ({ id }: { id: string }) => {
     throw new UserInputError('account-read')
   }
 
-  res = removeAuthFields(res)
+  res = AccountRemoveAuthFields(res)
 
   return res
 }
@@ -129,7 +113,7 @@ export const accounts = async () => {
     throw new UserInputError('account-read')
   }
 
-  res = res.map((acc) => removeAuthFields(acc))
+  res = res.map((acc) => AccountRemoveAuthFields(acc))
 
   return res
 }
@@ -156,7 +140,7 @@ export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
     throw new UserInputError('account-update')
   }
 
-  res = removeAuthFields(res)
+  res = AccountRemoveAuthFields(res)
 
   return res
 }
@@ -198,7 +182,7 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
     throw new UserInputError('account-delete')
   }
 
-  res = removeAuthFields(res)
+  res = AccountRemoveAuthFields(res)
 
   return res
 }
