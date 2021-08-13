@@ -104,6 +104,7 @@ export const validateIsAdmin = (_s: string) => {
 /**
  * Shorthand for including all `auth` validators, including:
  * * `validateCurrentUser` (implicitly)
+ * * `validateAuthVerified`
  * * `validateAuthId`
  * * `validateAuthName`
  * * `validateIsAdmin`
