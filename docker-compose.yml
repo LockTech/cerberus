@@ -10,7 +10,7 @@ networks:
     external: true
 
 services:
-  access:
+  keto:
     image: oryd/keto:latest
     networks:
       - default
@@ -21,12 +21,12 @@ services:
         source: ./config/keto
         target: /home/ory
 
-  # Mailslurper is NOT for production use.
+  # NOT for production use.
+  # https://github.com/mailslurper/mailslurper/wiki
   #
-  # Useful for development-time testing of Cerberus' functionality
   # To use, set the environment variable `SMTP_HOST` to 'localhost' and `SMTP_PORT` to `2500`.
   # Both `SMTP_USER` and `SMTP_PASS` can be left blank.
-  # You can view the emails sent at http://localhost:8080
+  # You can view the emails sent at http://localhost:8080 (templates may not format)
   mailslurper:
     image: marcopas/docker-mailslurper:latest
     ports:
