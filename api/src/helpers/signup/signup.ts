@@ -1,4 +1,7 @@
+import type { Account } from '@prisma/client'
 import { ValidationError, UserInputError } from '@redwoodjs/graphql-server'
+
+import { KetoBuildOrgMemberTuple } from 'src/constants/keto'
 
 import { SignupRes, SignupInviteRes } from 'src/constants/signup'
 
@@ -19,6 +22,7 @@ import {
   validateAccountEmail,
   validateAccountName,
 } from 'src/validators/account'
+import { writeTuple } from '../keto'
 
 // ==
 interface HandleInvitationOptions {
@@ -40,16 +44,21 @@ export const handleInvitation = async ({
   hashedPassword,
   salt,
 }: HandleInvitationOptions) => {
-  const isValid = await confirmInvitation({ code, email })
-  if (!isValid) {
+  const confirmation = await confirmInvitation({ code, email })
+  if (confirmation === null) {
     throw new UserInputError('invite-code-invalid')
   }
 
+  const organizationId = confirmation.organizationId
+
+  let res: Account
+
   try {
-    await db.account.create({
+    res = await db.account.create({
       data: {
         email,
         name,
+        organizationId,
         hashedPassword,
         salt,
         verified: true,
@@ -60,6 +69,11 @@ export const handleInvitation = async ({
     logger.error({ err }, 'Prisma error creating invited account.')
     throw new UserInputError('invite-create-account')
   }
+
+  const accountId = res.id
+  const tuple = KetoBuildOrgMemberTuple(accountId, organizationId)
+
+  await writeTuple(tuple)
 
   return SignupInviteRes
 }
