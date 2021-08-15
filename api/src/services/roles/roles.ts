@@ -3,7 +3,7 @@ import { BeforeResolverSpecType, UserInputError } from '@redwoodjs/api'
 
 import {
   KetoBuildAccountTuple,
-  KetoBuildPermissionSubjectSet,
+  KetoBuildPermissionTuple,
 } from 'src/constants/keto'
 
 import { deleteTuple, writeTuple } from 'src/helpers/keto'
@@ -160,10 +160,14 @@ export const deleteRole = async ({ id }: DeleteRoleArgs) => {
     where: { id },
   })
   roleRelations.permissions.forEach(async (perm) => {
-    await deleteTuple({ ...perm, subject: KetoBuildPermissionSubjectSet(id) })
+    const tuple = KetoBuildPermissionTuple({ ...perm, roleId: id })
+
+    await deleteTuple(tuple)
   })
   roleRelations.accounts.forEach(async (account) => {
-    await deleteTuple(KetoBuildAccountTuple(account.id, id))
+    const tuple = KetoBuildAccountTuple(account.id, id)
+
+    await deleteTuple(tuple)
   })
 
   try {
@@ -200,15 +204,16 @@ export const deleteAllRoles = async () => {
 
   try {
     roles.forEach((role) => {
-      const id = role.id
+      const roleId = role.id
       role.permissions.forEach(async (perm) => {
-        await deleteTuple({
-          ...perm,
-          subject: KetoBuildPermissionSubjectSet(id),
-        })
+        const tuple = KetoBuildPermissionTuple({ ...perm, roleId })
+
+        await deleteTuple(tuple)
       })
       role.accounts.forEach(async (account) => {
-        await deleteTuple(KetoBuildAccountTuple(account.id, id))
+        const tuple = KetoBuildAccountTuple(account.id, roleId)
+
+        await deleteTuple(tuple)
       })
     })
 
@@ -235,14 +240,15 @@ export const addPermToRole = async ({
   roleId,
 }: AddPermToRoleArgs) => {
   const permission = await getPermission({ id: permissionId })
-
   const { namespace, object, relation } = permission
-  await writeTuple({
+  const tuple = KetoBuildPermissionTuple({
     namespace,
     object,
     relation,
-    subject: KetoBuildPermissionSubjectSet(roleId),
+    roleId,
   })
+
+  await writeTuple(tuple)
 
   let res: Role
 
@@ -273,7 +279,9 @@ export const addRoleToAccount = async ({
   accountId,
   roleId,
 }: AddRoleToAccountArgs) => {
-  await writeTuple(KetoBuildAccountTuple(accountId, roleId))
+  const tuple = KetoBuildAccountTuple(accountId, roleId)
+
+  await writeTuple(tuple)
 
   let res: Role
 
@@ -305,14 +313,15 @@ export const delPermFromRole = async ({
   roleId,
 }: DelPermFromRoleArgs) => {
   const permission = await getPermission({ id: permissionId })
-
   const { namespace, object, relation } = permission
-  await deleteTuple({
+  const tuple = KetoBuildPermissionTuple({
     namespace,
     object,
     relation,
-    subject: KetoBuildPermissionSubjectSet(roleId),
+    roleId,
   })
+
+  await deleteTuple(tuple)
 
   let res: Role
 
@@ -343,7 +352,9 @@ export const delRoleFromAccount = async ({
   accountId,
   roleId,
 }: DelRoleFromAccountArgs) => {
-  await deleteTuple(KetoBuildAccountTuple(accountId, roleId))
+  const tuple = KetoBuildAccountTuple(accountId, roleId)
+
+  await deleteTuple(tuple)
 
   let res: Role
 

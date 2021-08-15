@@ -4,7 +4,17 @@ export const CheckURL = `${KetoURL}/check`
 export const DeleteURL = `${KetoURL}/relation-tuples`
 export const WriteURL = `${KetoURL}/relation-tuples`
 
-export const KetoBuildAccountTuple = (accountId: string, roleId: string) => ({
+export interface KetoRelationTuple {
+  namespace: string
+  object: string
+  relation: string
+  subject: string
+}
+
+export const KetoBuildAccountTuple = (
+  accountId: string,
+  roleId: string
+): KetoRelationTuple => ({
   namespace: 'cerberus_roles',
   object: roleId,
   relation: 'has',
@@ -12,4 +22,20 @@ export const KetoBuildAccountTuple = (accountId: string, roleId: string) => ({
 })
 
 export const KetoBuildPermissionSubjectSet = (roleId: string) =>
-  `cerberus_roles:${roleId}#`
+  `cerberus_roles:${roleId}#assigned`
+
+export interface KetoBuildPermissionTupleArgs
+  extends Omit<KetoRelationTuple, 'subject'> {
+  roleId: string
+}
+export const KetoBuildPermissionTuple = ({
+  namespace,
+  object,
+  relation,
+  roleId,
+}: KetoBuildPermissionTupleArgs): KetoRelationTuple => ({
+  namespace,
+  object,
+  relation,
+  subject: KetoBuildPermissionSubjectSet(roleId),
+})

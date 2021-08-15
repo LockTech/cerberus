@@ -1,6 +1,8 @@
 import { UserInputError } from '@redwoodjs/api'
 
 import { CheckURL, DeleteURL, WriteURL } from 'src/constants/keto'
+import type { KetoRelationTuple } from 'src/constants/keto'
+
 import { logger } from 'src/lib/logger'
 
 import { fetch } from 'src/util/fetch'
@@ -22,13 +24,6 @@ export const handleKetoError = <T>({
   }
 
   return res as T
-}
-
-export interface KetoRelationTuple {
-  namespace: string
-  object: string
-  relation: string
-  subject: string
 }
 
 /**
