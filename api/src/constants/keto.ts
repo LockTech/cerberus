@@ -21,6 +21,12 @@ export const KetoBuildOrgMemberTuple = (
   relation: 'member',
   subject: accountId,
 })
+export const KetoBuildOrgRoleTuple = (orgId: string, roleId: string) => ({
+  namespace: `cerberus_organizations`,
+  object: orgId,
+  relation: 'role',
+  subject: roleId,
+})
 
 // Account
 export const KetoBuildAccountRoleTuple = (
