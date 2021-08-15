@@ -10,7 +10,7 @@ import { deleteTuple, writeTuple } from 'src/helpers/keto'
 
 import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
+import { prismaLogger } from 'src/lib/logger'
 
 import { permission as getPermission } from 'src/services/permissions'
 
@@ -60,7 +60,7 @@ export const createRole = async ({ name }: CreateRoleArgs) => {
       },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error creating role.')
+    prismaLogger.error({ err }, 'Error creating role.')
     throw new UserInputError('role-create')
   }
 
@@ -82,7 +82,7 @@ export const role = async ({ id }: RoleArgs) => {
   try {
     res = await db.role.findFirst({ where: { id, organizationId } })
   } catch (err) {
-    logger.error({ err }, 'Prisma error reading role.')
+    prismaLogger.error({ err }, 'Error reading role.')
     throw new UserInputError('role-read')
   }
 
@@ -101,7 +101,7 @@ export const roles = async () => {
   try {
     res = await db.role.findMany({ where: { organizationId } })
   } catch (err) {
-    logger.error({ err }, 'Prisma error listing roles.')
+    prismaLogger.error({ err }, 'Error listing roles.')
     throw new UserInputError('role-read')
   }
 
@@ -125,7 +125,7 @@ export const updateRole = async ({ id, name }: UpdateRoleArgs) => {
       where: { id },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error updating a role.')
+    prismaLogger.error({ err }, 'Error updating a role.')
     throw new UserInputError('role-update')
   }
 
@@ -173,13 +173,17 @@ export const deleteRole = async ({ id }: DeleteRoleArgs) => {
   try {
     res = await db.role.delete({ where: { id } })
   } catch (err) {
-    logger.error({ err }, 'Prisma error deleting role.')
+    prismaLogger.error({ err }, 'Error deleting role.')
     throw new UserInputError('role-delete')
   }
 
   return res
 }
 
+/**
+ * @throws
+ *  * 'roles-delete' - When an error occurs deleting all roles from the DB.
+ */
 export const deleteAllRoles = async () => {
   const organizationId = getContextUser().organizationId
 
@@ -202,27 +206,24 @@ export const deleteAllRoles = async () => {
     where: { organizationId },
   })
 
-  try {
-    roles.forEach((role) => {
-      const roleId = role.id
-      role.permissions.forEach(async (perm) => {
-        const tuple = KetoBuildPermissionTuple({ ...perm, roleId })
+  roles.forEach((role) => {
+    const roleId = role.id
+    role.permissions.forEach(async (perm) => {
+      const tuple = KetoBuildPermissionTuple({ ...perm, roleId })
 
-        await deleteTuple(tuple)
-      })
-      role.accounts.forEach(async (account) => {
-        const tuple = KetoBuildAccountRoleTuple(account.id, roleId)
-
-        await deleteTuple(tuple)
-      })
+      await deleteTuple(tuple)
     })
+    role.accounts.forEach(async (account) => {
+      const tuple = KetoBuildAccountRoleTuple(account.id, roleId)
 
+      await deleteTuple(tuple)
+    })
+  })
+
+  try {
     await db.role.deleteMany({ where: { organizationId } })
   } catch (err) {
-    logger.error(
-      { err },
-      "Prisma error deleting all role's accounts and permissions."
-    )
+    prismaLogger.error({ err }, 'Error deleting all roles.')
     throw new UserInputError('roles-delete')
   }
 
@@ -264,7 +265,7 @@ export const addPermToRole = async ({
       where: { id: roleId },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error adding permission to role.')
+    prismaLogger.error({ err }, 'Error adding permission to role.')
     throw new UserInputError('role-add-permission')
   }
 
@@ -297,7 +298,7 @@ export const addRoleToAccount = async ({
       where: { id: roleId },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error adding role to account.')
+    prismaLogger.error({ err }, 'Error adding role to account.')
     throw new UserInputError('role-add-account')
   }
 
@@ -337,7 +338,7 @@ export const delPermFromRole = async ({
       where: { id: roleId },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error removing permission from role.')
+    prismaLogger.error({ err }, 'Error removing permission from role.')
     throw new UserInputError('role-remove-permission')
   }
 
@@ -370,7 +371,7 @@ export const delRoleFromAccount = async ({
       where: { id: roleId },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error removing role from account.')
+    prismaLogger.error({ err }, 'Error removing role from account.')
     throw new UserInputError('role-remove-account')
   }
 

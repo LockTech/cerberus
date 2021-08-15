@@ -3,7 +3,7 @@ import { UserInputError } from '@redwoodjs/graphql-server'
 import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
+import { prismaLogger } from 'src/lib/logger'
 
 import { reject } from 'src/validators/reject'
 
@@ -37,7 +37,7 @@ export const createInviteConfirm = async ({
       },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error creating invitation confirmation.')
+    prismaLogger.error({ err }, 'Error creating invitation confirmation.')
     throw new UserInputError('account-confirmation-create')
   }
 
@@ -66,7 +66,7 @@ export const createSignupConfirm = async ({
       },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error creating signup confirmation.')
+    prismaLogger.error({ err }, 'Error creating signup confirmation.')
     throw new UserInputError('account-confirmation-create')
   }
 
@@ -106,7 +106,7 @@ export const confirmInvitation = async ({
       },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error getting invitation confirmation.')
+    prismaLogger.error({ err }, 'Error getting invitation confirmation.')
     throw new UserInputError('account-confirmation-get')
   }
 
@@ -120,7 +120,7 @@ export const confirmInvitation = async ({
       where: { id },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error deleting invitation confirmation.')
+    prismaLogger.error({ err }, 'Eerror deleting invitation confirmation.')
     throw new Error('account-confirmation-delete')
   }
 
@@ -159,7 +159,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
       },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error getting signup confirmaton.')
+    prismaLogger.error({ err }, 'Error getting signup confirmaton.')
     throw new UserInputError('account-confirmation-get')
   }
 
@@ -173,7 +173,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
       where: { email },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error verifying account.')
+    prismaLogger.error({ err }, 'Error verifying account.')
     throw new UserInputError('account-confirmation-update')
   }
 
@@ -183,7 +183,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
       where: { id },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error deleting signup confirmation.')
+    prismaLogger.error({ err }, 'Error deleting signup confirmation.')
     throw new UserInputError('account-confirmation-delete')
   }
 

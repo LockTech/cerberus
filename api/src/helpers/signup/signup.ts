@@ -8,7 +8,7 @@ import { SignupRes, SignupInviteRes } from 'src/constants/signup'
 import { sendSignupEmail } from 'src/helpers/email'
 
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
+import { logger, prismaLogger } from 'src/lib/logger'
 
 import {
   confirmInvitation,
@@ -66,7 +66,7 @@ export const handleInvitation = async ({
       },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error creating invited account.')
+    prismaLogger.error({ err }, 'Error creating invited account.')
     throw new UserInputError('invite-create-account')
   }
 
@@ -126,7 +126,7 @@ export const handleSignup = async ({
       },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error creating signed up account.')
+    prismaLogger.error({ err }, 'Error creating signed up account.')
     throw new UserInputError('signup-create-account')
   }
 

@@ -50,3 +50,5 @@ export const logger = createLogger({
     redact,
   },
 })
+
+export const prismaLogger = logger.child({ prisma: true })

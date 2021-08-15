@@ -13,7 +13,7 @@ import { writeTuple } from 'src/helpers/keto'
 
 import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
+import { logger, prismaLogger } from 'src/lib/logger'
 
 import { deleteAllAccounts } from 'src/services/accounts'
 import { permission as getPermission } from 'src/services/permissions'
@@ -76,7 +76,7 @@ export const createOrganization = async ({
       currentUser: { ...currentUser, organizationId: res.organization.id },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error creating organization.')
+    prismaLogger.error({ err }, 'Error creating organization.')
     throw new UserInputError('organization-create')
   }
 
@@ -155,7 +155,7 @@ export const organization = async () => {
   try {
     res = await db.organization.findUnique({ where: { id } })
   } catch (err) {
-    logger.error({ err }, 'Prisma error getting organization.')
+    prismaLogger.error({ err }, 'Error getting organization.')
     throw new UserInputError('organization-get')
   }
 
@@ -180,7 +180,7 @@ export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
       where: { id },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error updating organization.')
+    prismaLogger.error({ err }, 'Error updating organization.')
     throw new UserInputError('organization-update')
   }
 
@@ -203,7 +203,7 @@ export const deleteOrganization = async () => {
   try {
     res = await db.organization.delete({ where: { id } })
   } catch (err) {
-    logger.error({ err }, 'Prisma error deleting organization.')
+    prismaLogger.error({ err }, 'Error deleting organization.')
     throw new UserInputError('organization-delete')
   }
 

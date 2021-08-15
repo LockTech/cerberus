@@ -6,7 +6,7 @@ import { PermissionUndefinedTuple } from 'src/constants/permission'
 import type { PermissionTuple } from 'src/constants/permission'
 
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
+import { prismaLogger } from 'src/lib/logger'
 
 import { validateAuth } from 'src/validators/auth'
 import { reject } from 'src/validators/reject'
@@ -42,7 +42,7 @@ export const createPermission = async (data: CreatePermissionArgs) => {
   try {
     res = await db.permission.create({ data })
   } catch (err) {
-    logger.error({ err }, 'Prisma error creating permission.')
+    prismaLogger.error({ err }, 'Error creating permission.')
     throw new UserInputError('permission-create')
   }
 
@@ -79,7 +79,7 @@ export const permission = async ({
       },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error getting permission.')
+    prismaLogger.error({ err }, 'Error getting permission.')
     throw new UserInputError('permission-get')
   }
 
@@ -96,7 +96,7 @@ export const permissions = async () => {
   try {
     res = await db.permission.findMany()
   } catch (err) {
-    logger.error({ err }, 'Prisma error getting permissions.')
+    prismaLogger.error({ err }, 'Error getting permissions.')
     throw new UserInputError('permission-get')
   }
 

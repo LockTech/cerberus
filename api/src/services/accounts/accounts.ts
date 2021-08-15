@@ -13,7 +13,7 @@ import { deleteTuple } from 'src/helpers/keto'
 
 import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
+import { logger, prismaLogger } from 'src/lib/logger'
 
 import { createInviteConfirm } from 'src/services/account_confirmations'
 import { organization as getOrganization } from 'src/services/organizations'
@@ -89,7 +89,7 @@ export const account = async ({ id }: { id: string }) => {
       },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error getting an account.')
+    prismaLogger.error({ err }, 'Error getting an account.')
     throw new UserInputError('account-read')
   }
 
@@ -112,7 +112,7 @@ export const accounts = async () => {
       where: { organizationId },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error getting accounts.')
+    prismaLogger.error({ err }, 'Error getting accounts.')
     throw new UserInputError('account-read')
   }
 
@@ -139,7 +139,7 @@ export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
       where: { id },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error updating account.')
+    prismaLogger.error({ err }, 'Error updating account.')
     throw new UserInputError('account-update')
   }
 
@@ -187,7 +187,7 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
       where: { id },
     })
   } catch (err) {
-    logger.error({ err }, 'Prisma error deleting account.')
+    prismaLogger.error({ err }, 'Error deleting account.')
     throw new UserInputError('account-delete')
   }
 
@@ -219,7 +219,7 @@ export const deleteAllAccounts = async () => {
   try {
     await db.account.deleteMany({ where: { organizationId } })
   } catch (err) {
-    logger.error({ err }, 'Prisma error deleting all accounts.')
+    prismaLogger.error({ err }, 'Error deleting all accounts.')
     throw new UserInputError('delete-users')
   }
 
