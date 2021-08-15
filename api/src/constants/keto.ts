@@ -35,7 +35,7 @@ export const KetoBuildAccountRoleTuple = (
 ): KetoRelationTuple => ({
   namespace: 'cerberus_roles',
   object: roleId,
-  relation: 'has',
+  relation: 'assigned',
   subject: accountId,
 })
 
