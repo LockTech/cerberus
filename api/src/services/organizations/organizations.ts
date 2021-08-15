@@ -5,7 +5,11 @@ import {
   UserInputError,
 } from '@redwoodjs/api'
 
+import { KetoBuildOrgMemberTuple } from 'src/constants/keto'
+
 import { CerberusAdminTuple } from 'src/constants/permission'
+
+import { writeTuple } from 'src/helpers/keto'
 
 import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
@@ -77,6 +81,10 @@ export const createOrganization = async ({
   }
 
   const organizationId = res.organization.id
+
+  const tuple = KetoBuildOrgMemberTuple(accountId, organizationId)
+  await writeTuple(tuple)
+
   let role: Role
 
   try {

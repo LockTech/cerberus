@@ -2,6 +2,8 @@ import type { Account, Organization, Permission } from '@prisma/client'
 
 import { CerberusAdminTuple } from 'src/constants/permission'
 
+import { writeTuple } from 'src/helpers/keto'
+
 import { db } from 'src/lib/db'
 
 import { deleteAllAccounts } from 'src/services/accounts'
@@ -21,7 +23,9 @@ import {
   updateOrganization,
 } from './organizations'
 import { OrganizationStandard } from './organizations.scenarios'
+import { KetoBuildOrgMemberTuple } from 'src/constants/keto'
 
+jest.mock('../../helpers/keto/keto')
 jest.mock('../accounts/accounts')
 jest.mock('../roles/roles')
 jest.mock('../permissions/permissions')
@@ -58,6 +62,42 @@ describe('organizations service', () => {
         const dbRes = await db.organization.findUnique({ where: { id } })
 
         expect(dbRes.name).toBe(name)
+      }
+    )
+
+    scenario(
+      'attempts to write a relation tuple to Keto',
+      async (scenario: OrganizationStandard) => {
+        const account = scenario.account.one as Account
+        const accountId = account.id
+        mockCurrentUser({ id: accountId })
+
+        const name = 'Lorem'
+        const adminRoleName = 'wow'
+
+        const perm = scenario.permission.one as Permission
+        const permissionId = perm.id
+
+        const roleId = 'd3ab2d8f-6936-4225-a33e-03e9e95cf496'
+
+        // @ts-expect-error jest types
+        createRole.mockResolvedValue({ id: roleId })
+        // @ts-expect-error jest types
+        getPermission.mockResolvedValue({ id: permissionId })
+        // @ts-expect-error jest types
+        addPermToRole.mockResolvedValue({})
+        // @ts-expect-error jest types
+        addRoleToAccount.mockResolvedValue({})
+        // @ts-expect-error jest types
+        writeTuple.mockResolvedValue(true)
+
+        const res = await createOrganization({ name, adminRoleName })
+        const organizationId = res.id
+
+        const tuple = KetoBuildOrgMemberTuple(accountId, organizationId)
+
+        expect(writeTuple).toHaveBeenCalledTimes(1)
+        expect(writeTuple).toHaveBeenCalledWith(tuple)
       }
     )
 
