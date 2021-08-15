@@ -57,44 +57,7 @@ dsn: postgres://keto:secret@database:5432/keto
 
 ## Dependencies
 
-In addition to the dependencies outlined in [RedwoodJS' introduction](https://redwoodjs.com/docs/introduction#technologies), the following are used by the Cerberus RedwoodJS application.
-
-### Shared
-
-* [TypeScript](https://www.typescriptlang.org/)
-
-### API Side
-
-* [Nodemailer](https://nodemailer.com/about/)
-* [SquirrellyJS](https://squirrelly.js.org/)
-* [UUID](https://www.npmjs.com/package/uuid) ([types](https://www.npmjs.com/package/@types/uuid))
-
-### Web Side
-
-* [HeadlessUI (React)](https://headlessui.dev/)
-* [i18next](https://www.i18next.com/)
-* [niceramps](https://github.com/MathGeniusJodie/niceramps)
-* [PostgreSQL](https://www.postgresql.org/)
-* [react-hook-form](https://react-hook-form.com/)
-* [RecoilJS](https://recoiljs.org/)
-* [TailwindCSS](https://tailwindcss.com/)
-  * [Autoprefixer](https://github.com/postcss/autoprefixer)
-  * [PostCSS](https://github.com/postcss/postcss)
-
-### Indirect Dependencies
-
-These dependencies are not directly required by Cerberus' RedwoodJS application, but are required for its full functionality.
-
-They must be installed alongside the application.
-
-* [Ory Keto](https://www.ory.sh/keto/docs/next/) - An example of using Keto with [Docker](https://www.docker.com/) can be found in this repository's [`docker-compose.yml`](docker-compose.yml).
-* As shown in [the `.env.example` file](.env.example), a server configured to, at a minimum, relay emails using SMTP.
-
-### Optional Dependencies
-
-LockTech provides configuration for an [API gateway](https://github.com/LockTech/poseidon) and a [relational database](https://github.com/LockTech/portunus).
-
-While not required, the linked repositories may provide utility for setting up the application in a development or production environment.
+[Consult the dedicated page on this repository's wiki](https://github.com/LockTech/cerberus/wiki/Dependencies).
 
 ## Contributing
 
