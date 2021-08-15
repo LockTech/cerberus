@@ -3,6 +3,7 @@ import { BeforeResolverSpecType, UserInputError } from '@redwoodjs/api'
 
 import {
   KetoBuildAccountRoleTuple,
+  KetoBuildOrgRoleTuple,
   KetoBuildPermissionTuple,
 } from 'src/constants/keto'
 
@@ -63,6 +64,9 @@ export const createRole = async ({ name }: CreateRoleArgs) => {
     prismaLogger.error({ err }, 'Error creating role.')
     throw new UserInputError('role-create')
   }
+
+  const tuple = KetoBuildOrgRoleTuple(organizationId, res.id)
+  await writeTuple(tuple)
 
   return res
 }
@@ -170,6 +174,11 @@ export const deleteRole = async ({ id }: DeleteRoleArgs) => {
     await deleteTuple(tuple)
   })
 
+  const organizationId = getContextUser().organizationId
+
+  const tuple = KetoBuildOrgRoleTuple(organizationId, id)
+  await deleteTuple(tuple)
+
   try {
     res = await db.role.delete({ where: { id } })
   } catch (err) {
@@ -206,7 +215,7 @@ export const deleteAllRoles = async () => {
     where: { organizationId },
   })
 
-  roles.forEach((role) => {
+  roles.forEach(async (role) => {
     const roleId = role.id
     role.permissions.forEach(async (perm) => {
       const tuple = KetoBuildPermissionTuple({ ...perm, roleId })
@@ -218,6 +227,9 @@ export const deleteAllRoles = async () => {
 
       await deleteTuple(tuple)
     })
+
+    const tuple = KetoBuildOrgRoleTuple(organizationId, roleId)
+    await deleteTuple(tuple)
   })
 
   try {
