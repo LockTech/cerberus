@@ -11,7 +11,8 @@ export interface KetoRelationTuple {
   subject: string
 }
 
-export const KetoBuildAccountTuple = (
+// Accounts
+export const KetoBuildAccountRoleTuple = (
   accountId: string,
   roleId: string
 ): KetoRelationTuple => ({
@@ -21,6 +22,7 @@ export const KetoBuildAccountTuple = (
   subject: accountId,
 })
 
+// Permissions
 export const KetoBuildPermissionSubjectSet = (roleId: string) =>
   `cerberus_roles:${roleId}#assigned`
 

@@ -2,7 +2,7 @@ import type { Role } from '@prisma/client'
 import { BeforeResolverSpecType, UserInputError } from '@redwoodjs/api'
 
 import {
-  KetoBuildAccountTuple,
+  KetoBuildAccountRoleTuple,
   KetoBuildPermissionTuple,
 } from 'src/constants/keto'
 
@@ -165,7 +165,7 @@ export const deleteRole = async ({ id }: DeleteRoleArgs) => {
     await deleteTuple(tuple)
   })
   roleRelations.accounts.forEach(async (account) => {
-    const tuple = KetoBuildAccountTuple(account.id, id)
+    const tuple = KetoBuildAccountRoleTuple(account.id, id)
 
     await deleteTuple(tuple)
   })
@@ -211,7 +211,7 @@ export const deleteAllRoles = async () => {
         await deleteTuple(tuple)
       })
       role.accounts.forEach(async (account) => {
-        const tuple = KetoBuildAccountTuple(account.id, roleId)
+        const tuple = KetoBuildAccountRoleTuple(account.id, roleId)
 
         await deleteTuple(tuple)
       })
@@ -279,7 +279,7 @@ export const addRoleToAccount = async ({
   accountId,
   roleId,
 }: AddRoleToAccountArgs) => {
-  const tuple = KetoBuildAccountTuple(accountId, roleId)
+  const tuple = KetoBuildAccountRoleTuple(accountId, roleId)
 
   await writeTuple(tuple)
 
@@ -352,7 +352,7 @@ export const delRoleFromAccount = async ({
   accountId,
   roleId,
 }: DelRoleFromAccountArgs) => {
-  const tuple = KetoBuildAccountTuple(accountId, roleId)
+  const tuple = KetoBuildAccountRoleTuple(accountId, roleId)
 
   await deleteTuple(tuple)
 

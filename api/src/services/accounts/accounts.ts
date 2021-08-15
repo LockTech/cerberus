@@ -3,7 +3,7 @@ import { UserInputError } from '@redwoodjs/graphql-server'
 import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 
 import { AccountRemoveAuthFields } from 'src/constants/account'
-import { KetoBuildAccountTuple } from 'src/constants/keto'
+import { KetoBuildAccountRoleTuple } from 'src/constants/keto'
 
 import { sendInviteEmail } from 'src/helpers/email'
 import { deleteTuple } from 'src/helpers/keto'
@@ -168,7 +168,7 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
   })
 
   account.roles.forEach(
-    async (role) => await deleteTuple(KetoBuildAccountTuple(id, role.id))
+    async (role) => await deleteTuple(KetoBuildAccountRoleTuple(id, role.id))
   )
 
   let res: Account
@@ -200,7 +200,7 @@ export const deleteAllAccounts = async () => {
 
   accounts.forEach(async (account) =>
     account.roles.forEach(async (role) =>
-      deleteTuple(KetoBuildAccountTuple(account.id, role.id))
+      deleteTuple(KetoBuildAccountRoleTuple(account.id, role.id))
     )
   )
 

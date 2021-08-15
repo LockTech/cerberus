@@ -1,7 +1,7 @@
 import type { Account, Organization, Role } from '@prisma/client'
 
 import { AccountRemoveAuthFields } from 'src/constants/account'
-import { KetoBuildAccountTuple } from 'src/constants/keto'
+import { KetoBuildAccountRoleTuple } from 'src/constants/keto'
 
 import { sendInviteEmail as send } from 'src/helpers/email'
 import { deleteTuple } from 'src/helpers/keto'
@@ -320,7 +320,7 @@ describe('account service', () => {
 
         expect(deleteTuple).toHaveBeenCalledTimes(1)
         expect(deleteTuple).toHaveBeenCalledWith(
-          KetoBuildAccountTuple(id, roleId)
+          KetoBuildAccountRoleTuple(id, roleId)
         )
       }
     )

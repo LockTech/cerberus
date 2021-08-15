@@ -2,7 +2,7 @@ import { validate as validateUUID } from 'uuid'
 import type { Account, Organization, Permission, Role } from '@prisma/client'
 
 import {
-  KetoBuildAccountTuple,
+  KetoBuildAccountRoleTuple,
   KetoBuildPermissionTuple,
 } from 'src/constants/keto'
 
@@ -307,7 +307,7 @@ describe('role service', () => {
 
         const acc = scenario.account.one as Account
         const accId = acc.id
-        const accTuple = KetoBuildAccountTuple(accId, id)
+        const accTuple = KetoBuildAccountRoleTuple(accId, id)
 
         const perm = scenario.permission.one as Permission
         const { namespace, object, relation } = perm
@@ -433,7 +433,7 @@ describe('role service', () => {
           await deleteAllRoles()
 
           expect(deleteTuple).toHaveBeenCalledWith(
-            KetoBuildAccountTuple(accountId, roleId)
+            KetoBuildAccountRoleTuple(accountId, roleId)
           )
         }
       )
@@ -482,14 +482,14 @@ describe('role service', () => {
             relation: perm3.relation,
             roleId: role1Id,
           })
-          const tuple4 = KetoBuildAccountTuple(acc1Id, role1Id)
+          const tuple4 = KetoBuildAccountRoleTuple(acc1Id, role1Id)
           const tuple5 = KetoBuildPermissionTuple({
             namespace: perm3.namespace,
             object: perm3.object,
             relation: perm3.relation,
             roleId: role2Id,
           })
-          const tuple6 = KetoBuildAccountTuple(acc2Id, role4Id)
+          const tuple6 = KetoBuildAccountRoleTuple(acc2Id, role4Id)
 
           await deleteAllRoles()
 
@@ -568,7 +568,7 @@ describe('role service', () => {
 
           expect(writeTuple).toHaveBeenCalledTimes(1)
           expect(writeTuple).toHaveBeenCalledWith(
-            KetoBuildAccountTuple(accountId, roleId)
+            KetoBuildAccountRoleTuple(accountId, roleId)
           )
         }
       )
@@ -620,7 +620,7 @@ describe('role service', () => {
 
           expect(deleteTuple).toHaveBeenCalledTimes(1)
           expect(deleteTuple).toHaveBeenCalledWith(
-            KetoBuildAccountTuple(accountId, roleId)
+            KetoBuildAccountRoleTuple(accountId, roleId)
           )
         }
       )
