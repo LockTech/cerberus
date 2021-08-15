@@ -30,5 +30,5 @@ export const validateOrganizationName = (s: string, { name }: NameInput) => {
 export const validateOrganizationId = (s: string, { id }: IDInput) => {
   if (!isUUID(id)) throw new ValidationError('organization-id-invalid')
 
-  // perform db check that id belongs to an organization
+  // perform keto check that id is the invoker's organization
 }

@@ -30,7 +30,7 @@ export const validateAccountEmail = (
   if (email.match(AccountEmailValidRegEx) === null)
     throw new ValidationError('account-email-reserved')
 
-  // perform DB check for email's existing use case insensitive
+  // perform DB check for email's existence; use case insensitive
 }
 
 /**
@@ -41,7 +41,7 @@ export const validateAccountEmail = (
 export const validateAccountID = (service: string, { id }: IDInput) => {
   if (!isUUID(id)) throw new ValidationError('account-id-invalid')
 
-  // use DB to validate context.currentUser.id has access to id
+  // use keto to check id is a member of the invoker's organization
 }
 
 /**

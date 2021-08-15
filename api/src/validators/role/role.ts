@@ -14,7 +14,7 @@ import type { IDInput, NameInput } from 'types/inputs'
 export const validateRoleId = (_s: string, { id }: IDInput) => {
   if (!isUUID(id)) throw new ValidationError('role-id-invalid')
 
-  // assert ID belongs to the invoking organization
+  // perform keto check to assert id belongs to invoker's organization
 }
 
 /**
