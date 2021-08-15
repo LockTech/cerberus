@@ -110,9 +110,9 @@ export const confirmInvitation = async ({
     throw new UserInputError('account-confirmation-get')
   }
 
-  if (res === null) return false
+  if (res === null) return null
 
-  if (res.organizationId === null) return false
+  if (res.organizationId === null) return null
 
   const id = res.id
   try {
@@ -124,7 +124,7 @@ export const confirmInvitation = async ({
     throw new Error('account-confirmation-delete')
   }
 
-  return true
+  return res
 }
 
 export interface ConfirmSignupArgs {

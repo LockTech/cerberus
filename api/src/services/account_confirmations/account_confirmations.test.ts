@@ -12,10 +12,58 @@ import {
 import type { AccountConfirmationStandard } from './account_confirmations.scenarios'
 
 describe('account_confirmation service', () => {
-  describe('confirm', () => {
+  describe('create', () => {
     describe('invitation', () => {
       scenario(
-        'returns false when the code cannot be found',
+        'creates an invitation confirmation',
+        async (_scenarios: AccountConfirmationStandard) => {
+          const code = randomStr(8)
+          const email = 'terry.boulder@bouldersboulders.com'
+          const organizationId = '1'
+
+          await createInviteConfirm({
+            code,
+            email,
+            organizationId,
+          })
+
+          const res = await db.account_Confirmation.findFirst({
+            where: { code, email },
+          })
+          expect(res.code).toBe(code)
+          expect(res.email).toBe(email)
+          expect(res.organizationId).toBe(organizationId)
+        }
+      )
+    })
+
+    describe('signup', () => {
+      scenario(
+        'creates a signup confirmation',
+        async (_scenarios: AccountConfirmationStandard) => {
+          const code = randomStr(8)
+          const email = 'terry.boulder@bouldersboulders.com'
+
+          await createSignupConfirm({
+            code,
+            email,
+          })
+
+          const res = await db.account_Confirmation.findFirst({
+            where: { code, email },
+          })
+          expect(res.code).toBe(code)
+          expect(res.email).toBe(email)
+          expect(res.organizationId).toBeNull()
+        }
+      )
+    })
+  })
+
+  describe('read', () => {
+    describe('invitation', () => {
+      scenario(
+        'returns "null" when the code cannot be found',
         async (scenario: AccountConfirmationStandard) => {
           const conf = scenario.account_Confirmation
             .invite_1 as Account_Confirmation
@@ -24,12 +72,12 @@ describe('account_confirmation service', () => {
 
           const res = await confirmInvitation({ code, email })
 
-          expect(res).toBeFalsy()
+          expect(res).toBeNull()
         }
       )
 
       scenario(
-        'returns false when the email cannot be found',
+        'returns "null" when the email cannot be found',
         async (scenario: AccountConfirmationStandard) => {
           const conf = scenario.account_Confirmation
             .invite_1 as Account_Confirmation
@@ -38,12 +86,12 @@ describe('account_confirmation service', () => {
 
           const res = await confirmInvitation({ code, email })
 
-          expect(res).toBeFalsy()
+          expect(res).toBeNull()
         }
       )
 
       scenario(
-        'returns false when "organizationId" is not defined',
+        'returns "null" when "organizationId" is not defined',
         async (scenario: AccountConfirmationStandard) => {
           const conf = scenario.account_Confirmation
             .invite_2 as Account_Confirmation
@@ -52,12 +100,12 @@ describe('account_confirmation service', () => {
 
           const res = await confirmInvitation({ code, email })
 
-          expect(res).toBeFalsy()
+          expect(res).toBeNull()
         }
       )
 
       scenario(
-        'returns true when the code and email combination are valid',
+        'returns the confirmation when the code and email combination are valid',
         async (scenario: AccountConfirmationStandard) => {
           const one = scenario.account_Confirmation
             .invite_1 as Account_Confirmation
@@ -66,7 +114,7 @@ describe('account_confirmation service', () => {
 
           const res = await confirmInvitation({ code, email })
 
-          expect(res).toBeTruthy()
+          expect(res).toEqual(expect.objectContaining(one))
         }
       )
 
@@ -175,54 +223,6 @@ describe('account_confirmation service', () => {
           const res = await db.account.findFirst({ where: { email } })
           expect(res.verified).toBeTruthy()
           expect(res.verifiedAt).toBeDefined()
-        }
-      )
-    })
-  })
-
-  describe('create', () => {
-    describe('invitation', () => {
-      scenario(
-        'creates an invitation confirmation',
-        async (_scenarios: AccountConfirmationStandard) => {
-          const code = randomStr(8)
-          const email = 'terry.boulder@bouldersboulders.com'
-          const organizationId = '1'
-
-          await createInviteConfirm({
-            code,
-            email,
-            organizationId,
-          })
-
-          const res = await db.account_Confirmation.findFirst({
-            where: { code, email },
-          })
-          expect(res.code).toBe(code)
-          expect(res.email).toBe(email)
-          expect(res.organizationId).toBe(organizationId)
-        }
-      )
-    })
-
-    describe('signup', () => {
-      scenario(
-        'creates a signup confirmation',
-        async (_scenarios: AccountConfirmationStandard) => {
-          const code = randomStr(8)
-          const email = 'terry.boulder@bouldersboulders.com'
-
-          await createSignupConfirm({
-            code,
-            email,
-          })
-
-          const res = await db.account_Confirmation.findFirst({
-            where: { code, email },
-          })
-          expect(res.code).toBe(code)
-          expect(res.email).toBe(email)
-          expect(res.organizationId).toBeNull()
         }
       )
     })
