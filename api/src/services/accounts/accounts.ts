@@ -3,7 +3,10 @@ import { UserInputError } from '@redwoodjs/graphql-server'
 import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 
 import { AccountRemoveAuthFields } from 'src/constants/account'
-import { KetoBuildAccountRoleTuple } from 'src/constants/keto'
+import {
+  KetoBuildAccountRoleTuple,
+  KetoBuildOrgMemberTuple,
+} from 'src/constants/keto'
 
 import { sendInviteEmail } from 'src/helpers/email'
 import { deleteTuple } from 'src/helpers/keto'
@@ -154,11 +157,17 @@ export interface DeleteAccountArgs {
  *  * 'account-delete' - When an error occures deleting the Account from the DB.
  */
 export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
-  const currentId = getContextUser().id
+  const currentUser = getContextUser()
+  const currentId = currentUser.id
 
   if (currentId === id) {
     throw new UserInputError('account-delete-self')
   }
+
+  const organizationId = currentUser.organizationId
+
+  const tuple = KetoBuildOrgMemberTuple(id, organizationId)
+  await deleteTuple(tuple)
 
   const account = await db.account.findUnique({
     select: {
@@ -198,11 +207,14 @@ export const deleteAllAccounts = async () => {
     where: { organizationId },
   })
 
-  accounts.forEach(async (account) =>
+  accounts.forEach(async (account) => {
+    const tuple = KetoBuildOrgMemberTuple(account.id, organizationId)
+    await deleteTuple(tuple)
+
     account.roles.forEach(async (role) =>
       deleteTuple(KetoBuildAccountRoleTuple(account.id, role.id))
     )
-  )
+  })
 
   try {
     await db.account.deleteMany({ where: { organizationId } })

@@ -1,7 +1,10 @@
 import type { Account, Organization, Role } from '@prisma/client'
 
 import { AccountRemoveAuthFields } from 'src/constants/account'
-import { KetoBuildAccountRoleTuple } from 'src/constants/keto'
+import {
+  KetoBuildAccountRoleTuple,
+  KetoBuildOrgMemberTuple,
+} from 'src/constants/keto'
 
 import { sendInviteEmail as send } from 'src/helpers/email'
 import { deleteTuple } from 'src/helpers/keto'
@@ -12,6 +15,7 @@ import {
   account,
   accounts,
   deleteAccount,
+  deleteAllAccounts,
   inviteAccount,
   updateAccount,
 } from './accounts'
@@ -259,7 +263,11 @@ describe('account service', () => {
       async (scenario: AccountStandard) => {
         const invoker = scenario.account.one as Account
         const invokerId = invoker.id
-        mockCurrentUser({ id: invokerId })
+
+        const organization = scenario.organization.one as Organization
+        const organizationId = organization.id
+
+        mockCurrentUser({ id: invokerId, organizationId })
 
         const acc = scenario.account.two as Account
         const id = acc.id
@@ -277,7 +285,11 @@ describe('account service', () => {
       async (scenario: AccountStandard) => {
         const invoker = scenario.account.two as Account
         const invokerId = invoker.id
-        mockCurrentUser({ id: invokerId })
+
+        const organization = scenario.organization.one as Organization
+        const organizationId = organization.id
+
+        mockCurrentUser({ id: invokerId, organizationId })
 
         const acc = scenario.account.one as Account
         const id = acc.id
@@ -301,11 +313,41 @@ describe('account service', () => {
     )
 
     scenario(
+      "attempts to delete the account's organization relation tuple",
+      async (scenario: AccountStandard) => {
+        const invoker = scenario.account.two as Account
+        const invokerId = invoker.id
+
+        const organization = scenario.organization.one as Organization
+        const organizationId = organization.id
+
+        mockCurrentUser({ id: invokerId, organizationId })
+
+        const acc = scenario.account.one as Account
+        const id = acc.id
+
+        // @ts-expect-error jest typings
+        deleteTuple.mockResolvedValue(null)
+
+        await deleteAccount({ id })
+
+        expect(deleteTuple).toHaveBeenCalledTimes(2)
+        expect(deleteTuple).toHaveBeenCalledWith(
+          KetoBuildOrgMemberTuple(id, organizationId)
+        )
+      }
+    )
+
+    scenario(
       "attempts to delete the account's role relation tuple",
       async (scenario: AccountStandard) => {
         const invoker = scenario.account.two as Account
         const invokerId = invoker.id
-        mockCurrentUser({ id: invokerId })
+
+        const organization = scenario.organization.one as Organization
+        const organizationId = organization.id
+
+        mockCurrentUser({ id: invokerId, organizationId })
 
         const acc = scenario.account.one as Account
         const id = acc.id
@@ -318,11 +360,91 @@ describe('account service', () => {
 
         await deleteAccount({ id })
 
-        expect(deleteTuple).toHaveBeenCalledTimes(1)
+        expect(deleteTuple).toHaveBeenCalledTimes(2)
         expect(deleteTuple).toHaveBeenCalledWith(
           KetoBuildAccountRoleTuple(id, roleId)
         )
       }
     )
+
+    describe('deleteAllAccounts', () => {
+      scenario(
+        'attempts to delete all account-organization relation tuples',
+        async (scenario: AccountStandard) => {
+          const organization = scenario.organization.one as Organization
+          const organizationId = organization.id
+
+          mockCurrentUser({ organizationId })
+
+          // @ts-expect-error jest types
+          deleteTuple.mockResolvedValue(null)
+
+          const acc1 = scenario.account.one as Account
+          const acc1Id = acc1.id
+          const acc2 = scenario.account.two as Account
+          const acc2Id = acc2.id
+
+          const tuple1 = KetoBuildOrgMemberTuple(acc1Id, organizationId)
+          const tuple2 = KetoBuildOrgMemberTuple(acc2Id, organizationId)
+
+          await deleteAllAccounts()
+
+          expect(deleteTuple).toHaveBeenCalledTimes(3)
+          expect(deleteTuple).toHaveBeenCalledWith(tuple1)
+          expect(deleteTuple).toHaveBeenCalledWith(tuple2)
+        }
+      )
+
+      scenario(
+        'attempts to delete all account-role relation tuples',
+        async (scenario: AccountStandard) => {
+          const organization = scenario.organization.one as Organization
+          const organizationId = organization.id
+
+          mockCurrentUser({ organizationId })
+
+          // @ts-expect-error jest types
+          deleteTuple.mockResolvedValue(null)
+
+          const acc1 = scenario.account.one as Account
+          const acc1Id = acc1.id
+
+          const role = scenario.role.one as Role
+          const roleId = role.id
+
+          const tuple = KetoBuildAccountRoleTuple(acc1Id, roleId)
+
+          await deleteAllAccounts()
+
+          expect(deleteTuple).toHaveBeenCalledTimes(3)
+          expect(deleteTuple).toHaveBeenCalledWith(tuple)
+        }
+      )
+
+      scenario(
+        'successfully removes all accounts from the database',
+        async (scenario: AccountStandard) => {
+          const organization = scenario.organization.one as Organization
+          const organizationId = organization.id
+
+          mockCurrentUser({ organizationId })
+
+          // @ts-expect-error jest types
+          deleteTuple.mockResolvedValue(null)
+
+          const acc1 = scenario.account.one as Account
+          const acc2 = scenario.account.two as Account
+
+          /* eslint-disable prettier/prettier */
+          const preRes = await db.account.findMany({ where: { organizationId } })
+          await deleteAllAccounts()
+          const postRes = await db.account.findMany({ where: { organizationId } })
+          /* eslint-enable prettier/prettier */
+
+          expect(preRes).toEqual(expect.arrayContaining([acc1, acc2]))
+          expect(postRes).toEqual(expect.arrayContaining([]))
+        }
+      )
+    })
   })
 })
