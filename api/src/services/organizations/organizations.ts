@@ -187,6 +187,10 @@ export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
   return res
 }
 
+/**
+ * @throws
+ *  * 'organization-delete' - When an error occurs deleting the organization from the DB.
+ */
 export const deleteOrganization = async () => {
   // Accounts & Roles
   try {
@@ -201,6 +205,8 @@ export const deleteOrganization = async () => {
   let res: Organization
 
   try {
+    await db.account_Confirmation.deleteMany({ where: { organizationId: id } })
+
     res = await db.organization.delete({ where: { id } })
   } catch (err) {
     prismaLogger.error({ err }, 'Error deleting organization.')

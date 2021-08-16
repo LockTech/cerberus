@@ -1,4 +1,9 @@
-import type { Account, Organization, Permission } from '@prisma/client'
+import type {
+  Account,
+  Account_Confirmation,
+  Organization,
+  Permission,
+} from '@prisma/client'
 
 import { CerberusAdminTuple } from 'src/constants/permission'
 
@@ -489,7 +494,7 @@ describe('organizations service', () => {
     )
 
     scenario(
-      'deletes the organization of currentUser from the database',
+      'deletes the organization of the invoker from the database',
       async (scenario: OrganizationStandard) => {
         const acc = scenario.account.two as Account
         const organizationId = acc.organizationId
@@ -507,6 +512,32 @@ describe('organizations service', () => {
         })
 
         expect(res).toBeNull()
+      }
+    )
+
+    scenario(
+      "deletes all the organization's pending confirmations",
+      async (scenario: OrganizationStandard) => {
+        const acc = scenario.account.two as Account
+        const organizationId = acc.organizationId
+        mockCurrentUser({ organizationId })
+
+        const confirm = scenario.account_Confirmation
+          .one as Account_Confirmation
+        const id = confirm.id
+        const where = { id }
+
+        // @ts-expect-error jest types
+        deleteAllAccounts.mockResolvedValue(true)
+        // @ts-expect-error jest types
+        deleteAllRoles.mockResolvedValue(true)
+
+        const preDbRes = await db.account_Confirmation.findFirst({ where })
+        await deleteOrganization()
+        const postDbRes = await db.account_Confirmation.findFirst({ where })
+
+        expect(preDbRes).toEqual(expect.objectContaining(confirm))
+        expect(postDbRes).toBeNull()
       }
     )
   })

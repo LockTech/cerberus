@@ -35,6 +35,15 @@ export const standard = defineScenario({
       salt: '',
     },
   },
+  // @ts-expect-error only need 1 confirmation
+  account_Confirmation: {
+    one: {
+      id: '1ef01680-a2d9-4146-935e-78a88dd251e4',
+      code: 'PFBL7LE9',
+      email: 'john.doe@acme.corp',
+      organizationId: '6a82a1cc-1e2f-47d6-a3e7-ce31c71450fa',
+    },
+  },
 })
 
 export type OrganizationStandard = typeof standard
