@@ -2,6 +2,7 @@ export const schema = gql`
   type Account {
     id: ID!
     email: String!
+    disabled: Boolean!
     name: String!
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -18,6 +19,11 @@ export const schema = gql`
 
   type Mutation {
     inviteAccount(email: String!): Boolean!
-    updateAccount(id: ID!, email: String, name: String): Account!
+    updateAccount(
+      id: ID!
+      disabled: Boolean
+      email: String
+      name: String
+    ): Account!
   }
 `
