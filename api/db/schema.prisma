@@ -72,6 +72,7 @@ model Permission {
   namespace                     String
   object                        String                            @default("")
   relation                      String                            @default("")
+  access_relation               String?
   //
   created_at                    DateTime                          @default(now())
   updated_at                    DateTime                          @default(now())
