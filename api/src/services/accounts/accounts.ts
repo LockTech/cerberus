@@ -1,4 +1,4 @@
-import type { Account } from '@prisma/client'
+import type { Account, Role } from '@prisma/client'
 import { UserInputError } from '@redwoodjs/graphql-server'
 import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
 
@@ -154,6 +154,7 @@ export interface DeleteAccountArgs {
 /**
  * @throws
  *  * 'account-delete-self' - When `context.currentUser.id === id`; preventing the self-deletion of the invokers account.
+ *  * 'account-delete-relations' - When an error occurs retrieving account-role relations from the DB.
  *  * 'account-delete' - When an error occures deleting the Account from the DB.
  */
 export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
@@ -169,14 +170,21 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
   const tuple = KetoBuildOrgMemberTuple(id, organizationId)
   await deleteTuple(tuple)
 
-  const account = await db.account.findUnique({
-    select: {
-      roles: true,
-    },
-    where: { id },
-  })
+  let accRelations: { roles: Role[] }
 
-  account.roles.forEach(
+  try {
+    accRelations = await db.account.findUnique({
+      select: {
+        roles: true,
+      },
+      where: { id },
+    })
+  } catch (err) {
+    prismaLogger.error({ err }, 'Error retrieving account-relations.')
+    throw new UserInputError('account-delete-relations')
+  }
+
+  accRelations.roles.forEach(
     async (role) => await deleteTuple(KetoBuildAccountRoleTuple(id, role.id))
   )
 
@@ -196,16 +204,28 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
   return res
 }
 
+/**
+ * @throws
+ *  * 'account-delete-relations' - When an error occurs retrieving account-role relations from the DB.
+ *  * 'account-delete' - When an error occurs deleting the accounts from the DB.
+ */
 export const deleteAllAccounts = async () => {
   const organizationId = getContextUser().organizationId
 
-  const accounts = await db.account.findMany({
-    select: {
-      id: true,
-      roles: true,
-    },
-    where: { organizationId },
-  })
+  let accounts: { id: string; roles: Role[] }[]
+
+  try {
+    accounts = await db.account.findMany({
+      select: {
+        id: true,
+        roles: true,
+      },
+      where: { organizationId },
+    })
+  } catch (err) {
+    prismaLogger.error({ err }, 'Error retrieving account-role relations.')
+    throw new UserInputError('account-delete-relations')
+  }
 
   accounts.forEach(async (account) => {
     const tuple = KetoBuildOrgMemberTuple(account.id, organizationId)
@@ -220,7 +240,7 @@ export const deleteAllAccounts = async () => {
     await db.account.deleteMany({ where: { organizationId } })
   } catch (err) {
     prismaLogger.error({ err }, 'Error deleting all accounts.')
-    throw new UserInputError('delete-users')
+    throw new UserInputError('account-delete')
   }
 
   return true
