@@ -101,8 +101,10 @@ export const confirmInvitation = async ({
         createdAt: 'desc',
       },
       where: {
-        code,
-        email,
+        AND: {
+          code,
+          email,
+        },
       },
     })
   } catch (err) {
@@ -154,8 +156,10 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
         createdAt: 'desc',
       },
       where: {
-        code,
-        email,
+        AND: {
+          code,
+          email,
+        },
       },
     })
   } catch (err) {
