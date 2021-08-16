@@ -1,4 +1,4 @@
-import type { Permission } from '@prisma/client'
+import type { Permission, Role } from '@prisma/client'
 import { UserInputError } from '@redwoodjs/api'
 import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
@@ -14,13 +14,15 @@ import {
   validatePermissionId,
   validatePermissionTuple,
 } from 'src/validators/permission'
+import { KetoBuildPermissionTuple } from 'src/constants/keto'
+import { deleteTuple } from 'src/helpers/keto'
 
 /* eslint-disable prettier/prettier */
 const valGetPermissionId = (s: string, { id }) => id && validatePermissionId(s, { id })
 const valGetPermissionTuple = (s: string, { tuple }) => tuple && validatePermissionTuple(s, tuple)
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { only: ['createPermission'] })
+  rules.add(reject, { only: ['createPermission', 'deletePermission'] })
   rules.add(validateAuth)
   rules.add([valGetPermissionId, valGetPermissionTuple], { only: ['permission'] })
 }
@@ -98,6 +100,66 @@ export const permissions = async () => {
   } catch (err) {
     prismaLogger.error({ err }, 'Error getting permissions.')
     throw new UserInputError('permission-get')
+  }
+
+  return res
+}
+
+export interface DeletePermissionArgs {
+  application: string
+  namespace: string
+  object?: string
+  relation?: string
+}
+/**
+ * @throws
+ *  * 'permission-delete' - When an error occurs deleting the permission from the DB.
+ */
+export const deletePermission = async ({
+  application,
+  namespace,
+  object,
+  relation,
+}: DeletePermissionArgs) => {
+  let res: Permission
+
+  object = object || ''
+  relation = relation || ''
+
+  const where = {
+    application_namespace_object_relation: {
+      application,
+      namespace,
+      object,
+      relation,
+    },
+  }
+
+  let permRelations: { id: string; roles: Role[] }
+  try {
+    permRelations = await db.permission.findUnique({
+      select: { id: true, roles: true },
+      where,
+    })
+  } catch (err) {
+    prismaLogger.error({ err }, 'Error retrieving permission-role relations.')
+  }
+
+  permRelations.roles.forEach(async ({ id: roleId }) => {
+    const tuple = KetoBuildPermissionTuple({
+      namespace,
+      object,
+      relation,
+      roleId,
+    })
+    await deleteTuple(tuple)
+  })
+
+  try {
+    res = await db.permission.delete({ where })
+  } catch (err) {
+    prismaLogger.error({ err }, 'Error deleting permission.')
+    throw new UserInputError('permission-delete')
   }
 
   return res
