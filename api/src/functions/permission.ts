@@ -5,19 +5,23 @@ import type { CRUDHandlerOptions } from 'src/helpers/crud-handler'
 
 import { logger } from 'src/lib/logger'
 
-import { createPermission, permissions } from 'src/services/permissions'
+import {
+  createPermission,
+  deletePermission,
+  permissions,
+} from 'src/services/permissions'
 
 import { validatePermissionTuple } from 'src/validators/permission'
 
 const options: CRUDHandlerOptions = {
   resolvers: {
-    DELETE: undefined,
+    DELETE: deletePermission,
     GET: permissions,
     POST: createPermission,
     PUT: undefined,
   },
   validators: {
-    DELETE: [],
+    DELETE: [validatePermissionTuple],
     GET: [],
     POST: [validatePermissionTuple],
     PUT: [],
@@ -29,7 +33,5 @@ export const handler = async (event: APIGatewayEvent, context: Context) => {
 
   const handler = new CRUDHandler(options)
 
-  const res = await handler.invoke(event, context)
-
-  return res
+  return await handler.invoke(event, context)
 }
