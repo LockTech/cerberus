@@ -46,10 +46,10 @@ const Modal: ModalType = ({ children, onClose, open }: ModalProps) => {
         <Transition.Child
           as="div"
           className="modal-layout"
-          enter="duration-200 ease-in-out origin-top transition-all transform-gpu"
+          enter="duration-200 ease-in-out origin-center transition-all transform-gpu"
           enterFrom="opacity-0 scale-75"
           enterTo="opacity-100 scale-100"
-          leave="duration-200 ease-in-out origin-top transition-all transform-gpu"
+          leave="duration-150 ease-in-out origin-center transition-all transform-gpu"
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-75"
         >
