@@ -2,9 +2,12 @@ import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from '@apollo/client'
+import { useAuth } from '@redwoodjs/auth'
 import { FieldError, Form, Label, TextField, Submit } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+
+import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
 
 import AccountDangerCard from 'src/components/AccountDangerCard'
 import FailureCard from 'src/components/FailureCard'
@@ -77,17 +80,24 @@ export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
   })
   const { reset } = formMethods
   const { dirtyFields, isDirty } = formMethods.formState
-
   const { t } = useTranslation()
 
+  const { reauthenticate } = useAuth()
+
+  const currentAccount = useCurrentAccount()
+
   const onCompleted = useCallback(
-    (data: AccountUpdateMutation) => {
+    async (data: AccountUpdateMutation) => {
       toast.dismiss()
       toast.success(t('Account.Update.Cell.Success.success'))
 
       reset({ email: data.account.email, name: data.account.name })
+
+      if (id === currentAccount.id) {
+        await reauthenticate()
+      }
     },
-    [reset, t]
+    [currentAccount, id, reauthenticate, reset, t]
   )
   const onError = useCallback(
     (error: Error) => {
