@@ -10,11 +10,14 @@ import {
   FieldError,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
-import { parseSearch } from '@redwoodjs/router/dist/util'
 import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-const LoginPage = () => {
+export interface LoginPageProps {
+  redirectTo?: string
+}
+
+const LoginPage = ({ redirectTo }: LoginPageProps) => {
   const { t } = useTranslation()
 
   const { isAuthenticated, logIn } = useAuth()
@@ -23,18 +26,14 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      const redirect =
-        location.search &&
-        (parseSearch(location.search) as { redirectTo: string }).redirectTo
-
-      if (redirect) {
-        window.location.href = redirect
+      if (redirectTo) {
+        window.location.href = redirectTo
         toast(t('Login.Page.redirect'))
       } else {
         navigate(routes.home())
       }
     }
-  }, [isAuthenticated, location, t])
+  }, [isAuthenticated, redirectTo, location, t])
 
   const usernameRef = useRef<HTMLInputElement>()
   useEffect(() => {
