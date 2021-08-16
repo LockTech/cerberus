@@ -141,28 +141,44 @@ export interface DeleteRoleArgs {
 }
 /**
  * @throws
+ *  * 'role-delete-relations' - When an error occurs retrieving relations to the role from the DB.
  *  * 'role-delete' - When an error occurs deleting the role from the DB.
  */
 export const deleteRole = async ({ id }: DeleteRoleArgs) => {
   let res: Role
 
-  const roleRelations = await db.role.findUnique({
-    select: {
-      accounts: {
-        select: {
-          id: true,
+  let roleRelations: {
+    accounts: { id: string }[]
+    permissions: {
+      object: string
+      namespace: string
+      relation: string
+    }[]
+  }
+
+  try {
+    roleRelations = await db.role.findUnique({
+      select: {
+        accounts: {
+          select: {
+            id: true,
+          },
+        },
+        permissions: {
+          select: {
+            namespace: true,
+            object: true,
+            relation: true,
+          },
         },
       },
-      permissions: {
-        select: {
-          namespace: true,
-          object: true,
-          relation: true,
-        },
-      },
-    },
-    where: { id },
-  })
+      where: { id },
+    })
+  } catch (err) {
+    prismaLogger.error({ err }, 'Error retrieving role DB relations.')
+    throw new UserInputError('role-delete-relations')
+  }
+
   roleRelations.permissions.forEach(async (perm) => {
     const tuple = KetoBuildPermissionTuple({ ...perm, roleId: id })
 
@@ -191,29 +207,46 @@ export const deleteRole = async ({ id }: DeleteRoleArgs) => {
 
 /**
  * @throws
- *  * 'roles-delete' - When an error occurs deleting all roles from the DB.
+ *  * 'role-delete-relations' - When an error occurs retrieving role-relations from the DB.
+ *  * 'role-delete' - When an error occurs deleting all roles from the DB.
  */
 export const deleteAllRoles = async () => {
   const organizationId = getContextUser().organizationId
 
-  const roles = await db.role.findMany({
-    select: {
-      id: true,
-      accounts: {
-        select: {
-          id: true,
+  let roles: {
+    id: string
+    accounts: { id: string }[]
+    permissions: {
+      object: string
+      namespace: string
+      relation: string
+    }[]
+  }[]
+
+  try {
+    roles = await db.role.findMany({
+      select: {
+        id: true,
+        accounts: {
+          select: {
+            id: true,
+          },
+        },
+        permissions: {
+          select: {
+            namespace: true,
+            object: true,
+            relation: true,
+          },
         },
       },
-      permissions: {
-        select: {
-          namespace: true,
-          object: true,
-          relation: true,
-        },
-      },
-    },
-    where: { organizationId },
-  })
+      where: { organizationId },
+    })
+  } catch (err) {
+    prismaLogger.error({ err }, 'Error retrieving all role relations.')
+
+    throw new UserInputError('role-delete-relations')
+  }
 
   roles.forEach(async (role) => {
     const roleId = role.id
@@ -236,7 +269,7 @@ export const deleteAllRoles = async () => {
     await db.role.deleteMany({ where: { organizationId } })
   } catch (err) {
     prismaLogger.error({ err }, 'Error deleting all roles.')
-    throw new UserInputError('roles-delete')
+    throw new UserInputError('role-delete')
   }
 
   return true
