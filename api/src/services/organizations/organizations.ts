@@ -80,6 +80,7 @@ export const createOrganization = async ({
     throw new UserInputError('organization-create')
   }
 
+  const organization = res.organization
   const organizationId = res.organization.id
 
   const tuple = KetoBuildOrgMemberTuple(accountId, organizationId)
@@ -112,6 +113,16 @@ export const createOrganization = async ({
     throw err
   }
 
+  if (permission === null) {
+    logger.fatal("Cerberus' administrator permission has not been created.")
+
+    await deleteRole({ id: roleId })
+
+    await db.organization.delete({ where: { id: organizationId } })
+
+    throw new Error('Cerberus')
+  }
+
   const permissionId = permission.id
 
   // perm->role
@@ -140,7 +151,7 @@ export const createOrganization = async ({
     throw err
   }
 
-  return res.organization
+  return organization
 }
 
 /**
