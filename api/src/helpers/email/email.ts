@@ -90,7 +90,6 @@ export const sendInviteEmail = async ({
 // ==
 interface SendSignupEmailData extends TemplateData {
   code: string
-  email: string
 }
 interface SendSignupEmailOptions {
   data: SendSignupEmailData

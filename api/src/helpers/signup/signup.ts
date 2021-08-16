@@ -106,7 +106,6 @@ export const handleSignup = async ({
   try {
     const data = {
       code,
-      email,
     }
     await sendSignupEmail({ data, email })
   } catch (err) {
