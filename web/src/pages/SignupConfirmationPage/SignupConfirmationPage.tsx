@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useRecoilValue } from 'recoil'
 import { useMutation } from '@apollo/client'
+import { useAuth } from '@redwoodjs/auth'
 import { Form, Label, FieldError, Submit, TextField } from '@redwoodjs/forms'
+import { navigate, routes } from '@redwoodjs/router'
 import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { navigate, routes } from '@redwoodjs/router'
+
+import { SignupDataAtom } from 'src/atoms/SignupData'
 
 export const MUTATION = gql`
   mutation SignupConfirmationMutation($code: String!, $email: String!) {
@@ -20,12 +24,12 @@ interface SignupConfirmationFormData {
   code: string
 }
 
-export interface SignupConfirmationPageProps {
-  email?: string
-}
-
-const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
+const SignupConfirmationPage = () => {
   const { t } = useTranslation()
+
+  const signupData = useRecoilValue(SignupDataAtom)
+
+  const { logIn } = useAuth()
 
   const codeRef = useRef<HTMLElement>()
   useEffect(() => {
@@ -35,18 +39,23 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
   // ==
 
   const onCompleted = useCallback(
-    (data: SignupConfirmationMutationResult) => {
+    async (data: SignupConfirmationMutationResult) => {
       toast.dismiss()
 
-      if (data.confirmed) {
+      if (data.confirmed && signupData) {
         toast(t('Signup.Confirmation.Page.login'))
         toast.success(t('Signup.Confirmation.Page.success'))
-        navigate(routes.login())
+
+        const { username, password } = signupData
+
+        await logIn({ username, password })
+
+        navigate(routes.signupOrganization())
       } else {
         toast.error(t('Signup.Confirmation.Page.failure'))
       }
     },
-    [t]
+    [logIn, signupData, t]
   )
   const onError = useCallback(
     (error: Error) => {
@@ -64,16 +73,14 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
   })
 
   const onSubmit = useCallback(
-    (data: SignupConfirmationFormData) => {
+    ({ code }: SignupConfirmationFormData) => {
       if (loading) return
 
       toast.loading(t('Signup.Confirmation.Page.loading'))
 
-      const code = data.code
-
-      mutate({ variables: { code, email } })
+      mutate({ variables: { code, email: signupData.username } })
     },
-    [email, loading, mutate, t]
+    [loading, mutate, signupData, t]
   )
 
   return (
@@ -85,7 +92,7 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
         <header className="title-group">
           <h1 className="title">{t('Signup.Confirmation.Page.title')}</h1>
         </header>
-        {!email && (
+        {!signupData && (
           <div className="space-y-3">
             <p className="text">
               {t('Signup.Confirmation.Page.emailNotFound')}
@@ -95,16 +102,16 @@ const SignupConfirmationPage = ({ email }: SignupConfirmationPageProps) => {
             </p>
           </div>
         )}
-        {email && (
+        {signupData && (
           <>
             <div className="space-y-3">
               <p className="text">
                 {t(
                   `Signup.Confirmation.Page.${
-                    email ? 'codeEmail' : 'codeSent'
+                    signupData.username ? 'codeEmail' : 'codeSent'
                   }`,
                   {
-                    email,
+                    email: signupData.username,
                   }
                 )}
               </p>
