@@ -12,6 +12,7 @@ model Account {
   id                            String                            @id @default(uuid())
   email                         String                            @unique
   name                          String
+  disabled                      Boolean                           @default(false)
   //
   verified                      Boolean                           @default(false)
   verifiedAt                    DateTime?
