@@ -11,7 +11,10 @@ import {
   permissions,
 } from 'src/services/permissions'
 
-import { validatePermissionTuple } from 'src/validators/permission'
+import {
+  validatePermissionAccessRel,
+  validatePermissionTuple,
+} from 'src/validators/permission'
 
 const options: CRUDHandlerOptions = {
   resolvers: {
@@ -23,7 +26,7 @@ const options: CRUDHandlerOptions = {
   validators: {
     DELETE: [validatePermissionTuple],
     GET: [],
-    POST: [validatePermissionTuple],
+    POST: [validatePermissionAccessRel, validatePermissionTuple],
     PUT: [],
   },
 }
