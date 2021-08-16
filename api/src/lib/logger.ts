@@ -18,6 +18,7 @@ const AccountRedactions = [
   'createdAt',
   'updatedAt',
   'lastLoginAt',
+  'code',
 ]
 
 /**
