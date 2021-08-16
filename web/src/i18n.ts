@@ -3,6 +3,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 
 import en_app from './locales/en/app.json'
+import en_errors from './locales/en/errors.json'
 import en_permissions from './locales/en/permissions.json'
 
 i18n
@@ -10,7 +11,7 @@ i18n
   .use(LanguageDetector)
   .init({
     interpolation: {
-      escapeValue: false,
+      escapeValue: false, // React already does escaping
       format: (value: string, format: string, lng: string) => {
         if (format === 'pluralPossessive' && lng === 'en') {
           if (!value.endsWith('s') && !value.endsWith('S')) {
@@ -35,14 +36,15 @@ i18n
 
         return value
       },
-    }, // React already does escaping
+    },
     lng: 'en',
     fallbackLng: 'en',
-    ns: ['app', 'permissions'],
+    ns: ['app', 'errors', 'permissions'],
     defaultNS: 'app',
     resources: {
       en: {
         app: en_app,
+        errors: en_errors,
         permissions: en_permissions,
       },
     },
