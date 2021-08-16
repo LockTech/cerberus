@@ -163,14 +163,14 @@ body.dark { @apply bg-gray-800; }
   .input-error {
     @apply input;
     /* Border */
-    @apply border-red-400;
+    @apply border-red-500;
     @apply dark:border-red-500 !important;
     /* Text */
-    @apply placeholder-red-600;
+    @apply placeholder-red-800;
     @apply dark:placeholder-red-300;
   }
   .input-field-error {
-    @apply text-red-600;
+    @apply text-red-700;
     @apply dark:text-red-300;
     @apply text-sm;
   }
@@ -183,7 +183,7 @@ body.dark { @apply bg-gray-800; }
     @apply dark:text-white;
   }
   .input-label-error {
-    @apply text-red-600;
+    @apply text-red-700;
     @apply dark:text-red-300;
   }
   .input-label-group {
