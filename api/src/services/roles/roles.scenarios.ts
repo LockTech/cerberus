@@ -13,27 +13,27 @@ export const standard = defineScenario({
   // @ts-expect-error only need three accounts
   account: {
     one: {
+      id: '00fa2b1a-40d1-4c32-be0c-516d86872970',
       email: 'foo.bar@acme.corp',
       name: 'Foo Bar',
-      id: '00fa2b1a-40d1-4c32-be0c-516d86872970',
       organizationId: '6a82a1cc-1e2f-47d6-a3e7-ce31c71450fa',
       hashedPassword: '',
       salt: '',
       verified: false,
     },
     two: {
+      id: '13d994a8-dad1-4c13-9547-f07436e61e76',
       email: 'foo.baz@acme.corp',
       name: 'Bruce Wayne',
-      id: '13d994a8-dad1-4c13-9547-f07436e61e76',
       organizationId: '6a82a1cc-1e2f-47d6-a3e7-ce31c71450fa',
       hashedPassword: '',
       salt: '',
       verified: false,
     },
     three: {
+      id: '9d17477b-ece9-4926-8c2d-440430be2bb7',
       email: 'foo.baz@example.net',
       name: 'Foo Baz',
-      id: '9d17477b-ece9-4926-8c2d-440430be2bb7',
       organizationId: 'e5a15b0b-06a8-4773-9812-0ce5d6e8b7d2',
       hashedPassword: '',
       salt: '',
@@ -63,6 +63,7 @@ export const standard = defineScenario({
   },
   role: {
     one: {
+      id: 'e757be42-2674-4060-8e62-ddc4c9cf39d7',
       name: 'Administrator',
       organization: {
         connect: {
@@ -83,6 +84,7 @@ export const standard = defineScenario({
       },
     },
     two: {
+      id: '0bb163b1-93e0-4d2c-a2f3-7fb82a418d14',
       name: 'Viewer',
       organization: {
         connect: {
@@ -96,6 +98,7 @@ export const standard = defineScenario({
       },
     },
     three: {
+      id: '4da02199-a751-47e1-ba91-9d4ac9a44086',
       name: 'Administrator',
       organization: {
         connect: {
@@ -116,6 +119,7 @@ export const standard = defineScenario({
       },
     },
     four: {
+      id: '53c5dd7d-b632-4b85-8768-3069dc801d40',
       name: 'Helper',
       organization: {
         connect: {
