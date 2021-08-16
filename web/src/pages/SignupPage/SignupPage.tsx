@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { useSetRecoilState } from 'recoil'
 import { useAuth } from '@redwoodjs/auth'
 import {
   EmailField,
@@ -15,18 +16,27 @@ import { Link, navigate, routes } from '@redwoodjs/router'
 import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import { SignupDataAtom } from 'src/atoms/SignupData'
+
 interface SignupFormData {
   name: string
   username: string
   password: string
+  confirmPassword: string
 }
 
-const SignupPage = () => {
+export interface SignupPageProps {
+  redirect?: string
+}
+
+const SignupPage = ({ redirect }: SignupPageProps) => {
   // REALLY doesn't want to validate `currentPassword` before first
   // submit without initiating the form ourselves; no biggie.
   const formMethods = useForm({ mode: 'all' })
 
   const { t } = useTranslation()
+
+  const setSignupData = useSetRecoilState(SignupDataAtom)
 
   const { isAuthenticated, signUp } = useAuth()
 
@@ -46,10 +56,10 @@ const SignupPage = () => {
     (passwordRef.current && passwordRef.current.value) || ''
 
   const onSubmit = useCallback(
-    async (data: SignupFormData) => {
+    async ({ username, name, password }: SignupFormData) => {
       toast.loading(t('Signup.Page.loading'))
 
-      const response: unknown = await signUp({ ...data })
+      const response: unknown = await signUp({ username, name, password })
 
       const error = response as Error
       const _id = response as { id: string }
@@ -61,11 +71,12 @@ const SignupPage = () => {
       } else {
         toast.success(t('Signup.Page.success'))
 
-        const email = data.username
-        navigate(routes.signupConfirmation({ email }))
+        setSignupData({ username, password, redirect })
+
+        navigate(routes.signupConfirmation())
       }
     },
-    [signUp, t]
+    [redirect, setSignupData, signUp, t]
   )
 
   return (
