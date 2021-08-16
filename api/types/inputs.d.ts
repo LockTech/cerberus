@@ -1,3 +1,7 @@
+export interface DisabledInput {
+  disabled: boolean
+}
+
 export interface EmailInput {
   email: string
 }

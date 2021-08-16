@@ -7,9 +7,25 @@ import {
   AccountEmailValidRegEx,
 } from 'src/constants/account'
 
-import { isStr } from 'src/util/asserters'
+import { isBool, isStr } from 'src/util/asserters'
 
-import type { EmailInput, IDInput, NameInput } from 'types/inputs'
+import type {
+  DisabledInput,
+  EmailInput,
+  IDInput,
+  NameInput,
+} from 'types/inputs'
+
+/**
+ * @throws
+ *  * 'account-disabled-invalid' - When `disabled` is not a boolean.
+ */
+export const validateAccountDisabled = (
+  s: string,
+  { disabled }: DisabledInput
+) => {
+  if (!isBool(disabled)) throw new ValidationError('account-disabled-invalid')
+}
 
 /**
  * @throws
@@ -18,10 +34,7 @@ import type { EmailInput, IDInput, NameInput } from 'types/inputs'
  *  * 'account-email-reserved' - When `email` contains a reserved character.
  *  * 'account-email-taken' - When `email` is in use by another account.
  */
-export const validateAccountEmail = (
-  service: string,
-  { email }: EmailInput
-) => {
+export const validateAccountEmail = (s: string, { email }: EmailInput) => {
   if (!isStr(email)) throw new ValidationError('account-email-invalid')
 
   if (email.length <= 0 || email.length > AccountEmailMaxLength)
@@ -38,7 +51,7 @@ export const validateAccountEmail = (
  *  * 'account-id-invalid' - When `id` is not a valid UUID.
  *  * 'account-id-match' - When `id` does not belong to the same organization as `context.currentUser.id`
  */
-export const validateAccountID = (service: string, { id }: IDInput) => {
+export const validateAccountID = (s: string, { id }: IDInput) => {
   if (!isUUID(id)) throw new ValidationError('account-id-invalid')
 
   // use keto to check id is a member of the invoker's organization
@@ -49,7 +62,7 @@ export const validateAccountID = (service: string, { id }: IDInput) => {
  *  * 'account-name-invalid' - When `name` is not a string.
  *  * 'account-name-length' - When `name` is less than 1 or greater than `AccountNameMaxLength` characters long.
  */
-export const validateAccountName = (service: string, { name }: NameInput) => {
+export const validateAccountName = (s: string, { name }: NameInput) => {
   if (!isStr(name)) throw new ValidationError('account-name-invalid')
 
   if (name.length <= 0 || name.length > AccountNameMaxLength)

@@ -6,6 +6,7 @@ import {
 import { randomStr } from 'src/util/randomStr'
 
 import {
+  validateAccountDisabled,
   validateAccountEmail,
   validateAccountID,
   validateAccountName,
@@ -13,6 +14,11 @@ import {
 
 const Service = 'Foo'
 
+const AccDisabledInvalid = {
+  name: 'ValidationError',
+  message: 'account-disabled-invalid',
+}
+//
 const AccEmailInvalid = {
   name: 'ValidationError',
   message: 'account-email-invalid',
@@ -41,6 +47,36 @@ const AccNameLength = {
 }
 
 describe('account validator', () => {
+  describe('account disabled', () => {
+    it('throws when `disabled` is not a boolean', () => {
+      expect(() =>
+        validateAccountDisabled(Service, { disabled: undefined })
+      ).toThrow(AccDisabledInvalid)
+      expect(() =>
+        validateAccountDisabled(Service, { disabled: null })
+      ).toThrow(AccDisabledInvalid)
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountDisabled(Service, { disabled: '' })).toThrow(
+        AccDisabledInvalid
+      )
+      // @ts-expect-error checking failing functionality
+      expect(() => validateAccountDisabled(Service, { disabled: 42 })).toThrow(
+        AccDisabledInvalid
+      )
+      expect(() =>
+        // @ts-expect-error checking failing functionality
+        validateAccountDisabled(Service, { disabled: () => 42 })
+      ).toThrow(AccDisabledInvalid)
+      expect(() =>
+        // @ts-expect-error checking failing functionality
+        validateAccountDisabled(Service, { disabled: () => false })
+      ).toThrow(AccDisabledInvalid)
+      expect(() =>
+        validateAccountDisabled(Service, { disabled: true })
+      ).not.toThrow()
+    })
+  })
+
   describe('account email', () => {
     it('throws when `email` is not a string', () => {
       expect(() => validateAccountEmail(Service, { email: undefined })).toThrow(
