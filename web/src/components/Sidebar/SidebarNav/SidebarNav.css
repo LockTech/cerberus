@@ -19,12 +19,11 @@
 .sidebar nav button {
   /* Background */
   @apply bg-transparent;
-  @apply hover:bg-gray-800 active:bg-gray-700;
-  /* @apply dark:hover:bg-gray-900 dark:active:bg-gray-800; */
+  @apply hover:bg-gray-700 active:bg-gray-600;
   /* Border */
   @apply border rounded;
   @apply border-transparent;
-  @apply hover:border-gray-700;
+  @apply hover:border-gray-600 active:border-gray-500;
   /* Text */
   @apply font-medium tracking-wider;
   @apply text-gray-400 hover:text-gray-100 active:text-gray-50;

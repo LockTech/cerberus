@@ -5,8 +5,8 @@
 .sidebar {
   /* Background */
   /* @apply bg-white; */
-  @apply bg-gray-900;
   /* @apply dark:bg-black dark:bg-opacity-30; */
+  @apply bg-gray-800;
   /* Misc */
   @apply max-w-[80%] lg:max-w-[10%] min-w-[17rem] w-[18%];
   @apply pb-6;
