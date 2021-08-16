@@ -58,7 +58,7 @@ export interface PermissionArgs {
 }
 /**
  * @throws
- *  * 'permission-get' - When an error occurs getting the permission from the DB.
+ *  * 'permission-read' - When an error occurs getting the permission from the DB.
  */
 export const permission = async ({
   id,
@@ -83,7 +83,7 @@ export const permission = async ({
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error getting permission.')
-    throw new UserInputError('permission-get')
+    throw new UserInputError('permission-read')
   }
 
   return res
@@ -91,7 +91,7 @@ export const permission = async ({
 
 /**
  * @throws
- *  * 'permission-get' - When an error occurs getting the permission from the DB.
+ *  * 'permissions-read' - When an error occurs getting the permission from the DB.
  */
 export const permissions = async () => {
   let res: Permission[]
@@ -100,7 +100,7 @@ export const permissions = async () => {
     res = await db.permission.findMany()
   } catch (err) {
     prismaLogger.error({ err }, 'Error getting permissions.')
-    throw new UserInputError('permission-get')
+    throw new UserInputError('permissions-read')
   }
 
   return res

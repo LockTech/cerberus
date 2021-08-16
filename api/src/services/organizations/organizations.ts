@@ -156,7 +156,7 @@ export const createOrganization = async ({
 
 /**
  * @throws
- *  * 'organization-get' - When an error occurs retrieving the organization from the database.
+ *  * 'organization-read' - When an error occurs retrieving the organization from the database.
  */
 export const organization = async () => {
   const id = getContextUser().organizationId
@@ -167,7 +167,7 @@ export const organization = async () => {
     res = await db.organization.findUnique({ where: { id } })
   } catch (err) {
     prismaLogger.error({ err }, 'Error getting organization.')
-    throw new UserInputError('organization-get')
+    throw new UserInputError('organization-read')
   }
 
   return res

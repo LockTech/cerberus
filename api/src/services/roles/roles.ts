@@ -95,7 +95,7 @@ export const role = async ({ id }: RoleArgs) => {
 
 /**
  * @throws
- *  * 'role-read' - When an error occurs reading roles from the DB.
+ *  * 'roles-read' - When an error occurs reading roles from the DB.
  */
 export const roles = async () => {
   const organizationId = getContextUser().organizationId
@@ -106,7 +106,7 @@ export const roles = async () => {
     res = await db.role.findMany({ where: { organizationId } })
   } catch (err) {
     prismaLogger.error({ err }, 'Error listing roles.')
-    throw new UserInputError('role-read')
+    throw new UserInputError('roles-read')
   }
 
   return res

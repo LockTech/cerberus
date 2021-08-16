@@ -102,7 +102,7 @@ export const account = async ({ id }: { id: string }) => {
 
 /**
  * @throws
- *  * 'account-read' - When an error occurs retrieving accounts from the DB.
+ *  * 'accounts-read' - When an error occurs retrieving accounts from the DB.
  */
 export const accounts = async () => {
   const organizationId = getContextUser().organizationId
@@ -115,7 +115,7 @@ export const accounts = async () => {
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error getting accounts.')
-    throw new UserInputError('account-read')
+    throw new UserInputError('accounts-read')
   }
 
   res = res.map((acc) => AccountRemoveAuthFields(acc))
