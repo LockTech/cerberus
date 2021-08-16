@@ -40,6 +40,7 @@ const redact: redactOptions = {
     ...getAccountRedactions('data.redwood.currentUser'),
     ...getAccountRedactions('data'),
     ...getAccountRedactions('data.*'),
+    ...getAccountRedactions('data.accounts.*'),
     ...getAccountRedactions('query'),
     ...getAccountRedactions('query.*'),
     //
