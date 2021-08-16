@@ -15,10 +15,11 @@ const Create = {
   message: 'permission-create',
 }
 
-const Tuple = {
+const TestInput = {
   application: 'foos_bookstore',
   namespace: 'foos_bookstore',
   relation: 'publish_books',
+  access_relation: '1',
 }
 
 describe('permissions service', () => {
@@ -40,23 +41,23 @@ describe('permissions service', () => {
     scenario(
       'returns the created permission after completion',
       async (_scenario: PermissionStandard) => {
-        const res = await createPermission(Tuple)
+        const res = await createPermission(TestInput)
 
-        const dbRes = await db.permission.findFirst({ where: Tuple })
+        const dbRes = await db.permission.findFirst({ where: TestInput })
 
         // @ts-expect-error checking for partial object
-        expect(dbRes).toEqual(expect.objectContaining<Permission>(Tuple))
+        expect(dbRes).toEqual(expect.objectContaining<Permission>(TestInput))
         expect(dbRes).toEqual(expect.objectContaining<Permission>(res))
       }
     )
 
     scenario(
-      'creates a new permission using a given PermissionTuple',
+      'creates a new permission using a given input',
       async (_scenario: PermissionStandard) => {
-        const res = await createPermission(Tuple)
+        const res = await createPermission(TestInput)
 
         // @ts-expect-error checking for partial object
-        expect(res).toEqual(expect.objectContaining<Permission>(Tuple))
+        expect(res).toEqual(expect.objectContaining<Permission>(TestInput))
       }
     )
   })

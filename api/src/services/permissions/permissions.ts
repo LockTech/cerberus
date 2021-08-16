@@ -37,6 +37,7 @@ export interface CreatePermissionArgs {
   namespace: string
   object?: string
   relation?: string
+  access_relation?: string
 }
 export const createPermission = async (data: CreatePermissionArgs) => {
   let res: Permission
