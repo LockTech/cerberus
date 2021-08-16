@@ -26,12 +26,42 @@ export interface CRUDHandlerOptions {
 }
 
 /**
- * Provides minimal mapping between service-endpoints (`resolvers`) and common CRUD methods; designed to be used with a serverless function,
+ * # Summary
+ *
+ * Provides minimal mapping between service-endpoints (`resolvers`) and common HTTP-CRUD methods; designed to be used with a serverless function,
  * removing the need to manually call services in response to a particular method being invoked.
  *
- * `validators` used by a service's `beforeResolver` can be reused.
+ * The following `methods` are available to map:
  *
- * To not use a resolver, pass the value `undefined`.
+ * * `DELETE`
+ * * `GET`
+ * * `POST`
+ * * `PUT`
+ *
+ * Requests which do not provide the above `methods` will be rejected with a status-code of `404`.
+ *
+ * All requests must be sent with the header `content-type` set to `application/json`; the `body` of the request should be a stringified JSON object or array,
+ * whatever is applicable to your use-case. The `CRUDHandler` will take care of parsing this JSON, ensuring your service-endpoint only recieves a JavaScript object - as it
+ * would if it were to be used by the GraphQL handler.
+ *
+ * Likewise, the endpoint will stringify the response of your service-endpoint, adding it to the `body` of the function's response.
+ *
+ * ## Resolver
+ *
+ * To not use a resolver, pass the value `undefined`; this will return a status-code of `404` if the function recieves the corresponding request (see example below).
+ *
+ * ## Validation
+ *
+ * To not provide validation, provide an empty array (see example below).
+ *
+ * ## Webhooks
+ *
+ * By default, *every* invocation of your function will be validated using [RedwoodJS' webhook features](https://redwoodjs.com/docs/webhooks.html#verifying-webhooks-with-redwoodjs-made-easy).
+ * You can disable webhooks on a per-resolver basis by providing a `webhooks` object to your configuration and setting any of the `methods` to `false` (see example below).
+ *
+ * Your configuration will be merged on-top of the default - meaning if you disable only `GET`, all other methods will still be verified.
+ *
+ * ## Example
  *
  * @example
  *  const options: CRUDHandlerOptions = {
@@ -39,14 +69,17 @@ export interface CRUDHandlerOptions {
  *      DELETE: deletePermission,
  *      GET: permissions,
  *      POST: createPermission,
- *      PUT: updatePermission,
+ *      PUT: undefined,
  *    },
  *    validators: {
  *      DELETE: [...],
  *      GET: [...],
  *      POST: [validatePermissionTuple],
- *      PUT: [...],
+ *      PUT: [],
  *    },
+ *    webhooks: {
+ *      GET: false,
+ *    }
  *  }
  *
  *  export const handler = async (event: APIGatewayEvent, context: Context) => {
@@ -54,9 +87,7 @@ export interface CRUDHandlerOptions {
  *
  *    const handler = new CRUDHandler(options)
  *
- *    const res = await handler.invoke(event, context)
- *
- *    return res
+ *    return await handler.invoke(event, context)
  *  }
  */
 export class CRUDHandler {
@@ -68,8 +99,21 @@ export class CRUDHandler {
   }
 
   async invoke(event: APIGatewayEvent, _c: Context): Promise<ProxyResult> {
-    validateJSONBody('CRUDHandler', event)
-    validateHTTPMethod('CRUDHandler', event)
+    // validateJSONBody
+    try {
+      validateJSONBody('CRUDHandler', event)
+    } catch (err) {
+      return returnFunctionError(err)
+    }
+    // validateHTTPMethod
+    try {
+      validateHTTPMethod('CRUDHandler', event)
+    } catch (err) {
+      return {
+        statusCode: 404,
+        body: null,
+      }
+    }
 
     const method = event.httpMethod.toUpperCase() as CRUDMethod
 
