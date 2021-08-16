@@ -2,7 +2,7 @@ import { resolve } from 'path'
 
 export const EmailFrom = process.env.EMAIL_FROM
 
-export const EmailDirectory = resolve(__dirname, '../../../emails')
+export const EmailDirectory = resolve(__dirname, '../../emails')
 
 export const EmailInviteFilePath = `${EmailDirectory}/invite.html`
 export const EmailInviteSubject = process.env.EMAIL_INVITE_SUBJECT
