@@ -222,9 +222,9 @@ describe('account service', () => {
 
         const res = await updateAccount({ email, id })
 
-        expect(res.email).not.toBe(updatee.email)
-        expect(res.name).toBe(updatee.name)
+        expect(res.disabled).toBe(updatee.disabled)
         expect(res.email).toBe(email)
+        expect(res.name).toBe(updatee.name)
       }
     )
 
@@ -238,9 +238,25 @@ describe('account service', () => {
 
         const res = await updateAccount({ name, id })
 
+        expect(res.disabled).toBe(updatee.disabled)
         expect(res.email).toBe(updatee.email)
-        expect(res.name).not.toBe(updatee.name)
         expect(res.name).toBe(name)
+      }
+    )
+
+    scenario(
+      "updates only an account's `disabled` status",
+      async (scenario: AccountStandard) => {
+        const updatee = scenario.account.one as Account
+        const id = updatee.id
+
+        const disabled = true
+
+        const res = await updateAccount({ disabled, id })
+
+        expect(res.disabled).toBe(disabled)
+        expect(res.email).toBe(updatee.email)
+        expect(res.name).toBe(updatee.name)
       }
     )
   })

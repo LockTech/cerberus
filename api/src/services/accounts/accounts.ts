@@ -22,6 +22,7 @@ import { randomStr } from 'src/util/randomStr'
 
 import { validateAuth } from 'src/validators/auth'
 import {
+  validateAccountDisabled,
   validateAccountEmail,
   validateAccountID,
   validateAccountName,
@@ -29,6 +30,7 @@ import {
 import { reject } from 'src/validators/reject'
 
 /* eslint-disable prettier/prettier */
+const valUpdateDisabled = (s: string, { disabled }) => disabled && validateAccountDisabled(s, { disabled })
 const valUpdateEmail = (s: string, { email }) => email && validateAccountEmail(s, { email })
 const valUpdateName = (s: string, { name }) => name && validateAccountName(s, { name })
 
@@ -37,7 +39,7 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateAuth)
   rules.add(validateAccountEmail, { only: ['inviteAccount'] })
   rules.add(validateAccountID, { only: ['account', 'updateAccount', 'deleteAccount'] })
-  rules.add([valUpdateEmail, valUpdateName], { only: ['updateAccount'] })
+  rules.add([valUpdateDisabled, valUpdateEmail, valUpdateName], { only: ['updateAccount'] })
 }
 /* eslint-enable prettier/prettier */
 
@@ -123,6 +125,7 @@ export const accounts = async () => {
 
 export interface UpdateAccountArgs {
   id: string
+  disabled?: boolean
   email?: string
   name?: string
 }
@@ -130,12 +133,14 @@ export interface UpdateAccountArgs {
  * @throws
  *  * 'account-update' - When an error occures updating the Account in the DB.
  */
-export const updateAccount = async ({ email, id, name }: UpdateAccountArgs) => {
+/* eslint-disable prettier/prettier */
+export const updateAccount = async ({ id, disabled, email, name }: UpdateAccountArgs) => {
+  /* eslint-enable prettier/prettier */
   let res: Account
 
   try {
     res = await db.account.update({
-      data: { email, name },
+      data: { disabled, email, name },
       where: { id },
     })
   } catch (err) {
