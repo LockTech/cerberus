@@ -7,6 +7,10 @@ import { navigate, routes } from '@redwoodjs/router'
 import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
+import { useRecoilValue } from 'recoil'
+import { SignupDataAtom } from 'src/atoms/SignupData'
+
 export const MUTATION = gql`
   mutation CreateOrganizationMutation($name: String!, $adminRoleName: String!) {
     organization: createOrganization(
@@ -31,6 +35,10 @@ const SignupOrganizationPage = () => {
 
   const { reauthenticate } = useAuth()
 
+  const currentAccount = useCurrentAccount()
+
+  const signupData = useRecoilValue(SignupDataAtom)
+
   const onCompleted = useCallback(
     async (_result: CreateOrganizationMutationResult) => {
       await reauthenticate()
@@ -38,9 +46,15 @@ const SignupOrganizationPage = () => {
       toast.dismiss()
       toast.success(t('Signup.Organization.Page.success'))
 
+      if (signupData.redirect) {
+        window.location.href = signupData.redirect
+        toast(t('Signup.Organization.Page.redirect'))
+      } else {
+        navigate(routes.home())
+      }
       navigate(routes.home())
     },
-    [reauthenticate, t]
+    [reauthenticate, signupData, t]
   )
   const onError = useCallback(
     (error: Error) => {
@@ -66,6 +80,9 @@ const SignupOrganizationPage = () => {
     },
     [loading, mutate, t]
   )
+
+  if (!currentAccount || currentAccount.organization !== null)
+    navigate(routes.home())
 
   return (
     <>
