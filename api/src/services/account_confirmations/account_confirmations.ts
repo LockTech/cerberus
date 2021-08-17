@@ -19,7 +19,7 @@ export interface CreateInviteConfirmArgs {
 }
 /**
  * @throws
- *  * 'account-confirmation-create' - When there is an error creating the AccountConfirmation in the DB.
+ *  * 'invite-confirmation-create' - When there is an error creating the AccountConfirmation in the DB.
  */
 export const createInviteConfirm = async ({
   code,
@@ -38,7 +38,7 @@ export const createInviteConfirm = async ({
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error creating invitation confirmation.')
-    throw new UserInputError('account-confirmation-create')
+    throw new UserInputError('invite-confirmation-create')
   }
 
   return res
@@ -50,7 +50,7 @@ export interface CreateSignupConfirmArgs {
 }
 /**
  * @throws
- *  * 'account-confirmation-create' - When there is an error creating the AccountConfirmation in the DB.
+ *  * 'signup-confirmation-create' - When there is an error creating the AccountConfirmation in the DB.
  */
 export const createSignupConfirm = async ({
   code,
@@ -67,7 +67,7 @@ export const createSignupConfirm = async ({
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error creating signup confirmation.')
-    throw new UserInputError('account-confirmation-create')
+    throw new UserInputError('signup-confirmation-create')
   }
 
   return res
@@ -78,16 +78,9 @@ export interface ConfirmInvitationArgs {
   email: string
 }
 /**
- * Determines if a given `code` and `email` combination are valid for an `invitation` to an organization.
- *
- * If the combination are valid, the record in the DB will be deleted.
- *
- * @returns
- *  * `false` if the combination are **not** valid.
- *  * `true` if the combination is valid.
  * @throws
- *  * 'account-confirmation-get' - When there is an error retrieving the Account_Confirmation from the DB.
- *  * 'account-confirmation-delete' - When there is an error deleting the Account_Confirmation from the DB.
+ *  * 'invite-confirmation-delete' - When there is an error deleting the Account_Confirmation from the DB.
+ *  * 'invite-confirmation-read' - When there is an error retrieving the Account_Confirmation from the DB.
  */
 export const confirmInvitation = async ({
   code,
@@ -109,7 +102,7 @@ export const confirmInvitation = async ({
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error getting invitation confirmation.')
-    throw new UserInputError('account-confirmation-get')
+    throw new UserInputError('invite-confirmation-read')
   }
 
   if (res === null) return null
@@ -123,7 +116,7 @@ export const confirmInvitation = async ({
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Eerror deleting invitation confirmation.')
-    throw new Error('account-confirmation-delete')
+    throw new Error('invite-confirmation-delete')
   }
 
   return res
@@ -134,18 +127,10 @@ export interface ConfirmSignupArgs {
   email: string
 }
 /**
- * Determines if a given `code` and `email` combination are valid for a new account `signup`.
- *
- * If the combination are valid, the record in the DB will be deleted and the account
- * which was confirmed will be `verified`.
- *
- * @returns
- *  * `false` if the combination are **not** valid.
- *  * `true` if the combination is valid.
  * @throws
- *  * 'account-confirmation-get' - When there is an error retrieving the Account_Confirmation from the DB.
- *  * 'account-confirmation-update' - When there is an error updating the confirmed account in the DB.
- *  * 'account-confirmation-delete' - When there is an error deleting the Account_Confirmation from the DB.
+ *  * 'signup-confirmation-delete' - When there is an error deleting the Account_Confirmation from the DB.
+ *  * 'signup-confirmation-read' - When there is an error retrieving the Account_Confirmation from the DB.
+ *  * 'signup-confirmation-update' - When there is an error updating the confirmed account in the DB.
  */
 export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
   let res: Account_Confirmation
@@ -164,7 +149,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error getting signup confirmaton.')
-    throw new UserInputError('account-confirmation-get')
+    throw new UserInputError('signup-confirmation-read')
   }
 
   if (res === null) return false
@@ -178,7 +163,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error verifying account.')
-    throw new UserInputError('account-confirmation-update')
+    throw new UserInputError('signup-confirmation-update')
   }
 
   const id = res.id
@@ -188,7 +173,7 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error deleting signup confirmation.')
-    throw new UserInputError('account-confirmation-delete')
+    throw new UserInputError('signup-confirmation-delete')
   }
 
   return true

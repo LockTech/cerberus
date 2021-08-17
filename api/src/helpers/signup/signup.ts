@@ -142,9 +142,6 @@ interface SignupHandlerOptions {
 }
 /**
  * @throws
- *  * Any error thrown by `validateEmail`
- *  * 'signup-name-required' - When `name` is not present.
- *  * 'signup-name-length' - When `name` is not present.
  *  * 'signup-invalid-code' - When `code` is defined but not a string.
  */
 export const signupHandler = async ({

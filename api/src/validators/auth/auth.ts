@@ -66,7 +66,6 @@ export const validateAuthOrganization = (s: string) => {
 
 /**
  * @throws
- *  * 'auth-invalid' - When `context.currentUser.verified` is not a boolean
  *  * 'auth-verified' - When `context.currentUser.verified` is `false` or `undefined`
  */
 export const validateAuthVerified = (s: string) => {
@@ -75,14 +74,14 @@ export const validateAuthVerified = (s: string) => {
 
   const verified = currentUser.verified
 
-  if (!isBool(verified)) throw new ValidationError('auth-invalid')
+  if (!isBool(verified)) throw new ValidationError('auth-verified')
 
   if (!verified) throw new ValidationError('auth-verified')
 }
 
 /**
  * @throws
- *  * 'authorization' - When the Keto `check` fails.
+ *  * 'auth-is-admin' - When the Keto `check` fails.
  */
 export const validateIsAdmin = (_s: string) => {
   const id = context.currentUser.id as string
@@ -98,7 +97,7 @@ export const validateIsAdmin = (_s: string) => {
 
   const res = true // await checkTuple(tuple)
 
-  if (!res) throw new AuthenticationError('authorization')
+  if (!res) throw new AuthenticationError('auth-is-admin')
 }
 
 /**

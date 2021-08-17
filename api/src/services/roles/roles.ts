@@ -141,7 +141,6 @@ export interface DeleteRoleArgs {
 }
 /**
  * @throws
- *  * 'role-delete-relations' - When an error occurs retrieving relations to the role from the DB.
  *  * 'role-delete' - When an error occurs deleting the role from the DB.
  */
 export const deleteRole = async ({ id }: DeleteRoleArgs) => {
@@ -175,8 +174,11 @@ export const deleteRole = async ({ id }: DeleteRoleArgs) => {
       where: { id },
     })
   } catch (err) {
-    prismaLogger.error({ err }, 'Error retrieving role DB relations.')
-    throw new UserInputError('role-delete-relations')
+    prismaLogger.error(
+      { err },
+      'Error retrieving role account and permission relations.'
+    )
+    throw new UserInputError('role-delete')
   }
 
   roleRelations.permissions.forEach(async (perm) => {
@@ -207,8 +209,7 @@ export const deleteRole = async ({ id }: DeleteRoleArgs) => {
 
 /**
  * @throws
- *  * 'role-delete-relations' - When an error occurs retrieving role-relations from the DB.
- *  * 'role-delete' - When an error occurs deleting all roles from the DB.
+ *  * 'roles-delete' - When an error occurs deleting all roles from the DB.
  */
 export const deleteAllRoles = async () => {
   const organizationId = getContextUser().organizationId
@@ -245,7 +246,7 @@ export const deleteAllRoles = async () => {
   } catch (err) {
     prismaLogger.error({ err }, 'Error retrieving all role relations.')
 
-    throw new UserInputError('role-delete-relations')
+    throw new UserInputError('roles-delete')
   }
 
   roles.forEach(async (role) => {
@@ -269,7 +270,7 @@ export const deleteAllRoles = async () => {
     await db.role.deleteMany({ where: { organizationId } })
   } catch (err) {
     prismaLogger.error({ err }, 'Error deleting all roles.')
-    throw new UserInputError('role-delete')
+    throw new UserInputError('roles-delete')
   }
 
   return true
@@ -281,6 +282,10 @@ export interface AddPermToRoleArgs {
   permissionId: string
   roleId: string
 }
+/**
+ * @throws
+ *  * 'role-add-permission' - When an error occurs adding a permission to a role.
+ */
 export const addPermToRole = async ({
   permissionId,
   roleId,
@@ -321,6 +326,10 @@ export interface AddRoleToAccountArgs {
   accountId: string
   roleId: string
 }
+/**
+ * @throws
+ *  * 'role-add-account' - When an error occurs adding a role to an account.
+ */
 export const addRoleToAccount = async ({
   accountId,
   roleId,
@@ -354,6 +363,10 @@ export interface DelPermFromRoleArgs {
   permissionId: string
   roleId: string
 }
+/**
+ * @throws
+ * * 'role-delete-permission' - When an error occurs deleting a permission from a role.
+ */
 export const delPermFromRole = async ({
   permissionId,
   roleId,
@@ -384,7 +397,7 @@ export const delPermFromRole = async ({
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error removing permission from role.')
-    throw new UserInputError('role-remove-permission')
+    throw new UserInputError('role-delete-permission')
   }
 
   return res
@@ -394,6 +407,10 @@ export interface DelRoleFromAccountArgs {
   accountId: string
   roleId: string
 }
+/**
+ * @throws
+ *  * 'role-delete-account' - When an error occurs deleting a role from an account.
+ */
 export const delRoleFromAccount = async ({
   accountId,
   roleId,
@@ -417,7 +434,7 @@ export const delRoleFromAccount = async ({
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error removing role from account.')
-    throw new UserInputError('role-remove-account')
+    throw new UserInputError('role-delete-account')
   }
 
   return res

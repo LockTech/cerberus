@@ -50,7 +50,7 @@ interface CheckTupleResult {
 }
 /**
  * @throws
- *  * 'keto-tuple-delete' - When an error occurs checking the relation tuple using the configured Keto instance.
+ *  * 'keto-tuple-check' - When an error occurs checking the relation tuple using the configured Keto instance.
  */
 export const checkTuple = async (tuple: KetoRelationTuple) => {
   let netRes: Response<CheckTupleResult>

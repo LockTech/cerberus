@@ -28,10 +28,6 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 }
 /* eslint-enable prettier/prettier */
 
-/**
- * @throws
- *  * 'permission-create' - When an error occurs creating the permission in the DB.
- */
 export interface CreatePermissionArgs {
   application: string
   namespace: string
@@ -39,6 +35,10 @@ export interface CreatePermissionArgs {
   relation?: string
   access_relation?: string
 }
+/**
+ * @throws
+ *  * 'permission-create' - When an error occurs creating the permission in the DB.
+ */
 export const createPermission = async (data: CreatePermissionArgs) => {
   let res: Permission
 

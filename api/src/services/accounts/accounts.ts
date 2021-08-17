@@ -45,7 +45,7 @@ export const beforeResolver = (rules: BeforeResolverSpecType) => {
 
 /**
  * @throws
- *  * 'account-email-send' - When an error occurs sending the invitation email.
+ *  * 'account-invite-email-send' - When an error occurs sending the invitation email.
  */
 export const inviteAccount = async ({ email }) => {
   const organization = await getOrganization()
@@ -68,7 +68,7 @@ export const inviteAccount = async ({ email }) => {
 
     await db.account_Confirmation.delete({ where: { id: confirm.id } })
 
-    throw new UserInputError('account-email-send')
+    throw new UserInputError('account-invite-email-send')
   }
 
   return true
@@ -159,7 +159,6 @@ export interface DeleteAccountArgs {
 /**
  * @throws
  *  * 'account-delete-self' - When `context.currentUser.id === id`; preventing the self-deletion of the invokers account.
- *  * 'account-delete-relations' - When an error occurs retrieving account-role relations from the DB.
  *  * 'account-delete' - When an error occures deleting the Account from the DB.
  */
 export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
@@ -186,7 +185,7 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error retrieving account-relations.')
-    throw new UserInputError('account-delete-relations')
+    throw new UserInputError('account-delete')
   }
 
   accRelations.roles.forEach(
@@ -211,8 +210,7 @@ export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
 
 /**
  * @throws
- *  * 'account-delete-relations' - When an error occurs retrieving account-role relations from the DB.
- *  * 'account-delete' - When an error occurs deleting the accounts from the DB.
+ *  * 'accounts-delete' - When an error occurs deleting the accounts from the DB.
  */
 export const deleteAllAccounts = async () => {
   const organizationId = getContextUser().organizationId
@@ -229,7 +227,7 @@ export const deleteAllAccounts = async () => {
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error retrieving account-role relations.')
-    throw new UserInputError('account-delete-relations')
+    throw new UserInputError('accounts-delete')
   }
 
   accounts.forEach(async (account) => {
@@ -245,7 +243,7 @@ export const deleteAllAccounts = async () => {
     await db.account.deleteMany({ where: { organizationId } })
   } catch (err) {
     prismaLogger.error({ err }, 'Error deleting all accounts.')
-    throw new UserInputError('account-delete')
+    throw new UserInputError('accounts-delete')
   }
 
   return true

@@ -48,6 +48,10 @@ export interface CreateOrganizationArgs {
   name: string
   adminRoleName: string
 }
+/**
+ * @throws
+ *  * 'organization-create' - When an error occurs while creating the organization in the DB.
+ */
 export const createOrganization = async ({
   name,
   adminRoleName,

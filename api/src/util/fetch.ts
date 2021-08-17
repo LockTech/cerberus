@@ -30,8 +30,6 @@ class fetch {
    * @param method
    * @param body The body of the request, given as a JS object or array.
    * @returns The `Response` given by the resource, typed according to the provided `generic`.
-   * @throws
-   *  * 'fetch-error' - If `response.status` is out of the success range (200).
    */
   static async fetch<T = Record<string, unknown>>(
     url: string,
