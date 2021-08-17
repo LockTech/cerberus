@@ -203,8 +203,7 @@
         },
         "submit": "Login"
       },
-      "account": "Don't have an account?",
-      "signup": "Sign Up",
+      "signup": "Need to create an account?",
       "redirect": "Redirecting your browser.",
       "loading": "Logging you into your account.",
       "success": "Successfully logged you into your account."
@@ -355,7 +354,7 @@
       "subtitle": "Enter some of your personal information below to begin creating your account and organization.",
       "form": {
         "name": {
-          "label": "Full Name",
+          "label": "Name",
           "placeholder": "Jane Doe",
           "length": "Your name must be shorter than 70 characters.",
           "required": "Your name is required to signup."
@@ -378,8 +377,7 @@
         },
         "submit": "Sign Up"
       },
-      "account": "Already have an account?",
-      "login": "Login",
+      "login": "Already have an account?",
       "loading": "Signing up your account.",
       "success": "A confirmation code has been sent to your email address.",
       "errors": {

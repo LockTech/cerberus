@@ -127,7 +127,6 @@ const LoginPage = ({ redirectTo }: LoginPageProps) => {
         </Form>
       </div>
       <div className="auth-link">
-        <span>{t('Login.Page.account')}</span>{' '}
         <Link to={routes.signup()} className="link-primary">
           {t('Login.Page.signup')}
         </Link>
