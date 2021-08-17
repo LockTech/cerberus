@@ -3,8 +3,6 @@ import { Helmet } from '@redwoodjs/web'
 
 import AppbarTitle from 'src/components/Appbar/AppbarTitle'
 
-import './HomePage.css'
-
 const HomePage = () => {
   const { t } = useTranslation()
 
