@@ -1,12 +1,4 @@
 {
-  "errors": {
-    "account-email-taken": "This email is already in use by another member.",
-    "account-invalid": "Your account could not be validated.",
-    "account-organization-invalid": "Could not validate you belong to an organization.",
-    "email-invalid": "Did not recieve a valid email address.",
-    "email-length": "Email address has exceeded the maximum allowed length.",
-    "email-reserved": "Email address contains an invalid character or is not formatted correctly."
-  },
   "Account": {
     "Danger": {
       "Card": {
@@ -31,27 +23,13 @@
           "submit": "Invite"
         },
         "loading": "Sending invitation to your organization.",
-        "success": "Successfully invited a member to your organization.",
-        "errors": {
-          "account-email-taken": "$t(errors.account-email-taken)",
-          "account-create-confirm": "An error occured trying to create a confirmation email for the member.",
-          "account-email-send": "An error occured sending the invitation email to the member.",
-          "email-required": "An email address is required to invite a member.",
-          "email-invalid": "$t(errors.email-invalid)",
-          "email-length": "$t(errors.email-length)",
-          "email-reserved": "$t(errors.email-reserved)"
-        }
+        "success": "Successfully invited a member to your organization."
       }
     },
     "List": {
       "Cell": {
         "Failure": {
-          "title": "Error loading your organization's accounts.",
-          "errors": {
-            "account-get": "An unexpected database error occured trying to retrieve your accounts.",
-            "account-invalid": "$t(errors.account-invalid)",
-            "account-organization-invalid": "Could not validate you belong to an organization."
-          }
+          "title": "Error loading your organization's accounts."
         },
         "Loading": "Loading your organization's accounts.",
         "Success": {
@@ -88,10 +66,7 @@
     "Update": {
       "Cell": {
         "Failure": {
-          "title": "Error loading your member's account details.",
-          "errors": {
-            "account-get": "An unexpected database error occured trying to retrieve this member's account."
-          }
+          "title": "Error loading your member's account details."
         },
         "Loading": "Loading your member's account details.",
         "Success": {
@@ -107,18 +82,6 @@
               "required": "A name is required to update an account."
             },
             "submit": "Update"
-          },
-          "errors": {
-            "account-email-taken": "$t(errors.account-email-taken)",
-            "account-invalid": "$t(errors.account-invalid)",
-            "account-organization-invalid": "$t(errors.account-organization-invalid)",
-            "account-organization-match": "This use is not a member of your organization.",
-            "account-name-invalid": "Did not recieve a valid value for the member's name.",
-            "account-name-length": "Your member's name must be shorter than 70 characters.",
-            "account-update": "A database error occured trying to update your member.",
-            "email-invalid": "$t(errors.email-invalid)",
-            "email-length": "$t(errors.email-length)",
-            "email-reserved": "$t(errors.email-reserved)"
           },
           "success": "Successfully updated your member's account."
         }
@@ -242,15 +205,7 @@
             "submit": "Update"
           },
           "loading": "Updating your organization.",
-          "success": "Updated your organization.",
-          "errors": {
-            "account-invalid": "$t(errors.account-invalid)",
-            "account-organization-invalid": "Could not validate you belong to an organization.",
-            "organization-name-invalid": "A name is required when updating your organization.",
-            "organization-name-length": "Your organization's name must be shorter than 60 characters.",
-            "organization-name-taken": "That name is already in use by another organization.",
-            "organization-update": "An error occured trying to update your organization."
-          }
+          "success": "Updated your organization."
         }
       }
     }
@@ -314,12 +269,7 @@
         "loading": "Confirming your account.",
         "success": "Your account has been confirmed.",
         "login": "Please login to finish creating your organization.",
-        "failure": "Your account could not be confirmed.",
-        "errors": {
-          "account-confirmation-get": "Error retrieving confirmation details.",
-          "account-confirmation-update": "Error verifying account after confirmation.",
-          "account-confirmation-delete": "Error deleting confirmation details."
-        }
+        "failure": "Your account could not be confirmed."
       }
     },
     "Organization": {
@@ -379,20 +329,7 @@
       },
       "login": "Already have an account?",
       "loading": "Signing up your account.",
-      "success": "A confirmation code has been sent to your email address.",
-      "errors": {
-        "email-required": "An email address is required to signup.",
-        "email-invalid": "$t(errors.email-invalid)",
-        "email-length": "$t(errors.email-length)",
-        "email-reserved": "$t(errors.email-reserved)",
-        "signup-invalid-code": "A confirmation code is not required in this stage of signup.",
-        "account-name-required": "Your name is required to signup.",
-        "account-name-invalid": "Your name is required to signup.",
-        "account-name-length": "Your name must be shorter than 70 characters.",
-        "signup-create-confirm": "An error occured trying to setup confirmation for your account.",
-        "signup-email-send": "An error occured trying to send your confirmation email.",
-        "signup-create-account": "An error occured trying to create your account."
-      }
+      "success": "A confirmation code has been sent to your email address."
     }
   }
 }
