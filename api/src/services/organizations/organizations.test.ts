@@ -36,6 +36,25 @@ jest.mock('../roles/roles')
 jest.mock('../permissions/permissions')
 
 describe('organizations service', () => {
+  beforeEach(() => {
+    // @ts-expect-error jest typings
+    writeTuple.mockClear()
+    // @ts-expect-error jest typings
+    deleteAllAccounts.mockClear()
+    // @ts-expect-error jest typings
+    addPermToRole.mockClear()
+    // @ts-expect-error jest typings
+    addRoleToAccount.mockClear()
+    // @ts-expect-error jest typings
+    createRole.mockClear()
+    // @ts-expect-error jest typings
+    deleteRole.mockClear()
+    // @ts-expect-error jest typings
+    deleteAllRoles.mockClear()
+    // @ts-expect-error jest typings
+    getPermission.mockClear()
+  })
+
   describe('create', () => {
     scenario(
       'creates a new organization',

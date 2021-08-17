@@ -177,7 +177,7 @@ describe('signup helper', () => {
 
       expect(sendSignupEmail).toHaveBeenCalledTimes(1)
       expect(sendSignupEmail).toHaveBeenCalledWith({
-        data: { email, code },
+        data: { code },
         email,
       })
     })
