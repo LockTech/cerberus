@@ -38,7 +38,7 @@
       },
       "Page": {
         "Helmet": {
-          "title": "Accounts • Cerberus"
+          "title": "Cerberus • Accounts"
         },
         "Appbar": {
           "title": "Accounts"
@@ -54,7 +54,7 @@
     },
     "Page": {
       "Helmet": {
-        "title": "Account Details • Cerberus"
+        "title": "Cerberus • Account Details"
       },
       "Appbar": {
         "title": "Account Details"
@@ -130,7 +130,7 @@
   "Home": {
     "Page": {
       "Helmet": {
-        "title": "Dashboard • Cerberus"
+        "title": "Cerberus • Dashboard"
       },
       "Appbar": {
         "title": "Dashboard"
@@ -141,7 +141,7 @@
     "Confirmation": {
       "Page": {
         "Helmet": {
-          "title": "Invitation Confirmation • Cerberus"
+          "title": "Cerberus • Invitation Confirmation"
         }
       }
     }
@@ -149,7 +149,7 @@
   "Login": {
     "Page": {
       "Helmet": {
-        "title": "Login • Cerberus"
+        "title": "Cerberus • Login"
       },
       "title": "Login",
       "subtitle": "Enter your account's e-mail address and password to login.",
@@ -185,7 +185,7 @@
       },
       "Page": {
         "Helmet": {
-          "title": "Organization Settings • Cerberus"
+          "title": "Cerberus • Organization Settings"
         },
         "Appbar": {
           "title": "Organization Settings"
@@ -219,7 +219,7 @@
     "List": {
       "Page": {
         "Helmet": {
-          "title": "Roles • Cerberus"
+          "title": "Cerberus • Roles"
         },
         "Appbar": {
           "title": "Roles"
@@ -251,7 +251,7 @@
     "Confirmation": {
       "Page": {
         "Helmet": {
-          "title": "Sign Up Confirmation • Cerberus"
+          "title": "Cerberus • Sign Up Confirmation"
         },
         "title": "Signup Confirmation",
         "emailNotFound": "Your email address could not be determined.",
@@ -275,7 +275,7 @@
     "Organization": {
       "Page": {
         "Helmet": {
-          "title": "Create Organization • Cerberus"
+          "title": "Cerberus • Create Organization"
         },
         "title": "Create Organization",
         "subtitle": "Finishing signing up by creating your organization and its administrator role.",
@@ -298,7 +298,7 @@
     },
     "Page": {
       "Helmet": {
-        "title": "Sign Up • Cerberus"
+        "title": "Cerberus • Sign Up"
       },
       "title": "Sign Up",
       "subtitle": "Enter some of your personal information below to begin creating your account and organization.",
