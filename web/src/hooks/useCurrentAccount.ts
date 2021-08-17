@@ -1,5 +1,14 @@
-import type { CurrentAccount } from 'src/atoms/CurrentAccount'
 import { useAuth } from '@redwoodjs/auth'
+
+export interface CurrentAccount {
+  id: string
+  email: string
+  name: string
+  organization?: {
+    id: string
+    name: string
+  }
+}
 
 /**
  * @returns `useAuth().currentUser` with typings applied
