@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
  * const apiError = new Error('account-read')
  *
  * const component = () => {
- *  const t = useErrorTranslation()
+ *  const { t } = useErrorTranslation()
  *
  *  return <p>{t(apiError)}</p>
  * }
