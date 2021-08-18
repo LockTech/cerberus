@@ -5,8 +5,16 @@ import { useChannel } from '@storybook/addons'
 import '../src/index.css'
 import '../src/i18n'
 
+import ToastProvider from '../src/components/ToastProvider/ToastProvider'
+
 export const decorators = [
   (storyFunc) => <RecoilRoot>{storyFunc()}</RecoilRoot>,
+  (storyFunc) => (
+    <>
+      <ToastProvider />
+      {storyFunc()}
+    </>
+  ),
   (storyFunc) => {
     useChannel(
       {
