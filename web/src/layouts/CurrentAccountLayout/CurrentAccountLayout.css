@@ -1,4 +1,4 @@
-.currentAccount-loader {
+.current-account {
   @apply flex flex-col items-center justify-center;
   @apply h-full w-full;
   @apply space-y-8;

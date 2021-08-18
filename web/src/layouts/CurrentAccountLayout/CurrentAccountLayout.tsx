@@ -18,10 +18,11 @@ const CurrentAccountLayout = ({ children }: CurrentAccountLayoutProps) => {
 
   const currentAccount = useCurrentAccount()
 
-  if (currentAccount && !loading) return <>{children}</>
+  if (!currentAccount) return null
+  else if (!loading) return <>{children}</>
   else
     return (
-      <div className="currentAccount-loader">
+      <div className="current-account">
         <LoadingSpinner className="loading-indicator" />
         <p className="text">{t('CurrentAccount.Layout.loading')}</p>
       </div>
