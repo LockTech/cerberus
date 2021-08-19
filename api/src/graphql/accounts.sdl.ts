@@ -10,6 +10,8 @@ export const schema = gql`
     organizationId: ID
     organization: Organization
     roles: [Role!]!
+    verified: Boolean!
+    verifiedAt: DateTime
   }
 
   type Query {
