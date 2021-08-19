@@ -5,9 +5,9 @@ export const schema = gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     organizationId: ID!
-    organization: Organization!
-    accounts: [Account!]!
-    permissions: [Permission!]!
+    # organization: Organization!
+    # accounts: [Account!]!
+    # permissions: [Permission!]!
   }
 
   type Query {
