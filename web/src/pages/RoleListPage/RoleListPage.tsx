@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import AppbarTitle from 'src/components/Appbar/AppbarTitle'
 import RoleCreateModal from 'src/components/RoleCreateModal'
+import RoleListCell from 'src/components/RoleListCell'
 
 const RoleListPage = () => {
   const { t } = useTranslation()
@@ -15,6 +16,7 @@ const RoleListPage = () => {
       <AppbarTitle>{t('Role.List.Page.Appbar.title')}</AppbarTitle>
       <div className="page-layout">
         <RoleCreateModal />
+        <RoleListCell />
       </div>
     </>
   )
