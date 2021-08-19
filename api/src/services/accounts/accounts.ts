@@ -85,6 +85,7 @@ export const account = async ({ id }: { id: string }) => {
 
   try {
     res = await db.account.findFirst({
+      include: { roles: true },
       where: {
         id,
         organizationId,
@@ -111,6 +112,7 @@ export const accounts = async () => {
 
   try {
     res = await db.account.findMany({
+      include: { roles: true },
       where: { organizationId },
     })
   } catch (err) {
