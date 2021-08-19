@@ -13,7 +13,7 @@ import ColorModeLayout from '../src/layouts/ColorModeLayout/ColorModeLayout'
 import './styles.css'
 
 export const decorators = [
-  (storyFunc) => {
+  (storyFunc, context) => {
     useChannel(
       {
         DARK_MODE: (mode) => {
@@ -24,15 +24,33 @@ export const decorators = [
       []
     )
 
+    const padding = context.globals
+
     return (
       <HelmetProvider>
         <RecoilRoot>
           <ColorModeLayout>
             <ToastProvider />
-            {storyFunc()}
+            <div className={padding ? 'p-8' : 'p-0'}>{storyFunc()}</div>
           </ColorModeLayout>
         </RecoilRoot>
       </HelmetProvider>
     )
   },
 ]
+
+export const globalTypes = {
+  padding: {
+    name: 'Padding',
+    description: 'Toggle padding surrounding component-preview.',
+    defaultValue: 'off',
+    toolbar: {
+      icon: 'component',
+      items: ['on', 'off'],
+    },
+  },
+}
+
+export const parameters = {
+  actions: { argTypesRegex: '^on[A-Z].*' },
+}
