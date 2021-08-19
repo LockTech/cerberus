@@ -227,6 +227,12 @@
       }
     },
     "List": {
+      "Cell": {
+        "Loading": "Loading your organization's roles.",
+        "Success": {
+          "createdAt": "Created on {{ createdAt, friendlyDate }} at {{ createdAt, friendlyTime }}"
+        }
+      },
       "Page": {
         "Helmet": {
           "title": "Cerberus • Roles"
@@ -234,6 +240,19 @@
         "Appbar": {
           "title": "Roles"
         }
+      }
+    },
+    "Page": {
+      "Helmet": {
+        "title": "Cerberus • Role Details"
+      },
+      "Appbar": {
+        "title": "Role Details"
+      }
+    },
+    "Update": {
+      "Cell": {
+        "Loading": "Loading the role's details."
       }
     }
   },
