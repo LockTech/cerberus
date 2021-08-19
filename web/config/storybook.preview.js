@@ -24,14 +24,16 @@ export const decorators = [
       []
     )
 
-    const padding = context.globals
+    const { padding } = context.globals
 
     return (
       <HelmetProvider>
         <RecoilRoot>
           <ColorModeLayout>
             <ToastProvider />
-            <div className={padding ? 'p-8' : 'p-0'}>{storyFunc()}</div>
+            <div className={padding === 'on' ? 'p-8' : 'p-0'}>
+              {storyFunc()}
+            </div>
           </ColorModeLayout>
         </RecoilRoot>
       </HelmetProvider>
@@ -53,4 +55,5 @@ export const globalTypes = {
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
+  layout: 'fullscreen',
 }
