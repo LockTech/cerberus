@@ -81,6 +81,9 @@ export const createOrganization = async ({
     })
   } catch (err) {
     prismaLogger.error({ err }, 'Error creating organization.')
+
+    await db.account.delete({ where: { id: accountId } })
+
     throw new UserInputError('organization-create')
   }
 
@@ -99,6 +102,8 @@ export const createOrganization = async ({
 
     await db.organization.delete({ where: { id: organizationId } })
 
+    await db.account.delete({ where: { id: accountId } })
+
     throw err
   }
 
@@ -114,6 +119,8 @@ export const createOrganization = async ({
 
     await db.organization.delete({ where: { id: organizationId } })
 
+    await db.account.delete({ where: { id: accountId } })
+
     throw err
   }
 
@@ -123,6 +130,8 @@ export const createOrganization = async ({
     await deleteRole({ id: roleId })
 
     await db.organization.delete({ where: { id: organizationId } })
+
+    await db.account.delete({ where: { id: accountId } })
 
     throw new Error('Cerberus')
   }
@@ -139,6 +148,8 @@ export const createOrganization = async ({
 
     await db.organization.delete({ where: { id: organizationId } })
 
+    await db.account.delete({ where: { id: accountId } })
+
     throw err
   }
   // role->account
@@ -150,7 +161,8 @@ export const createOrganization = async ({
     await deleteRole({ id: roleId })
 
     await db.organization.delete({ where: { id: organizationId } })
-    logger.error({ err, organizationId }, 'tried to delete org')
+
+    await db.account.delete({ where: { id: accountId } })
 
     throw err
   }
