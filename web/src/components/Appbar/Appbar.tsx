@@ -7,7 +7,7 @@ import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
 
 import AppMenu from 'src/components/AppMenu'
 
-import './AppBar.css'
+import './Appbar.css'
 
 const Appbar = () => {
   const { t } = useTranslation()
