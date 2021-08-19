@@ -4,7 +4,7 @@ import LoadingCard from './LoadingCard'
 
 export default {
   component: LoadingCard,
-  title: 'Components/LoadingCard',
+  title: 'Components/Card/Loading',
 } as Meta
 
 export const deafault = () => (

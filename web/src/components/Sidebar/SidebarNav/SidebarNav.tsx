@@ -22,41 +22,41 @@ const SidebarNav = () => {
     <nav>
       {/* General */}
       <div className="nav-group">
-        <p className="nav-group-title">{t('Sidebar.nav.general.title')}</p>
+        <p className="nav-group-title">{t('Sidebar.Nav.general.title')}</p>
         <button
           className={clsx(home && 'active')}
           onClick={() => navigate(routes.home())}
         >
-          {t('Sidebar.nav.general.dashboard')}
+          {t('Sidebar.Nav.general.dashboard')}
         </button>
       </div>
-      {/* Accounts */}
+      {/* Members */}
       <div className="nav-group">
-        <p className="nav-group-title">{t('Sidebar.nav.accounts.title')}</p>
+        <p className="nav-group-title">{t('Sidebar.Nav.members.title')}</p>
         <button className={clsx(accountActivity && 'active')}>
-          {t('Sidebar.nav.accounts.activity')}
+          {t('Sidebar.Nav.members.activity')}
         </button>
         <button
           className={clsx(listAccounts && 'active')}
           onClick={() => navigate(routes.listAccounts())}
         >
-          {t('Sidebar.nav.accounts.listAccounts')}
+          {t('Sidebar.Nav.members.listAccounts')}
         </button>
         <button
           className={clsx(listRoles && 'active')}
           onClick={() => navigate(routes.listRoles())}
         >
-          {t('Sidebar.nav.accounts.listRoles')}
+          {t('Sidebar.Nav.members.listRoles')}
         </button>
       </div>
       {/* Organization */}
       <div className="nav-group">
-        <p className="nav-group-title">{t('Sidebar.nav.organization.title')}</p>
+        <p className="nav-group-title">{t('Sidebar.Nav.organization.title')}</p>
         <button
           className={clsx(orgSettings && 'active')}
           onClick={() => navigate(routes.organizationSettings())}
         >
-          {t('Sidebar.nav.organization.settings')}
+          {t('Sidebar.Nav.organization.settings')}
         </button>
       </div>
     </nav>

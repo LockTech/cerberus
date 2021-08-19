@@ -11,9 +11,9 @@ import AppSettingsModal from 'src/components/AppSettingsModal'
 
 import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
 
-import './AccountMenu.css'
+import './AppMenu.css'
 
-const AccountMenu = () => {
+const AppMenu = () => {
   const { t } = useTranslation()
 
   const currentAccount = useCurrentAccount()
@@ -24,16 +24,18 @@ const AccountMenu = () => {
   return (
     <>
       <AppSettingsModal />
-      <Menu as="div" className="menu">
-        <Menu.Button as="button" className="account-menu">
+      <Menu as="div" className="account-menu menu">
+        <Menu.Button as="button" className="account-menu-button">
           <div className="title-group">
             <span className="hint">{currentAccount?.organization?.name}</span>
             <span className="title">{currentAccount?.name}</span>
           </div>
-          <UserCircleIcon
-            aria-label={t('Account.Menu.accountProfile')}
-            className="icon"
-          />
+          <div>
+            <UserCircleIcon
+              aria-label={t('Account.Menu.accountProfile')}
+              className="icon"
+            />
+          </div>
         </Menu.Button>
         <Transition
           as={React.Fragment}
@@ -74,4 +76,4 @@ const AccountMenu = () => {
   )
 }
 
-export default AccountMenu
+export default AppMenu

@@ -4,3 +4,32 @@ export const standard = {
     name: 'Example Inc.',
   },
 }
+
+export const mockUpdateOrganization = () => {
+  mockCurrentUser({})
+
+  mockGraphQLQuery('OrganizationUpdateQuery', (_v, { ctx }) => {
+    ctx.delay(1500)
+    return standard
+  })
+
+  mockGraphQLMutation('OrganizationUpdateMutation', (_v, { ctx }) => {
+    ctx.delay(1500)
+    return standard
+  })
+}
+
+export const mockUpdateOrganizationError = () => {
+  mockCurrentUser({})
+
+  mockGraphQLQuery('OrganizationUpdateQuery', (_v, { ctx }) => {
+    ctx.delay(1500)
+    return standard
+  })
+
+  mockGraphQLMutation('OrganizationUpdateMutation', (_v, { ctx }) => {
+    ctx.delay(1500)
+    ctx.errors([{ message: 'organization-update' }])
+    return standard
+  })
+}

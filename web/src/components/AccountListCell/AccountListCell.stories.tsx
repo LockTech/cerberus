@@ -1,26 +1,24 @@
 import type { Meta } from '@storybook/react'
 
+// @ts-expect-error types
+import AccountList from './AccountListCell'
 import { Failure, Loading, Success } from './AccountListCell'
-import { standard } from './AccountListCell.mock'
+import { mockAccountList, standard } from './AccountListCell.mock'
 
 export default {
+  component: AccountList,
   subcomponents: { Failure, Loading, Success },
-  title: 'Cells/AccountListCell',
+  title: 'Cells/Account/ListCell',
 } as Meta
 
-export const databaseFailure = () => (
-  <Failure error={new Error('account-get')} />
-)
-export const accountFailure = () => (
-  <Failure error={new Error('account-invalid')} />
-)
-export const accountOrgFailure = () => (
-  <Failure error={new Error('account-organization-invalid')} />
-)
-export const miscFailure = () => (
-  <Failure error={new Error('An unexpected network error occured.')} />
-)
+export const failure = () => <Failure error={new Error('An error occured!')} />
 
 export const loading = () => <Loading />
 
 export const success = () => <Success {...standard} />
+
+export const Mocked = () => {
+  mockAccountList()
+
+  return <AccountList />
+}

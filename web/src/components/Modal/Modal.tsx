@@ -36,10 +36,10 @@ const Modal: ModalType = ({ children, onClose, open }: ModalProps) => {
         <Transition.Child
           as={Dialog.Overlay}
           className="modal-overlay"
-          enter="duration-150 ease-in-out transition-opacity"
+          enter="duration-200 ease-in-out transition-opacity"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="duration-150 ease-in-out transition-opacity"
+          leave="duration-200 ease-in-out transition-opacity"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         />
@@ -49,7 +49,7 @@ const Modal: ModalType = ({ children, onClose, open }: ModalProps) => {
           enter="duration-200 ease-in-out origin-center transition-all transform-gpu"
           enterFrom="opacity-0 scale-75"
           enterTo="opacity-100 scale-100"
-          leave="duration-150 ease-in-out origin-center transition-all transform-gpu"
+          leave="duration-200 ease-in-out origin-center transition-all transform-gpu"
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-75"
         >

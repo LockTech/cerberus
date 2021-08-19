@@ -1,6 +1,5 @@
 .account-list {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
-  @apply gap-4;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
   @apply text-center;
 }
 
@@ -8,5 +7,5 @@
   @apply space-y-1;
 }
 .account-list .account-name {
-  @apply font-semibold text-xl;
+  @apply font-semibold text-2xl;
 }

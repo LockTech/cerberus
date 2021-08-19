@@ -4,7 +4,9 @@ import { Transition } from '@headlessui/react'
 
 import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
 
-import SidebarNav from './SidebarNav/SidebarNav'
+import SidebarNav from 'src/components/Sidebar/SidebarNav'
+
+import { CopyrightURL } from 'src/constants/variables'
 
 import { useCloseSidebarOnNavigate } from 'src/hooks/useCloseSidebarOnNavigate'
 import { useScreenWidth } from 'src/hooks/useScreenWidth'
@@ -60,11 +62,11 @@ const Sidebar = () => {
         <footer className="copyright">
           <a
             className="link-gray"
-            href="https://locktech.software"
+            href={CopyrightURL}
             target="_blank"
             rel="noreferrer"
           >
-            © 2021 LockTech Software
+            {t('Sidebar.copyright')}
           </a>
         </footer>
       </Transition>

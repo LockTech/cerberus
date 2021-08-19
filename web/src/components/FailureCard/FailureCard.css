@@ -10,3 +10,16 @@
   @apply h-12 w-12;
   @apply m-auto;
 }
+
+.failure-wrapper {
+  @apply space-y-8;
+}
+
+.failure-wrapper .reload {
+  @apply flex items-center justify-center;
+  @apply space-x-3;
+}
+
+.failure-wrapper .reload .icon {
+  @apply h-6 w-6;
+}

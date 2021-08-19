@@ -1,0 +1,11 @@
+.spinner {
+  @apply w-full max-w-[150px];
+}
+.spinner .outter {
+  @apply text-gray-100 dark:text-gray-600;
+  @apply origin-center;
+}
+.spinner .inner {
+  @apply text-primary-500 dark:text-primary-400;
+  @apply animate-spin-physics origin-center;
+}

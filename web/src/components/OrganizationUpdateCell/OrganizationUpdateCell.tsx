@@ -2,17 +2,20 @@ import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from '@apollo/client'
+import { useAuth } from '@redwoodjs/auth'
 import { FieldError, Form, Label, Submit, TextField } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import FailureCard from 'src/components/FailureCard'
+import LoadingCard from 'src/components/LoadingCard'
 import OrganizationSettingsDangerCard from 'src/components/OrganizationSettingsDangerCard'
 
 import type {
   OrganizationUpdateQuery,
   OrganizationUpdateMutation,
 } from 'types/graphql'
-import { useAuth } from '@redwoodjs/auth'
+import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
 export const MUTATION = gql`
   mutation OrganizationUpdateMutation($name: String!) {
@@ -30,13 +33,25 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => {
+  const { t } = useTranslation()
 
-export const Empty = () => <div>Empty</div>
+  return (
+    <LoadingCard>
+      <p className="text">{t('Organization.Update.Cell.Loading')}</p>
+    </LoadingCard>
+  )
+}
 
-export const Failure = ({ error }: CellFailureProps) => (
-  <div style={{ color: 'red' }}>Error: {error.message}</div>
-)
+export const Failure = ({ error }: CellFailureProps) => {
+  const { et } = useErrorTranslation()
+
+  return (
+    <FailureCard>
+      <p className="text">{et(error)}</p>
+    </FailureCard>
+  )
+}
 
 interface OrganizationUpdateFormData {
   name: string
@@ -54,6 +69,7 @@ export const Success = ({
   const { isDirty } = formMethods.formState
 
   const { t } = useTranslation()
+  const { et } = useErrorTranslation()
 
   const { reauthenticate } = useAuth()
 
@@ -72,14 +88,9 @@ export const Success = ({
   const onError = useCallback(
     (error: Error) => {
       toast.dismiss()
-      toast.error(
-        t(
-          `Organization.Update.Cell.Success.errors.${error.message}`,
-          error.message
-        )
-      )
+      toast.error(et(error))
     },
-    [t]
+    [et]
   )
 
   const [mutate, { loading }] = useMutation(MUTATION, {

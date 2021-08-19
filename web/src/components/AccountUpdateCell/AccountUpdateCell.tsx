@@ -8,6 +8,7 @@ import { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
+import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
 import AccountDangerCard from 'src/components/AccountDangerCard'
 import FailureCard from 'src/components/FailureCard'
@@ -47,17 +48,11 @@ export const Loading = () => {
 export const Empty = () => <div>Empty</div>
 
 export const Failure = ({ error }: CellFailureProps) => {
-  const { t } = useTranslation()
+  const { et } = useErrorTranslation()
 
   return (
     <FailureCard>
-      <p className="text">{t('Account.Update.Cell.Failure.title')}</p>
-      <p className="text">
-        {t(
-          `Account.Update.Cell.Failure.errors.${error.message}`,
-          error.message
-        )}
-      </p>
+      <p className="text">{et(error)}</p>
     </FailureCard>
   )
 }
@@ -80,7 +75,9 @@ export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
   })
   const { reset } = formMethods
   const { dirtyFields, isDirty } = formMethods.formState
+
   const { t } = useTranslation()
+  const { et } = useErrorTranslation()
 
   const { reauthenticate } = useAuth()
 
@@ -102,11 +99,9 @@ export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
   const onError = useCallback(
     (error: Error) => {
       toast.dismiss()
-      toast.error(
-        t(`Account.Update.Cell.Success.errors.${error.message}`, error.message)
-      )
+      toast.error(et(error))
     },
-    [t]
+    [et]
   )
 
   const [mutate, { loading }] = useMutation(MUTATION, {
@@ -133,15 +128,13 @@ export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
   )
 
   return (
-    <>
+    <div className="page-layout">
       <div className="card card-body">
         <header className="title-group">
           <h2 className="title">
             {t('Account.Update.Cell.Success.title', { name })}
           </h2>
-          <p className="hint">
-            {t('Account.Update.Cell.Success.subtitle', { name })}
-          </p>
+          <p className="hint">{t('Account.Update.Cell.Success.subtitle')}</p>
         </header>
         <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
           {/* email */}
@@ -201,6 +194,6 @@ export const Success = ({ account }: CellSuccessProps<AccountUpdateQuery>) => {
         </Form>
       </div>
       <AccountDangerCard name={name} />
-    </>
+    </div>
   )
 }

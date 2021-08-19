@@ -5,6 +5,8 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import FailureCard from 'src/components/FailureCard'
 import LoadingCard from 'src/components/LoadingCard'
 
+import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
+
 import type { AccountListQuery } from 'types/graphql'
 
 import './AccountListCell.css'
@@ -16,6 +18,7 @@ export const QUERY = gql`
       id
       lastLoginAt
       name
+      verifiedAt
     }
   }
 `
@@ -31,14 +34,11 @@ export const Loading = () => {
 }
 
 export const Failure = ({ error }: CellFailureProps) => {
-  const { t } = useTranslation()
+  const { et } = useErrorTranslation()
 
   return (
     <FailureCard>
-      <p className="text">{t('Account.List.Cell.Failure.title')}</p>
-      <p className="text">
-        {t(`Account.List.Cell.Failure.errors.${error.message}`, error.message)}
-      </p>
+      <p className="text">{et(error)}</p>
     </FailureCard>
   )
 }
@@ -53,6 +53,7 @@ export const Success = ({ accounts }: CellSuccessProps<AccountListQuery>) => {
         const id = account.id
         const lastLogin = account.lastLoginAt
         const name = account.name
+        const verifiedAt = account.verifiedAt
 
         return (
           <button
@@ -64,12 +65,17 @@ export const Success = ({ accounts }: CellSuccessProps<AccountListQuery>) => {
               <h3 className="account-name text">{name}</h3>
               <p className="account-email hint">{email}</p>
             </header>
-            <p className="text">
-              {t('Account.List.Cell.Success.lastLogin', {
-                time: lastLogin,
-                date: lastLogin,
-              })}
-            </p>
+            <div className="title-group">
+              <p className="text">
+                {t('Account.List.Cell.Success.lastLogin', {
+                  time: lastLogin,
+                  date: lastLogin,
+                })}
+              </p>
+              <p className="hint">
+                {t('Account.List.Cell.Success.verified', { date: verifiedAt })}
+              </p>
+            </div>
           </button>
         )
       })}

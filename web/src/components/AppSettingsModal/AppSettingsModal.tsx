@@ -13,7 +13,7 @@ import Select from 'src/components/Select'
 
 import './AppSettingsModal.css'
 
-const ThemeKey = 'App.Settings.Modal.form.theme.options'
+const ThemeKey = 'App.SettingsModal.form.theme.options'
 const ThemeValues = [
   { name: `${ThemeKey}.browser`, value: 'browser' },
   { name: `${ThemeKey}.light`, value: 'light' },
@@ -34,7 +34,7 @@ const AppSettingsModal = () => {
     (data: AppSettingsFormData) => {
       setColorMode(data.theme.value)
       setModalOpen(false)
-      toast.success(t('App.Settings.Modal.saved'))
+      toast.success(t('App.SettingsModal.saved'))
     },
     [setColorMode, setModalOpen, t]
   )
@@ -43,16 +43,16 @@ const AppSettingsModal = () => {
     <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
       <div className="card card-body">
         <header className="title-group">
-          <Modal.Title>{t('App.Settings.Modal.title')}</Modal.Title>
+          <Modal.Title>{t('App.SettingsModal.title')}</Modal.Title>
           <Modal.Description>
-            {t('App.Settings.Modal.subtitle')}
+            {t('App.SettingsModal.subtitle')}
           </Modal.Description>
         </header>
         <Form className="form" onSubmit={onSubmit}>
           {/* Theme */}
           <div className="input-group">
             <Label className="input-label" name="theme">
-              {t('App.Settings.Modal.form.theme.label')}
+              {t('App.SettingsModal.form.theme.label')}
             </Label>
             <Select
               defaultValue={{
@@ -63,11 +63,11 @@ const AppSettingsModal = () => {
               values={ThemeValues}
             />
             <Label className="hint" name="theme">
-              {t('App.Settings.Modal.form.theme.hint')}
+              {t('App.SettingsModal.form.theme.hint')}
             </Label>
           </div>
           <Submit className="button-primary-fill form-button">
-            {t('App.Settings.Modal.form.submit')}
+            {t('App.SettingsModal.form.submit')}
           </Submit>
         </Form>
       </div>

@@ -6,6 +6,8 @@ import { toast } from '@redwoodjs/web/toast'
 
 import Modal from 'src/components/Modal'
 
+import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
+
 export const MUTATION = gql`
   mutation InviteMemberMutation($email: String!) {
     account: inviteAccount(email: $email)
@@ -18,6 +20,7 @@ interface AccountInviteFormData {
 
 const AccountInviteModal = () => {
   const { t } = useTranslation()
+  const { et } = useErrorTranslation()
 
   const [open, setOpen] = useState(false)
 
@@ -30,11 +33,9 @@ const AccountInviteModal = () => {
   const onError = useCallback(
     (error: Error) => {
       toast.dismiss()
-      toast.error(
-        t(`Account.Invite.Modal.errors.${error.message}`, error.message)
-      )
+      toast.error(et(error))
     },
-    [t]
+    [et]
   )
 
   const [mutate, { loading }] = useMutation(MUTATION, { onCompleted, onError })
@@ -43,7 +44,6 @@ const AccountInviteModal = () => {
     (variables: AccountInviteFormData) => {
       if (!loading) {
         toast.loading(t('Account.Invite.Modal.loading'))
-
         mutate({ variables })
       }
     },
@@ -56,16 +56,17 @@ const AccountInviteModal = () => {
         className="button-primary-fill w-full"
         onClick={() => setOpen(true)}
       >
-        {t('Account.Invite.Modal.inviteMember')}
+        {t('Account.Invite.Modal.action')}
       </button>
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className="card card-body">
-          <div>
+          <div className="title-group">
             <Modal.Title>{t('Account.Invite.Modal.title')}</Modal.Title>
             <Modal.Description>
               {t('Account.Invite.Modal.subtitle')}
             </Modal.Description>
           </div>
+          <p className="text">{t('Account.Invite.Modal.info')}</p>
           <Form className="form" onSubmit={onSubmit}>
             <div className="input-group">
               <Label
@@ -80,6 +81,7 @@ const AccountInviteModal = () => {
                 className="input-primary"
                 errorClassName="input-error"
                 name="email"
+                placeholder={t('Account.Invite.Modal.form.email.placeholder')}
                 validation={{
                   required: {
                     value: true,

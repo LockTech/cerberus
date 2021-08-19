@@ -2,11 +2,11 @@ import { useTranslation } from 'react-i18next'
 
 import DangerCard from 'src/components/DangerCard'
 
-export interface AccountUpdateCellProps {
+export interface AccountDangerCardProps {
   name: string
 }
 
-const AccountDangerCard = ({ name }: AccountUpdateCellProps) => {
+const AccountDangerCard = ({ name }: AccountDangerCardProps) => {
   const { t } = useTranslation()
 
   return (
@@ -14,12 +14,12 @@ const AccountDangerCard = ({ name }: AccountUpdateCellProps) => {
       <div className="action">
         <div className="title-group">
           <p className="title">
-            {t('Account.Danger.Card.delete.title', { name })}
+            {t('Account.DangerCard.delete.title', { name })}
           </p>
-          <p className="hint">{t('Account.Danger.Card.delete.subtitle')}</p>
+          <p className="hint">{t('Account.DangerCard.delete.subtitle')}</p>
         </div>
         <button className="button-red-outline">
-          {t('Account.Danger.Card.delete.action')}
+          {t('Account.DangerCard.delete.action')}
         </button>
       </div>
     </DangerCard>

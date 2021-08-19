@@ -1,5 +1,7 @@
 import clsx from 'clsx'
 
+import './LoadingSpinner.css'
+
 export interface LoadingSpinnerProps {
   className?: string
 }

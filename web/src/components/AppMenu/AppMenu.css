@@ -1,4 +1,8 @@
 .account-menu {
+  @apply max-w-xs;
+}
+
+.account-menu-button {
   /* Background */
   @apply bg-transparent;
   @apply hover:bg-gray-200 hover:bg-opacity-30 active:bg-gray-300 active:bg-opacity-50;
@@ -12,25 +16,27 @@
   @apply duration-[200ms] ease-in-out transition-all;
   @apply px-2 md:px-4 py-2 space-x-0 md:space-x-5;
 }
-.account-menu span {
-  @apply flex;
-}
-.account-menu .title-group {
+.account-menu-button .title-group {
   @apply flex flex-col items-start justify-center;
   @apply space-y-[0.25rem];
   @apply hidden md:block;
 }
-.account-menu .title {
+.account-menu-button .title-group span {
+  @apply flex;
+  @apply break-words;
+  @apply text-left;
+}
+.account-menu-button .title-group .title {
   /* Text */
   @apply text-sm;
   @apply text-gray-900;
   @apply dark:text-gray-50;
 }
-.account-menu .hint {
+.account-menu-button .title-group .hint {
   @apply text-gray-500;
   @apply dark:text-gray-300;
 }
-.account-menu .icon {
+.account-menu-button .icon {
   /* Text */
   @apply text-gray-500;
   @apply dark:text-gray-300;

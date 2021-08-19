@@ -1,0 +1,20 @@
+.fatal-page {
+  @apply p-10 md:p-20;
+}
+
+.fatal-page .wrapper {
+  @apply flex flex-col md:flex-row items-center;
+  @apply h-full w-full md:max-w-4xl;
+  @apply m-auto space-y-14 md:space-x-14 md:space-y-0;
+}
+
+.fatal-page .content {
+  @apply flex-grow;
+  @apply space-y-8;
+  @apply w-full;
+}
+
+.fatal-page .actions {
+  @apply flex flex-col items-center justify-evenly;
+  @apply space-y-6;
+}

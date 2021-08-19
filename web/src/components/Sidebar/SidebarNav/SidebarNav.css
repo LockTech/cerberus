@@ -26,7 +26,7 @@
   @apply hover:border-gray-600 active:border-gray-500;
   /* Text */
   @apply font-medium tracking-wider;
-  @apply text-gray-400 hover:text-gray-100 active:text-gray-50;
+  @apply text-gray-300 hover:text-gray-100 active:text-gray-50;
   /* Misc */
   @apply duration-[200ms] ease-in-out transition-all;
   @apply flex flex-row items-center;
@@ -36,8 +36,10 @@
 
 .sidebar nav button.active {
   /* Background */
-  @apply bg-gray-700 bg-opacity-70;
-  @apply dark:bg-gray-800 dark:bg-opacity-70;
+  @apply bg-gray-700 active:bg-gray-600;
+  /* Border */
+  @apply border;
+  @apply border-gray-600;
   /* Text */
   @apply text-gray-50;
 }

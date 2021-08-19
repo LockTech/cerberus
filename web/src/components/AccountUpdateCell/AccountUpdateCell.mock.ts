@@ -5,3 +5,32 @@ export const standard = {
     name: 'John Doe',
   },
 }
+
+export const mockAccount = () => {
+  mockCurrentUser({ id: '1' })
+
+  mockGraphQLQuery('AccountUpdateQuery', (_v, { ctx }) => {
+    ctx.delay(2000)
+    return standard
+  })
+
+  mockGraphQLMutation('AccountUpdateMutation', (_v, { ctx }) => {
+    ctx.delay(2000)
+    return { ...standard }
+  })
+}
+
+export const mockAccountError = () => {
+  mockCurrentUser({ id: '1' })
+
+  mockGraphQLQuery('AccountUpdateQuery', (_v, { ctx }) => {
+    ctx.delay(2000)
+    return standard
+  })
+
+  mockGraphQLMutation('AccountUpdateMutation', (_v, { ctx }) => {
+    ctx.delay(2000)
+    ctx.errors([{ message: 'account-update' }])
+    return { ...standard }
+  })
+}

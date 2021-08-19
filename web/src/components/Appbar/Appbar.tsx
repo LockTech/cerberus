@@ -5,7 +5,7 @@ import { MenuIcon } from '@heroicons/react/solid'
 import { AppbarTitleAtom } from 'src/atoms/AppbarTitle'
 import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
 
-import AccountMenu from 'src/components/AccountMenu'
+import AppMenu from 'src/components/AppMenu'
 
 import './Appbar.css'
 
@@ -27,7 +27,7 @@ const Appbar = () => {
       </button>
       {title !== '' && typeof title === 'string' && <h1>{title}</h1>}
       <div className="actions">
-        <AccountMenu />
+        <AppMenu />
       </div>
     </header>
   )
