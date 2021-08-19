@@ -10,11 +10,10 @@ type ColorModeLayoutProps = {
 const ColorModeLayout = ({ children }: ColorModeLayoutProps) => {
   const [colorMode, setColorMode] = useRecoilState(ColorModeAtom)
 
-  const onChangePreference = useCallback((e) => {
-    e.matches
-      ? document.body.classList.add('dark')
-      : document.body.classList.remove('dark')
-  }, [])
+  const onChangePreference = useCallback(
+    () => document.body.classList.toggle('dark'),
+    []
+  )
 
   const delChangePreference = useCallback(
     () =>
