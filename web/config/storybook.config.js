@@ -1,5 +1,13 @@
 module.exports = {
-  addons: ['storybook-dark-mode'],
+  addons: [
+    'storybook-dark-mode',
+    {
+      name: '@storybook/addon-essentials',
+      options: {
+        backgrounds: false,
+      },
+    },
+  ],
   previewHead: (head) => `
     ${head}
     <link rel="preconnect" href="https://fonts.googleapis.com">
