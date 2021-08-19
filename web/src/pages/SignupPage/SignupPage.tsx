@@ -30,9 +30,7 @@ export interface SignupPageProps {
 }
 
 const SignupPage = ({ redirect }: SignupPageProps) => {
-  // REALLY doesn't want to validate `currentPassword` before first
-  // submit without initiating the form ourselves; no biggie.
-  const formMethods = useForm({ mode: 'onSubmit' })
+  const formMethods = useForm({ mode: 'all' })
 
   const { t } = useTranslation()
 

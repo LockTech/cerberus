@@ -49,9 +49,8 @@ const SignupOrganizationPage = () => {
       if (signupData.redirect) {
         window.location.href = signupData.redirect
         toast(t('Signup.Organization.Page.redirect'))
-      } else {
-        navigate(routes.home())
       }
+
       navigate(routes.home())
     },
     [reauthenticate, signupData, t]
@@ -62,6 +61,7 @@ const SignupOrganizationPage = () => {
       toast.error(
         t(`Signup.Organization.Page.errors.${error.message}`, error.message)
       )
+      navigate(routes.signup())
     },
     [t]
   )
