@@ -42,13 +42,6 @@
         }
       }
     },
-    "Menu": {
-      "accountProfile": "Account Profile",
-      "items": {
-        "settings": "Settings",
-        "logout": "Logout"
-      }
-    },
     "Page": {
       "Helmet": {
         "title": "Cerberus • Account Details"
@@ -84,6 +77,20 @@
     }
   },
   "App": {
+    "Bar": {
+      "sidebarToggle": "Toggle Sidebar",
+      "actions": {
+        "manual": "User Manual",
+        "userProfile": "User Profile"
+      }
+    },
+    "Menu": {
+      "accountProfile": "Account Profile",
+      "items": {
+        "settings": "Settings",
+        "logout": "Logout"
+      }
+    },
     "SettingsModal": {
       "title": "Application Settings",
       "subtitle": "These settings do not effect your organization or its members.",
@@ -95,18 +102,11 @@
             "light": "Day",
             "night": "Night"
           },
-          "hint": "Update the application's design to match the current time-of-day, or your personal preference."
+          "hint": "Update the application's design to match the current time-of-day, or use your personal preference."
         },
         "submit": "Save"
       },
       "saved": "Settings updated."
-    }
-  },
-  "Appbar": {
-    "sidebarToggle": "Toggle Sidebar",
-    "actions": {
-      "manual": "User Manual",
-      "userProfile": "User Profile"
     }
   },
   "Auth": {

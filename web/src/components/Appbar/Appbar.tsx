@@ -7,7 +7,7 @@ import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
 
 import AppMenu from 'src/components/AppMenu'
 
-import './Appbar.css'
+import './AppBar.css'
 
 const Appbar = () => {
   const { t } = useTranslation()
@@ -19,7 +19,7 @@ const Appbar = () => {
   return (
     <header className="appbar">
       <button
-        aria-label={t('Appbar.sidebarToggle')}
+        aria-label={t('App.Bar.sidebarToggle')}
         className="sidebar-toggle"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
