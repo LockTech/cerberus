@@ -45,8 +45,6 @@ export const Loading = () => {
   )
 }
 
-export const Empty = () => <div>Empty</div>
-
 export const Failure = ({ error }: CellFailureProps) => {
   const { et } = useErrorTranslation()
 
