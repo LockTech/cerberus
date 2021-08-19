@@ -282,7 +282,6 @@
         },
         "loading": "Confirming your account.",
         "success": "Your account has been confirmed.",
-        "login": "Please login to finish creating your organization.",
         "failure": "Your account could not be confirmed."
       }
     },

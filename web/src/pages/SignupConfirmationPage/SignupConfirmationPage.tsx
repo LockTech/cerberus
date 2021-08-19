@@ -43,7 +43,6 @@ const SignupConfirmationPage = () => {
       toast.dismiss()
 
       if (data.confirmed && signupData) {
-        toast(t('Signup.Confirmation.Page.login'))
         toast.success(t('Signup.Confirmation.Page.success'))
 
         const { username, password } = signupData
