@@ -9,9 +9,9 @@ const Routes = () => {
   return (
     <Router>
       <Set wrap={[ColorModeLayout]}>
+        <Route notfound page={NotFoundPage} />
         <Set private unauthenticated="login" wrap={[CurrentAccountLayout, DashboardLayout]}>
           {/* General */}
-          <Route notfound page={NotFoundPage} />
           <Route path="/" page={HomePage} name="home" />
           {/* Accounts */}
           <Route path="/accounts" page={AccountListPage} name="listAccounts" />
