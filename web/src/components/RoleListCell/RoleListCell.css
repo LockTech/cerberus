@@ -1,0 +1,10 @@
+.role-list {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  @apply text-center;
+}
+
+.role-list .card {}
+
+.role-list .role-name {
+  @apply font-semibold text-2xl;
+}
