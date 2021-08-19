@@ -5,7 +5,7 @@ const ToastProvider = () => {
     <Toaster
       toastOptions={{
         className: 'toast',
-        duration: 3000,
+        // duration: 3000,
         position: 'bottom-right',
         error: {
           iconTheme: {
