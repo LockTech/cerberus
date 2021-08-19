@@ -48,9 +48,6 @@
       },
       "Appbar": {
         "title": "Account Details"
-      },
-      "actions": {
-        "passwordReset": "Send password reset email"
       }
     },
     "Update": {
