@@ -1,39 +1,36 @@
 {
   "Account": {
-    "Danger": {
-      "Card": {
-        "delete": {
-          "title": "Delete {{ name, pluralPossessive }} Account",
-          "subtitle": "Permanently remove this account from your organization.",
-          "action": "Delete"
-        }
+    "DangerCard": {
+      "delete": {
+        "title": "Delete {{ name, pluralPossessive }} Account",
+        "subtitle": "Permanently remove this member's account from your organization.",
+        "action": "Delete"
       }
     },
     "Invite": {
       "Modal": {
-        "inviteMember": "Send Invitation",
-        "title": "Invite Member",
+        "action": "Invite a Member",
+        "title": "Member Invitation",
         "subtitle": "Send an invitation email to a member of your organization.",
+        "info": "The invited member will be able to create their own account, setting their name and password.",
         "form": {
           "email": {
             "label": "E-Mail Address",
             "placeholder": "jane.doe@example.net",
             "required": "An e-mail address is required to invite a member to your organization."
           },
-          "submit": "Invite"
+          "submit": "Send Invitation"
         },
-        "loading": "Sending invitation to your organization.",
-        "success": "Successfully invited a member to your organization."
+        "loading": "Sending invitation.",
+        "success": "Successfully sent invitation."
       }
     },
     "List": {
       "Cell": {
-        "Failure": {
-          "title": "Error loading your organization's accounts."
-        },
-        "Loading": "Loading your organization's accounts.",
+        "Loading": "Loading your member's accounts.",
         "Success": {
-          "lastLogin": "Last seen at {{ time, friendlyTime }} on {{ date, friendlyDate }}"
+          "lastLogin": "Last seen at {{ time, friendlyTime }} on {{ date, friendlyDate }}",
+          "verified": "Created on {{ date, friendlyDate }}"
         }
       },
       "Page": {
@@ -65,13 +62,10 @@
     },
     "Update": {
       "Cell": {
-        "Failure": {
-          "title": "Error loading your member's account details."
-        },
         "Loading": "Loading your member's account details.",
         "Success": {
           "title": "{{ name }}",
-          "subtitle": "Update {{ name, pluralPossessive  }} account details.",
+          "subtitle": "Update this member's account details.",
           "form": {
             "email": {
               "label": "Email Address",
@@ -83,30 +77,29 @@
             },
             "submit": "Update"
           },
+          "loading": "Updating member's account details.",
           "success": "Successfully updated your member's account."
         }
       }
     }
   },
   "App": {
-    "Settings": {
-      "Modal": {
-        "title": "Application Settings",
-        "subtitle": "General settings which do not effect your organization or its members.",
-        "form": {
-          "theme": {
-            "label": "Color Scheme",
-            "options": {
-              "browser": "Detect",
-              "light": "Day",
-              "night": "Night"
-            },
-            "hint": "Update the application's design to match the current time-of-day or use your personal preference."
+    "SettingsModal": {
+      "title": "Application Settings",
+      "subtitle": "These settings do not effect your organization or its members.",
+      "form": {
+        "theme": {
+          "label": "Color Scheme",
+          "options": {
+            "browser": "Detect",
+            "light": "Day",
+            "night": "Night"
           },
-          "submit": "Save"
+          "hint": "Update the application's design to match the current time-of-day, or your personal preference."
         },
-        "saved": "Settings updated."
-      }
+        "submit": "Save"
+      },
+      "saved": "Settings updated."
     }
   },
   "Appbar": {
@@ -125,6 +118,20 @@
     "Card": {
       "title": "Danger",
       "subtitle": "Take caution when making use of the following features."
+    }
+  },
+  "FailureCard": {
+    "reload": "Reload the Page"
+  },
+  "FatalError": {
+    "Page": {
+      "title": "Something's gone wrong!",
+      "subtitle": "An unexpected error has occured that the application could not recover from.",
+      "support": "",
+      "actions": {
+        "dashboard": "Goto the Dashboard",
+        "support": "Contact Support"
+      }
     }
   },
   "Home": {
@@ -172,6 +179,11 @@
       "success": "Successfully logged you into your account."
     }
   },
+  "NotFound": {
+    "Page": {
+      "title": "That page doesn't exist"
+    }
+  },
   "Organization": {
     "Settings": {
       "Danger": {
@@ -194,6 +206,7 @@
     },
     "Update": {
       "Cell": {
+        "Loading": "Loading your organization's details.",
         "Success": {
           "title": "Details",
           "subtitle": "Update your organization's general information.",
@@ -229,14 +242,15 @@
   },
   "Sidebar": {
     "title": "Cerberus",
-    "subtitle": "Manage your organization's accounts and their permissions.",
-    "nav": {
+    "subtitle": "Account and permission management.",
+    "copyright": "© 2021 LockTech Software",
+    "Nav": {
       "general": {
-        "title": "Cerberus",
+        "title": "General",
         "dashboard": "Dashboard"
       },
-      "accounts": {
-        "title": "Accounts",
+      "members": {
+        "title": "Members",
         "activity": "Activity",
         "listAccounts": "Accounts",
         "listRoles": "Roles"
