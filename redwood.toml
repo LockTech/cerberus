@@ -2,7 +2,7 @@
 
 [web]
   host = "127.0.0.1"
-  includeEnvironmentVariables = []
+  includeEnvironmentVariables = ['PRIVACY_URL', 'SUPPORT_URL']
   port = 8910
   apiProxyPath = "/.redwood/functions" # "/api"
 [api]
