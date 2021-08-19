@@ -8,7 +8,7 @@ import { mockAccountList, standard } from './AccountListCell.mock'
 export default {
   component: AccountList,
   subcomponents: { Failure, Loading, Success },
-  title: 'Cells/Account/ListCell',
+  title: 'Cells/Account/List',
 } as Meta
 
 export const failure = () => <Failure error={new Error('An error occured!')} />

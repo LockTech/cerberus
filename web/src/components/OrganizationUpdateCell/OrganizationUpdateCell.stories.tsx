@@ -11,7 +11,7 @@ import {
 
 export default {
   subcomponents: { Failure, Loading, Success },
-  title: 'Cells/Organization/UpdateCell',
+  title: 'Cells/Organization/Update',
 } as Meta
 
 export const failure = () => <Failure error={new Error('organization-read')} />

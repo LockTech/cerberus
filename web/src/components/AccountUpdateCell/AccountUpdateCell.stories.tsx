@@ -12,7 +12,7 @@ import {
 export default {
   component: AccountUpdateCell,
   subcomponents: { Empty, Failure, Loading, Success },
-  title: 'Cells/Account/UpdateCell',
+  title: 'Cells/Account/Update',
 } as Meta
 
 export const empty = () => <Empty />
