@@ -62,7 +62,7 @@ export const Success = ({ accounts }: CellSuccessProps<AccountListQuery>) => {
             onClick={() => navigate(routes.account({ id }))}
           >
             <header className="title-group">
-              <h3 className="account-name text">{name}</h3>
+              <h2 className="account-name text">{name}</h2>
               <p className="account-email hint">{email}</p>
             </header>
             <div className="title-group">
