@@ -61,10 +61,10 @@ export const Success = ({ accounts }: CellSuccessProps<AccountListQuery>) => {
             key={id}
             onClick={() => navigate(routes.account({ id }))}
           >
-            <header className="title-group">
+            <div className="title-group">
               <h2 className="account-name text">{name}</h2>
               <p className="account-email hint">{email}</p>
-            </header>
+            </div>
             <div className="title-group">
               <p className="text">
                 {t('Account.List.Cell.Success.lastLogin', {

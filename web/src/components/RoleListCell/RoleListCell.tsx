@@ -59,9 +59,9 @@ export const Success = ({ roles }: CellSuccessProps<RoleListQuery>) => {
             key={id}
             onClick={() => navigate(routes.role({ id }))}
           >
-            <header>
+            <div>
               <h2 className="role-name text">{name}</h2>
-            </header>
+            </div>
             <p className="text">
               {t('Role.List.Cell.Success.createdAt', { createdAt })}
             </p>
