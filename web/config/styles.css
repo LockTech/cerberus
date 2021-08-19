@@ -1,0 +1,7 @@
+.sb-main-padded {
+  padding: 0 !important;
+}
+
+.sb-main-padded #root {
+  height: 100%;
+}
