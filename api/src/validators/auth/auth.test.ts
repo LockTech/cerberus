@@ -34,10 +34,6 @@ const AuthOrgInvalidError = {
   message: 'auth-organization-invalid',
 }
 //
-const AuthVerifiedInvalidError = {
-  name: 'ValidationError',
-  message: 'auth-invalid',
-}
 const AuthVerifiedError = {
   name: 'ValidationError',
   message: 'auth-verified',
@@ -159,27 +155,27 @@ describe('auth validator', () => {
   describe('verified', () => {
     it('throws when `context.currentUser.verified` is undefined', () => {
       mockCurrentUser({ verified: undefined })
-      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedError)
       //
       mockCurrentUser({ verified: null })
-      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedError)
       //
     })
     it('throws when `context.currentUser.verified` is not a "boolean"', () => {
       mockCurrentUser({ verified: 3 })
-      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedError)
       //
       mockCurrentUser({ verified: '23' })
-      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedError)
       //
       mockCurrentUser({ verified: () => 4 })
-      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedError)
       //
       mockCurrentUser({ verified: () => '4' })
-      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedError)
       //
       mockCurrentUser({ verified: () => true })
-      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedInvalidError)
+      expect(() => validateAuthVerified(Service)).toThrow(AuthVerifiedError)
       //
     })
     it('throws when `context.currentUser.verified` is "false"', () => {

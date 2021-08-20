@@ -74,9 +74,7 @@ export const validateAuthVerified = (s: string) => {
 
   const verified = currentUser.verified
 
-  if (!isBool(verified)) throw new ValidationError('auth-verified')
-
-  if (!verified) throw new ValidationError('auth-verified')
+  if (!isBool(verified) || !verified) throw new ValidationError('auth-verified')
 }
 
 /**
