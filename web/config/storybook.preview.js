@@ -31,7 +31,7 @@ export const decorators = [
         <RecoilRoot>
           <ColorModeLayout>
             <ToastProvider />
-            <div className={padding === 'on' ? 'p-8' : 'p-0'}>
+            <div className={padding === 'on' ? 'padding' : ''}>
               {storyFunc()}
             </div>
           </ColorModeLayout>

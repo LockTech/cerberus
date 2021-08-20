@@ -5,3 +5,7 @@
 .sb-main-padded #root {
   height: 100%;
 }
+
+.padding {
+  padding: 24rem;
+}
