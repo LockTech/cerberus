@@ -4,6 +4,7 @@ import type { GlobalContext } from '@redwoodjs/api'
 
 import { authFields, authModelAccessor, loginExpires } from 'src/constants/auth'
 
+import { loginHandler } from 'src/helpers/login'
 import { signupHandler } from 'src/helpers/signup'
 
 import { db } from 'src/lib/db'
@@ -21,6 +22,7 @@ export const handler = async (
     authFields,
     signupHandler,
     loginExpires,
+    loginHandler,
   })
   const res = await authHandler.invoke()
 
