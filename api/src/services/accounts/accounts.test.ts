@@ -30,7 +30,7 @@ jest.mock('../../helpers/keto/keto')
 
 const AccountInviteEmailSend = {
   name: 'ValidationError',
-  message: 'account-email-send',
+  message: 'account-invite-email-send',
 }
 //
 const _AccountRead = {
@@ -183,9 +183,14 @@ describe('account service', () => {
       scenario(
         'retrieves all accounts belonging to the invokers organization',
         async (scenario: AccountStandard) => {
+          const role = scenario.role.one as Role
+
           const acc1 = AccountRemoveAuthFields(scenario.account.one)
+          acc1['roles'] = [role]
           const acc2 = AccountRemoveAuthFields(scenario.account.two)
+          acc2['roles'] = []
           const acc3 = AccountRemoveAuthFields(scenario.account.three)
+          acc3['roles'] = []
 
           const organizationId = acc1.organizationId
           mockCurrentUser({ organizationId })
