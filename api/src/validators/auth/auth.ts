@@ -79,6 +79,19 @@ export const validateAuthVerified = (s: string) => {
 
 /**
  * @throws
+ *  * 'auth-disabled' - When `context.currentUser.disabled` is `true` or `undefined`
+ */
+export const validateAuthDisabled = (s: string) => {
+  validateCurrentUser(s)
+  const currentUser = context.currentUser
+
+  const disabled = currentUser.disabled
+
+  if (!isBool(disabled) || disabled) throw new ValidationError('auth-disabled')
+}
+
+/**
+ * @throws
  *  * 'auth-is-admin' - When the Keto `check` fails.
  */
 export const validateIsAdmin = (_s: string) => {
@@ -108,6 +121,7 @@ export const validateIsAdmin = (_s: string) => {
  */
 export const validateAuth = (s: string) => {
   validateAuthVerified(s)
+  validateAuthDisabled(s)
   validateAuthId(s)
   validateAuthName(s)
   validateAuthOrganization(s)

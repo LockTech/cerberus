@@ -8,6 +8,7 @@ import {
   validateAuthName,
   validateAuthOrganization,
   validateAuthVerified,
+  validateAuthDisabled,
 } from './auth'
 
 const AuthUndefinedError = {
@@ -37,6 +38,11 @@ const AuthOrgInvalidError = {
 const AuthVerifiedError = {
   name: 'ValidationError',
   message: 'auth-verified',
+}
+//
+const AuthDisabledError = {
+  name: 'ValidationError',
+  message: 'auth-disabled',
 }
 
 const Service = 'Foo'
@@ -186,6 +192,43 @@ describe('auth validator', () => {
     it('DOES NOT throw when `context.currentUser.verified` is "true"', () => {
       mockCurrentUser({ verified: true })
       expect(() => validateAuthVerified(Service)).not.toThrow(AuthVerifiedError)
+      //
+    })
+  })
+  describe('disabled', () => {
+    it('throws when `context.currentUser.disabled` is undefined', () => {
+      mockCurrentUser({ disabled: undefined })
+      expect(() => validateAuthDisabled(Service)).toThrow(AuthDisabledError)
+      //
+      mockCurrentUser({ disabled: null })
+      expect(() => validateAuthDisabled(Service)).toThrow(AuthDisabledError)
+      //
+    })
+    it('throws when `context.currentUser.disabled` is not a "boolean"', () => {
+      mockCurrentUser({ disabled: 3 })
+      expect(() => validateAuthDisabled(Service)).toThrow(AuthDisabledError)
+      //
+      mockCurrentUser({ disabled: '23' })
+      expect(() => validateAuthDisabled(Service)).toThrow(AuthDisabledError)
+      //
+      mockCurrentUser({ disabled: () => 4 })
+      expect(() => validateAuthDisabled(Service)).toThrow(AuthDisabledError)
+      //
+      mockCurrentUser({ disabled: () => '4' })
+      expect(() => validateAuthDisabled(Service)).toThrow(AuthDisabledError)
+      //
+      mockCurrentUser({ disabled: () => true })
+      expect(() => validateAuthDisabled(Service)).toThrow(AuthDisabledError)
+      //
+    })
+    it('throws when `context.currentUser.disabled` is "true"', () => {
+      mockCurrentUser({ disabled: true })
+      expect(() => validateAuthDisabled(Service)).toThrow(AuthDisabledError)
+      //
+    })
+    it('DOES NOT throw when `context.currentUser.disabled` is "false"', () => {
+      mockCurrentUser({ disabled: false })
+      expect(() => validateAuthDisabled(Service)).not.toThrow(AuthDisabledError)
       //
     })
   })
