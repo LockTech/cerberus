@@ -152,9 +152,8 @@ export const signupHandler = async ({
   validateAccountEmail('signupHandler', { email })
   validateAccountName('signupHandler', { name })
 
-  /* eslint-disable prettier/prettier */
   if (isStr(code)) return await handleInvitation({ code, email, name, ...rest })
-  else if (isUndefined(code)) return await handleSignup({ email, name, ...rest })
+  else if (isUndefined(code))
+    return await handleSignup({ email, name, ...rest })
   else throw new ValidationError('signup-invalid-code')
-  /* eslint-enable prettier/prettier */
 }
