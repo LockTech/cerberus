@@ -146,7 +146,7 @@ export class CRUDHandler {
     const body = event.body ? JSON.parse(event.body) : {}
 
     try {
-      validators !== [] &&
+      validators.length >= 1 &&
         (await this._validateMethod(resolverName, validators, body))
     } catch (err) {
       return returnFunctionError(err)
