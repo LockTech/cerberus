@@ -21,17 +21,3 @@ services:
         source: ./config/keto
         target: /home/ory
 
-  # NOT for production use.
-  # https://github.com/mailslurper/mailslurper/wiki
-  #
-  # To use, set the environment variable `SMTP_HOST` to 'localhost' and `SMTP_PORT` to `2500`.
-  # Both `SMTP_USER` and `SMTP_PASS` can be left blank.
-  # You can view the emails sent at http://localhost:8080 (templates may not format)
-  mailslurper:
-    image: marcopas/docker-mailslurper:latest
-    ports:
-      - '8080:8080'
-      - '8085:8085'
-      - '2500:2500'
-    networks:
-      - default
