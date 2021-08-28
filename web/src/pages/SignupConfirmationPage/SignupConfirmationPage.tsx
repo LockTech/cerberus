@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRecoilValue } from 'recoil'
-import { useMutation } from '@apollo/client'
 import { useAuth } from '@redwoodjs/auth'
 import { Form, Label, FieldError, Submit, TextField } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
-import { Helmet } from '@redwoodjs/web'
+import { Helmet, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { SignupDataAtom } from 'src/atoms/SignupData'
@@ -59,6 +58,7 @@ const SignupConfirmationPage = () => {
   const onError = useCallback(
     (error: Error) => {
       toast.dismiss()
+      console.log(error)
       toast.error(
         t(`Signup.Confirmation.Page.errors.${error.message}`, error.message)
       )
@@ -77,7 +77,8 @@ const SignupConfirmationPage = () => {
 
       toast.loading(t('Signup.Confirmation.Page.loading'))
 
-      mutate({ variables: { code, email: signupData.username } })
+      const email = signupData.username
+      mutate({ variables: { code, email } })
     },
     [loading, mutate, signupData, t]
   )
