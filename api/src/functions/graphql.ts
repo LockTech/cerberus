@@ -27,7 +27,6 @@ export const handler = createGraphQLHandler({
   },
   schema: makeMergedSchema({
     schemas,
-    // @ts-expect-error Redwood
     services: makeServices({ services }),
   }),
   depthLimitOptions: {
