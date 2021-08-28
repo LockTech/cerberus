@@ -13,6 +13,7 @@
   "account-update": "Error updating member's account.",
   "accounts-delete": "Error deleting your organization's members.",
   "accounts-read": "Error retrieving your members.",
+  "auth-disabled": "Your account has been disabled by your organization.",
   "auth-id-invalid": "Error authenticating your account's ID.",
   "auth-is-admin": "You must be an administrator of your organization to do this.",
   "auth-name-invalid": "Your account's name is invalid.",
