@@ -4,8 +4,6 @@ export const schema = gql`
     name: String!
     createdAt: DateTime!
     updatedAt: DateTime!
-    # accounts: [Account]!
-    # roles: [Role!]!
   }
 
   type Query {

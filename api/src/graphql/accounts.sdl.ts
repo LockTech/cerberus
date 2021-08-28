@@ -8,7 +8,6 @@ export const schema = gql`
     updatedAt: DateTime!
     lastLoginAt: DateTime!
     organizationId: ID
-    # organization: Organization
     roles: [Role!]!
     verified: Boolean!
     verifiedAt: DateTime

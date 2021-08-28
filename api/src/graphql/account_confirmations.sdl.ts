@@ -7,8 +7,6 @@ export const schema = gql`
     created_at: DateTime!
   }
 
-  # type Query {}
-
   type Mutation {
     confirmSignup(code: String!, email: String!): Boolean!
   }
