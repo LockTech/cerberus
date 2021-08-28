@@ -13,12 +13,15 @@ import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { Helmet } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
+
 export interface LoginPageProps {
   redirectTo?: string
 }
 
 const LoginPage = ({ redirectTo }: LoginPageProps) => {
   const { t } = useTranslation()
+  const { et } = useErrorTranslation()
 
   const { isAuthenticated, logIn } = useAuth()
 
@@ -46,18 +49,20 @@ const LoginPage = ({ redirectTo }: LoginPageProps) => {
 
       const response: unknown = await logIn({ ...data })
 
-      const error = response as Error
-      const _id = response as { id: string }
+      console.log(response)
+
+      const { error } = response as { error: string }
+      const { id: _id } = response as { id: string }
 
       toast.dismiss()
 
-      if (error.message) {
-        toast.error(error.message)
+      if (error) {
+        toast.error(et({ name: 'Error', message: error }))
       } else {
         toast.success(t('Login.Page.success'))
       }
     },
-    [logIn, t]
+    [et, logIn, t]
   )
 
   return (
