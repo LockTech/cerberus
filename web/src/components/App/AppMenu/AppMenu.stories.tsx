@@ -1,4 +1,4 @@
-import { mockCurrentUser } from '@redwoodjs/testing'
+import { mockCurrentUser } from '@redwoodjs/testing/web'
 import type { Meta, Story } from '@storybook/react'
 
 import AppMenu from './AppMenu'
