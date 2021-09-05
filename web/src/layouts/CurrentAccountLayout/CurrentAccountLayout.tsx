@@ -18,6 +18,7 @@ const CurrentAccountLayout = ({ children }: CurrentAccountLayoutProps) => {
 
   const currentAccount = useCurrentAccount()
 
+  // Safely return `null` as the user should be redirected by Redwood's router.
   if (!currentAccount) return null
   else if (!loading) return <>{children}</>
   else
