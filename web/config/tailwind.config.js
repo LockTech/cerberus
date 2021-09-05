@@ -1,7 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  plugins: [require('@locktech/atomic/preset')],
+  presets: [require('@locktech/atomic/preset')],
   purge: ['src/**/*.{js,ts,jsx,tsx,html,css}'],
   theme: {
     extend: {
