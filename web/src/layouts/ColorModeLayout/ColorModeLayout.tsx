@@ -22,7 +22,7 @@ const ColorModeLayout = ({ children }: ColorModeLayoutProps) => {
     () =>
       window
         .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', onChangePreference),
+        .removeEventListener('change', onChangePreference),
     [onChangePreference]
   )
 
