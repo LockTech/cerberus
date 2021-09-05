@@ -1,4 +1,4 @@
-import { Private, Router, Route, Set } from '@redwoodjs/router'
+import { Router, Route, Set } from '@redwoodjs/router'
 
 import AuthLayout from 'src/layouts/AuthLayout'
 import ColorModeLayout from 'src/layouts/ColorModeLayout'
@@ -23,15 +23,11 @@ const Routes = () => {
           <Route path="/organization/settings" page={OrganizationSettingsPage} name="organizationSettings" />
         </Set>
         <Set prerender wrap={[AuthLayout]}>
-          <Private unauthenticated="signup">
-            <Route path="/signup/organization" page={SignupOrganizationPage} name="signupOrganization" />
-          </Private>
-          {/* Auth */}
-          <Route name="login" path="/login" page={LoginPage} />
-          <Route name="signup" path="/signup" page={SignupPage} />
-          {/* Confirmation */}
-          <Route name="signupConfirmation" path="/signup/confirmation" page={SignupConfirmationPage} />
-          <Route name="inviteConfirmation" path="/invite/confirmation" page={InviteConfirmationPage} />
+          <Route path="/signup" name="signup" page={AuthSignupPage} />
+          <Route path="/login" name="login" page={AuthLoginPage} />
+          <Route path="/signup/confirmation" name="signupConfirmation" page={AuthSignupConfirmationPage} />
+          <Route path="/signup/organization" name="signupOrganization" page={AuthSignupOrganizationPage} />
+          <Route path="/invite/confirmation" name="inviteConfirmation" page={AuthInviteConfirmationPage} />
         </Set>
       </Set>
     </Router>
