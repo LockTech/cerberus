@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { Helmet } from '@redwoodjs/web'
 
-import AppbarTitle from 'src/components/Appbar/AppbarTitle'
-import AccountInviteModal from 'src/components/AccountInviteModal'
-import AccountListCell from 'src/components/AccountListCell'
+import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
+import AccountInviteModal from 'src/components/Account/AccountInviteModal'
+import AccountListCell from 'src/components/Account/AccountListCell'
 
 const AccountListPage = () => {
   const { t } = useTranslation()

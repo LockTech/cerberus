@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { Helmet } from '@redwoodjs/web'
 
-import AppbarTitle from 'src/components/Appbar/AppbarTitle'
-import RoleUpdateCell from 'src/components/RoleUpdateCell'
+import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
+import RoleUpdateCell from 'src/components/Role/RoleUpdateCell'
 
 export interface RolePageProps {
   id: string

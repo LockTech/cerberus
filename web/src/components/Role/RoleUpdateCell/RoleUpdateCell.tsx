@@ -1,12 +1,12 @@
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { useTranslation } from 'react-i18next'
 
-import FailureCard from 'src/components/FailureCard'
-import LoadingCard from 'src/components/LoadingCard'
+import FailureCard from 'src/components/Card/FailureCard'
+import LoadingCard from 'src/components/Card/LoadingCard'
 
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
-import type { UpdateRoleQuery } from 'types/graphql'
+import type { RoleUpdateQuery } from 'types/graphql'
 
 export const QUERY = gql`
   query RoleUpdateQuery($id: ID!) {
@@ -46,6 +46,6 @@ export const Failure = ({ error }: CellFailureProps) => {
   )
 }
 
-export const Success = ({ role }: CellSuccessProps<UpdateRoleQuery>) => {
+export const Success = ({ role }: CellSuccessProps<RoleUpdateQuery>) => {
   return <div>{JSON.stringify(role)}</div>
 }

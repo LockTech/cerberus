@@ -1,9 +1,9 @@
 import { Helmet } from '@redwoodjs/web'
 import { useTranslation } from 'react-i18next'
 
-import AppbarTitle from 'src/components/Appbar/AppbarTitle'
-import RoleCreateModal from 'src/components/RoleCreateModal'
-import RoleListCell from 'src/components/RoleListCell'
+import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
+import RoleCreateModal from 'src/components/Role/RoleCreateModal'
+import RoleListCell from 'src/components/Role/RoleListCell'
 
 const RoleListPage = () => {
   const { t } = useTranslation()

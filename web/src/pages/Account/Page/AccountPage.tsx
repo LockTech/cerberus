@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { Helmet } from '@redwoodjs/web'
 
-import AppbarTitle from 'src/components/Appbar/AppbarTitle'
-import AccountUpdateCell from 'src/components/AccountUpdateCell'
+import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
+import AccountUpdateCell from 'src/components/Account/AccountUpdateCell'
 
 import './AccountPage.css'
 

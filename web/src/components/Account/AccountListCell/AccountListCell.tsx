@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { navigate, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
-import FailureCard from 'src/components/FailureCard'
-import LoadingCard from 'src/components/LoadingCard'
+import FailureCard from 'src/components/Card/FailureCard'
+import LoadingCard from 'src/components/Card/LoadingCard'
 
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 

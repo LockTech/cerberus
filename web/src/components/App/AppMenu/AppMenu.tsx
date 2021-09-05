@@ -7,7 +7,7 @@ import { useAuth } from '@redwoodjs/auth'
 
 import { AppSettingsModalAtom } from 'src/atoms/AppSettingsModal'
 
-import AppSettingsModal from 'src/components/AppSettingsModal'
+import AppSettingsModal from 'src/components/App/AppSettingsModal'
 
 import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
 

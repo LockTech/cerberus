@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import DangerCard from 'src/components/DangerCard'
+import DangerCard from 'src/components/Card/DangerCard'
 
 const OrganizationSettingsDangerCard = () => {
   const { t } = useTranslation()

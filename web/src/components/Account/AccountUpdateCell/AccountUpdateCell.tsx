@@ -10,9 +10,9 @@ import { toast } from '@redwoodjs/web/toast'
 import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
-import AccountDangerCard from 'src/components/AccountDangerCard'
-import FailureCard from 'src/components/FailureCard'
-import LoadingCard from 'src/components/LoadingCard'
+import AccountDangerCard from 'src/components/Account/AccountDangerCard'
+import FailureCard from 'src/components/Card/FailureCard'
+import LoadingCard from 'src/components/Card/LoadingCard'
 
 import type { AccountUpdateQuery, AccountUpdateMutation } from 'types/graphql'
 

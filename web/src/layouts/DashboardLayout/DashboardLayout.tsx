@@ -2,7 +2,7 @@ import { navigate, routes } from '@redwoodjs/router'
 
 import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
 
-import Appbar from 'src/components/Appbar'
+import Appbar from 'src/components/App/Appbar'
 import Sidebar from 'src/components/Sidebar'
 
 import './DashboardLayout.css'

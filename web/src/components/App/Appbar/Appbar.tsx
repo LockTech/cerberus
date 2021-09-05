@@ -5,7 +5,7 @@ import { MenuIcon } from '@heroicons/react/solid'
 import { AppbarTitleAtom } from 'src/atoms/AppbarTitle'
 import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
 
-import AppMenu from 'src/components/AppMenu'
+import AppMenu from 'src/components/App/AppMenu'
 
 import './Appbar.css'
 

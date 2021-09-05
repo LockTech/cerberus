@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { Helmet } from '@redwoodjs/web'
 
-import AppbarTitle from 'src/components/Appbar/AppbarTitle'
-import OrganizationUpdateCell from 'src/components/OrganizationUpdateCell'
+import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
+import OrganizationUpdateCell from 'src/components/Organization/OrganizationUpdateCell'
 
 const OrganizationSettingsPage = () => {
   const { t } = useTranslation()

@@ -7,9 +7,9 @@ import { FieldError, Form, Label, Submit, TextField } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import FailureCard from 'src/components/FailureCard'
-import LoadingCard from 'src/components/LoadingCard'
-import OrganizationSettingsDangerCard from 'src/components/OrganizationSettingsDangerCard'
+import FailureCard from 'src/components/Card/FailureCard'
+import LoadingCard from 'src/components/Card/LoadingCard'
+import OrganizationSettingsDangerCard from 'src/components/Organization/OrganizationSettingsDangerCard'
 
 import type {
   OrganizationUpdateQuery,

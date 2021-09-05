@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Helmet } from '@redwoodjs/web'
 
-import AppbarTitle from 'src/components/Appbar/AppbarTitle'
+import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
 
 const HomePage = () => {
   const { t } = useTranslation()

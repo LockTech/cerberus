@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react'
 
-import { mockRoleList } from 'src/components/RoleListCell/RoleListCell.mock'
+import { mockRoleList } from 'src/components/Role/RoleListCell/RoleListCell.mock'
 
 import RoleListPage from './RoleListPage'
 
