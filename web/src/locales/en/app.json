@@ -108,7 +108,8 @@
   },
   "Auth": {
     "Layout": {
-      "privacy": "Our Privacy Policy"
+      "privacy": "Our Privacy Policy",
+      "support": "Contact Support"
     }
   },
   "Danger": {
@@ -148,32 +149,6 @@
           "title": "Cerberus • Invitation Confirmation"
         }
       }
-    }
-  },
-  "Login": {
-    "Page": {
-      "Helmet": {
-        "title": "Cerberus • Login"
-      },
-      "title": "Login",
-      "subtitle": "Enter your account's e-mail address and password to login.",
-      "form": {
-        "username": {
-          "label": "E-Mail Address",
-          "placeholder": "E-Mail Address",
-          "required": "An e-mail address is required to login."
-        },
-        "password": {
-          "label": "Password",
-          "placeholder": "Password",
-          "required": "A password is required to login."
-        },
-        "submit": "Login"
-      },
-      "signup": "Need to create an account?",
-      "redirect": "Redirecting your browser.",
-      "loading": "Logging you into your account.",
-      "success": "Successfully logged you into your account."
     }
   },
   "NotFound": {
@@ -275,90 +250,6 @@
         "title": "Organization",
         "settings": "Settings"
       }
-    }
-  },
-  "Signup": {
-    "Confirmation": {
-      "Page": {
-        "Helmet": {
-          "title": "Cerberus • Sign Up Confirmation"
-        },
-        "title": "Signup Confirmation",
-        "emailNotFound": "Your email address could not be determined.",
-        "emailNotFoundSteps": "You can find a link to this page in the confirmation email sent to the address you provided during signup.",
-        "codeEmail": "We've sent a confirmation code to {{ email }}.",
-        "codeUse": "Copy and paste it below to finish creating your account.",
-        "form": {
-          "code": {
-            "label": "Confirmation Code",
-            "placeholder": "Code",
-            "required": "A confirmation code is required to confirm your account."
-          },
-          "submit": "Confirm"
-        },
-        "loading": "Confirming your account.",
-        "success": "Your account has been confirmed.",
-        "failure": "Your account could not be confirmed."
-      }
-    },
-    "Organization": {
-      "Page": {
-        "Helmet": {
-          "title": "Cerberus • Create Organization"
-        },
-        "title": "Create Organization",
-        "subtitle": "Finishing signing up by creating your organization and its administrator role.",
-        "form": {
-          "name": {
-            "label": "Organization Name",
-            "placeholder": "Example Inc.",
-            "required": "An name is required to create an organization."
-          },
-          "adminRoleName": {
-            "label": "Administrator Role Name",
-            "placeholder": "Administrator",
-            "required": "A name for your administrator role is required to create an organization."
-          },
-          "submit": "Create"
-        },
-        "success": "Your organization has been created.",
-        "loading": "Creating your organization."
-      }
-    },
-    "Page": {
-      "Helmet": {
-        "title": "Cerberus • Sign Up"
-      },
-      "title": "Sign Up",
-      "subtitle": "Enter some of your personal information below to begin creating your account and organization.",
-      "form": {
-        "name": {
-          "label": "Name",
-          "placeholder": "Jane Doe",
-          "length": "Your name must be shorter than 70 characters.",
-          "required": "Your name is required to signup."
-        },
-        "username": {
-          "label": "E-Mail Address",
-          "placeholder": "jane.doe@example.net",
-          "required": "An e-mail address is required to signup."
-        },
-        "password": {
-          "label": "Password",
-          "placeholder": "Password",
-          "minLength": "Your password must be longer than 8 characters.",
-          "required": "A password is required to signup."
-        },
-        "confirmPassword": {
-          "label": "Confirm Password",
-          "placeholder": "Password",
-          "match": "Passwords do not match."
-        },
-        "submit": "Sign Up"
-      },
-      "login": "Already have an account?",
-      "loading": "Signing up your account.",
-      "success": "A confirmation code has been sent to your email address."
     }
   }
 }
