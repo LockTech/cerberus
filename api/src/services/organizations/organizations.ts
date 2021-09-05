@@ -35,12 +35,12 @@ import { validateRoleName } from 'src/validators/role'
 
 /* eslint-disable prettier/prettier */
 const valCreateRoleName = (s: string, { adminRoleName }) => validateRoleName(s, { name: adminRoleName })
-const valUpdateRoleName = (s: string, { name }) => name && validateOrganizationName(s, { name })
+const valUpdateOrgName = (s: string, { name }) => name && validateOrganizationName(s, { name })
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(validateAuth, { except: ['createOrganization'] })
   rules.add([validateAuthVerified, validateAuthId, validateOrganizationName, valCreateRoleName], { only: ['createOrganization'] })
-  rules.add([valUpdateRoleName], { only: ['updateOrganization'] })
+  rules.add([valUpdateOrgName], { only: ['updateOrganization'] })
 }
 /* eslint-enable prettier/prettier */
 
