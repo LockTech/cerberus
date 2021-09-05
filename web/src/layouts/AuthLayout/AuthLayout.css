@@ -1,4 +1,0 @@
-.auth-layout {
-  @apply m-auto px-6 pt-3 pb-6 space-y-6 w-full;
-  @apply sm:max-w-[28rem];
-}
