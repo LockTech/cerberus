@@ -2097,10 +2097,10 @@
   resolved "https://registry.yarnpkg.com/@josephg/resolvable/-/resolvable-1.0.1.tgz#69bc4db754d79e1a2f17a650d3466e038d94a5eb"
   integrity sha512-CtzORUwWTTOTqfVtHaKRJ0I1kNQd1bpn3sUh8I3nJDVY+5/M/Oe1DnEWzPQvqq/xPIIkzzzIP7mfCoAjFRvDhg==
 
-"@locktech/atomic@2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@locktech/atomic/-/atomic-2.1.1.tgz#bc2b31e15dfe4484ae7921ddf3060bcbc7c5fde0"
-  integrity sha512-h/W8L2NyRM9GffrDPJQTcJ+2NaWibQilIePfWgP9Z+lYst8sf4lzdUMhgPb0jQTGu/IQHQUhfbkoclu1CqD1kw==
+"@locktech/atomic@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@locktech/atomic/-/atomic-2.2.0.tgz#b29182b506c63acf1452bff65abbb60d978fc85c"
+  integrity sha512-n0JKkZpp+wLKxDTkVmNMdnTc8ezjg2hchnY99KRs0zAjCs2Jlm7gpcZSLeC5PBGRYvKhn9GQJjcWJRYT54aLkQ==
 
 "@mdx-js/loader@^1.6.22":
   version "1.6.22"
