@@ -26,9 +26,7 @@ const SignupPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('Signup.Page.Helmet.title')}</title>
-      </Helmet>
+      <Helmet title={t('Signup.Page.Helmet.title')} />
       <div className="card space-y-6">
         <div className="space-y-1">
           <h1 className="text title">{t('Signup.Page.title')}</h1>
