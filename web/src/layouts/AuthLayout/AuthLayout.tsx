@@ -12,7 +12,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   const { t } = useTranslation()
 
   return (
-    <div className="max-w-md m-auto pt-8 space-y-6">
+    <div className="max-w-md m-auto pt-6 space-y-6">
       <BrandBanner />
       {children}
       <div className="flex flex-col items-center space-y-3">
