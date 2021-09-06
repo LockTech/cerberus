@@ -266,10 +266,12 @@ Using the example given in Permission Management and Roles, a `check` request ma
 
 ## Licensing
 
-The Cerberus platform is provided under the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html).
+The Cerberus platform is provided under the [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl-3.0.en.html) ([in-a-nutshell](https://github.com/LockTech/cerberus/blob/main/LICENSE)).
 
 This choice was made to ensure further work done on the platform, whether pushed to this repository or not, is always available for the benefit of everyone.
 
 ### Attributions
 
-* `FatalErrorPage` Illustration by <a href="https://icons8.com/illustrations/author/5ec7b0e101d0360016f3d1b3">Pixeltrue</a> from <a href="https://icons8.com/illustrations">Ouch!</a>
+The following are credits to artists, designers, and engineers whose work is used by this platform, but is not a direct-dependency of the project.
+
+* n/a
