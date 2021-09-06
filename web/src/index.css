@@ -6,3 +6,10 @@ html, body, #redwood-app {
   height: 100%;
   width: 100%;
 }
+
+@layer components {
+  .input-error {
+    @apply text-base;
+    @apply text-red-600 dark:text-red-300;
+  }
+}
