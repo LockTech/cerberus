@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 import BrandBanner from 'src/components/BrandBanner'
 
-import { PrivacyURL, SupportURL } from 'src/constants/variables'
+import { BrandURL, PrivacyURL, SupportURL } from 'src/constants/variables'
 
 type AuthLayoutProps = {
   children: React.ReactNode
@@ -13,7 +13,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
 
   return (
     <div className="dark max-w-lg m-auto px-6 sm:px-0 py-6 space-y-6">
-      <BrandBanner className="max-w-sm" />
+      <a href={BrandURL} rel="noreferrer" target="_blank">
+        <BrandBanner className="max-w-xs" />
+      </a>
       {children}
       <div className="flex flex-col items-center space-y-3">
         <a className="link" href={PrivacyURL} rel="noreferrer" target="_blank">
