@@ -1,7 +1,5 @@
 import clsx from 'clsx'
 
-import './BrandBanner.css'
-
 export type BrandBannerProps = {
   className?: string
 }
@@ -9,12 +7,12 @@ export type BrandBannerProps = {
 const BrandBanner = ({ className }: BrandBannerProps) => {
   return (
     <svg
-      className={clsx('brand-banner', className)}
+      className={clsx('text h-full m-auto w-9/12', className)}
       fill="none"
       viewBox="0 0 295 110"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <svg className="moon">
+      <svg className="text-gray-50 dark:text-gray-900">
         <path
           fillRule="evenodd"
           clipRule="evenodd"
