@@ -253,6 +253,13 @@
     }
   },
   "Signup": {
+    "Confirmation": {
+      "Page": {
+        "Helmet": {
+          "title": "Cerberus • Signup Confirmation"
+        }
+      }
+    },
     "Page": {
       "Helmet": {
         "title": "Cerberus • Signup"
@@ -283,7 +290,8 @@
           "placeholder": "Secure Secret",
           "match": "Your passwords do not match."
         }
-      }
+      },
+      "login": "Already have an account?"
     }
   }
 }

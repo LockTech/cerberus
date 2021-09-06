@@ -9,6 +9,7 @@ import {
   Submit,
   TextField,
 } from '@redwoodjs/forms'
+import { Link, routes } from '@redwoodjs/router'
 import { Helmet } from '@redwoodjs/web'
 
 export interface SignupPageFormData {
@@ -125,6 +126,9 @@ const SignupPage = () => {
           </div>
           <Submit className="btn btn-primary w-full">Signup</Submit>
         </Form>
+        <Link className="link mx-auto" to={routes.login()}>
+          {t('Signup.Page.login')}
+        </Link>
       </div>
     </>
   )
