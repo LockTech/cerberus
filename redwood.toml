@@ -1,6 +1,7 @@
 # https://redwoodjs.com/docs/app-configuration-redwood-toml
 
 [web]
+  title = "Cerberus"
   host = "127.0.0.1"
   includeEnvironmentVariables = ['PRIVACY_URL', 'SUPPORT_URL']
   port = 8910
