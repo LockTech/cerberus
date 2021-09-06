@@ -251,5 +251,39 @@
         "settings": "Settings"
       }
     }
+  },
+  "Signup": {
+    "Page": {
+      "Helmet": {
+        "title": "Cerberus • Signup"
+      },
+      "title": "Signup",
+      "subtitle": "Create your personal account using the form below.",
+      "welcome": "Welcome to Cerberus! This is a tool for managing your organization's members and their access to other applications.",
+      "form": {
+        "name": {
+          "label": "Full Name",
+          "placeholder": "Jane Doe",
+          "required": "Your name is required to create your account."
+        },
+        "email": {
+          "label": "E-Mail Address",
+          "placeholder": "jane.doe@example.net",
+          "required": "Your e-mail address is required to create your account."
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Secure Secret",
+          "hint": "Your password must be at least 8 characters long. Strong passwords mix letters, numbers, and symbols.",
+          "minLength": "Your password must be longer than 8 characters.",
+          "required": "A password is required to create your account."
+        },
+        "confirmPassword": {
+          "label": "Password Confirmation",
+          "placeholder": "Secure Secret",
+          "match": "Your passwords do not match."
+        }
+      }
+    }
   }
 }
