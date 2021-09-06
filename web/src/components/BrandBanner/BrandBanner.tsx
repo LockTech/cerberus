@@ -1,9 +1,15 @@
+import clsx from 'clsx'
+
 import './BrandBanner.css'
 
-const BrandBanner = () => {
+export type BrandBannerProps = {
+  className?: string
+}
+
+const BrandBanner = ({ className }: BrandBannerProps) => {
   return (
     <svg
-      className="brand-banner"
+      className={clsx('brand-banner', className)}
       fill="none"
       viewBox="0 0 295 110"
       xmlns="http://www.w3.org/2000/svg"
