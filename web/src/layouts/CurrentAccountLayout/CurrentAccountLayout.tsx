@@ -1,9 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '@redwoodjs/auth'
 
 import LoadingSpinner from 'src/components/LoadingSpinner'
 
-import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
+import { useAuth } from 'src/hooks/useAuth'
 
 import './CurrentAccountLayout.css'
 
@@ -14,12 +13,10 @@ type CurrentAccountLayoutProps = {
 const CurrentAccountLayout = ({ children }: CurrentAccountLayoutProps) => {
   const { t } = useTranslation()
 
-  const { loading } = useAuth()
-
-  const currentAccount = useCurrentAccount()
+  const { currentUser, loading } = useAuth()
 
   // Safely return `null` as the user should be redirected by Redwood's router.
-  if (!currentAccount) return null
+  if (!currentUser) return null
   else if (!loading) return <>{children}</>
   else
     return (
