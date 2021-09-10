@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Helmet } from '@redwoodjs/web'
+import { MetaTags } from '@redwoodjs/web'
 
 import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
 
@@ -8,9 +8,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('Home.Page.Helmet.title')}</title>
-      </Helmet>
+      <MetaTags title={t('Home.Page.Helmet.title')} />
       <AppbarTitle>{t('Home.Page.Appbar.title')}</AppbarTitle>
     </>
   )

@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import { Helmet } from '@redwoodjs/web'
+import { MetaTags } from '@redwoodjs/web'
 
 import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
-import AccountInviteModal from 'src/components/Account/AccountInviteModal'
 import AccountListCell from 'src/components/Account/AccountListCell'
 
 const AccountListPage = () => {
@@ -10,14 +9,9 @@ const AccountListPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('Account.List.Page.Helmet.title')}</title>
-      </Helmet>
+      <MetaTags title={t('Account.List.Page.Helmet.title')} />
       <AppbarTitle>{t('Account.List.Page.Appbar.title')}</AppbarTitle>
-      <div className="page-layout">
-        <AccountInviteModal />
-        <AccountListCell />
-      </div>
+      <AccountListCell />
     </>
   )
 }

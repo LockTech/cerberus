@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react'
 
-import { mockAccount } from 'src/components/Account/AccountUpdateCell/AccountUpdateCell.mock'
+import { mockAccount } from 'src/components/Account/AccountDetailCell/AccountDetailCell.mock'
 
 import AccountPage from './AccountPage'
 import type { AccountPageProps } from './AccountPage'

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Helmet } from '@redwoodjs/web'
+import { MetaTags } from '@redwoodjs/web'
 
 import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
 import OrganizationUpdateCell from 'src/components/Organization/OrganizationUpdateCell'
@@ -9,9 +9,7 @@ const OrganizationSettingsPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('Organization.Settings.Page.Helmet.title')}</title>
-      </Helmet>
+      <MetaTags title={t('Organization.Settings.Page.Helmet.title')} />
       <AppbarTitle>{t('Organization.Settings.Page.Appbar.title')}</AppbarTitle>
       <OrganizationUpdateCell />
     </>

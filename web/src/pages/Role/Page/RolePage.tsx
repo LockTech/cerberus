@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Helmet } from '@redwoodjs/web'
+import { MetaTags } from '@redwoodjs/web'
 
 import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
 import RoleUpdateCell from 'src/components/Role/RoleUpdateCell'
@@ -13,13 +13,9 @@ const RolePage = ({ id }: RolePageProps) => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('Role.Page.Helmet.title')}</title>
-      </Helmet>
+      <MetaTags title={t('Role.Page.Helmet.title')} />
       <AppbarTitle>{t('Role.Page.Appbar.title')}</AppbarTitle>
-      <div className="page-layout">
-        <RoleUpdateCell id={id} />
-      </div>
+      <RoleUpdateCell id={id} />
     </>
   )
 }
