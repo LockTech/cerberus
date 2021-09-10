@@ -13,16 +13,17 @@
     ]
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.0",
+    "@headlessui/react": "1.4.1",
     "@heroicons/react": "^1.0.2",
-    "@redwoodjs/auth": "^0.36.3",
-    "@redwoodjs/forms": "^0.36.3",
-    "@redwoodjs/router": "^0.36.3",
-    "@redwoodjs/web": "^0.36.3",
+    "@redwoodjs/auth": "^0.36.4",
+    "@redwoodjs/forms": "^0.36.4",
+    "@redwoodjs/router": "^0.36.4",
+    "@redwoodjs/web": "^0.36.4",
     "clsx": "^1.1.1",
     "i18n": "^0.13.3",
     "i18next": "^20.3.3",
     "i18next-browser-languagedetector": "^6.1.2",
+    "niceramps": "^0.0.3",
     "prop-types": "15.7.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -30,7 +31,7 @@
     "recoil": "^0.3.1"
   },
   "devDependencies": {
-    "@locktech/atomic": "2.2.0",
+    "@locktech/atomic": "2.2.2",
     "@storybook/addon-essentials": "^6.3.7",
     "autoprefixer": "^10.3.1",
     "postcss": "^8.3.6",
