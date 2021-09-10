@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import {
@@ -9,32 +10,54 @@ import {
   Submit,
   TextField,
 } from '@redwoodjs/forms'
-import { Link, routes } from '@redwoodjs/router'
-import { Helmet } from '@redwoodjs/web'
+import { Link, navigate, routes } from '@redwoodjs/router'
+import { MetaTags } from '@redwoodjs/web'
 
-export interface SignupPageFormData {
+import { useSignupCallback } from 'src/hooks/useAuthCallback'
+
+export interface SignupFormData {
   name: string
   email: string
   password: string
   confirmPassword: string
 }
 
-const SignupPage = () => {
-  const formMethods = useForm<SignupPageFormData>({ mode: 'all' })
+export type SignupPageProps = {
+  redirectTo?: string
+}
+
+const SignupPage = ({ redirectTo = '/' }: SignupPageProps) => {
+  const formMethods = useForm<SignupFormData>({ mode: 'all' })
   const { password: currentPassword } = formMethods.watch()
 
   const { t } = useTranslation()
 
+  const signUp = useSignupCallback()
+
+  const onSubmit = useCallback(
+    async (data: SignupFormData) => {
+      const res = await signUp(data)
+
+      !res.error &&
+        navigate(routes.signupConfirmation({ email: data.email, redirectTo }))
+    },
+    [redirectTo, signUp]
+  )
+
   return (
     <>
-      <Helmet title={t('Signup.Page.Helmet.title')} />
-      <div className="card space-y-6">
+      <MetaTags title={t('Signup.Page.Meta.title')} />
+      <div className="card body">
         <div className="space-y-1">
           <h1 className="text title">{t('Signup.Page.title')}</h1>
           <p className="muted subtitle">{t('Signup.Page.subtitle')}</p>
         </div>
         <p className="text">{t('Signup.Page.welcome')}</p>
-        <Form className="space-y-6" formMethods={formMethods}>
+        <Form
+          className="space-y-6"
+          formMethods={formMethods}
+          onSubmit={onSubmit}
+        >
           <div className="input-group floating">
             <TextField
               autoComplete="name"
@@ -56,6 +79,7 @@ const SignupPage = () => {
           </div>
           <div className="input-group floating">
             <EmailField
+              autoComplete="email"
               className="input"
               errorClassName="input input-error"
               name="email"
@@ -124,7 +148,9 @@ const SignupPage = () => {
             </Label>
             <FieldError className="input-error" name="confirmPassword" />
           </div>
-          <Submit className="btn btn-primary w-full">Signup</Submit>
+          <Submit className="btn btn-primary w-full">
+            {t('Signup.Page.form.submit')}
+          </Submit>
         </Form>
         <Link className="link mx-auto" to={routes.login()}>
           {t('Signup.Page.login')}

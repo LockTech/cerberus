@@ -4,7 +4,7 @@ import LoginPage from './LoginPage'
 
 export default {
   component: LoginPage,
-  title: 'Pages/Login',
+  title: 'Pages/Auth/Login',
 } as Meta
 
 export const Default: Story = (props) => {

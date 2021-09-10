@@ -4,7 +4,7 @@ import SignupPage from './SignupPage'
 
 export default {
   component: SignupPage,
-  title: 'Pages/Signup',
+  title: 'Pages/Auth/Signup',
 } as Meta
 
 export const Default: Story = (props) => {

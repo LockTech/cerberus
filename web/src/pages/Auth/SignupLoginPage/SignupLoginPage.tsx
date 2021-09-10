@@ -8,54 +8,56 @@ import {
   PasswordField,
   Submit,
 } from '@redwoodjs/forms'
-import { Link, routes } from '@redwoodjs/router'
+import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import { useLoginCallback } from 'src/hooks/useAuthCallback'
 
-export interface LoginFormData {
+export interface SignupLoginFormData {
   email: string
   password: string
 }
 
-export type LoginPageProps = {
-  redirectTo?: string
+export type SignupLoginPageProps = {
+  email: string
+  redirectTo: string
 }
 
-const LoginPage = ({ redirectTo = '/' }: LoginPageProps) => {
+const SignupLoginPage = ({ email, redirectTo }: SignupLoginPageProps) => {
   const { t } = useTranslation()
 
   const logIn = useLoginCallback()
 
   const onSubmit = useCallback(
-    async (data: LoginFormData) => {
+    async (data: SignupLoginFormData) => {
       const res = await logIn(data)
 
-      window.location.href = !res.errors ? redirectTo : ''
+      !res.error && navigate(routes.signupOrganization({ redirectTo }))
     },
     [logIn, redirectTo]
   )
 
   return (
     <>
-      <MetaTags title={t('Login.Page.Meta.title')} />
+      <MetaTags title={t('Signup.Login.Page.Meta.title')} />
       <div className="card body">
         <div className="space-y-1">
-          <h1 className="text title">{t('Login.Page.title')}</h1>
-          <p className="muted hint">{t('Login.Page.subtitle')}</p>
+          <h1 className="text title">{t('Signup.Login.Page.title')}</h1>
+          <p className="muted hint">{t('Signup.Login.Page.subtitle')}</p>
         </div>
         <Form className="space-y-6" onSubmit={onSubmit}>
           <div className="input-group floating">
             <EmailField
               autoComplete="email"
               className="input"
+              defaultValue={email}
               errorClassName="input input-error"
               name="email"
-              placeholder={t('Login.Page.form.email.placeholder')}
+              placeholder={t('Signup.Login.Page.form.email.placeholder')}
               validation={{
                 required: {
                   value: true,
-                  message: t('Login.Page.form.email.required'),
+                  message: t('Signup.Login.Page.form.email.required'),
                 },
               }}
             />
@@ -64,7 +66,7 @@ const LoginPage = ({ redirectTo = '/' }: LoginPageProps) => {
               errorClassName="input-label"
               name="email"
             >
-              {t('Login.Page.form.email.label')}
+              {t('Signup.Login.Page.form.email.label')}
             </Label>
             <FieldError className="input-error" name="email" />
           </div>
@@ -74,29 +76,26 @@ const LoginPage = ({ redirectTo = '/' }: LoginPageProps) => {
               className="input"
               errorClassName="input input-error"
               name="password"
-              placeholder={t('Login.Page.form.password.placeholder')}
+              placeholder={t('Signup.Login.Page.form.password.placeholder')}
               validation={{
                 required: {
                   value: true,
-                  message: t('Login.Page.form.password.required'),
+                  message: t('Signup.Login.Page.form.password.required'),
                 },
               }}
             />
             <Label className="input-label" name="password">
-              {t('Login.Page.form.password.label')}
+              {t('Signup.Login.Page.form.password.label')}
             </Label>
             <FieldError className="input-error" name="password" />
           </div>
           <Submit className="btn btn-primary w-full">
-            {t('Login.Page.form.submit')}
+            {t('Signup.Login.Page.form.submit')}
           </Submit>
         </Form>
-        <Link className="link mx-auto" to={routes.signup()}>
-          {t('Login.Page.signup')}
-        </Link>
       </div>
     </>
   )
 }
 
-export default LoginPage
+export default SignupLoginPage
