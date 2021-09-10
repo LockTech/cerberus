@@ -28,12 +28,15 @@ const validateRoleAccountId = (s: string, { accountId }) => validateAccountID(s,
 const validateRolePermissionId = (s: string, { permissionId }) => validatePermissionId(s, { id: permissionId })
 const validateRoleIdEx = (s: string, { roleId }) => validateRoleId(s, { id: roleId })
 
+const validateRoleAccountIdEx = (s: string, { accountId }) => accountId && validateAccountID(s, { id: accountId })
+
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
   rules.add(reject, { only: ['deleteAllRoles'] })
   rules.add(validateAuth)
   rules.add(validateRoleId, { only: ['role', 'updateRole', 'deleteRole'] })
   rules.add(validateRoleName, { only: ['createRole'] })
   rules.add(valUpdateRoleName, { only: ['updateRole'] })
+  rules.add(validateRoleAccountIdEx, { only: ['roles'] })
   // --
   rules.add(validateRoleAccountId, { only: ['addRoleToAccount', 'delRoleFromAccount'] })
   rules.add(validateRolePermissionId, { only: ['addPermToRole', 'delPermFromRole'] })
@@ -93,17 +96,28 @@ export const role = async ({ id }: RoleArgs) => {
   return res
 }
 
+export interface RolesArgs {
+  accountId?: string
+}
 /**
+ * @param accountId - Exclude roles which are assigned to `accountId`.
  * @throws
  *  * 'roles-read' - When an error occurs reading roles from the DB.
  */
-export const roles = async () => {
+export const roles = async ({ accountId }: RolesArgs) => {
   const organizationId = getContextUser().organizationId
 
   let res: Role[]
 
+  const accountExclusion = accountId && {
+    NOT: { accounts: { some: { id: accountId } } },
+  }
+
   try {
-    res = await db.role.findMany({ where: { organizationId } })
+    res = await db.role.findMany({
+      orderBy: { createdAt: 'asc' },
+      where: { organizationId, ...accountExclusion },
+    })
   } catch (err) {
     prismaLogger.error({ err }, 'Error listing roles.')
     throw new UserInputError('roles-read')
@@ -113,6 +127,7 @@ export const roles = async () => {
 }
 
 export interface UpdateRoleArgs {
+  color: string
   id: string
   name: string
 }
@@ -120,12 +135,12 @@ export interface UpdateRoleArgs {
  * @throws
  *  * 'role-update' - When an error occurs updating the role in the DB.
  */
-export const updateRole = async ({ id, name }: UpdateRoleArgs) => {
+export const updateRole = async ({ color, id, name }: UpdateRoleArgs) => {
   let res: Role
 
   try {
     res = await db.role.update({
-      data: { name },
+      data: { color, name },
       where: { id },
     })
   } catch (err) {
