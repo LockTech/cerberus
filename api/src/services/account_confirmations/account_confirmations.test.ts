@@ -1,6 +1,9 @@
 import type { Account_Confirmation } from '@prisma/client'
 
+import { sendSignupEmail } from 'src/helpers/email'
+
 import { db } from 'src/lib/db'
+
 import { randomStr } from 'src/util/randomStr'
 
 import {
@@ -10,6 +13,21 @@ import {
   confirmSignup,
 } from './account_confirmations'
 import type { AccountConfirmationStandard } from './account_confirmations.scenarios'
+
+jest.mock('../email/email')
+
+const SignupEmailSendError = {
+  name: 'UserInputError',
+  message: 'signup-email-send',
+}
+
+const TestInput = {
+  code: '1',
+  email: 'test@example.net',
+  name: 'Oogey Boogey',
+  hashedPassword: '',
+  salt: '',
+}
 
 describe('account_confirmation service', () => {
   describe('create', () => {
@@ -39,13 +57,59 @@ describe('account_confirmation service', () => {
 
     describe('signup', () => {
       scenario(
+        'throws when encountering an error creating the signup confirmation',
+        async (_scenario: AccountConfirmationStandard) => {
+          // @ts-expect-error jest types
+          createSignupConfirm.mockRejectedValue(new Error('oops'))
+
+          expect(createSignupConfirm(TestInput)).rejects.toThrow()
+        }
+      )
+
+      scenario(
+        'throws when encountering an error sending the confirmation email',
+        async (_scenario: AccountConfirmationStandard) => {
+          // @ts-expect-error jest types
+          createSignupConfirm.mockResolvedValue(true)
+          // @ts-expect-error jest types
+          sendSignupEmail.mockRejectedValue(new Error('email failed!'))
+
+          expect(createSignupConfirm(TestInput)).rejects.toThrow(
+            SignupEmailSendError
+          )
+        }
+      )
+
+      scenario(
+        'attempts to send a confirmation email',
+        async (_scenario: AccountConfirmationStandard) => {
+          // @ts-expect-error jest types
+          createSignupConfirm.mockResolvedValue(true)
+          // @ts-expect-error jest types
+          sendSignupEmail.mockResolvedValue(true)
+
+          const { email, code } = TestInput
+
+          // @ts-expect-error jest types
+          randomStr.mockReturnValue(code)
+
+          await createSignupConfirm(TestInput)
+
+          expect(createSignupConfirm).toHaveBeenCalledTimes(1)
+          expect(sendSignupEmail).toHaveBeenCalledWith({
+            data: { code },
+            email,
+          })
+        }
+      )
+
+      scenario(
         'creates a signup confirmation',
         async (_scenarios: AccountConfirmationStandard) => {
           const code = randomStr(8)
           const email = 'terry.boulder@bouldersboulders.com'
 
           await createSignupConfirm({
-            code,
             email,
           })
 

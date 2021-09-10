@@ -1,16 +1,24 @@
 import type { Account_Confirmation } from '@prisma/client'
-import { UserInputError } from '@redwoodjs/graphql-server'
-import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
+import { UserInputError } from '@redwoodjs/api'
+import type { BeforeResolverSpecType } from '@redwoodjs/api'
+
+import { ConfirmationCodeLength } from 'src/constants/signup'
+
+import { sendSignupEmail } from 'src/helpers/email'
 
 import { db } from 'src/lib/db'
-import { prismaLogger } from 'src/lib/logger'
+import { logger, prismaLogger } from 'src/lib/logger'
+
+import { randomStr } from 'src/util/randomStr'
 
 import { reject } from 'src/validators/reject'
 
+/* eslint-disable prettier/prettier */
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { except: ['confirmSignup'] })
-  rules.skip({ only: ['confirmSignup'] })
+  rules.add(reject, { except: ['confirmSignup', 'resendConfirmation'] })
+  rules.skip({ only: ['confirmSignup', 'resendConfirmation'] })
 }
+/* eslint-enable prettier/prettier */
 
 export interface CreateInviteConfirmArgs {
   code: string
@@ -45,7 +53,6 @@ export const createInviteConfirm = async ({
 }
 
 export interface CreateSignupConfirmArgs {
-  code: string
   email: string
 }
 /**
@@ -53,10 +60,22 @@ export interface CreateSignupConfirmArgs {
  *  * 'signup-confirmation-create' - When there is an error creating the AccountConfirmation in the DB.
  */
 export const createSignupConfirm = async ({
-  code,
   email,
 }: CreateSignupConfirmArgs) => {
   let res: Account_Confirmation
+
+  const code = randomStr(ConfirmationCodeLength)
+
+  // email
+  try {
+    const data = {
+      code,
+    }
+    await sendSignupEmail({ data, email })
+  } catch (err) {
+    logger.error({ err }, 'Error sending signup confirmation email.')
+    throw new UserInputError('signup-email-send')
+  }
 
   try {
     res = await db.account_Confirmation.create({
@@ -166,8 +185,9 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
     throw new UserInputError('signup-confirmation-update')
   }
 
-  const id = res.id
   try {
+    const id = res.id
+
     await db.account_Confirmation.delete({
       where: { id },
     })
@@ -177,4 +197,24 @@ export const confirmSignup = async ({ code, email }: ConfirmSignupArgs) => {
   }
 
   return true
+}
+
+export interface ResendConfirmationArgs {
+  email: string
+}
+export const resendConfirmation = async ({ email }: ResendConfirmationArgs) => {
+  let confirmation: Account_Confirmation
+
+  try {
+    confirmation = await db.account_Confirmation.findFirst({ where: { email } })
+  } catch (err) {
+    prismaLogger.error({ err }, 'Error getting an account confirmation.')
+    throw new UserInputError('resend-confirmation-read')
+  }
+
+  if (confirmation === null) return
+
+  await createSignupConfirm({ email })
+
+  return
 }
