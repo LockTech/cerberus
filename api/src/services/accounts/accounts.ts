@@ -1,6 +1,6 @@
 import type { Account, Role } from '@prisma/client'
-import { UserInputError } from '@redwoodjs/graphql-server'
-import type { BeforeResolverSpecType } from '@redwoodjs/graphql-server'
+import { UserInputError } from '@redwoodjs/api'
+import type { BeforeResolverSpecType } from '@redwoodjs/api'
 
 import { AccountRemoveAuthFields } from 'src/constants/account'
 import {
@@ -112,7 +112,8 @@ export const accounts = async () => {
 
   try {
     res = await db.account.findMany({
-      include: { roles: true },
+      include: { roles: { orderBy: { createdAt: 'asc' } } },
+      orderBy: { createdAt: 'asc' },
       where: { organizationId },
     })
   } catch (err) {
