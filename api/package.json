@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@redwoodjs/api": "^0.36.3",
-    "@redwoodjs/graphql-server": "^0.36.3",
+    "@redwoodjs/api": "^0.36.4",
+    "axios": "^0.21.4",
     "nodemailer": "^6.6.3",
     "squirrelly": "^8.0.8",
     "uuid": "^8.3.2"
