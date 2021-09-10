@@ -25,6 +25,7 @@
   },
   "include": [
     "src",
+    "./types/niceramps.d.ts",
     "../.redwood/types/includes/all-*",
     "../.redwood/types/includes/web-*",
   ]
