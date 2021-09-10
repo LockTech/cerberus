@@ -12,9 +12,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   const { t } = useTranslation()
 
   return (
-    <div className="dark max-w-lg m-auto px-6 sm:px-0 py-6 space-y-6">
-      <a href={BrandURL} rel="noreferrer" target="_blank">
-        <BrandBanner className="max-w-xs" />
+    <div className="max-w-md m-auto px-6 sm:px-0 py-6 space-y-6">
+      <a className="dark" href={BrandURL} rel="noreferrer" target="_blank">
+        <BrandBanner className="bg-gray-900 max-w-xs px-4 py-2 rounded-lg" />
       </a>
       {children}
       <div className="flex flex-col items-center space-y-3">
