@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { useLocation } from '@redwoodjs/router'
 
-import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
+import { SidebarOpenAtom } from 'src/context/SidebarOpen'
 
 export const useCloseSidebarOnNavigate = () => {
   const setSidebarOpen = useSetRecoilState(SidebarOpenAtom)
