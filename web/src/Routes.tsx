@@ -23,11 +23,12 @@ const Routes = () => {
           <Route path="/organization/settings" page={OrganizationSettingsPage} name="organizationSettings" />
         </Set>
         <Set prerender wrap={[AuthLayout]}>
-          <Route path="/signup" name="signup" page={AuthSignupPage} />
-          <Route path="/login" name="login" page={AuthLoginPage} />
-          <Route path="/signup/confirmation" name="signupConfirmation" page={AuthSignupConfirmationPage} />
-          <Route path="/signup/organization" name="signupOrganization" page={AuthSignupOrganizationPage} />
           <Route path="/invite/confirmation" name="inviteConfirmation" page={AuthInviteConfirmationPage} />
+          <Route path="/login" name="login" page={AuthLoginPage} />
+          <Route path="/signup" name="signup" page={AuthSignupPage} />
+          <Route path="/signup/confirmation" name="signupConfirmation" page={AuthSignupConfirmationPage} />
+          <Route path="/signup/login" name="signupLogin" page={AuthSignupLoginPage} />
+          <Route path="/signup/organization" name="signupOrganization" page={AuthSignupOrganizationPage} />
         </Set>
       </Set>
     </Router>
