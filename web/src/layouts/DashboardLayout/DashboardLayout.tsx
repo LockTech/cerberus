@@ -1,6 +1,6 @@
 import { navigate, routes } from '@redwoodjs/router'
 
-import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
+import { useAuth } from 'src/hooks/useAuth'
 
 import Appbar from 'src/components/App/Appbar'
 import Sidebar from 'src/components/Sidebar'
@@ -12,7 +12,7 @@ type DashboardLayoutProps = {
 }
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-  const { organization } = useCurrentAccount()
+  const { organization } = useAuth().currentUser
 
   if (organization === null) {
     navigate(routes.signupOrganization())
