@@ -11,19 +11,19 @@ const FailureCard = ({ children }: FailureCardProps) => {
   const { t } = useTranslation()
 
   return (
-    <div className="failure-wrapper">
-      <div className="card-body card-red failure-card">
+    <>
+      <div className="card card-failure">
         <ExclamationCircleIcon className="icon" />
         {children || null}
       </div>
       <button
-        className="button-primary-fill reload w-full"
+        className="btn btn-primary-ghost btn-failure"
         onClick={() => window.location.reload()}
       >
         <RefreshIcon className="icon" />
         <span>{t('FailureCard.reload')}</span>
       </button>
-    </div>
+    </>
   )
 }
 

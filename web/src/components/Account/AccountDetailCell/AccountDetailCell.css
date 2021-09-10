@@ -1,0 +1,7 @@
+.account-details {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-8;
+}
+
+.account-details > * {
+  @apply h-[fit-content];
+}

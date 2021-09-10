@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
@@ -6,13 +7,14 @@ interface ChildrenProps {
 }
 
 const ModalDescription = (props: ChildrenProps) => (
-  <Dialog.Description {...props} as="p" className="modal-subtitle" />
+  <Dialog.Description {...props} as="p" className="muted hint" />
 )
 const ModalTitle = (props: ChildrenProps) => (
-  <Dialog.Title {...props} as="h2" className="modal-title" />
+  <Dialog.Title {...props} as="h2" className="font-semibold text text-2xl" />
 )
 
 export interface ModalProps extends ChildrenProps {
+  initialFocus?: React.MutableRefObject<HTMLElement>
   onClose: (open: boolean) => void
   open: boolean
 }
@@ -29,10 +31,26 @@ type ModalType = ModalComponent & {
  * * `Dialog.Overlay` functionality
  * * `Dialog.Description` and `Dialog.Title` wrappers (`Modal.` respectively)
  */
-const Modal: ModalType = ({ children, onClose, open }: ModalProps) => {
+const Modal: ModalType = ({
+  children,
+  initialFocus,
+  onClose,
+  open,
+}: ModalProps) => {
+  useEffect(() => {
+    if (open) {
+      window.scrollTo({ top: 0 })
+    }
+  }, [open])
+
   return (
     <Transition as={React.Fragment} show={open}>
-      <Dialog className="modal" onClose={onClose}>
+      <Dialog
+        className="modal"
+        initialFocus={initialFocus}
+        onClose={onClose}
+        open={open}
+      >
         <Transition.Child
           as={Dialog.Overlay}
           className="modal-overlay"
@@ -43,18 +61,19 @@ const Modal: ModalType = ({ children, onClose, open }: ModalProps) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         />
-        <Transition.Child
-          as="div"
-          className="modal-layout"
-          enter="duration-200 ease-in-out origin-center transition-all transform-gpu"
-          enterFrom="opacity-0 scale-75"
-          enterTo="opacity-100 scale-100"
-          leave="duration-200 ease-in-out origin-center transition-all transform-gpu"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-75"
-        >
-          <div className="modal-body">{children}</div>
-        </Transition.Child>
+        <div className="modal-wrapper">
+          <Transition.Child
+            as={React.Fragment}
+            enter="duration-200 ease-in-out origin-center transition-all transform-gpu"
+            enterFrom="opacity-0 scale-75"
+            enterTo="opacity-100 scale-100"
+            leave="duration-200 ease-in-out origin-center transition-all transform-gpu"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-75"
+          >
+            {children}
+          </Transition.Child>
+        </div>
       </Dialog>
     </Transition>
   )

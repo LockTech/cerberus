@@ -24,43 +24,32 @@ const AccountInviteModal = () => {
 
   const [open, setOpen] = useState(false)
 
-  const onCompleted = useCallback(() => {
-    toast.dismiss()
-    toast.success(t('Account.Invite.Modal.success'))
-
-    setOpen(false)
-  }, [setOpen, t])
-  const onError = useCallback(
-    (error: Error) => {
-      toast.dismiss()
-      toast.error(et(error))
-    },
-    [et]
-  )
-
-  const [mutate, { loading }] = useMutation(MUTATION, { onCompleted, onError })
+  const [mutate, { loading }] = useMutation(MUTATION)
 
   const onSubmit = useCallback(
     (variables: AccountInviteFormData) => {
-      if (!loading) {
-        toast.loading(t('Account.Invite.Modal.loading'))
-        mutate({ variables })
-      }
+      if (loading) return
+
+      toast.promise(mutate({ variables }), {
+        loading: t('Account.Invite.Modal.loading'),
+        success: () => {
+          setOpen(false)
+          return t('Account.Invite.Modal.success')
+        },
+        error: (err: Error) => et(err),
+      })
     },
-    [loading, mutate, t]
+    [et, loading, mutate, setOpen, t]
   )
 
   return (
     <>
-      <button
-        className="button-primary-fill w-full"
-        onClick={() => setOpen(true)}
-      >
+      <button className="btn btn-primary w-full" onClick={() => setOpen(true)}>
         {t('Account.Invite.Modal.action')}
       </button>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className="card card-body">
-          <div className="title-group">
+        <div className="card body">
+          <div className="space-y-2">
             <Modal.Title>{t('Account.Invite.Modal.title')}</Modal.Title>
             <Modal.Description>
               {t('Account.Invite.Modal.subtitle')}
@@ -68,18 +57,11 @@ const AccountInviteModal = () => {
           </div>
           <p className="text">{t('Account.Invite.Modal.info')}</p>
           <Form className="form" onSubmit={onSubmit}>
-            <div className="input-group">
-              <Label
-                className="input-label"
-                errorClassName="input-label-error"
-                name="email"
-              >
-                {t('Account.Invite.Modal.form.email.label')}
-              </Label>
+            <div className="input-group floating">
               <TextField
                 autoComplete="email"
-                className="input-primary"
-                errorClassName="input-error"
+                className="input"
+                errorClassName="input input-error"
                 name="email"
                 placeholder={t('Account.Invite.Modal.form.email.placeholder')}
                 validation={{
@@ -89,11 +71,23 @@ const AccountInviteModal = () => {
                   },
                 }}
               />
-              <FieldError className="input-field-error" name="email" />
+              <Label className="input-label" name="email">
+                {t('Account.Invite.Modal.form.email.label')}
+              </Label>
+              <FieldError className="input-error" name="email" />
             </div>
-            <Submit className="button-primary-fill form-button">
-              {t('Account.Invite.Modal.form.submit')}
-            </Submit>
+            <div className="form-button space-x-4">
+              <Submit className="btn btn-primary" disabled={loading}>
+                {t('Account.Invite.Modal.form.submit')}
+              </Submit>
+              <button
+                className="btn btn-red-ghost"
+                onClick={() => setOpen(false)}
+                type="button"
+              >
+                {t('Account.Invite.Modal.form.cancel')}
+              </button>
+            </div>
           </Form>
         </div>
       </Modal>

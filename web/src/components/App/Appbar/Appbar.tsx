@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { MenuIcon } from '@heroicons/react/solid'
 
-import { AppbarTitleAtom } from 'src/atoms/AppbarTitle'
-import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
+import { AppbarTitleAtom } from 'src/context/AppbarTitle'
+import { SidebarOpenAtom } from 'src/context/SidebarOpen'
 
 import AppMenu from 'src/components/App/AppMenu'
 

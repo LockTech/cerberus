@@ -9,12 +9,14 @@ const SidebarNav = () => {
 
   const home = useMatch(routes.home()).match
   //
-  const accountActivity = false
+  // const accountActivity = false
   const listAccountsMatch = useMatch(routes.listAccounts()).match
   const accountMatch = useMatch(routes.account()).match
   const listAccounts = listAccountsMatch || accountMatch
   //
-  const listRoles = useMatch(routes.listRoles()).match
+  const listRolesMatch = useMatch(routes.listRoles()).match
+  const roleMatch = useMatch(routes.role()).match
+  const listRoles = listRolesMatch || roleMatch
   //
   const orgSettings = useMatch(routes.organizationSettings()).match
 
@@ -33,9 +35,9 @@ const SidebarNav = () => {
       {/* Members */}
       <div className="nav-group">
         <p className="nav-group-title">{t('Sidebar.Nav.members.title')}</p>
-        <button className={clsx(accountActivity && 'active')}>
+        {/* <button className={clsx(accountActivity && 'active')}>
           {t('Sidebar.Nav.members.activity')}
-        </button>
+        </button> */}
         <button
           className={clsx(listAccounts && 'active')}
           onClick={() => navigate(routes.listAccounts())}

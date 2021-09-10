@@ -1,9 +1,8 @@
 .appbar {
   /* Misc */
-  @apply relative;
   @apply flex flex-row items-center;
   @apply w-full;
-  @apply px-6 sm:px-10 py-3;
+  @apply px-6 sm:px-10 py-3 space-x-4;
 }
 
 .appbar h1 {
@@ -33,7 +32,7 @@
   /* Misc */
   @apply flex flex-row items-center justify-center;
   @apply duration-[200ms] ease-in-out transition-all;
-  @apply mr-4 p-2;
+  @apply p-2;
   @apply flex lg:hidden;
 }
 .sidebar-toggle .icon {

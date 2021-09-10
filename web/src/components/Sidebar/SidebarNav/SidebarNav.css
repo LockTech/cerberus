@@ -25,12 +25,14 @@
   @apply border-transparent;
   @apply hover:border-gray-600 active:border-gray-500;
   /* Text */
-  @apply font-medium tracking-wider;
+  @apply tracking-wider;
   @apply text-gray-300 hover:text-gray-100 active:text-gray-50;
   /* Misc */
-  @apply duration-[200ms] ease-in-out transition-all;
+  @apply outline-none;
+  @apply focus:ring focus:ring-offset-1 focus:ring-primary-400 focus:ring-offset-gray-900;
+  @apply duration-[200ms] ease-in-out transition;
   @apply flex flex-row items-center;
-  @apply px-5 py-3;
+  @apply px-5 py-2;
   @apply w-full;
 }
 

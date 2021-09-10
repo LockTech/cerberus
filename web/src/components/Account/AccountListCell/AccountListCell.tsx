@@ -1,15 +1,16 @@
+import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
-import { navigate, routes } from '@redwoodjs/router'
+import { Link, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import AccountInviteModal from 'src/components/Account/AccountInviteModal'
 import FailureCard from 'src/components/Card/FailureCard'
 import LoadingCard from 'src/components/Card/LoadingCard'
+import RoleBadge from 'src/components/Role/RoleBadge'
 
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
 import type { AccountListQuery } from 'types/graphql'
-
-import './AccountListCell.css'
 
 export const QUERY = gql`
   query AccountListQuery {
@@ -19,6 +20,11 @@ export const QUERY = gql`
       lastLoginAt
       name
       verifiedAt
+      roles {
+        color
+        id
+        name
+      }
     }
   }
 `
@@ -47,38 +53,52 @@ export const Success = ({ accounts }: CellSuccessProps<AccountListQuery>) => {
   const { t } = useTranslation()
 
   return (
-    <div className="account-list">
-      {accounts.map((account) => {
-        const email = account.email
-        const id = account.id
-        const lastLogin = account.lastLoginAt
-        const name = account.name
-        const verifiedAt = account.verifiedAt
+    <div className="page-layout">
+      <AccountInviteModal />
+      <div className="list-layout">
+        {accounts.map((account) => {
+          const email = account.email
+          const id = account.id
+          const lastLogin = account.lastLoginAt
+          const name = account.name
+          const verifiedAt = account.verifiedAt
+          const roles = account.roles
 
-        return (
-          <button
-            className="card card-body card-interactive"
-            key={id}
-            onClick={() => navigate(routes.account({ id }))}
-          >
-            <div className="title-group">
-              <h2 className="account-name text">{name}</h2>
-              <p className="account-email hint">{email}</p>
-            </div>
-            <div className="title-group">
-              <p className="text">
-                {t('Account.List.Cell.Success.lastLogin', {
-                  time: lastLogin,
-                  date: lastLogin,
+          return (
+            <Link
+              className="btn card card-interactive outline-none space-y-3 text-center"
+              key={id}
+              to={routes.account({ id })}
+            >
+              <div className="space-y-1">
+                <h2 className="text title">{name}</h2>
+                <p className="muted tracking-wide">{email}</p>
+                <p className="muted">
+                  {t('Account.List.Cell.Success.lastLogin', {
+                    time: lastLogin,
+                    date: lastLogin,
+                  })}
+                </p>
+              </div>
+              <div
+                className={clsx(
+                  'flex flex-row flex-wrap justify-center',
+                  roles.length === 0 && 'hidden'
+                )}
+              >
+                {roles.map((role) => (
+                  <RoleBadge className="m-1" key={role.id} {...role} />
+                ))}
+              </div>
+              <p className="muted hint italic">
+                {t('Account.List.Cell.Success.verified', {
+                  date: verifiedAt,
                 })}
               </p>
-              <p className="hint">
-                {t('Account.List.Cell.Success.verified', { date: verifiedAt })}
-              </p>
-            </div>
-          </button>
-        )
-      })}
+            </Link>
+          )
+        })}
+      </div>
     </div>
   )
 }

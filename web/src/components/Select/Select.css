@@ -1,0 +1,7 @@
+.select-trigger {
+  @apply flex flex-row items-center justify-between;
+}
+
+.select-trigger .icon {
+  @apply h-4 w-4;
+}

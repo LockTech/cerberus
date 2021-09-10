@@ -1,0 +1,31 @@
+.accountRole-container {
+  @apply flex flex-col space-y-6 w-full;
+}
+.accountRole-container .title {
+  @apply font-medium text-xl;
+}
+
+.accountRole-items {
+  @apply flex flex-col items-center;
+  @apply p-3 space-y-3;
+  @apply max-h-96 overflow-y-auto;
+}
+
+.accountRole-item {
+  @apply duration-300 ease-in-out transition-all transform-gpu;
+  @apply focus:ring-2 focus:ring-offset-2;
+  @apply focus:ring-gray-400 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-900;
+  @apply bg-transparent;
+  @apply hover:bg-gray-50 dark:hover:bg-gray-700;
+  @apply border border-transparent rounded;
+  @apply hover:border-gray-200 active:border-gray-300;
+  @apply dark:hover:border-gray-600 dark:active:border-gray-500;
+  @apply text font-normal normal-case tracking-normal;
+  @apply flex flex-row items-center justify-center;
+  @apply outline-none p-3 space-x-3 w-full;
+}
+
+.accountRole-item .dot {
+  @apply rounded-full;
+  @apply h-3 w-3;
+}

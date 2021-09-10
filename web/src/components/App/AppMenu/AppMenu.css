@@ -3,14 +3,16 @@
 }
 
 .account-menu-button {
+  @apply btn outline-none;
   /* Background */
   @apply bg-transparent;
-  @apply hover:bg-gray-200 hover:bg-opacity-30 active:bg-gray-300 active:bg-opacity-50;
-  @apply dark:hover:bg-gray-600 dark:hover:bg-opacity-30 dark:active:bg-gray-500 dark:active:bg-opacity-50;
+  @apply hover:bg-gray-100 active:bg-gray-200 active:bg-opacity-50;
+  @apply dark:hover:bg-gray-800 dark:active:bg-gray-700;
   /* Border */
   @apply border border-transparent rounded-full md:rounded-md;
   @apply hover:border-gray-300;
-  @apply dark:hover:border-gray-500;
+  @apply dark:hover:border-gray-700;
+  @apply font-normal normal-case tracking-normal;
   /* Misc */
   @apply flex flex-row items-center justify-center;
   @apply duration-[200ms] ease-in-out transition-all;
@@ -42,4 +44,20 @@
   @apply dark:text-gray-300;
   /* Misc */
   @apply h-6 w-6;
+}
+
+.account-menu .menu-items {
+  @apply dark:border-gray-600;
+}
+
+.account-menu .menu-item {
+  @apply flex flex-row items-center justify-start;
+  @apply space-x-3;
+}
+.account-menu .menu-item .icon {
+  @apply h-4 w-4;
+}
+.account-menu .menu-item.logout {
+  @apply text-red-700 dark:text-red-300;
+  @apply focus:ring-red-700 dark:focus:ring-red-400;
 }

@@ -1,19 +1,19 @@
 import { useTranslation } from 'react-i18next'
-import { navigate, routes } from '@redwoodjs/router'
+import { Link, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import FailureCard from 'src/components/Card/FailureCard'
 import LoadingCard from 'src/components/Card/LoadingCard'
+import RoleCreateModal from 'src/components/Role/RoleCreateModal'
 
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
 import type { RoleListQuery } from 'types/graphql'
 
-import './RoleListCell.css'
-
 export const QUERY = gql`
   query RoleListQuery {
     roles {
+      color
       id
       name
       createdAt
@@ -47,27 +47,30 @@ export const Success = ({ roles }: CellSuccessProps<RoleListQuery>) => {
   const { t } = useTranslation()
 
   return (
-    <div className="role-list">
-      {roles.map((role) => {
-        const createdAt = role.createdAt
-        const id = role.id
-        const name = role.name
+    <div className="page-layout">
+      <RoleCreateModal />
+      <div className="list-layout">
+        {roles.map((role) => {
+          const color = role.color
+          const createdAt = role.createdAt
+          const id = role.id
+          const name = role.name
 
-        return (
-          <button
-            className="card card-body card-interactive"
-            key={id}
-            onClick={() => navigate(routes.role({ id }))}
-          >
-            <div>
-              <h2 className="role-name text">{name}</h2>
-            </div>
-            <p className="text">
-              {t('Role.List.Cell.Success.createdAt', { createdAt })}
-            </p>
-          </button>
-        )
-      })}
+          return (
+            <Link
+              className="btn card card-interactive border-t-8 outline-none space-y-3 text-center"
+              style={{ borderTopColor: color }}
+              key={id}
+              to={routes.role({ id })}
+            >
+              <h2 className="text title">{name}</h2>
+              <p className="muted hint italic">
+                {t('Role.List.Cell.Success.createdAt', { createdAt })}
+              </p>
+            </Link>
+          )
+        })}
+      </div>
     </div>
   )
 }

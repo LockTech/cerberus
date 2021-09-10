@@ -1,8 +1,10 @@
 import clsx from 'clsx'
-import { Controller, useFormContext } from 'react-hook-form'
+import { useController, useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Listbox } from '@headlessui/react'
 import { SelectorIcon } from '@heroicons/react/solid'
+
+import './Select.css'
 
 export interface SelectValue {
   /**
@@ -30,37 +32,39 @@ const Select = ({ defaultValue, name, values }: SelectProps) => {
 
   const { control } = useFormContext()
 
+  const {
+    field: { ref: _ref, ...rest },
+  } = useController({
+    control,
+    name,
+    defaultValue,
+  })
+
   return (
-    <Controller
-      control={control}
-      name={name}
-      defaultValue={defaultValue}
-      render={({ onChange, value }) => (
-        <Listbox as="div" className="select" onChange={onChange} value={value}>
-          <Listbox.Button className="select-button">
-            <span>{t(value?.name)}</span>
-            <SelectorIcon className="icon" />
-          </Listbox.Button>
-          <Listbox.Options className="select-items">
-            {values.map((val, index) => (
-              <Listbox.Option key={index} value={val}>
-                {({ active, selected }) => (
-                  <button
-                    className={clsx(
-                      'select-item',
-                      active && 'active',
-                      selected && 'selected'
-                    )}
-                  >
-                    {t(val.name)}
-                  </button>
-                )}
-              </Listbox.Option>
-            ))}
-          </Listbox.Options>
-        </Listbox>
-      )}
-    />
+    <Listbox as="div" className="select" {...rest}>
+      <Listbox.Button className="select-trigger">
+        <span>{t(rest.value?.name)}</span>
+        <SelectorIcon className="icon" />
+      </Listbox.Button>
+      <Listbox.Options className="select-items">
+        {values.map((val, index) => (
+          <Listbox.Option
+            as="button"
+            className={({ active, selected }) =>
+              clsx(
+                'select-item',
+                active && 'select-item-active',
+                selected && 'select-item-selected'
+              )
+            }
+            key={index}
+            value={val}
+          >
+            {t(val.name)}
+          </Listbox.Option>
+        ))}
+      </Listbox.Options>
+    </Listbox>
   )
 }
 

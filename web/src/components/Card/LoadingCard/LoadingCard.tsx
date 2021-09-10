@@ -8,7 +8,7 @@ export interface LoadingCardProps {
 
 const LoadingCard = ({ children }: LoadingCardProps) => {
   return (
-    <div className="card card-body loading-card">
+    <div className="card body card-loading">
       <LoadingSpinner className="loader" />
       {children || null}
     </div>

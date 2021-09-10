@@ -74,68 +74,62 @@ export const Success = ({
   const { reauthenticate } = useAuth()
 
   const onCompleted = useCallback(
-    async (data: OrganizationUpdateMutation) => {
+    async ({ name }) => {
       await reauthenticate()
+      reset({ name })
 
       toast.dismiss()
-      toast.success(t('Organization.Update.Cell.Success.success'))
-
-      const name = data.organization.name
-      reset({ name })
+      toast.success(t('Organization.Update.Cell.Success.update.success'))
     },
     [reauthenticate, reset, t]
   )
   const onError = useCallback(
-    (error: Error) => {
+    (err: Error) => {
       toast.dismiss()
-      toast.error(et(error))
+      toast.error(et(err))
     },
     [et]
   )
-
-  const [mutate, { loading }] = useMutation(MUTATION, {
-    onCompleted,
-    onError,
-    refetchQueries: [{ query: QUERY }],
-  })
+  const [mutate, { loading }] = useMutation<OrganizationUpdateMutation>(
+    MUTATION,
+    {
+      onCompleted,
+      onError,
+      refetchQueries: [{ query: QUERY }],
+    }
+  )
 
   const onSubmit = useCallback(
     (variables: OrganizationUpdateFormData) => {
       if (loading) return
 
-      toast.loading(t('Organization.Update.Cell.Success.loading'))
-
       mutate({ variables })
     },
-    [loading, mutate, t]
+    [loading, mutate]
   )
 
   return (
     <div className="page-layout">
-      <div className="card card-body">
-        <header className="title-group">
-          <h2 className="title">
+      <div className="card body">
+        <header className="space-y-1">
+          <h2 className="text title">
             {t('Organization.Update.Cell.Success.title')}
           </h2>
-          <p className="hint">
+          <p className="muted hint">
             {t('Organization.Update.Cell.Success.subtitle')}
           </p>
         </header>
         <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
-          <div className="input-group">
-            <Label
-              className="input-label"
-              errorClassName="input-label-error"
-              name="name"
-            >
-              {t('Organization.Update.Cell.Success.form.name.label')}
-            </Label>
+          <div className="input-group floating">
             <TextField
               autoComplete="organization"
-              className="input-primary"
+              className="input"
               defaultValue={organization.name}
-              errorClassName="input-error"
+              errorClassName="input input-error"
               name="name"
+              placeholder={t(
+                'Organization.Update.Cell.Success.form.name.placeholder'
+              )}
               validation={{
                 required: {
                   value: true,
@@ -145,10 +139,13 @@ export const Success = ({
                 },
               }}
             />
-            <FieldError className="input-field-error" name="name" />
+            <Label className="input-label" name="name">
+              {t('Organization.Update.Cell.Success.form.name.label')}
+            </Label>
+            <FieldError className="input-error" name="name" />
           </div>
           <Submit
-            className="button-primary-fill form-button"
+            className="btn btn-primary form-button"
             disabled={!isDirty || loading}
           >
             {t('Organization.Update.Cell.Success.form.submit')}

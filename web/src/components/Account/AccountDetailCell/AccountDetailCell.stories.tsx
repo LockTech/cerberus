@@ -1,16 +1,16 @@
 import type { Meta } from '@storybook/react'
 
 // @ts-expect-error default is generated before runtime
-import AccountUpdateCell from './AccountUpdateCell'
-import { Failure, Loading, Success } from './AccountUpdateCell'
+import AccountDetailCell from './AccountDetailCell'
+import { Failure, Loading, Success } from './AccountDetailCell'
 import {
   mockAccount,
   mockAccountError,
   standard,
-} from './AccountUpdateCell.mock'
+} from './AccountDetailCell.mock'
 
 export default {
-  component: AccountUpdateCell,
+  component: AccountDetailCell,
   subcomponents: { Failure, Loading, Success },
   title: 'Cells/Account/Update',
 } as Meta
@@ -24,11 +24,11 @@ export const success = () => <Success {...standard} />
 export const mockedSuccess = () => {
   mockAccount()
 
-  return <AccountUpdateCell />
+  return <AccountDetailCell />
 }
 
 export const mockedFailure = () => {
   mockAccountError()
 
-  return <AccountUpdateCell />
+  return <AccountDetailCell />
 }

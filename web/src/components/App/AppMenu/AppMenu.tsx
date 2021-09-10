@@ -3,32 +3,30 @@ import { useTranslation } from 'react-i18next'
 import { useSetRecoilState } from 'recoil'
 import { Menu, Transition } from '@headlessui/react'
 import { CogIcon, LogoutIcon, UserCircleIcon } from '@heroicons/react/solid'
-import { useAuth } from '@redwoodjs/auth'
 
-import { AppSettingsModalAtom } from 'src/atoms/AppSettingsModal'
+import { AppSettingsModalAtom } from 'src/context/AppSettingsModal'
 
 import AppSettingsModal from 'src/components/App/AppSettingsModal'
 
-import { useCurrentAccount } from 'src/hooks/useCurrentAccount'
+import { useAuth } from 'src/hooks/useAuth'
 
 import './AppMenu.css'
 
 const AppMenu = () => {
   const { t } = useTranslation()
 
-  const currentAccount = useCurrentAccount()
-  const setSettingsModalOpen = useSetRecoilState(AppSettingsModalAtom)
+  const { currentUser, logOut } = useAuth()
 
-  const { logOut } = useAuth()
+  const setSettingsModalOpen = useSetRecoilState(AppSettingsModalAtom)
 
   return (
     <>
       <AppSettingsModal />
-      <Menu as="div" className="account-menu menu">
+      <Menu as="div" className="menu account-menu">
         <Menu.Button as="button" className="account-menu-button">
           <div className="title-group">
-            <span className="hint">{currentAccount?.organization?.name}</span>
-            <span className="title">{currentAccount?.name}</span>
+            <span className="hint">{currentUser?.organization?.name}</span>
+            <span className="title">{currentUser?.name}</span>
           </div>
           <div>
             <UserCircleIcon
@@ -39,35 +37,33 @@ const AppMenu = () => {
         </Menu.Button>
         <Transition
           as={React.Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
+          enter="duration-150 ease-out origin-bottom transition transform-gpu"
+          enterFrom="opacity-0 scale-y-95 sm:scale-y-100"
+          enterTo="opacity-100 scale-y-100"
+          leave="duration-100 ease-in origin-bottom transition transform-gpu"
+          leaveFrom="opacity-100 scale-y-100"
+          leaveTo="opacity-0 scale-y-95 sm:scale-y-100"
         >
-          <Menu.Items className="menu-items">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={clsx('menu-item', active && 'active')}
-                  onClick={() => setSettingsModalOpen(true)}
-                >
-                  <CogIcon aria-hidden="true" className="icon" />
-                  {t('App.Menu.items.settings')}
-                </button>
-              )}
+          <Menu.Items as="div" className="menu-items menu-items-right">
+            <Menu.Item
+              as="button"
+              className={({ active }) =>
+                clsx('menu-item', active && 'menu-item-active')
+              }
+              onClick={() => setSettingsModalOpen(true)}
+            >
+              <CogIcon aria-hidden="true" className="icon" />
+              <span>{t('App.Menu.items.settings')}</span>
             </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={clsx('menu-item logout', active && 'active')}
-                  onClick={() => logOut()}
-                >
-                  <LogoutIcon aria-hidden="true" className="icon" />
-                  {t('App.Menu.items.logout')}
-                </button>
-              )}
+            <Menu.Item
+              as="button"
+              className={({ active }) =>
+                clsx('menu-item', active && 'menu-item-active', 'logout')
+              }
+              onClick={logOut}
+            >
+              <LogoutIcon aria-hidden="true" className="icon" />
+              <span>{t('App.Menu.items.logout')}</span>
             </Menu.Item>
           </Menu.Items>
         </Transition>

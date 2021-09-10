@@ -8,15 +8,15 @@ const OrganizationSettingsDangerCard = () => {
   return (
     <DangerCard>
       <div className="action">
-        <div className="title-group">
+        <div className="space-y-1">
           <p className="title">
             {t('Organization.Settings.Danger.Card.delete.title')}
           </p>
-          <p className="hint">
+          <p className="muted hint">
             {t('Organization.Settings.Danger.Card.delete.subtitle')}
           </p>
         </div>
-        <button className="button-red-outline">
+        <button className="btn btn-red-ghost">
           {t('Organization.Settings.Danger.Card.delete.action')}
         </button>
       </div>

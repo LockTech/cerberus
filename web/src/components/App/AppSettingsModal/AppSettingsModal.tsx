@@ -4,14 +4,12 @@ import { useRecoilState } from 'recoil'
 import { Form, Label, Submit } from '@redwoodjs/forms'
 import { toast } from '@redwoodjs/web/toast'
 
-import { ColorModeAtom } from 'src/atoms/ColorMode'
-import type { ColorMode } from 'src/atoms/ColorMode'
-import { AppSettingsModalAtom } from 'src/atoms/AppSettingsModal'
+import { ColorModeAtom } from 'src/context/ColorMode'
+import type { ColorMode } from 'src/context/ColorMode'
+import { AppSettingsModalAtom } from 'src/context/AppSettingsModal'
 
 import Modal from 'src/components/Modal'
 import Select from 'src/components/Select'
-
-import './AppSettingsModal.css'
 
 const ThemeKey = 'App.SettingsModal.form.theme.options'
 const ThemeValues = [
@@ -27,21 +25,21 @@ interface AppSettingsFormData {
 const AppSettingsModal = () => {
   const { t } = useTranslation()
 
-  const [modalOpen, setModalOpen] = useRecoilState(AppSettingsModalAtom)
+  const [open, setOpen] = useRecoilState(AppSettingsModalAtom)
   const [colorMode, setColorMode] = useRecoilState(ColorModeAtom)
 
   const onSubmit = useCallback(
     (data: AppSettingsFormData) => {
       setColorMode(data.theme.value)
-      setModalOpen(false)
+      setOpen(false)
       toast.success(t('App.SettingsModal.saved'))
     },
-    [setColorMode, setModalOpen, t]
+    [setColorMode, setOpen, t]
   )
 
   return (
-    <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-      <div className="card card-body">
+    <Modal open={open} onClose={setOpen}>
+      <div className="card body">
         <header className="title-group">
           <Modal.Title>{t('App.SettingsModal.title')}</Modal.Title>
           <Modal.Description>
@@ -62,13 +60,22 @@ const AppSettingsModal = () => {
               name="theme"
               values={ThemeValues}
             />
-            <Label className="hint" name="theme">
+            <Label className="input-hint" name="theme">
               {t('App.SettingsModal.form.theme.hint')}
             </Label>
           </div>
-          <Submit className="button-primary-fill form-button">
-            {t('App.SettingsModal.form.submit')}
-          </Submit>
+          <div className="form-button space-x-4">
+            <Submit className="btn btn-primary">
+              {t('App.SettingsModal.form.submit')}
+            </Submit>
+            <button
+              className="btn btn-red-ghost"
+              onClick={() => setOpen(false)}
+              type="button"
+            >
+              {t('App.SettingsModal.form.cancel')}
+            </button>
+          </div>
         </Form>
       </div>
     </Modal>

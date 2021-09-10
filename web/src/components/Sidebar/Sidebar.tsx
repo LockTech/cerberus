@@ -1,8 +1,9 @@
+import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useRecoilState } from 'recoil'
 import { Transition } from '@headlessui/react'
 
-import { SidebarOpenAtom } from 'src/atoms/SidebarOpen'
+import { SidebarOpenAtom } from 'src/context/SidebarOpen'
 
 import SidebarNav from 'src/components/Sidebar/SidebarNav'
 
@@ -22,35 +23,35 @@ const Sidebar = () => {
 
   const width = useScreenWidth()
 
-  const responsiveSidebarOpen = width >= 1024 ? true : sidebarOpen
+  const responsiveSidebarOpen = width >= 1024
 
   return (
-    <section className={width >= 1024 && 'sidebar-container'}>
+    <Transition
+      as="section"
+      className={clsx('dark', responsiveSidebarOpen && 'sidebar-container')}
+      show={responsiveSidebarOpen || sidebarOpen}
+    >
       {width < 1024 && (
-        <Transition
+        <Transition.Child
           as="div"
-          aria-hidden="true"
           className="sidebar-overlay"
-          onClick={() => setSidebarOpen(false)}
           enter="duration-100 ease-in-out transition-opacity"
           enterFrom="opacity-0"
           enterTo="opacity-50"
-          leave="duration-100 ease-in-out transition-opacity"
+          leave="duration-200 ease-in-out transition-opacity"
           leaveFrom="opacity-50"
           leaveTo="opacity-0"
-          show={responsiveSidebarOpen}
+          onClick={() => setSidebarOpen(false)}
         />
       )}
-      <Transition
-        appear
+      <Transition.Child
         className="sidebar"
-        enter="duration-300 ease-in-out transition-transform transform-gpu"
+        enter="duration-300 ease-in-out transition-all transform-gpu"
         enterFrom="-translate-x-64 lg:translate-x-0 opacity-0"
         enterTo="translate-x-0 opacity-100"
-        leave="duration-300 ease-in-out transition-transform transform-gpu"
+        leave="duration-200 ease-in-out transition-all transform-gpu"
         leaveFrom="translate-x-0 opacity-100"
-        leaveTo="-translate-x-64 opacity-0"
-        show={responsiveSidebarOpen}
+        leaveTo="-translate-x-64 lg:translate-x-0 opacity-0"
       >
         <div>
           <header className="title-group">
@@ -69,8 +70,8 @@ const Sidebar = () => {
             {t('Sidebar.copyright')}
           </a>
         </footer>
-      </Transition>
-    </section>
+      </Transition.Child>
+    </Transition>
   )
 }
 

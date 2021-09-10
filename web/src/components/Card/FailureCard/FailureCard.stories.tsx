@@ -12,5 +12,5 @@ export const Default: Story<FailureCardProps> = (props) => (
   <FailureCard {...props} />
 )
 Default.args = {
-  children: <p>Oh shit! An error!</p>,
+  children: <p className="text">Oh shit! An error!</p>,
 }

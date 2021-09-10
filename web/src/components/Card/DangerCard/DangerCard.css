@@ -1,27 +1,20 @@
-.danger-card .title-icon {
-  @apply flex flex-row items-end;
-  @apply space-x-3 space-y-0;
+.card-danger .title-group {
+  @apply flex flex-row items-center;
+  @apply space-x-0 sm:space-x-6;
 }
-.danger-card .title-icon .icon {
-  @apply text-red-800 dark:text-red-500;
-  @apply h-8 w-8;
+.card-danger .icon {
+  @apply text-yellow-600 dark:text-yellow-300;
+  @apply h-10 w-10;
+  @apply hidden sm:block;
 }
 
-.danger-card .action {
+.card-danger .action {
   @apply flex flex-col sm:flex-row sm:items-center sm:justify-between;
-  @apply space-x-0 space-y-3 sm:space-x-4 sm:space-y-0;
+  @apply space-x-0 space-y-4 sm:space-x-4 sm:space-y-0;
 }
-.danger-card .action .title-group {
-  @apply space-y-1;
+.card-danger .action .title {
+  @apply font-semibold text text-xl;
 }
-.danger-card .action .title-group .title {
-  @apply font-semibold text-lg;
-}
-.danger-card .action .title-group .hint {
-  @apply text-base;
-  @apply text-gray-700;
-  @apply dark:text-gray-200;
-}
-.danger-card .action button {
+.card-danger .action button {
   @apply flex-shrink-0;
 }

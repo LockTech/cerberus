@@ -1,25 +1,23 @@
-.failure-card {
+.card-failure {
   @apply text-center;
+  @apply p-6 space-y-3;
 }
 
-.failure-card .icon {
+.card-failure .icon {
   /* Text */
   @apply text-red-500;
   @apply dark:text-red-400;
   /* Misc */
-  @apply h-12 w-12;
+  @apply h-16 w-16;
   @apply m-auto;
 }
 
-.failure-wrapper {
-  @apply space-y-8;
-}
-
-.failure-wrapper .reload {
+.btn-failure {
   @apply flex items-center justify-center;
-  @apply space-x-3;
+  @apply mt-8 space-x-4;
+  @apply w-full;
 }
 
-.failure-wrapper .reload .icon {
-  @apply h-6 w-6;
+.btn-failure .icon {
+  @apply h-5 w-5;
 }

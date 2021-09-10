@@ -1,0 +1,21 @@
+.toast {
+  @apply card;
+  @apply flex flex-row items-center;
+  @apply px-3 py-2 space-x-2;
+  @apply w-full sm:w-auto;
+}
+
+.toast-text {
+  @apply text;
+}
+
+.toast-icon {
+  @apply h-[26px] w-[26px];
+}
+
+.toast-error-icon {
+  @apply text-red-700 dark:text-red-300;
+}
+.toast-success-icon {
+  @apply text-green-700 dark:text-green-300;
+}

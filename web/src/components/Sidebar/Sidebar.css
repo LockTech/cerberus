@@ -10,14 +10,14 @@
   /* Misc */
   @apply max-w-[80%] lg:max-w-[10%] min-w-[17rem] w-[18%];
   @apply pb-6;
-  @apply fixed inset-0 z-30;
+  @apply fixed inset-0 z-10;
   @apply overflow-y-auto;
   @apply flex flex-col justify-between;
 }
 
 .sidebar-overlay {
   @apply bg-gray-900 bg-opacity-50;
-  @apply absolute inset-0 z-20;
+  @apply absolute inset-0 z-10;
 }
 
 .sidebar .title-group {
@@ -38,6 +38,6 @@
   @apply px-6 pt-12;
 }
 .sidebar .copyright a {
-  @apply text-gray-300 hover:text-gray-200 active:text-gray-50 !important;
+  @apply text-gray-500 hover:text-gray-400 active:text-gray-300 !important;
   @apply text-sm;
 }
