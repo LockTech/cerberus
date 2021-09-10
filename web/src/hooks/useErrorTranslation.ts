@@ -22,7 +22,8 @@ export const useErrorTranslation = () => {
   const { t: _t, ...rest } = useTranslation()
 
   const et = useCallback(
-    ({ message }: Error) => _t(`errors:${message}`, message),
+    ({ message }: Error | { message: string }) =>
+      _t(`errors:${message}`, message),
     [_t]
   )
 
