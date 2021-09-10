@@ -1,77 +1,29 @@
-import CrossFetch from 'cross-fetch'
-
-import { isDefined } from 'src/util/asserters'
-
-enum FetchMethods {
-  GET = 'GET',
-  // HEAD = 'HEAD',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
-  // CONNECT = 'CONNECT',
-  // OPTIONS = 'OPTIONS',
-  // TRACE = 'TRACE',
-  // PATCH = 'PATCH',
-}
-
-export type Response<T> = {
-  ok: boolean
-  res: T
-  status: number
-  statusText: string
-}
+import axios from 'axios'
 
 type UnknownHeaders = Record<string, unknown>
 type UnknownBody = unknown
 
+axios.defaults.headers.common['Accept'] = 'application/json'
+axios.defaults.headers.common['Content-Type'] = 'application/json'
+
 class fetch {
-  /**
-   * @param url
-   * @param method
-   * @param body The body of the request, given as a JS object or array.
-   * @returns The `Response` given by the resource, typed according to the provided `generic`.
-   */
-  static async fetch<T = Record<string, unknown>>(
-    url: string,
-    method: FetchMethods,
-    body: UnknownBody,
-    headers?: UnknownHeaders
-  ) {
-    const netRes = await CrossFetch(url, {
-      method,
-      body: isDefined(body) ? JSON.stringify(body) : null,
-      headers: {
-        Accepts: 'application/json',
-        Connection: 'keep-alive',
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-    })
-
-    const { bodyUsed, json, ok, status, statusText } = netRes
-
-    const res = (bodyUsed && (await json())) || {}
-
-    return { ok, res, status, statusText } as Response<T>
-  }
-
   static GET = async <T>(url: string, headers?: UnknownHeaders) =>
-    await this.fetch<T>(url, FetchMethods.GET, undefined, headers)
+    (await axios.get<T>(url, { headers })).data
 
   static POST = async <T>(
     url: string,
     body: UnknownBody,
     headers?: UnknownHeaders
-  ) => await this.fetch<T>(url, FetchMethods.POST, body, headers)
+  ) => (await axios.post<T>(url, body, { headers })).data
 
   static PUT = async <T>(
     url: string,
     body: UnknownBody,
     headers?: UnknownHeaders
-  ) => await this.fetch<T>(url, FetchMethods.PUT, body, headers)
+  ) => (await axios.put<T>(url, body, { headers })).data
 
   static DELETE = async <T>(url: string, headers?: UnknownHeaders) =>
-    await this.fetch<T>(url, FetchMethods.DELETE, undefined, headers)
+    (await axios.delete<T>(url, { headers })).data
 }
 
-export { fetch, FetchMethods }
+export { fetch }
