@@ -6,6 +6,12 @@ import {
   AccountNameMaxLength,
   AccountEmailValidRegEx,
 } from 'src/constants/account'
+import { KetoBuildOrgMemberTuple } from 'src/constants/keto'
+
+import { checkTuple } from 'src/helpers/keto'
+
+import { getContextUser } from 'src/lib/context'
+import { db } from 'src/lib/db'
 
 import { isBool, isStr } from 'src/util/asserters'
 
@@ -32,8 +38,12 @@ export const validateAccountDisabled = (
  *  * 'account-email-invalid' - When `email` is not a string.
  *  * 'account-email-length' - When `email` is less than 1 or greater than `AccountEmailMaxLength` characters long.
  *  * 'account-email-reserved' - When `email` contains a reserved character.
+ *  * 'account-email-unique' - When `email` is in use by another account.
  */
-export const validateAccountEmail = (s: string, { email }: EmailInput) => {
+export const validateAccountEmail = async (
+  s: string,
+  { email }: EmailInput
+) => {
   if (!isStr(email)) throw new ValidationError('account-email-invalid')
 
   if (email.length <= 0 || email.length > AccountEmailMaxLength)
@@ -42,17 +52,25 @@ export const validateAccountEmail = (s: string, { email }: EmailInput) => {
   if (email.match(AccountEmailValidRegEx) === null)
     throw new ValidationError('account-email-reserved')
 
-  // perform DB check for email's existence; use case insensitive
+  const res = await db.account.findUnique({ where: { email } })
+  if (res !== null) throw new ValidationError('account-email-unique')
 }
 
 /**
  * @throws
  *  * 'account-id-invalid' - When `id` is not a valid UUID.
+ *  * 'account-id-forbidden' - When `id` is not accessibile by the invoking account.
  */
-export const validateAccountID = (s: string, { id }: IDInput) => {
+export const validateAccountID = async (s: string, { id }: IDInput) => {
   if (!isUUID(id)) throw new ValidationError('account-id-invalid')
 
-  // use keto to check id is a member of the invoker's organization
+  const organizationId = getContextUser().organizationId
+
+  const tuple = KetoBuildOrgMemberTuple(id, organizationId)
+
+  const res = await checkTuple(tuple)
+
+  if (!res) throw new ValidationError('account-id-forbidden')
 }
 
 /**

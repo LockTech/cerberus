@@ -1,5 +1,5 @@
 import type { APIGatewayEvent } from 'aws-lambda'
-import { ValidationError } from '@redwoodjs/graphql-server'
+import { ValidationError } from '@redwoodjs/api'
 
 import {
   FunctionHeaderMediaTypeKey,

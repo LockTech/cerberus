@@ -1,4 +1,4 @@
-import { ValidationError } from '@redwoodjs/graphql-server'
+import { ValidationError } from '@redwoodjs/api'
 
 /**
  * Throws a 'rejected' error, nothing more.

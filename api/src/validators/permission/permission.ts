@@ -6,16 +6,26 @@ import type { PermissionTuple } from 'src/constants/permission'
 import { isDefined, isPermissionTuple, isStr } from 'src/util/asserters'
 
 import type { IDInput } from 'types/inputs'
+import { db } from 'src/lib/db'
 
 /**
  * @throws
  *  * 'permission-tuple-invalid' - When `tuple` is not a valid `PermissionTuple`.
+ *  * 'permission-tuple-unique' - When `tuple` is not unique.
  */
-export const validatePermissionTuple = (_s: string, tuple: PermissionTuple) => {
+export const validatePermissionTuple = async (
+  _s: string,
+  tuple: PermissionTuple
+) => {
   if (!isPermissionTuple(tuple))
     throw new ValidationError('permission-tuple-invalid')
 
-  // perform db operation to assert permission is unique
+  const res = await db.permission.findUnique({
+    where: {
+      application_namespace_object_relation: tuple,
+    },
+  })
+  if (res !== null) throw new ValidationError('permission-tuple-unique')
 }
 
 export interface AccessRelationInput {
@@ -36,9 +46,11 @@ export const validatePermissionAccessRel = (
 /**
  * @throws
  *  * 'permission-id-invalid' - When `id` is not a valid UUID.
+ *  * 'permission-id-exists' - When a permission with `id` does not exist.
  */
-export const validatePermissionId = (_s: string, { id }: IDInput) => {
+export const validatePermissionId = async (_s: string, { id }: IDInput) => {
   if (!isUUID(id)) throw new ValidationError('permission-id-invalid')
 
-  // perform db assertion that `id` belongs to a valid permission
+  const res = await db.permission.findUnique({ where: { id } })
+  if (res === null) throw new ValidationError('permission-exists')
 }
