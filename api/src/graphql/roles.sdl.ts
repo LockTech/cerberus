@@ -2,6 +2,7 @@ export const schema = gql`
   type Role {
     id: ID!
     name: String!
+    color: String!
     createdAt: DateTime!
     updatedAt: DateTime!
     organizationId: ID!
@@ -9,13 +10,14 @@ export const schema = gql`
 
   type Query {
     role(id: ID!): Role!
-    roles: [Role!]!
+    roles(accountId: ID): [Role!]!
+    #
   }
 
   type Mutation {
     createRole(name: String!): Role!
     deleteRole(id: ID!): Role!
-    updateRole(id: ID!, name: String): Role!
+    updateRole(id: ID!, color: String, name: String): Role!
     #
     addPermToRole(permissionId: ID!, roleId: ID!): Role!
     addRoleToAccount(accountId: ID!, roleId: ID!): Role!
