@@ -2,7 +2,7 @@ import {
   createGraphQLHandler,
   makeMergedSchema,
   makeServices,
-} from '@redwoodjs/graphql-server'
+} from '@redwoodjs/api'
 
 import schemas from 'src/graphql/**/*.{js,ts}'
 import services from 'src/services/**/*.{js,ts}'
@@ -12,6 +12,7 @@ import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
 
 export const handler = createGraphQLHandler({
+  // @ts-expect-error api types?
   getCurrentUser,
   loggerConfig: {
     logger,
@@ -20,7 +21,7 @@ export const handler = createGraphQLHandler({
       operationName: true,
       requestId: true,
       query: true,
-      tracing: true,
+      tracing: false,
       userAgent: true,
     },
   },
