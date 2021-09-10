@@ -1,3 +1,7 @@
+export interface ColorInput {
+  color: string
+}
+
 export interface DisabledInput {
   disabled: boolean
 }
