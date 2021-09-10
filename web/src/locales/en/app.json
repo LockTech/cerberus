@@ -7,30 +7,52 @@
         "action": "Delete"
       }
     },
+    "Delete": {
+      "Modal": {
+        "action": "Delete",
+        "title": "Account Deletion",
+        "subtitle": "Are you sure you want to delete this member's account?",
+        "undone": "Once deleted, there is no way to recover an account.",
+        "form": {
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        },
+        "delete": {
+          "loading": "Deleting your member's account.",
+          "success": "Deleted {{ name, pluralPossessive }} account."
+        }
+      }
+    },
+    "Detail": {
+      "Cell": {
+        "Loading": "Loading your member's account details."
+      }
+    },
     "Invite": {
       "Modal": {
         "action": "Invite a Member",
         "title": "Member Invitation",
         "subtitle": "Send an invitation email to a member of your organization.",
-        "info": "The invited member will be able to create their own account, setting their name and password.",
+        "info": "The invited member will be able to create their own account, setting the account's name and password.",
         "form": {
           "email": {
             "label": "E-Mail Address",
             "placeholder": "jane.doe@example.net",
             "required": "An e-mail address is required to invite a member to your organization."
           },
-          "submit": "Send Invitation"
+          "submit": "Send",
+          "cancel": "Cancel"
         },
         "loading": "Sending invitation.",
-        "success": "Successfully sent invitation."
+        "success": "Invitation has been sent."
       }
     },
     "List": {
       "Cell": {
         "Loading": "Loading your member's accounts.",
         "Success": {
-          "lastLogin": "Last seen at {{ time, friendlyTime }} on {{ date, friendlyDate }}",
-          "verified": "Created on {{ date, friendlyDate }}"
+          "lastLogin": "Last seen on {{ date, friendlyDate }} at {{ time, friendlyTime }}",
+          "verified": "Verified on {{ date, friendlyDate }}"
         }
       },
       "Page": {
@@ -50,25 +72,49 @@
         "title": "Account Details"
       }
     },
-    "Update": {
+    "Role": {
       "Cell": {
-        "Loading": "Loading your member's account details.",
+        "Loading": "Loading the member's role details.",
         "Success": {
-          "title": "{{ name }}",
-          "subtitle": "Update this member's account details.",
-          "form": {
-            "email": {
-              "label": "Email Address",
-              "required": "An email address is required to update an account."
-            },
-            "name": {
-              "label": "Full Name",
-              "required": "A name is required to update an account."
-            },
-            "submit": "Update"
+          "title": "Roles",
+          "subtitle": "Click or tap a role to add or remove it from this account.",
+          "roles": {
+            "title": "Available Roles",
+            "subtitle": "All of your organization's roles which are not assigned to this account."
           },
+          "account": {
+            "title": "{{ name, pluralPossessive }} Roles",
+            "subtitle": "The roles which have been assigned to this account."
+          },
+          "add": {
+            "loading": "Adding the {{ roleName }} role to {{ accountName }}.",
+            "success": "Added the {{ roleName }} role to {{ accountName }}."
+          },
+          "del": {
+            "loading": "Removing the {{ roleName }} role from {{ accountName }}.",
+            "success": "Removed the {{ roleName }} role from {{ accountName }}."
+          }
+        }
+      }
+    },
+    "Update": {
+      "Card": {
+        "title": "{{ name }}",
+        "subtitle": "Update this member's account details.",
+        "form": {
+          "email": {
+            "label": "E-Mail Address",
+            "required": "An email address is required to update an account."
+          },
+          "name": {
+            "label": "Full Name",
+            "required": "A name is required to update an account."
+          },
+          "submit": "Update"
+        },
+        "update": {
           "loading": "Updating member's account details.",
-          "success": "Successfully updated your member's account."
+          "success": "Updated {{ name, pluralPossessive }} account."
         }
       }
     }
@@ -101,9 +147,10 @@
           },
           "hint": "Update the application's design to match the current time-of-day, or use your personal preference."
         },
-        "submit": "Save"
+        "submit": "Save",
+        "cancel": "Cancel"
       },
-      "saved": "Settings updated."
+      "saved": "Application settings updated."
     }
   },
   "Auth": {
@@ -147,8 +194,61 @@
       "Page": {
         "Helmet": {
           "title": "Cerberus • Invitation Confirmation"
+        },
+        "title": "Invite Confirmation",
+        "subtitle": "",
+        "form": {
+          "name": {
+            "placeholder": "Jane Doe",
+            "label": "Full Name",
+            "required": "Your name is required to create your account."
+          },
+          "email": {
+            "placeholder": "jane.doe@example.net",
+            "label": "E-Mail Address",
+            "required": "Your e-mail address is required to create your account."
+          },
+          "password": {
+            "placeholder": "Secure Secret",
+            "label": "Password",
+            "minLength": "Your password must be longer than 8 characters.",
+            "required": "A password is required to create your account."
+          },
+          "confirmPassword": {
+            "placeholder": "Secure Secret",
+            "label": "Confirm Password",
+            "match": "Your passwords do not match."
+          },
+          "submit": "Confirm"
         }
       }
+    }
+  },
+  "Login": {
+    "Hook": {
+      "loading": "Logging into your account.",
+      "success": "Logged into your account."
+    },
+    "Page": {
+      "Meta": {
+        "title": "Cerberus • Login"
+      },
+      "title": "Login",
+      "subtitle": "Welcome back! Enter your e-mail address and password to get access to your organization.",
+      "form": {
+        "email": {
+          "label": "E-Mail Address",
+          "placeholder": "jane.doe@example.net",
+          "required": "An e-mail address is required to login."
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Secure Secret",
+          "required": "Your password is required to login."
+        },
+        "submit": "Login"
+      },
+      "signup": "Need to create an account?"
     }
   },
   "NotFound": {
@@ -185,12 +285,15 @@
           "form": {
             "name": {
               "label": "Organization Name",
+              "placeholder": "Example Inc.",
               "required": "A name is required when updating your organization."
             },
             "submit": "Update"
           },
-          "loading": "Updating your organization.",
-          "success": "Updated your organization."
+          "update": {
+            "loading": "Updating your organization.",
+            "success": "Updated your organization."
+          }
         }
       }
     }
@@ -198,14 +301,53 @@
   "Role": {
     "Create": {
       "Modal": {
-        "createRole": "Create a Role"
+        "createRole": "Create a Role",
+        "title": "Create Role",
+        "subtitle": "Create a new role which you may use to assign permissions to your organization's members.",
+        "form": {
+          "name": {
+            "label": "Role Name",
+            "placeholder": "Administrator",
+            "required": "A name is required to create a role."
+          },
+          "submit": "Create",
+          "cancel": "Cancel"
+        },
+        "create": {
+          "loading": "Creating a role for your organization.",
+          "success": "Your role has been created, redirecting to its details page."
+        }
+      }
+    },
+    "DangerCard": {
+      "delete": {
+        "title": "Delete the {{ name }} role",
+        "subtitle": "Permanently remove this role from your organization."
+      }
+    },
+    "Delete": {
+      "Modal": {
+        "action": "Delete",
+        "title": "Role Deletion",
+        "subtitle": "Are you sure you want to delete this role from your organization?",
+        "accounts": "Deleting this role will remove it from all accounts.",
+        "permissions": "This will also remove all permissions any of these accounts have as a result of being assigned this role.",
+        "undone": "Once deleted, there is no way to recover a role.",
+        "form": {
+          "delete": "Delete",
+          "cancel": "Cancel"
+        },
+        "delete": {
+          "loading": "Deleting role from your organization.",
+          "success": "Deleted the {{ name }} role from your organization."
+        }
       }
     },
     "List": {
       "Cell": {
         "Loading": "Loading your organization's roles.",
         "Success": {
-          "createdAt": "Created on {{ createdAt, friendlyDate }} at {{ createdAt, friendlyTime }}"
+          "createdAt": "Created on {{ createdAt, friendlyDate }}"
         }
       },
       "Page": {
@@ -227,7 +369,28 @@
     },
     "Update": {
       "Cell": {
-        "Loading": "Loading the role's details."
+        "Loading": "Loading the role's details.",
+        "Success": {
+          "title": "{{ name }}",
+          "subtitle": "Update the {{ name }} role's details.",
+          "form": {
+            "name": {
+              "label": "Role Name",
+              "placeholder": "Administrator",
+              "required": "A name is required to update your role."
+            },
+            "color": {
+              "label": "Color",
+              "hint": "Colors along the center of the Y-axis tend to show up better on both a light and dark color scheme.",
+              "preview": "Color Preview"
+            },
+            "submit": "Update"
+          },
+          "update": {
+            "loading": "Updating your organization's role.",
+            "success": "Updated the {{ name }} role."
+          }
+        }
       }
     }
   },
@@ -255,13 +418,88 @@
   "Signup": {
     "Confirmation": {
       "Page": {
-        "Helmet": {
+        "Meta": {
           "title": "Cerberus • Signup Confirmation"
+        },
+        "title": "Signup Confirmation",
+        "subtitle": "Confirm your account to start setting up your organization.",
+        "emailMissing": "Your e-mail address could not be decoded. Make sure you use the link sent in your confirmation e-mail.",
+        "emailSent": "We have sent you a confirmation email.",
+        "instructions": "In it, you will find a code that you may enter below to finish creating your account.",
+        "resend": {
+          "message": "Resend Confirmation E-Mail",
+          "loading": "Resending your account's confirmation e-mail.",
+          "success": "If your account is pending confirmation, we've resent its confirmation code."
+        },
+        "confirm": {
+          "loading": "Confirming your account.",
+          "success": "Your account has been confirmed."
+        },
+        "form": {
+          "code": {
+            "label": "Confirmation Code",
+            "placeholder": "XXXXXXX",
+            "required": "A confirmation code is required to confirm your account."
+          },
+          "submit": "Confirm"
+        }
+      }
+    },
+    "Hook": {
+      "loading": "Creating your account.",
+      "success": "Your account has been created."
+    },
+    "Login": {
+      "Page": {
+        "Meta": {
+          "title": "Cerberus • Signup Verification"
+        },
+        "title": "Signup Verification",
+        "subtitle": "You will need to login so we can verify who is creating the organization.",
+        "form": {
+          "email": {
+            "label": "E-Mail Address",
+            "placeholder": "jane.doe@example.net",
+            "required": "An e-mail address is required to login."
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "Secure Secret",
+            "required": "Your password is required to login."
+          },
+          "submit": "Login"
+        }
+      }
+    },
+    "Organization": {
+      "Page": {
+        "Meta": {
+          "title": "Cerberus • Create Organization"
+        },
+        "title": "Create Organization",
+        "subtitle": "You will need to provide some basic information about your organization.",
+        "create": {
+          "loading": "Creating your organization and its administrator role.",
+          "success": "Created your organization. Redirecting your browser."
+        },
+        "form": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Example Inc.",
+            "required": "Your organization's name is needed to create it."
+          },
+          "adminRoleName": {
+            "label": "Administrator Role's Name",
+            "placeholder": "Administrator",
+            "hint": "The name of the role which will have access to every member and their permissions.",
+            "required": "Your administrator role's name is required to create your organization."
+          },
+          "submit": "Create Organization"
         }
       }
     },
     "Page": {
-      "Helmet": {
+      "Meta": {
         "title": "Cerberus • Signup"
       },
       "title": "Signup",
@@ -289,7 +527,8 @@
           "label": "Password Confirmation",
           "placeholder": "Secure Secret",
           "match": "Your passwords do not match."
-        }
+        },
+        "submit": "Signup"
       },
       "login": "Already have an account?"
     }
