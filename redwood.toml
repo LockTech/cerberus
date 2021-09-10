@@ -13,7 +13,7 @@
   open = true
 [experimental]
   esbuild = false
-  useEnvelop = true
+  useEnvelop = false
 [generate]
   tests = false
   stories = false
