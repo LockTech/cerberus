@@ -1,14 +1,12 @@
 import type { Account } from '@prisma/client'
-import { ValidationError, UserInputError } from '@redwoodjs/graphql-server'
+import { ValidationError, UserInputError } from '@redwoodjs/api'
 
 import { KetoBuildOrgMemberTuple } from 'src/constants/keto'
 
 import { SignupRes, SignupInviteRes } from 'src/constants/signup'
 
-import { sendSignupEmail } from 'src/helpers/email'
-
 import { db } from 'src/lib/db'
-import { logger, prismaLogger } from 'src/lib/logger'
+import { prismaLogger } from 'src/lib/logger'
 
 import {
   confirmInvitation,
@@ -16,7 +14,6 @@ import {
 } from 'src/services/account_confirmations'
 
 import { isStr, isUndefined } from 'src/util/asserters'
-import { randomStr } from 'src/util/randomStr'
 
 import {
   validateAccountEmail,
@@ -97,21 +94,8 @@ export const handleSignup = async ({
   hashedPassword,
   salt,
 }: HandleSignupOptions) => {
-  const code = randomStr(8)
-
   // confirmation
-  await createSignupConfirm({ code, email })
-
-  // email
-  try {
-    const data = {
-      code,
-    }
-    await sendSignupEmail({ data, email })
-  } catch (err) {
-    logger.error({ err }, 'Error sending signup confirmation email.')
-    throw new UserInputError('signup-email-send')
-  }
+  await createSignupConfirm({ email })
 
   // create
   try {

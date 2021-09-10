@@ -28,10 +28,6 @@ const InviteInvalidError = {
   message: 'invite-code-invalid',
 }
 //
-const SignupEmailSendError = {
-  name: 'UserInputError',
-  message: 'signup-email-send',
-}
 
 const TestInput = {
   code: '1',
@@ -146,42 +142,6 @@ describe('signup helper', () => {
   })
 
   describe('handleSignup', () => {
-    it('throws when encountering an error creating the signup confirmation', async () => {
-      // @ts-expect-error jest types
-      createSignupConfirm.mockRejectedValue(new Error('oops'))
-
-      expect(handleSignup(TestInput)).rejects.toThrow()
-    })
-
-    it('throws when encountering an error sending the confirmation email', async () => {
-      // @ts-expect-error jest types
-      createSignupConfirm.mockResolvedValue(true)
-      // @ts-expect-error jest types
-      sendSignupEmail.mockRejectedValue(new Error('email failed!'))
-
-      expect(handleSignup(TestInput)).rejects.toThrow(SignupEmailSendError)
-    })
-
-    it('attempts to send a confirmation email', async () => {
-      // @ts-expect-error jest types
-      createSignupConfirm.mockResolvedValue(true)
-      // @ts-expect-error jest types
-      sendSignupEmail.mockResolvedValue(true)
-
-      const { email, code } = TestInput
-
-      // @ts-expect-error jest types
-      randomStr.mockReturnValue(code)
-
-      await handleSignup(TestInput)
-
-      expect(sendSignupEmail).toHaveBeenCalledTimes(1)
-      expect(sendSignupEmail).toHaveBeenCalledWith({
-        data: { code },
-        email,
-      })
-    })
-
     it('creates an unverified account', async () => {
       // @ts-expect-error jest types
       createSignupConfirm.mockResolvedValue(true)
