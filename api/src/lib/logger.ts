@@ -1,5 +1,5 @@
 import type { redactOptions } from 'pino'
-import { createLogger } from '@redwoodjs/graphql-server/logger'
+import { createLogger } from '@redwoodjs/api/logger'
 
 import { buildRedactString } from 'src/util/logger'
 
