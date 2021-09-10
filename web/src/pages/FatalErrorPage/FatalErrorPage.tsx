@@ -12,9 +12,9 @@ export default () => {
     <main className="fatal-page">
       <section className="wrapper">
         <div className="content">
-          <header className="title-group">
-            <h1 className="title">{t('FatalError.Page.title')}</h1>
-            <p className="text">{t('FatalError.Page.subtitle')}</p>
+          <header className="space-y-1">
+            <h1 className="text title">{t('FatalError.Page.title')}</h1>
+            <p className="text hint">{t('FatalError.Page.subtitle')}</p>
           </header>
           <div className="actions">
             <button

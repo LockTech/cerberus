@@ -12,18 +12,18 @@ export default () => {
     <main className="notFound-page">
       <section className="wrapper">
         <div className="content">
-          <header className="title-group">
-            <h1 className="title">{t('NotFound.Page.title')}</h1>
+          <header className="space-y-1">
+            <h1 className="text title">{t('NotFound.Page.title')}</h1>
           </header>
           <div className="actions">
             <button
-              className="button-primary-fill w-full"
+              className="btn btn-primary w-full"
               onClick={() => navigate(routes.home())}
             >
               {t('FatalError.Page.actions.dashboard')}
             </button>
             <button
-              className="button-gray-outline w-full"
+              className="btn w-full"
               onClick={() => (window.location.href = SupportURL)}
             >
               {t('FatalError.Page.actions.support')}
