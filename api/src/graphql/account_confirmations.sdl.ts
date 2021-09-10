@@ -9,5 +9,6 @@ export const schema = gql`
 
   type Mutation {
     confirmSignup(code: String!, email: String!): Boolean!
+    resendConfirmation(email: String!): Boolean
   }
 `
