@@ -9,7 +9,7 @@ export const standard = {
 export const mockAccount = () => {
   mockCurrentUser({ id: '1' })
 
-  mockGraphQLQuery('AccountUpdateQuery', (_v, { ctx }) => {
+  mockGraphQLQuery('AccountDetailQuery', (_v, { ctx }) => {
     ctx.delay(2000)
     return standard
   })
@@ -23,7 +23,7 @@ export const mockAccount = () => {
 export const mockAccountError = () => {
   mockCurrentUser({ id: '1' })
 
-  mockGraphQLQuery('AccountUpdateQuery', (_v, { ctx }) => {
+  mockGraphQLQuery('AccountDetailQuery', (_v, { ctx }) => {
     ctx.delay(2000)
     return standard
   })
