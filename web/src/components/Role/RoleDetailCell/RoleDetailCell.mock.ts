@@ -7,7 +7,7 @@ export const standard = {
 }
 
 export const mockRoleUpdate = () => {
-  mockGraphQLQuery('RoleUpdateQuery', (_v, { ctx }) => {
+  mockGraphQLQuery('RoleDetailQuery', (_v, { ctx }) => {
     ctx.delay(1500)
     return standard
   })
