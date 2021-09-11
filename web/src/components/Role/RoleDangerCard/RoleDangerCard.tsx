@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next'
 import DangerCard from 'src/components/Card/DangerCard'
 import RoleDeleteModal from 'src/components/Role/RoleDeleteModal'
 
+import type { RoleUpdateQuery } from 'types/graphql'
+
 export interface RoleDangerCardProps {
-  id: string
-  name: string
+  role: RoleUpdateQuery['role']
 }
 
-const RoleDangerCard = ({ id, name }: RoleDangerCardProps) => {
+const RoleDangerCard = ({ role: { id, name } }: RoleDangerCardProps) => {
   const { t } = useTranslation()
 
   return (
