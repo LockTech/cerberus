@@ -368,29 +368,29 @@
       }
     },
     "Update": {
-      "Cell": {
-        "Loading": "Loading the role's details.",
-        "Success": {
-          "title": "{{ name }}",
-          "subtitle": "Update the {{ name }} role's details.",
-          "form": {
-            "name": {
-              "label": "Role Name",
-              "placeholder": "Administrator",
-              "required": "A name is required to update your role."
-            },
-            "color": {
-              "label": "Color",
-              "hint": "Colors along the center of the Y-axis tend to show up better on both a light and dark color scheme.",
-              "preview": "Color Preview"
-            },
-            "submit": "Update"
+      "Card": {
+        "title": "{{ name }}",
+        "subtitle": "Update the {{ name }} role's details.",
+        "form": {
+          "name": {
+            "label": "Role Name",
+            "placeholder": "Administrator",
+            "required": "A name is required to update your role."
           },
-          "update": {
-            "loading": "Updating your organization's role.",
-            "success": "Updated the {{ name }} role."
-          }
+          "color": {
+            "label": "Color",
+            "hint": "Colors along the center of the Y-axis tend to show up better on both a light and dark color scheme.",
+            "preview": "Color Preview"
+          },
+          "submit": "Update"
+        },
+        "update": {
+          "loading": "Updating your organization's role.",
+          "success": "Updated the {{ name }} role."
         }
+      },
+      "Cell": {
+        "Loading": "Loading the role's details."
       }
     }
   },
