@@ -5,6 +5,7 @@ import FailureCard from 'src/components/Card/FailureCard'
 import LoadingCard from 'src/components/Card/LoadingCard'
 import RoleDangerCard from 'src/components/Role/RoleDangerCard'
 import RoleUpdateCard from 'src/components/Role/RoleUpdateCard'
+import RolePermissionCell from 'src/components/Role/RolePermissionCell'
 
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
@@ -44,6 +45,7 @@ export const Success = ({ role }: CellSuccessProps<RoleUpdateQuery>) => {
   return (
     <div className="page-layout">
       <RoleUpdateCard role={role} />
+      <RolePermissionCell />
       <RoleDangerCard role={role} />
     </div>
   )
