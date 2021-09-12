@@ -184,7 +184,7 @@ The structure of these translations should resemble the following, in continuing
 {
   "foo": { // "application"
     "title": "Foo's Book Publishing",
-    "foo_publish_books::can": { // "namespace:object:relation"
+    "foo_publish_books##can": { // "namespace#object#relation"
       "title": "Publish",
       "summary": "Provide permission to publish new books to the site and send it to printing."
     }
