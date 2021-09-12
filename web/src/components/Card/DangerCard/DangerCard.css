@@ -12,9 +12,6 @@
   @apply flex flex-col sm:flex-row sm:items-center sm:justify-between;
   @apply space-x-0 space-y-4 sm:space-x-4 sm:space-y-0;
 }
-.card-danger .action .title {
-  @apply font-semibold text text-xl;
-}
 .card-danger .action button {
   @apply flex-shrink-0;
 }
