@@ -4,7 +4,7 @@ import { MetaTags } from '@redwoodjs/web'
 import AppbarTitle from 'src/components/App/Appbar/AppbarTitle'
 import OrganizationDetailCell from 'src/components/Organization/OrganizationDetailCell'
 
-const OrganizationSettingsPage = () => {
+const OrganizationPage = () => {
   const { t } = useTranslation()
 
   return (
@@ -16,4 +16,4 @@ const OrganizationSettingsPage = () => {
   )
 }
 
-export default OrganizationSettingsPage
+export default OrganizationPage

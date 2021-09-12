@@ -18,7 +18,7 @@ const SidebarNav = () => {
   const roleMatch = useMatch(routes.role()).match
   const listRoles = listRolesMatch || roleMatch
   //
-  const orgSettings = useMatch(routes.organizationSettings()).match
+  const orgSettings = useMatch(routes.organization()).match
 
   return (
     <nav>
@@ -56,7 +56,7 @@ const SidebarNav = () => {
         <p className="nav-group-title">{t('Sidebar.Nav.organization.title')}</p>
         <button
           className={clsx(orgSettings && 'active')}
-          onClick={() => navigate(routes.organizationSettings())}
+          onClick={() => navigate(routes.organization())}
         >
           {t('Sidebar.Nav.organization.settings')}
         </button>

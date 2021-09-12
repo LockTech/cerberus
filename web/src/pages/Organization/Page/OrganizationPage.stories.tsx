@@ -2,15 +2,15 @@ import type { Meta, Story } from '@storybook/react'
 
 import { mockUpdateOrganization } from 'src/components/Organization/OrganizationDetailCell/OrganizationDetailCell.mock'
 
-import OrganizationSettingsPage from './OrganizationSettingsPage'
+import OrganizationPage from './OrganizationPage'
 
 export default {
-  component: OrganizationSettingsPage,
-  title: 'Pages/Organization/Settings',
+  component: OrganizationPage,
+  title: 'Pages/Organization/Page',
 } as Meta
 
 export const Default: Story = (props) => {
   mockUpdateOrganization()
 
-  return <OrganizationSettingsPage {...props} />
+  return <OrganizationPage {...props} />
 }

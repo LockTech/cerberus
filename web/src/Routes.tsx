@@ -20,7 +20,7 @@ const Routes = () => {
           <Route path="/roles" page={RoleListPage} name="listRoles" />
           <Route path="/role/{id}" page={RolePage} name="role" />
           {/* Organizations */}
-          <Route path="/organization/settings" page={OrganizationSettingsPage} name="organizationSettings" />
+          <Route path="/organization" page={OrganizationPage} name="organization" />
         </Set>
         <Set prerender wrap={[AuthLayout]}>
           <Route path="/invite/confirmation" name="inviteConfirmation" page={AuthInviteConfirmationPage} />
