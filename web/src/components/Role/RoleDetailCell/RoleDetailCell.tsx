@@ -9,10 +9,10 @@ import RolePermissionCell from 'src/components/Role/RolePermissionCell'
 
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
-import type { RoleUpdateQuery } from 'types/graphql'
+import type { RoleDetailQuery } from 'types/graphql'
 
 export const QUERY = gql`
-  query RoleUpdateQuery($id: ID!) {
+  query RoleDetailQuery($id: ID!) {
     role(id: $id) {
       color
       id
@@ -41,7 +41,7 @@ export const Failure = ({ error }: CellFailureProps) => {
   )
 }
 
-export const Success = ({ role }: CellSuccessProps<RoleUpdateQuery>) => {
+export const Success = ({ role }: CellSuccessProps<RoleDetailQuery>) => {
   return (
     <div className="page-layout">
       <RoleUpdateCard role={role} />
