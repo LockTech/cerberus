@@ -18,7 +18,7 @@ const AccountDangerCard = ({
     <DangerCard>
       <div className="action">
         <div className="space-y-1">
-          <p className="text title">
+          <p className="text">
             {t('Account.DangerCard.delete.title', { name })}
           </p>
           <p className="muted hint">

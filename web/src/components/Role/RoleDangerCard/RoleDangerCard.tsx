@@ -16,7 +16,7 @@ const RoleDangerCard = ({ role: { id, name } }: RoleDangerCardProps) => {
     <DangerCard>
       <div className="action">
         <div className="space-y-1">
-          <p className="text title">
+          <p className="text">
             {t('Role.DangerCard.delete.title', { name })}
           </p>
           <p className="muted hint">{t('Role.DangerCard.delete.subtitle')}</p>

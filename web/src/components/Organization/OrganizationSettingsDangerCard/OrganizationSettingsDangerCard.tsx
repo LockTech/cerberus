@@ -9,7 +9,7 @@ const OrganizationSettingsDangerCard = () => {
     <DangerCard>
       <div className="action">
         <div className="space-y-1">
-          <p className="title">
+          <p className="text">
             {t('Organization.Settings.Danger.Card.delete.title')}
           </p>
           <p className="muted hint">
