@@ -18,13 +18,12 @@ import { KetoBuildPermissionTuple } from 'src/constants/keto'
 import { deleteTuple } from 'src/helpers/keto'
 
 /* eslint-disable prettier/prettier */
-const valGetPermissionId = (s: string, { id }) => id && validatePermissionId(s, { id })
-const valGetPermissionTuple = (s: string, { tuple }) => tuple && validatePermissionTuple(s, tuple)
+// const valGetPermissionId = (s: string, { id }) => id && validatePermissionId(s, { id })
+// const valGetPermissionTuple = (s: string, { tuple }) => tuple && validatePermissionTuple(s, tuple)
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { only: ['createPermission', 'deletePermission'] })
+  rules.add(reject, { only: ['createPermission', 'deletePermission', 'permission'] })
   rules.add(validateAuth)
-  rules.add([valGetPermissionId, valGetPermissionTuple], { only: ['permission'] })
 }
 /* eslint-enable prettier/prettier */
 
