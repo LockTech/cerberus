@@ -1,13 +1,13 @@
 import type { Meta } from '@storybook/react'
 
 // @ts-expect-error types
-import OrganizationUpdateCell from './OrganizationUpdateCell'
-import { Failure, Loading, Success } from './OrganizationUpdateCell'
+import OrganizationDetailCell from './OrganizationDetailCell'
+import { Failure, Loading, Success } from './OrganizationDetailCell'
 import {
   mockUpdateOrganization,
   mockUpdateOrganizationError,
   standard,
-} from './OrganizationUpdateCell.mock'
+} from './OrganizationDetailCell.mock'
 
 export default {
   subcomponents: { Failure, Loading, Success },
@@ -23,11 +23,11 @@ export const success = () => <Success {...standard} />
 export const mockedSuccess = () => {
   mockUpdateOrganization()
 
-  return <OrganizationUpdateCell />
+  return <OrganizationDetailCell />
 }
 
 export const mockedFailure = () => {
   mockUpdateOrganizationError()
 
-  return <OrganizationUpdateCell />
+  return <OrganizationDetailCell />
 }
