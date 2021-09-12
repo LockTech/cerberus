@@ -367,6 +367,14 @@
         "title": "Role Details"
       }
     },
+    "Permission": {
+      "Cell": {
+        "Loading": "Loading your role's permissions.",
+        "Success": {
+          "title": "Permissions"
+        }
+      }
+    },
     "Update": {
       "Card": {
         "title": "{{ name }}",
@@ -379,7 +387,7 @@
           },
           "color": {
             "label": "Color",
-            "hint": "Colors along the center of the Y-axis tend to show up better on both a light and dark color scheme.",
+            "hint": "Colors along the center of the Y-axis tend to show up better on both the light and dark color schemes.",
             "preview": "Color Preview"
           },
           "submit": "Update"
