@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 import DangerCard from 'src/components/Card/DangerCard'
 
-const OrganizationSettingsDangerCard = () => {
+const OrganizationDangerCard = () => {
   const { t } = useTranslation()
 
   return (
@@ -24,4 +24,4 @@ const OrganizationSettingsDangerCard = () => {
   )
 }
 
-export default OrganizationSettingsDangerCard
+export default OrganizationDangerCard

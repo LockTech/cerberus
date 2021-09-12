@@ -1,12 +1,12 @@
 import type { Meta, Story } from '@storybook/react'
 
-import OrganizationSettingsDangerCard from './OrganizationSettingsDangerCard'
+import OrganizationDangerCard from './OrganizationDangerCard'
 
 export default {
-  component: OrganizationSettingsDangerCard,
+  component: OrganizationDangerCard,
   title: 'Components/Organization/DangerCard',
 } as Meta
 
 export const Default: Story = (props) => (
-  <OrganizationSettingsDangerCard {...props} />
+  <OrganizationDangerCard {...props} />
 )
