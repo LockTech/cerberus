@@ -17,10 +17,9 @@ export const returnFunctionSuccess = (res: unknown): ProxyResult => ({
 })
 
 /**
- * Convert an `Error` into a response which can be returned by serverless functions.
+ * Create a `ProxyResult` using an `Error` to be used as the return value of a serverless function.
  *
  * Takes care of adding `headers` and an appropriate (500) `statusCode` to the response.
- * The given `Error` will be used to fill-out the response's body.
  *
  * @param err The `Error` to be used as the `body` of the response
  * @returns `ProxyResult`
