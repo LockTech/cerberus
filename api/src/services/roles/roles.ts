@@ -336,6 +336,7 @@ export interface AddPermToRoleArgs {
 /**
  * @throws
  *  * 'role-add-permission' - When an error occurs adding a permission to a role.
+ *  * 'role-add-permission-duplicate' - When the given role has already been assigned the given permission.
  */
 export const addPermToRole = async ({
   permissionId,
@@ -343,17 +344,20 @@ export const addPermToRole = async ({
 }: AddPermToRoleArgs) => {
   logger.trace({ permissionId, roleId }, 'Adding permission to role.')
 
+  const role = await db.role.findFirst({
+    where: { id: roleId, permissions: { some: { id: permissionId } } },
+  })
+  if (role) throw new ValidationError('role-add-permission-duplicate')
+
   const permission = await getPermission({ id: permissionId })
   const { namespace, object, relation } = permission
+
   const tuple = KetoBuildPermissionTuple({
     namespace,
     object,
     relation,
     roleId,
   })
-
-  logger.debug({ tuple }, 'Writing tuple to Keto.')
-
   await writeTuple(tuple)
 
   let res: Role
@@ -391,8 +395,14 @@ export const addRoleToAccount = async ({
   accountId,
   roleId,
 }: AddRoleToAccountArgs) => {
-  const tuple = KetoBuildAccountRoleTuple(accountId, roleId)
+  logger.trace({ accountId, roleId }, 'Deleting role from account.')
 
+  const role = await db.role.findFirst({
+    where: { id: roleId, accounts: { some: { id: accountId } } },
+  })
+  if (role) throw new ValidationError('role-add-account-duplicate')
+
+  const tuple = KetoBuildAccountRoleTuple(accountId, roleId)
   await writeTuple(tuple)
 
   let res: Role
@@ -413,6 +423,8 @@ export const addRoleToAccount = async ({
     throw new UserInputError('role-add-account')
   }
 
+  logger.info({ res }, 'Deleted role from account.')
+
   return res
 }
 
@@ -428,19 +440,17 @@ export const delPermFromRole = async ({
   permissionId,
   roleId,
 }: DelPermFromRoleArgs) => {
-  logger.debug({ permissionId, roleId }, 'Deleting permission from role.')
+  logger.trace({ permissionId, roleId }, 'Deleting permission from role.')
 
   const permission = await getPermission({ id: permissionId })
   const { namespace, object, relation } = permission
+
   const tuple = KetoBuildPermissionTuple({
     namespace,
     object,
     relation,
     roleId,
   })
-
-  logger.debug({ tuple }, 'Deleting tuple from Keto.')
-
   await deleteTuple(tuple)
 
   let res: Role
@@ -461,6 +471,8 @@ export const delPermFromRole = async ({
     throw new UserInputError('role-delete-permission')
   }
 
+  logger.trace({ res }, 'Deleted permission from role.')
+
   return res
 }
 
@@ -476,8 +488,9 @@ export const delRoleFromAccount = async ({
   accountId,
   roleId,
 }: DelRoleFromAccountArgs) => {
-  const tuple = KetoBuildAccountRoleTuple(accountId, roleId)
+  logger.trace({ accountId, roleId }, 'Deleting role from account.')
 
+  const tuple = KetoBuildAccountRoleTuple(accountId, roleId)
   await deleteTuple(tuple)
 
   let res: Role
@@ -497,6 +510,8 @@ export const delRoleFromAccount = async ({
     prismaLogger.error({ err }, 'Error removing role from account.')
     throw new UserInputError('role-delete-account')
   }
+
+  logger.info({ res }, 'Deleted role from account.')
 
   return res
 }
