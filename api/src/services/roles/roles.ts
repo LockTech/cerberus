@@ -1,11 +1,16 @@
 import type { Role } from '@prisma/client'
-import { BeforeResolverSpecType, UserInputError } from '@redwoodjs/api'
+import {
+  BeforeResolverSpecType,
+  ValidationError,
+  UserInputError,
+} from '@redwoodjs/api'
 
 import {
   KetoBuildAccountRoleTuple,
   KetoBuildOrgRoleTuple,
   KetoBuildPermissionTuple,
 } from 'src/constants/keto'
+import { CerberusAdminTuple } from 'src/constants/permission'
 
 import { deleteTuple, writeTuple } from 'src/helpers/keto'
 
@@ -161,8 +166,27 @@ export interface DeleteRoleArgs {
 /**
  * @throws
  *  * 'role-delete' - When an error occurs deleting the role from the DB.
+ *  * 'role-delete-admin' - When attempting to delete a role with Cerberus' 'Administrator' permission.
  */
 export const deleteRole = async ({ id }: DeleteRoleArgs) => {
+  logger.trace({ id }, 'Deleting role.')
+
+  const adminPerm = await db.permission.findUnique({
+    where: { application_namespace_object_relation: CerberusAdminTuple },
+  })
+  const isAdmin = await db.role.findFirst({
+    where: {
+      id,
+      permissions: {
+        some: {
+          id: adminPerm.id,
+        },
+      },
+    },
+  })
+
+  if (isAdmin !== null) throw new ValidationError('role-delete-admin')
+
   let res: Role
 
   let roleRelations: {
@@ -203,17 +227,23 @@ export const deleteRole = async ({ id }: DeleteRoleArgs) => {
   roleRelations.permissions.forEach(async (perm) => {
     const tuple = KetoBuildPermissionTuple({ ...perm, roleId: id })
 
+    logger.debug({ tuple }, 'Deleting Keto permission-role tuple.')
+
     await deleteTuple(tuple)
   })
   roleRelations.accounts.forEach(async (account) => {
     const tuple = KetoBuildAccountRoleTuple(account.id, id)
 
+    logger.debug({ tuple }, 'Deleting Keto account-role tuple.')
+
     await deleteTuple(tuple)
   })
 
   const organizationId = getContextUser().organizationId
-
   const tuple = KetoBuildOrgRoleTuple(organizationId, id)
+
+  logger.debug({ tuple }, 'Deleting Keto organization-role tuple.')
+
   await deleteTuple(tuple)
 
   try {
@@ -222,6 +252,8 @@ export const deleteRole = async ({ id }: DeleteRoleArgs) => {
     prismaLogger.error({ err }, 'Error deleting role.')
     throw new UserInputError('role-delete')
   }
+
+  logger.info({ res }, 'Deleted role.')
 
   return res
 }
@@ -309,7 +341,7 @@ export const addPermToRole = async ({
   permissionId,
   roleId,
 }: AddPermToRoleArgs) => {
-  logger.debug({ permissionId, roleId }, 'Adding permission to role.')
+  logger.trace({ permissionId, roleId }, 'Adding permission to role.')
 
   const permission = await getPermission({ id: permissionId })
   const { namespace, object, relation } = permission
@@ -341,6 +373,8 @@ export const addPermToRole = async ({
     prismaLogger.error({ err }, 'Error adding permission to role.')
     throw new UserInputError('role-add-permission')
   }
+
+  logger.info({ res }, 'Added permission to role.')
 
   return res
 }
