@@ -53,10 +53,10 @@ html, body, #redwood-app {
   }
   .modal-wrapper {
     @apply absolute inset-0 z-10;
-    @apply max-w-xl mx-auto m-6 pointer-events-none;
+    @apply max-w-xl mx-auto pointer-events-none;
   }
   .modal-wrapper > * {
-    @apply pointer-events-auto;
+    @apply pointer-events-auto m-6;
   }
   .page-layout {
     @apply space-y-8;
