@@ -27,7 +27,7 @@
 .sidebar .title-group h1 {
   /* @apply text-primary-600; */
   @apply text-primary-200;
-  @apply font-semibold text-2xl;
+  @apply font-semibold text-2xl tracking-wider;
 }
 .sidebar .title-group p {
   @apply text-gray-200;
