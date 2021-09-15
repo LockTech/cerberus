@@ -6,11 +6,12 @@
   @apply text-left;
   @apply duration-200 ease-in-out transition;
   @apply flex flex-row items-center;
-  @apply outline-none p-4;
+  @apply outline-none p-4 space-x-6;
   @apply h-auto w-full;
 }
 
 .applicationPermission-button .icon {
-  @apply text-gray-600 dark:text-gray-300 h-5 w-5;
+  @apply text-gray-600 dark:text-gray-300;
   @apply duration-200 ease-in-out transform transition-transform;
+  @apply h-6 w-6;
 }
