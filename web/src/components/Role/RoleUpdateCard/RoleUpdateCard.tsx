@@ -82,7 +82,7 @@ const RoleUpdateCard = ({ role: { color, id, name } }: RoleUpdateCardProps) => {
   return (
     <div className="card body">
       <div className="space-y-1">
-        <h2 className="text title">{t('Role.Update.Card.title', { name })}</h2>
+        <h2 className="text title">{t('Role.Update.Card.title')}</h2>
         <p className="muted hint">{t('Role.Update.Card.subtitle', { name })}</p>
       </div>
       <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
