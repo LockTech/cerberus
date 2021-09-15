@@ -46,10 +46,10 @@ const ApplicationPermissions = ({
             </div>
           </Disclosure.Button>
           <Transition
-            enter="duration-300 ease-out origin-top transform transition"
+            enter="duration-300 ease-out origin-top transform transition-opacity"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="duration-100 ease-out origin-top transform transition"
+            leave="duration-100 ease-out origin-top transform transition-opacity"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
