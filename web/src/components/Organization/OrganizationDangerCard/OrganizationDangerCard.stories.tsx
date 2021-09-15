@@ -7,6 +7,4 @@ export default {
   title: 'Components/Organization/DangerCard',
 } as Meta
 
-export const Default: Story = (props) => (
-  <OrganizationDangerCard {...props} />
-)
+export const Default: Story = (props) => <OrganizationDangerCard {...props} />

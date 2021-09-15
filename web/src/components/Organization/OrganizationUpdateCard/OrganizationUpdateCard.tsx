@@ -28,7 +28,9 @@ export type OrganizationUpdateCardProps = {
   organization: OrganizationDetailQuery['organization']
 }
 
-const OrganizationUpdateCard = ({ organization: { name } }: OrganizationUpdateCardProps) => {
+const OrganizationUpdateCard = ({
+  organization: { name },
+}: OrganizationUpdateCardProps) => {
   const formMethods = useForm<OrganizationUpdateFormData>({
     defaultValues: { name },
     mode: 'onSubmit',
@@ -41,50 +43,32 @@ const OrganizationUpdateCard = ({ organization: { name } }: OrganizationUpdateCa
 
   const { reauthenticate } = useAuth()
 
-  const onCompleted = useCallback(
-    async ({ name }) => {
-      await reauthenticate()
-      reset({ name })
-
-      toast.dismiss()
-      toast.success(t('Organization.Update.Cell.Success.update.success'))
-    },
-    [reauthenticate, reset, t]
-  )
-  const onError = useCallback(
-    (err: Error) => {
-      toast.dismiss()
-      toast.error(et(err))
-    },
-    [et]
-  )
-  const [mutate, { loading }] = useMutation(
-    MUTATION,
-    {
-      onCompleted,
-      onError,
-      refetchQueries: [{ query: QUERY }],
-    }
-  )
+  const [mutate, { loading }] = useMutation(MUTATION, {
+    refetchQueries: [{ query: QUERY }],
+  })
 
   const onSubmit = useCallback(
     (variables: OrganizationUpdateFormData) => {
       if (loading) return
 
-      mutate({ variables })
+      reset(variables)
+
+      reauthenticate()
+
+      toast.promise(mutate({ variables }), {
+        loading: t('Organization.Update.Card.update.loading'),
+        success: t('Organization.Update.Card.update.success'),
+        error: (err) => et(err),
+      })
     },
-    [loading, mutate]
+    [et, loading, mutate, t, reauthenticate, reset]
   )
 
   return (
     <div className="card body">
       <header className="space-y-1">
-        <h2 className="text title">
-          {t('Organization.Update.Cell.Success.title')}
-        </h2>
-        <p className="muted hint">
-          {t('Organization.Update.Cell.Success.subtitle')}
-        </p>
+        <h2 className="text title">{t('Organization.Update.Card.title')}</h2>
+        <p className="muted hint">{t('Organization.Update.Card.subtitle')}</p>
       </header>
       <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
         <div className="input-group floating">
@@ -94,20 +78,16 @@ const OrganizationUpdateCard = ({ organization: { name } }: OrganizationUpdateCa
             defaultValue={name}
             errorClassName="input input-error"
             name="name"
-            placeholder={t(
-              'Organization.Update.Cell.Success.form.name.placeholder'
-            )}
+            placeholder={t('Organization.Update.Card.form.name.placeholder')}
             validation={{
               required: {
                 value: true,
-                message: t(
-                  'Organization.Update.Cell.Success.form.name.required'
-                ),
+                message: t('Organization.Update.Card.form.name.required'),
               },
             }}
           />
           <Label className="input-label" name="name">
-            {t('Organization.Update.Cell.Success.form.name.label')}
+            {t('Organization.Update.Card.form.name.label')}
           </Label>
           <FieldError className="input-error" name="name" />
         </div>
@@ -115,7 +95,7 @@ const OrganizationUpdateCard = ({ organization: { name } }: OrganizationUpdateCa
           className="btn btn-primary form-button"
           disabled={!isDirty || loading}
         >
-          {t('Organization.Update.Cell.Success.form.submit')}
+          {t('Organization.Update.Card.form.submit')}
         </Submit>
       </Form>
     </div>

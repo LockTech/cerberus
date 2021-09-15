@@ -4,14 +4,15 @@ import type { Meta } from '@storybook/react'
 import OrganizationDetailCell from './OrganizationDetailCell'
 import { Failure, Loading, Success } from './OrganizationDetailCell'
 import {
-  mockUpdateOrganization,
-  mockUpdateOrganizationError,
+  mockOrganizationDetail,
+  mockOrganizationDetailError,
   standard,
 } from './OrganizationDetailCell.mock'
 
 export default {
+  component: OrganizationDetailCell,
   subcomponents: { Failure, Loading, Success },
-  title: 'Cells/Organization/Update',
+  title: 'Cells/Organization/Detail',
 } as Meta
 
 export const failure = () => <Failure error={new Error('organization-read')} />
@@ -21,13 +22,13 @@ export const loading = () => <Loading />
 export const success = () => <Success {...standard} />
 
 export const mockedSuccess = () => {
-  mockUpdateOrganization()
+  mockOrganizationDetail()
 
   return <OrganizationDetailCell />
 }
 
 export const mockedFailure = () => {
-  mockUpdateOrganizationError()
+  mockOrganizationDetailError()
 
   return <OrganizationDetailCell />
 }
