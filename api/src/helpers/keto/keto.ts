@@ -13,7 +13,7 @@ import { fetch } from 'src/util/fetch'
  *  * 'keto-tuple-write' - When an error occurs writing the relation tuple to the configured Keto instance.
  */
 export const writeTuple = async (tuple: KetoRelationTuple) => {
-  logger.debug({ tuple }, 'Writing Keto relation tuple.')
+  logger.trace({ tuple }, 'Writing Keto relation tuple.')
 
   let res: KetoRelationTuple
 
@@ -35,7 +35,7 @@ interface CheckTupleResult {
  *  * 'keto-tuple-check' - When an error occurs checking the relation tuple using the configured Keto instance.
  */
 export const checkTuple = async (tuple: KetoRelationTuple) => {
-  logger.debug({ tuple }, 'Checking Keto relation tuple.')
+  logger.trace({ tuple }, 'Checking Keto relation tuple.')
 
   let res: CheckTupleResult
 
@@ -86,7 +86,7 @@ export const deleteTuple = async ({
 
   const url = `${DeleteURL}?namespace=${namespace}&object=${object}&relation=${relation}&subject=${subject}`
 
-  logger.debug({ url }, 'Deleting Keto relation tuple.')
+  logger.trace({ url }, 'Deleting Keto relation tuple.')
 
   let res: null
 
