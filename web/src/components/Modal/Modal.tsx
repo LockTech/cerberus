@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
@@ -37,11 +37,14 @@ const Modal: ModalType = ({
   onClose,
   open,
 }: ModalProps) => {
+  const [scrollPos, setScrollPos] = useState<number>()
+
   useEffect(() => {
     if (open) {
+      setScrollPos(window.scrollY)
       window.scrollTo({ top: 0 })
-    }
-  }, [open])
+    } else if (scrollPos) window.scrollTo({ top: scrollPos })
+  }, [open, scrollPos, setScrollPos])
 
   return (
     <Transition as={React.Fragment} show={open}>
