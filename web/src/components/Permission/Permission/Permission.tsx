@@ -39,7 +39,7 @@ export type PermissionProps = {
 
 const Permission = ({
   permission: { application, id: permissionId, namespace, object, relation },
-  role: { id: roleId, permissions },
+  role: { id: roleId, name: roleName, permissions },
 }: PermissionProps) => {
   const [active, setActive] = useState(false)
 
@@ -56,7 +56,7 @@ const Permission = ({
   })
 
   const onChange = useCallback(
-    (state: boolean) => {
+    async (state: boolean) => {
       state &&
         toast.promise(add(), {
           loading: t('Permission.add.loading'),
@@ -73,10 +73,10 @@ const Permission = ({
             setActive(state)
             return t('Permission.del.success')
           },
-          error: (err) => et(err),
+          error: (err) => et(err, { roleName }),
         })
     },
-    [add, del, et, t]
+    [add, del, et, roleName, t]
   )
 
   const translationKey = `permissions:${application}.${namespace}#${object}#${relation}`
