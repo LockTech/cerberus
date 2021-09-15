@@ -11,7 +11,11 @@
 }
 
 .applicationPermission-button .icon {
-  @apply text-gray-600 dark:text-gray-300;
-  @apply duration-200 ease-in-out transform transition-transform;
-  @apply h-6 w-6;
+  @apply text-gray-400 dark:text-gray-300;
+  @apply duration-200 ease-in-out transform transition;
+  @apply h-[20px] w-[20px];
+}
+.applicationPermission-button .icon.active {
+  @apply text-gray-900 dark:text-gray-50;
+  @apply rotate-90;
 }
