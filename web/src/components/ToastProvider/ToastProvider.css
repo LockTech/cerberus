@@ -1,7 +1,7 @@
 .toast {
   @apply card;
   @apply flex flex-row items-center;
-  @apply px-3 py-2 space-x-2;
+  @apply px-3 py-2 space-x-3;
   @apply w-full sm:w-auto;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .toast-icon {
-  @apply h-[26px] w-[26px];
+  @apply h-[20px] w-[20px];
 }
 
 .toast-error-icon {
