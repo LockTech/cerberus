@@ -17,9 +17,9 @@ const App = () => {
     <FatalErrorBoundary page={FatalErrorPage}>
       <RedwoodProvider>
         <RecoilRoot>
+          <ToastProvider />
           <AuthProvider type="dbAuth">
             <RedwoodApolloProvider>
-              <ToastProvider />
               <Routes />
             </RedwoodApolloProvider>
           </AuthProvider>
