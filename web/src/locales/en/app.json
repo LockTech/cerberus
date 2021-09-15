@@ -336,8 +336,7 @@
         "action": "Delete",
         "title": "Role Deletion",
         "subtitle": "Are you sure you want to delete this role from your organization?",
-        "accounts": "Deleting this role will remove it from all accounts.",
-        "permissions": "This will also remove all permissions any of these accounts have as a result of being assigned this role.",
+        "accounts": "Deleting this role will remove it from any assigned accounts. The permissions assigned to this role will also be removed from those accounts.",
         "undone": "Once deleted, there is no way to recover a role.",
         "form": {
           "delete": "Delete",
