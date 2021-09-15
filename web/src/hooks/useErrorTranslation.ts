@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { UseTranslationOptions } from 'react-i18next'
 
 /**
  * Wrapper around i18next's `useTranslation` hook.
@@ -18,12 +19,17 @@ import { useTranslation } from 'react-i18next'
  *  return <p>{t(apiError)}</p>
  * }
  */
-export const useErrorTranslation = () => {
-  const { t: _t, ...rest } = useTranslation()
+export const useErrorTranslation = (
+  ns?: string,
+  options?: UseTranslationOptions
+) => {
+  const { t: _t, ...rest } = useTranslation(ns, options)
 
   const et = useCallback(
-    ({ message }: Error | { message: string }) =>
-      _t(`errors:${message}`, message),
+    (
+      { message }: Error | { message: string },
+      options?: Record<string, unknown>
+    ) => _t(`errors:${message}`, { defaultValue: message, ...options }),
     [_t]
   )
 
