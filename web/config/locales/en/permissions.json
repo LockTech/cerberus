@@ -1,0 +1,14 @@
+{
+  "cerberus": {
+    "title": "Cerberus",
+    "subtitle": "A platform for managing accounts and their permissions.",
+    "cerberus_admins##is": {
+      "title": "Administrator",
+      "summary": "Provides full access to manage your organization's members, roles, and their permissions."
+    },
+    "cerberus_admins##storybook": {
+      "title": "Test",
+      "summary": "This is a test permission which doesn't actually provide anything."
+    }
+  }
+}
