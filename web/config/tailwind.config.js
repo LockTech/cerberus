@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'spin-physics': 'spin 1.5s cubic-bezier(.8, .25, .2, .75) infinite',
+        'spin-physics': 'spin 1.5s cubic-bezier(.75, .25, .25, .75) infinite',
       },
       colors: {
         green: colors.emerald,
