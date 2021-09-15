@@ -1,0 +1,16 @@
+.applicationPermission-button {
+  @apply focus:ring focus:ring-offset-1 focus:ring-primary-400;
+  @apply focus:ring-offset-gray-50 dark:focus:ring-offset-gray-900;
+  @apply bg-transparent hover:bg-gray-50 active:bg-gray-100;
+  @apply dark:hover:bg-gray-700 dark:active:bg-gray-600;
+  @apply text-left;
+  @apply duration-200 ease-in-out transition;
+  @apply flex flex-row items-center;
+  @apply outline-none p-4;
+  @apply h-auto w-full;
+}
+
+.applicationPermission-button .icon {
+  @apply text-gray-600 dark:text-gray-300 h-5 w-5;
+  @apply duration-200 ease-in-out transform transition-transform;
+}
