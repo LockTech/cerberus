@@ -1,8 +1,12 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useParams } from '@redwoodjs/router'
 
 import BrandBanner from 'src/components/BrandBanner'
 
 import { BrandURL, PrivacyURL, SupportURL } from 'src/constants/variables'
+
+import { useAuth } from 'src/hooks/useAuth'
 
 type AuthLayoutProps = {
   children: React.ReactNode
@@ -10,6 +14,15 @@ type AuthLayoutProps = {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   const { t } = useTranslation()
+
+  const { redirectTo } = useParams()
+
+  const { currentUser } = useAuth()
+
+  useEffect(() => {
+    if (currentUser?.id) window.location.href = !redirectTo ? '/' : redirectTo
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser, redirectTo])
 
   return (
     <div className="max-w-md m-auto px-6 sm:px-0 py-6 space-y-6">
