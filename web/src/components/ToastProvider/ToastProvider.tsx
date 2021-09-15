@@ -6,6 +6,7 @@ import type { Toast } from '@redwoodjs/web/toast'
 import LoadingSpinner from 'src/components/LoadingSpinner'
 
 import './ToastProvider.css'
+import { useScreenWidth } from 'src/hooks/useScreenWidth'
 
 const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
   switch (type) {
@@ -27,11 +28,13 @@ const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
 }
 
 const ToastProvider = () => {
+  const screenWidth = useScreenWidth()
+
   return (
     <Toaster
       toastOptions={{
         duration: 4000,
-        position: 'bottom-right',
+        position: screenWidth >= 640 ? 'top-center' : 'bottom-center',
         loading: {
           duration: 1000000,
         },
@@ -42,10 +45,10 @@ const ToastProvider = () => {
           appear={true}
           as="div"
           className="toast"
-          enter="duration-300 ease-in-out origin-bottom sm:origin-right transition transform"
+          enter="duration-300 ease-in-out origin-bottom sm:origin-top transition transform"
           enterFrom="opacity-0 scale-90"
           enterTo="opacity-100 scale-100"
-          leave="duration-500 ease-in-out origin-bottom sm:origin-right transition transform"
+          leave="duration-300 ease-in-out origin-bottom sm:origin-top transition transform"
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-[.8]"
           show={t.visible}
