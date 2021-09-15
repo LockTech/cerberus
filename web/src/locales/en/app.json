@@ -165,8 +165,8 @@
   },
   "Danger": {
     "Card": {
-      "title": "Danger",
-      "subtitle": "Take caution when making use of the following features."
+      "title": "Caution",
+      "subtitle": "Take care when making use of the following features."
     }
   },
   "FailureCard": {
