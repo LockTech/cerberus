@@ -123,20 +123,12 @@ const RoleUpdateCard = ({ role: { color, id, name } }: RoleUpdateCardProps) => {
             {t('Role.Update.Card.form.color.hint')}
           </Label>
           <FieldError className="input-error" name="color" />
-          <div className="flex flex-row mt-6 self-center space-x-12">
+          <div className="flex flex-col md:flex-row items-center mt-6 self-center space-x-0 md:space-x-12 space-y-4 md:space-y-0">
             <div className="bg-white px-6 py-4 rounded-md">
-              <RoleBadge
-                className="self-center"
-                color={currentColor}
-                name={currentName}
-              />
+              <RoleBadge color={currentColor} name={currentName} />
             </div>
             <div className="dark bg-gray-800 px-6 py-4 rounded-md">
-              <RoleBadge
-                className="self-center"
-                color={currentColor}
-                name={currentName}
-              />
+              <RoleBadge color={currentColor} name={currentName} />
             </div>
           </div>
         </div>
