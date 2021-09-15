@@ -77,7 +77,7 @@
         "Loading": "Loading the member's role details.",
         "Success": {
           "title": "Roles",
-          "subtitle": "Click or tap a role to add or remove it from this account.",
+          "subtitle": "Interact with a role to add or remove it from this account.",
           "roles": {
             "title": "Available Roles",
             "subtitle": "All of your organization's roles which are not assigned to this account."
@@ -99,12 +99,12 @@
     },
     "Update": {
       "Card": {
-        "title": "{{ name }}",
-        "subtitle": "Update this member's account details.",
+        "title": "Details",
+        "subtitle": "Update {{ name, pluralPossessive }} email, name, and/or disable their account.",
         "form": {
           "disabled": {
-            "label": "Disable Account",
-            "hint": "Disable this account's ability to login, preventing its member from making use of it."
+            "label": "Disable",
+            "hint": "Prevent this account from being able to login."
           },
           "email": {
             "label": "E-Mail Address",
@@ -304,6 +304,16 @@
       }
     }
   },
+  "Permission": {
+    "add": {
+      "loading": "Adding permission to role.",
+      "success": "Added permission to role."
+    },
+    "del": {
+      "loading": "Removing permission from role.",
+      "success": "Removed permission from role."
+    }
+  },
   "Role": {
     "Create": {
       "Modal": {
@@ -382,14 +392,14 @@
         "Loading": "Loading your role's permissions.",
         "Success": {
           "title": "Permissions",
-          "subtitle": "Click a permission or its toggle to assign or remove that permission from this role."
+          "subtitle": "Interact with an application to toggle its permissions' visibility. Permissions can then be assigned and removed from the {{ name }} role."
         }
       }
     },
     "Update": {
       "Card": {
-        "title": "{{ name }}",
-        "subtitle": "Update the {{ name }} role's details.",
+        "title": "Details",
+        "subtitle": "Update the {{ name }} role's name and/or color.",
         "form": {
           "name": {
             "label": "Role Name",
