@@ -110,10 +110,10 @@ const AccountUpdateCard = ({
   return (
     <div className="card body">
       <header className="space-y-1">
-        <h2 className="text title">
-          {t('Account.Update.Card.title', { name })}
-        </h2>
-        <p className="muted hint">{t('Account.Update.Card.subtitle')}</p>
+        <h2 className="text title">{t('Account.Update.Card.title')}</h2>
+        <p className="muted hint">
+          {t('Account.Update.Card.subtitle', { name })}
+        </p>
       </header>
       <Form className="form" formMethods={formMethods} onSubmit={onSubmit}>
         {/* email */}
