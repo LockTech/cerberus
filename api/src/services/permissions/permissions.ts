@@ -22,8 +22,9 @@ import { deleteTuple } from 'src/helpers/keto'
 // const valGetPermissionTuple = (s: string, { tuple }) => tuple && validatePermissionTuple(s, tuple)
 
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { only: ['createPermission', 'deletePermission', 'permission'] })
-  rules.add(validateAuth)
+  rules.add(reject, { only: ['createPermission', 'deletePermission', 'permission', 'permissions'] })
+  // rules.add(validateAuth)
+  rules.skip({ only: ['applicationPermissions'] })
 }
 /* eslint-enable prettier/prettier */
 
@@ -101,6 +102,36 @@ export const permissions = async () => {
     prismaLogger.error({ err }, 'Error getting permissions.')
     throw new UserInputError('permissions-read')
   }
+
+  return res
+}
+
+export const applicationPermissions = async () => {
+  let permissions: Permission[]
+
+  try {
+    permissions = await db.permission.findMany()
+  } catch (err) {
+    prismaLogger.error({ err }, 'Error getting application permissions.')
+    throw new UserInputError('permissions-read')
+  }
+
+  const appPermList: Record<string, Permission[]> = {}
+
+  permissions.forEach((permission) => {
+    const application = permission.application
+    if (!Array.isArray(appPermList[application])) appPermList[application] = []
+    appPermList[application].push(permission)
+  })
+
+  const res = []
+
+  Object.keys(appPermList).forEach((application) => {
+    res.push({
+      application,
+      permissions: appPermList[application]
+    })
+  })
 
   return res
 }

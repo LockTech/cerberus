@@ -9,7 +9,12 @@ export const schema = gql`
     updated_at: DateTime!
   }
 
-  type Query {
+  type ApplicationPermissions {
+    application: String!
     permissions: [Permission!]!
+  }
+
+  type Query {
+    applicationPermissions: [ApplicationPermissions!]!
   }
 `
