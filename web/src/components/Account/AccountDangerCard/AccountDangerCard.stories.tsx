@@ -12,5 +12,9 @@ export const Default: Story<AccountDangerCardProps> = (props) => (
   <AccountDangerCard {...props} />
 )
 Default.args = {
-  name: 'John Doe',
+  account: {
+    email: null,
+    id: '1',
+    name: 'John Doe',
+  },
 }

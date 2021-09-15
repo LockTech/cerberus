@@ -16,6 +16,7 @@ import './AccountDetailCell.css'
 export const QUERY = gql`
   query AccountDetailQuery($id: ID!) {
     account(id: $id) {
+      disabled
       email
       id
       name

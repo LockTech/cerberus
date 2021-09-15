@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from '@apollo/client'
+import { navigate, routes } from '@redwoodjs/router'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Account/AccountListCell'
@@ -11,10 +12,9 @@ import UndoneNotice from 'src/components/UndoneNotice'
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
 import { Account } from 'types/graphql'
-import { navigate, routes } from '@redwoodjs/router'
 
 export const MUTATION = gql`
-  mutation DeleteAccountMutation($id: ID!) {
+  mutation AccountDeleteMutation($id: ID!) {
     account: deleteAccount(id: $id) {
       name
     }
@@ -46,12 +46,13 @@ const AccountDeleteModal = ({ id }: AccountDeleteModalProps) => {
     toast.promise(mutate(), {
       loading: t('Account.Delete.Modal.delete.loading'),
       success: ({ data: { account } }) => {
+        setOpen(false)
         navigate(routes.listAccounts())
         return t('Account.Delete.Modal.delete.success', account)
       },
       error: (err: Error) => et(err),
     })
-  }, [et, mutate, t])
+  }, [et, mutate, setOpen, t])
 
   return (
     <>

@@ -1,6 +1,8 @@
+import clsx from 'clsx'
 import { useCallback } from 'react'
-import { useForm } from 'react-hook-form'
+import { useController, useForm } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
+import { Switch } from '@headlessui/react'
 import { FieldError, Form, Label, TextField, Submit } from '@redwoodjs/forms'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -13,8 +15,19 @@ import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 import type { AccountDetailQuery } from 'types/graphql'
 
 export const MUTATION = gql`
-  mutation AccountUpdateMutation($id: ID!, $email: String, $name: String) {
-    account: updateAccount(id: $id, email: $email, name: $name) {
+  mutation AccountUpdateMutation(
+    $id: ID!
+    $disabled: Boolean
+    $email: String
+    $name: String
+  ) {
+    account: updateAccount(
+      id: $id
+      disabled: $disabled
+      email: $email
+      name: $name
+    ) {
+      disabled
       email
       name
     }
@@ -22,6 +35,7 @@ export const MUTATION = gql`
 `
 
 interface UpdateAccountFormData {
+  disabled: boolean
   email: string
   name: string
 }
@@ -31,17 +45,22 @@ export type AccountUpdateCardProps = {
 }
 
 const AccountUpdateCard = ({
-  account: { email, id, name },
+  account: { disabled, email, id, name },
 }: AccountUpdateCardProps) => {
   const formMethods = useForm({
     mode: 'onSubmit',
     defaultValues: {
+      disabled,
       email,
       name,
     },
   })
-  const { reset } = formMethods
+  const { control, reset } = formMethods
   const { dirtyFields, isDirty } = formMethods.formState
+
+  const {
+    field: { onChange: onChangeDisabled, value: disabledValue },
+  } = useController({ control, name: 'disabled' })
 
   const { t } = useTranslation()
   const { et } = useErrorTranslation()
@@ -137,6 +156,25 @@ const AccountUpdateCard = ({
           </Label>
           <FieldError className="input-error" name="name" />
         </div>
+        {/* disabled */}
+        <Switch.Group as="div" className="input-group">
+          <Switch.Label as={Label} className="input-label" name="disabled">
+            {t('Account.Update.Card.form.disabled.label')}
+          </Switch.Label>
+          <Switch
+            checked={disabledValue}
+            className={clsx(
+              'switch-track',
+              disabledValue && 'switch-track-active'
+            )}
+            onChange={onChangeDisabled}
+          >
+            <span aria-disabled="true" className="switch-thumb" />
+          </Switch>
+          <Switch.Label as={Label} className="input-hint" name="disabled">
+            {t('Account.Update.Card.form.disabled.hint')}
+          </Switch.Label>
+        </Switch.Group>
         <Submit
           className="btn btn-primary form-button"
           disabled={!isDirty || loading}

@@ -6,6 +6,7 @@ export const standard = {
       name: 'John Doe',
       lastLoginAt: '2021-08-06T01:28:30+0000',
       verifiedAt: '2021-08-01T02:28:30+0000',
+      roles: [{ color: '#7039a3', id: '1', name: 'Admin' }],
     },
     {
       email: 'jane.doe@example.net',
@@ -13,6 +14,7 @@ export const standard = {
       name: 'Jane Doe',
       lastLoginAt: '2021-08-06T01:28:30+0000',
       verifiedAt: '2021-08-01T02:28:30+0000',
+      roles: [{ color: '#33a199', id: '2', name: 'Mod' }],
     },
     {
       email: 'adumbledorable@example.net',
@@ -20,6 +22,7 @@ export const standard = {
       name: 'Albus Dumbledore',
       lastLoginAt: '2021-08-06T01:28:30+0000',
       verifiedAt: '2021-08-01T02:28:30+0000',
+      roles: [{ color: '#619c30', id: '3', name: 'Helper' }],
     },
     {
       email: 'notsuperman@example.net',
@@ -27,6 +30,7 @@ export const standard = {
       name: 'Clark Kent',
       lastLoginAt: '2021-08-06T01:28:30+0000',
       verifiedAt: '2021-08-01T02:28:30+0000',
+      roles: [{ color: '#33a199', id: '2', name: 'Mod' }],
     },
     {
       email: 'lowodor@example.net',
@@ -34,6 +38,7 @@ export const standard = {
       name: 'Dry Erase Marker',
       lastLoginAt: '2021-08-06T01:28:30+0000',
       verifiedAt: '2021-08-01T02:28:30+0000',
+      roles: [{ color: '#33a199', id: '2', name: 'Mod' }],
     },
   ],
 }

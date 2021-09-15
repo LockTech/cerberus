@@ -32,7 +32,7 @@ export const QUERY = gql`
 `
 
 export const ADD_MUTATION = gql`
-  mutation AddRoleMutation($accountId: ID!, $roleId: ID!) {
+  mutation AccountAddRoleMutation($accountId: ID!, $roleId: ID!) {
     role: addRoleToAccount(accountId: $accountId, roleId: $roleId) {
       id
     }
@@ -40,7 +40,7 @@ export const ADD_MUTATION = gql`
 `
 
 export const DEL_MUTATION = gql`
-  mutation DelRoleMutation($accountId: ID!, $roleId: ID!) {
+  mutation AccountDelRoleMutation($accountId: ID!, $roleId: ID!) {
     role: delRoleFromAccount(accountId: $accountId, roleId: $roleId) {
       id
     }
