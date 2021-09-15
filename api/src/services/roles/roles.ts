@@ -11,7 +11,7 @@ import { deleteTuple, writeTuple } from 'src/helpers/keto'
 
 import { getContextUser } from 'src/lib/context'
 import { db } from 'src/lib/db'
-import { prismaLogger } from 'src/lib/logger'
+import { logger, prismaLogger } from 'src/lib/logger'
 
 import { permission as getPermission } from 'src/services/permissions'
 
@@ -87,7 +87,10 @@ export const role = async ({ id }: RoleArgs) => {
   let res: Role
 
   try {
-    res = await db.role.findFirst({ where: { id, organizationId } })
+    res = await db.role.findFirst({
+      include: { accounts: true, permissions: true },
+      where: { id, organizationId },
+    })
   } catch (err) {
     prismaLogger.error({ err }, 'Error reading role.')
     throw new UserInputError('role-read')
@@ -115,6 +118,7 @@ export const roles = async ({ accountId }: RolesArgs) => {
 
   try {
     res = await db.role.findMany({
+      include: { accounts: true, permissions: true },
       orderBy: { createdAt: 'asc' },
       where: { organizationId, ...accountExclusion },
     })
@@ -305,6 +309,8 @@ export const addPermToRole = async ({
   permissionId,
   roleId,
 }: AddPermToRoleArgs) => {
+  logger.debug({ permissionId, roleId }, 'Adding permission to role.')
+
   const permission = await getPermission({ id: permissionId })
   const { namespace, object, relation } = permission
   const tuple = KetoBuildPermissionTuple({
@@ -313,6 +319,8 @@ export const addPermToRole = async ({
     relation,
     roleId,
   })
+
+  logger.debug({ tuple }, 'Writing tuple to Keto.')
 
   await writeTuple(tuple)
 
@@ -386,6 +394,8 @@ export const delPermFromRole = async ({
   permissionId,
   roleId,
 }: DelPermFromRoleArgs) => {
+  logger.debug({ permissionId, roleId }, 'Deleting permission from role.')
+
   const permission = await getPermission({ id: permissionId })
   const { namespace, object, relation } = permission
   const tuple = KetoBuildPermissionTuple({
@@ -394,6 +404,8 @@ export const delPermFromRole = async ({
     relation,
     roleId,
   })
+
+  logger.debug({ tuple }, 'Deleting tuple from Keto.')
 
   await deleteTuple(tuple)
 
