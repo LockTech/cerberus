@@ -8,6 +8,9 @@ export default {
   title: 'Components/LoadingSpinner',
 } as Meta
 
-export const deafault: Story<LoadingSpinnerProps> = (props) => (
+export const Default: Story<LoadingSpinnerProps> = (props) => (
   <LoadingSpinner {...props} />
 )
+Default.args = {
+  className: 'mx-auto',
+}
