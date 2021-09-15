@@ -1,15 +1,15 @@
 import React from 'react'
-import { HelmetProvider } from 'react-helmet-async'
+import { RedwoodProvider } from '@redwoodjs/web'
 import { RecoilRoot } from 'recoil'
 import { useChannel } from '@storybook/addons'
 
 import '../src/index.css'
-import '../src/i18n'
 
 import ToastProvider from '../src/components/ToastProvider/ToastProvider'
 
 import ColorModeLayout from '../src/layouts/ColorModeLayout/ColorModeLayout'
 
+import './i18n'
 import './styles.css'
 
 export const decorators = [
@@ -27,7 +27,7 @@ export const decorators = [
     const { padding } = context.globals
 
     return (
-      <HelmetProvider>
+      <RedwoodProvider>
         <RecoilRoot>
           <ColorModeLayout>
             <ToastProvider />
@@ -36,7 +36,7 @@ export const decorators = [
             </div>
           </ColorModeLayout>
         </RecoilRoot>
-      </HelmetProvider>
+      </RedwoodProvider>
     )
   },
 ]
