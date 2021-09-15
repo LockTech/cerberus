@@ -53,6 +53,7 @@
   "role-color-invalid": "Recieved an invalid color for your organization's role.",
   "role-create": "Error creating a new role.",
   "role-delete": "Error deleting role.",
+  "role-delete-admin": "A role with Cerberus' \"Administrator\" permission cannot be deleted.",
   "role-delete-permission": "Error removing permission from role.",
   "role-delete-account": "Error removing role from member's account.",
   "role-forbidden": "You do not have access to that role.",
