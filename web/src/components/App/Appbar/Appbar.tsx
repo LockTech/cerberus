@@ -18,14 +18,16 @@ const Appbar = () => {
 
   return (
     <header className="appbar">
-      <button
-        aria-label={t('App.Bar.sidebarToggle')}
-        className="sidebar-toggle"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <MenuIcon className="icon" />
-      </button>
-      {title !== '' && typeof title === 'string' && <h1>{title}</h1>}
+      <div className="appbar-left">
+        <button
+          aria-label={t('App.Bar.sidebarToggle')}
+          className="sidebar-toggle"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          <MenuIcon className="icon" />
+        </button>
+        {title !== '' && typeof title === 'string' && <h1>{title}</h1>}
+      </div>
       <div className="actions">
         <AppMenu />
       </div>
