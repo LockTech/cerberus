@@ -112,7 +112,7 @@ export const Success = ({
           accountName,
           roleName,
         }),
-        error: (err: Error) => et(err),
+        error: (err: Error) => et(err, { accountName, roleName }),
       })
     },
     [account, add, addLoading, delLoading, et, t]
