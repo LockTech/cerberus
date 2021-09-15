@@ -17,6 +17,9 @@ export const QUERY = gql`
       color
       id
       name
+      permissions {
+        id
+      }
     }
   }
 `
@@ -45,7 +48,8 @@ export const Success = ({ role }: CellSuccessProps<RoleDetailQuery>) => {
   return (
     <div className="page-layout">
       <RoleUpdateCard role={role} />
-      <RolePermissionCell />
+      {/* @ts-expect-error Redwood passes props through to state components */}
+      <RolePermissionCell role={role} />
       <RoleDangerCard role={role} />
     </div>
   )
