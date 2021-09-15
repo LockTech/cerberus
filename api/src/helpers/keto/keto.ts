@@ -13,6 +13,8 @@ import { fetch } from 'src/util/fetch'
  *  * 'keto-tuple-write' - When an error occurs writing the relation tuple to the configured Keto instance.
  */
 export const writeTuple = async (tuple: KetoRelationTuple) => {
+  logger.debug({ tuple }, 'Writing Keto relation tuple.')
+
   let res: KetoRelationTuple
 
   try {
@@ -33,21 +35,24 @@ interface CheckTupleResult {
  *  * 'keto-tuple-check' - When an error occurs checking the relation tuple using the configured Keto instance.
  */
 export const checkTuple = async (tuple: KetoRelationTuple) => {
+  logger.debug({ tuple }, 'Checking Keto relation tuple.')
+
   let res: CheckTupleResult
 
   try {
     res = await fetch.POST<CheckTupleResult>(CheckURL, tuple)
   } catch (err) {
     const { response } = err as AxiosError<CheckTupleResult>
-    const { data, status } = response
+    const { status } = response
 
     if (status === 403) {
+      const { data } = response
+
       res = data
       return
     }
 
     logger.error({ err }, 'Keto error checking tuple.')
-
     throw new UserInputError('keto-tuple-check')
   }
 
@@ -74,12 +79,19 @@ export const deleteTuple = async ({
   relation,
   subject,
 }: KetoRelationTuple) => {
+  namespace = encodeURIComponent(namespace)
+  object = encodeURIComponent(object)
+  relation = encodeURIComponent(relation)
+  subject = encodeURIComponent(subject)
+
+  const url = `${DeleteURL}?namespace=${namespace}&object=${object}&relation=${relation}&subject=${subject}`
+
+  logger.debug({ url }, 'Deleting Keto relation tuple.')
+
   let res: null
 
   try {
-    res = await fetch.DELETE(
-      `${DeleteURL}?namespace=${namespace}&object=${object}&relation=${relation}&subject=${subject}`
-    )
+    res = await fetch.DELETE(url)
   } catch (err) {
     logger.error({ err }, 'Keto error deleting tuple.')
     throw new UserInputError('keto-tuple-delete')
