@@ -102,6 +102,10 @@
         "title": "{{ name }}",
         "subtitle": "Update this member's account details.",
         "form": {
+          "disabled": {
+            "label": "Disable Account",
+            "hint": "Disable this account's ability to login, preventing its member from making use of it."
+          },
           "email": {
             "label": "E-Mail Address",
             "required": "An email address is required to update an account."
@@ -257,6 +261,11 @@
     }
   },
   "Organization": {
+    "Detail": {
+      "Cell": {
+        "Loading": "Loading your organization's details."
+      }
+    },
     "Settings": {
       "Danger": {
         "Card": {
@@ -277,23 +286,20 @@
       }
     },
     "Update": {
-      "Cell": {
-        "Loading": "Loading your organization's details.",
-        "Success": {
-          "title": "Details",
-          "subtitle": "Update your organization's general information.",
-          "form": {
-            "name": {
-              "label": "Organization Name",
-              "placeholder": "Example Inc.",
-              "required": "A name is required when updating your organization."
-            },
-            "submit": "Update"
+      "Card": {
+        "title": "Details",
+        "subtitle": "Update your organization's general information.",
+        "form": {
+          "name": {
+            "label": "Organization Name",
+            "placeholder": "Example Inc.",
+            "required": "A name is required when updating your organization."
           },
-          "update": {
-            "loading": "Updating your organization.",
-            "success": "Updated your organization."
-          }
+          "submit": "Update"
+        },
+        "update": {
+          "loading": "Updating your organization.",
+          "success": "Updated your organization."
         }
       }
     }
@@ -343,6 +349,11 @@
         }
       }
     },
+    "Detail": {
+      "Cell": {
+        "Loading": "Loading the role's details."
+      }
+    },
     "List": {
       "Cell": {
         "Loading": "Loading your organization's roles.",
@@ -371,7 +382,8 @@
       "Cell": {
         "Loading": "Loading your role's permissions.",
         "Success": {
-          "title": "Permissions"
+          "title": "Permissions",
+          "subtitle": "Click a permission or its toggle to assign or remove that permission from this role."
         }
       }
     },
@@ -387,8 +399,7 @@
           },
           "color": {
             "label": "Color",
-            "hint": "Colors along the center of the Y-axis tend to show up better on both the light and dark color schemes.",
-            "preview": "Color Preview"
+            "hint": "Colors along the center of the Y-axis tend to show up better on both the light and dark color schemes."
           },
           "submit": "Update"
         },
@@ -396,9 +407,6 @@
           "loading": "Updating your organization's role.",
           "success": "Updated the {{ name }} role."
         }
-      },
-      "Cell": {
-        "Loading": "Loading the role's details."
       }
     }
   },
