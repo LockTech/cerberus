@@ -1,9 +1,10 @@
 {
   "cerberus": {
-    "title": "Cerberus Identity Management",
+    "title": "Cerberus",
+    "subtitle": "An account, role, and permission management platform.",
     "cerberus_admins##is": {
       "title": "Administrator",
-      "summary": "Provides full access to manage your organization's members, roles, and their permissions."
+      "summary": "Provides the ability to manage your organization's members, roles, and their permissions."
     }
   }
 }
