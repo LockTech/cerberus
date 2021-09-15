@@ -1,0 +1,15 @@
+.permission {
+  @apply input-group;
+  @apply flex flex-col-reverse sm:flex-row items-center;
+  @apply my-0 sm:my-2 px-6 py-2 sm:py-4 space-x-0 sm:space-x-10;
+  @apply w-full;
+}
+
+.permission .permission-switch {
+  @apply switch-track;
+  @apply self-end sm:self-auto;
+  @apply mt-4 sm:mt-0;
+}
+.permission .permission-switch.active {
+  @apply switch-track-active;
+}
