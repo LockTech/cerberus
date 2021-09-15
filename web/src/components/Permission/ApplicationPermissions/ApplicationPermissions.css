@@ -1,5 +1,5 @@
 .applicationPermission-button {
-  @apply focus:ring focus:ring-offset-1 focus:ring-primary-400;
+  @apply focus:ring focus:ring-offset-2 focus:ring-primary-400;
   @apply focus:ring-offset-gray-50 dark:focus:ring-offset-gray-900;
   @apply bg-transparent hover:bg-gray-50 active:bg-gray-100;
   @apply dark:hover:bg-gray-700 dark:active:bg-gray-600;
