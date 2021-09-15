@@ -20,7 +20,7 @@ const ApplicationPermissions = ({
   const { t } = useTranslation()
 
   return (
-    <Disclosure as={React.Fragment}>
+    <Disclosure as="div">
       {({ open }) => (
         <>
           <Disclosure.Button className="applicationPermission-button">
@@ -44,7 +44,7 @@ const ApplicationPermissions = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Disclosure.Panel>
+            <Disclosure.Panel className="mb-6">
               {permissions.map((perm) => (
                 <Permission key={perm.id} {...perm} />
               ))}
