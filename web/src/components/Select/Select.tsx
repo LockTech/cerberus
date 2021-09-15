@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useController, useFormContext } from 'react-hook-form'
+import { useController } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Listbox } from '@headlessui/react'
 import { SelectorIcon } from '@heroicons/react/solid'
@@ -30,15 +30,9 @@ export interface SelectProps {
 const Select = ({ defaultValue, name, values }: SelectProps) => {
   const { t } = useTranslation()
 
-  const { control } = useFormContext()
-
   const {
-    field: { ref: _ref, ...rest },
-  } = useController({
-    control,
-    name,
-    defaultValue,
-  })
+    field: { ref: _r, ...rest },
+  } = useController({ name, defaultValue })
 
   return (
     <Listbox as="div" className="select" {...rest}>
