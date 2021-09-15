@@ -7,7 +7,7 @@ import ApplicationPermissions from 'src/components/Permission/ApplicationPermiss
 
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
-import type { RolePermissionQuery } from 'types/graphql'
+import type { RoleDetailQuery, RolePermissionQuery } from 'types/graphql'
 
 export const QUERY = gql`
   query RolePermissionQuery {
@@ -46,7 +46,9 @@ export const Failure = ({ error }: CellFailureProps) => {
 
 export const Success = ({
   applicationPermissions,
-}: CellSuccessProps<RolePermissionQuery>) => {
+  role,
+}: CellSuccessProps<RolePermissionQuery> &
+  CellSuccessProps<RoleDetailQuery>) => {
   const { t } = useTranslation()
 
   return (
@@ -56,7 +58,7 @@ export const Success = ({
           {t('Role.Permission.Cell.Success.title')}
         </h2>
         <p className="muted hint">
-          {t('Role.Permission.Cell.Success.subtitle')}
+          {t('Role.Permission.Cell.Success.subtitle', { name: role.name })}
         </p>
       </div>
       <div className="divide-y-2 divide-gray-100 dark:divide-gray-600">
@@ -65,6 +67,7 @@ export const Success = ({
             key={application}
             application={application}
             permissions={permissions}
+            role={role}
           />
         ))}
       </div>
