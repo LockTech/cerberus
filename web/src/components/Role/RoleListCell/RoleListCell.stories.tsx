@@ -3,7 +3,7 @@ import type { Meta } from '@storybook/react'
 // @ts-expect-error types
 import RoleListCell from './RoleListCell'
 import { Failure, Loading, Success } from './RoleListCell'
-import { mockRoleList, standard } from './RoleListCell.mock'
+import { mockRoleList, mockRoleListError, standard } from './RoleListCell.mock'
 
 export default {
   component: RoleListCell,
@@ -17,8 +17,14 @@ export const loading = () => <Loading />
 
 export const success = () => <Success {...standard} />
 
-export const Mocked = () => {
+export const MockedSuccess = () => {
   mockRoleList()
+
+  return <RoleListCell />
+}
+
+export const MockedError = () => {
+  mockRoleListError()
 
   return <RoleListCell />
 }

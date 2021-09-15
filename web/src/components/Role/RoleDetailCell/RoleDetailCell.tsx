@@ -26,7 +26,7 @@ export const Loading = () => {
 
   return (
     <LoadingCard>
-      <p className="text">{t('Role.Update.Cell.Loading')}</p>
+      <p className="text">{t('Role.Detail.Cell.Loading')}</p>
     </LoadingCard>
   )
 }

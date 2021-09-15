@@ -17,7 +17,7 @@ import { QUERY } from 'src/components/Role/RoleDetailCell'
 
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
-import type { RoleUpdateQuery } from 'types/graphql'
+import type { RoleDetailQuery } from 'types/graphql'
 
 export const MUTATION = gql`
   mutation RoleUpdateMutation($id: ID!, $color: String, $name: String) {
@@ -33,7 +33,7 @@ export type RoleUpdateFormData = {
 }
 
 export interface RoleUpdateCardProps {
-  role: RoleUpdateQuery['role']
+  role: RoleDetailQuery['role']
 }
 
 const RoleUpdateCard = ({ role: { color, id, name } }: RoleUpdateCardProps) => {
@@ -123,12 +123,7 @@ const RoleUpdateCard = ({ role: { color, id, name } }: RoleUpdateCardProps) => {
             {t('Role.Update.Card.form.color.hint')}
           </Label>
           <FieldError className="input-error" name="color" />
-        </div>
-        <div className="input-group">
-          <p className="input-label">
-            {t('Role.Update.Card.form.color.preview')}
-          </p>
-          <div className="flex flex-row self-center space-x-12">
+          <div className="flex flex-row mt-6 self-center space-x-12">
             <div className="bg-white px-6 py-4 rounded-md">
               <RoleBadge
                 className="self-center"
