@@ -2,12 +2,12 @@
   /* Misc */
   @apply flex flex-row items-center;
   @apply w-full;
-  @apply px-6 sm:px-10 py-3;
+  @apply px-2 sm:px-10 py-3;
 }
 
 .appbar-left {
   @apply flex flex-row items-center flex-grow;
-  @apply space-x-4 lg:space-x-0;
+  @apply space-x-1 lg:space-x-0;
 }
 
 .appbar h1 {
