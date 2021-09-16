@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useController } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { Listbox } from '@headlessui/react'
+import { Listbox, Transition } from '@headlessui/react'
 import { SelectorIcon } from '@heroicons/react/solid'
 
 import './Select.css'
@@ -40,24 +40,35 @@ const Select = ({ defaultValue, name, values }: SelectProps) => {
         <span>{t(rest.value?.name)}</span>
         <SelectorIcon className="icon" />
       </Listbox.Button>
-      <Listbox.Options className="select-items">
-        {values.map((val, index) => (
-          <Listbox.Option
-            as="button"
-            className={({ active, selected }) =>
-              clsx(
-                'select-item',
-                active && 'select-item-active',
-                selected && 'select-item-selected'
-              )
-            }
-            key={index}
-            value={val}
-          >
-            {t(val.name)}
-          </Listbox.Option>
-        ))}
-      </Listbox.Options>
+      <Transition
+        as={React.Fragment}
+        leave="duration-200 ease-out origin-bottom sm:origin-top transform transition"
+        leaveFrom="scale-100 opacity-100"
+        leaveTo="opacity-0 scale-y-90"
+      >
+        <Listbox.Options
+          as="div"
+          className="select-items fixed sm:absolute z-50 sm:z-auto"
+        >
+          {values.map((val, index) => (
+            <Listbox.Option
+              as="button"
+              className={({ active, selected }) =>
+                clsx(
+                  'select-item',
+                  active && 'select-item-active',
+                  selected && 'select-item-selected'
+                )
+              }
+              key={index}
+              type="button"
+              value={val}
+            >
+              {t(val.name)}
+            </Listbox.Option>
+          ))}
+        </Listbox.Options>
+      </Transition>
     </Listbox>
   )
 }
