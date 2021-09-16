@@ -99,7 +99,7 @@
     },
     "Update": {
       "Card": {
-        "title": "Details",
+        "title": "{{ name, pluralPossessive }} Details",
         "subtitle": "Update {{ name, pluralPossessive }} email, name, and/or disable their account.",
         "form": {
           "disabled": {
@@ -154,7 +154,7 @@
         "submit": "Save",
         "cancel": "Cancel"
       },
-      "saved": "Application settings updated."
+      "saved": "Your application settings have been updated."
     }
   },
   "Auth": {
@@ -398,7 +398,7 @@
     },
     "Update": {
       "Card": {
-        "title": "Details",
+        "title": "{{ name }} Details",
         "subtitle": "Update the {{ name }} role's name and/or color.",
         "form": {
           "name": {
@@ -557,5 +557,8 @@
       },
       "login": "Already have an account?"
     }
+  },
+  "Toast": {
+    "close": "Close toast notification"
   }
 }
