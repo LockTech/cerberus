@@ -1,0 +1,7 @@
+.undoneNotice {
+  @apply flex flex-row items-center justify-center space-x-3;
+}
+
+.undoneNotice .icon {
+  @apply text-yellow-600 dark:text-yellow-300 h-6 w-6;
+}
