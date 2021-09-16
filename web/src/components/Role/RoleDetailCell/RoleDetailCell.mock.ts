@@ -8,6 +8,7 @@ export const standard = {
     id: 'ac83b67d-d592-47cb-934e-28e5a7a50aaf',
     name: 'Administrator',
     color: '#a82d96',
+    permissions: [{ id: 'ac83b67d-d592-47cb-934e-28e5a7a50aaf' }],
   },
 }
 
