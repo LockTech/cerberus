@@ -1,6 +1,6 @@
 import React from 'react'
-import { RedwoodProvider } from '@redwoodjs/web'
 import { RecoilRoot } from 'recoil'
+import { RedwoodProvider } from '@redwoodjs/web'
 import { useChannel } from '@storybook/addons'
 
 import '../src/index.css'
