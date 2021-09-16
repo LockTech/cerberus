@@ -8,13 +8,9 @@ module.exports = {
       animation: {
         'spin-physics': 'spin 1.5s cubic-bezier(.75, .25, .25, .75) infinite',
       },
-      colors: {
-        green: colors.emerald,
-        red: colors.rose,
-      },
     },
     fontFamily: {
-      quicksand: ['Quicksand', 'sans-serif'],
+      inter: ['Inter', 'sans-serif'],
     },
   },
 }
