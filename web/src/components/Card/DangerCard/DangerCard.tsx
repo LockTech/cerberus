@@ -17,7 +17,7 @@ const DangerCard = ({ children }: DangerCardProps) => {
           <ExclamationIcon />
         </div>
         <div className="space-y-1">
-          <h2 className="text title">{t('Danger.Card.title')}</h2>
+          <h3 className="text">{t('Danger.Card.title')}</h3>
           <p className="muted hint">{t('Danger.Card.subtitle')}</p>
         </div>
       </header>
