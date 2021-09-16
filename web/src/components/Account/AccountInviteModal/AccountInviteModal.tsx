@@ -49,7 +49,7 @@ const AccountInviteModal = () => {
       </button>
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className="card body">
-          <div className="space-y-2">
+          <div className="space-y-1">
             <Modal.Title>{t('Account.Invite.Modal.title')}</Modal.Title>
             <Modal.Description>
               {t('Account.Invite.Modal.subtitle')}
