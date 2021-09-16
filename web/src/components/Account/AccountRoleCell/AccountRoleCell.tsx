@@ -76,7 +76,11 @@ const roleComponent = (
     key={id}
     onClick={() => callback(id, name)}
   >
-    <span className="dot" style={{ backgroundColor: color }} />
+    <span
+      aria-hidden="true"
+      className="dot"
+      style={{ backgroundColor: color }}
+    />
     <span>{name}</span>
   </button>
 )
@@ -143,7 +147,7 @@ export const Success = ({
   return (
     <div className="card sm:p-6 space-y-6">
       <div className="space-y-1">
-        <h2 className="text title">{t('Account.Role.Cell.Success.title')}</h2>
+        <h3 className="text">{t('Account.Role.Cell.Success.title')}</h3>
         <p className="muted hint">{t('Account.Role.Cell.Success.subtitle')}</p>
       </div>
       <div className="gap-4 md:gap-16 grid grid-cols-1 md:grid-cols-2">
