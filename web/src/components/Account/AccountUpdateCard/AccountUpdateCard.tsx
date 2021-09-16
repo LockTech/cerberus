@@ -110,7 +110,9 @@ const AccountUpdateCard = ({
   return (
     <div className="card body">
       <header className="space-y-1">
-        <h2 className="text title">{t('Account.Update.Card.title')}</h2>
+        <h2 className="text title">
+          {t('Account.Update.Card.title', { name })}
+        </h2>
         <p className="muted hint">
           {t('Account.Update.Card.subtitle', { name })}
         </p>
@@ -173,7 +175,7 @@ const AccountUpdateCard = ({
             )}
             onChange={onChangeDisabled}
           >
-            <span aria-disabled="true" className="switch-thumb" />
+            <span aria-hidden="true" className="switch-thumb" />
           </Switch>
           <Switch.Label as={Label} className="input-hint w-max" name="disabled">
             {t('Account.Update.Card.form.disabled.hint')}
