@@ -1,51 +1,71 @@
 .toast {
   @apply card;
-  @apply flex flex-row items-center;
+  @apply flex flex-row items-start justify-between;
   @apply px-3 py-2 space-x-3;
   @apply w-full sm:w-auto sm:min-w-[32rem] sm:max-w-xl;
   @apply shadow-md;
 }
 .toast.error {
-  @apply bg-red-100 dark:bg-red-800;
-  @apply border-red-400 dark:border-red-600;
+  @apply bg-red-700;
+  @apply border-red-800 dark:border-red-400;
 }
 .toast.loading {
-  @apply bg-primary-100 dark:bg-primary-800;
-  @apply border-primary-400 dark:border-primary-600;
+  @apply bg-primary-700;
+  @apply border-primary-800 dark:border-primary-400;
 }
 .toast.success {
-  @apply bg-green-100 dark:bg-green-800;
-  @apply border-green-400 dark:border-green-600;
+  @apply bg-green-700;
+  @apply border-green-800 dark:border-green-400;
+}
+
+.toast .toast-content {
+  @apply flex flex-row items-center;
+  @apply space-x-3;
 }
 
 .toast-text {
-  @apply text;
+  @apply text-gray-50;
 }
-.toast.error > .toast-text {
-  @apply text-red-900 dark:text-red-50;
+.toast.error .toast-text {
+  @apply text-red-50;
 }
-.toast.loading > .toast-text {
-  @apply text-primary-900 dark:text-primary-50;
+.toast.loading .toast-text {
+  @apply text-primary-50;
 }
-.toast.success > .toast-text {
-  @apply text-green-900 dark:text-green-50;
+.toast.success .toast-text {
+  @apply text-green-50;
 }
 
 .toast-icon {
   @apply h-[20px] w-[20px];
 }
-.toast.error > .toast-icon {
-  @apply text-red-900 dark:text-red-50;
+.toast.error .toast-icon {
+  @apply text-red-400;
 }
-.toast.loading > .toast-icon {
-  @apply text-primary-900 dark:text-primary-50;
+.toast.loading .toast-icon .inner {
+  @apply text-primary-200;
 }
-.toast.loading > .toast-icon > .inner {
-  @apply text-primary-600 dark:text-primary-200;
+.toast.loading .toast-icon .outter {
+  @apply text-primary-600;
 }
-.toast.loading > .toast-icon > .outter {
-  @apply text-primary-200 dark:text-primary-600;
+.toast.success .toast-icon {
+  @apply text-green-400;
 }
-.toast.success > .toast-icon {
-  @apply text-green-900 dark:text-green-50;
+
+.toast.error .toast-close-button {
+  @apply text-red-500;
+  @apply text-opacity-50 hover:text-opacity-75 active:text-opacity-100;
+}
+.toast.loading .toast-close-button {
+  @apply text-primary-500;
+  @apply text-opacity-50 hover:text-opacity-75 active:text-opacity-100;
+}
+.toast.success .toast-close-button {
+  @apply text-green-500;
+  @apply text-opacity-50 hover:text-opacity-75 active:text-opacity-100;
+}
+.toast .toast-close-button {
+  @apply text-opacity-50 hover:text-opacity-75 active:text-opacity-100;
+  @apply duration-200 ease-in-out transition;
+  @apply h-7 sm:h-6 w-7 sm:w-6;
 }
