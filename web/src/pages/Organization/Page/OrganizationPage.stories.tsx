@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react'
 
-import { mockUpdateOrganization } from 'src/components/Organization/OrganizationDetailCell/OrganizationDetailCell.mock'
+import { mockOrganizationDetail } from 'src/components/Organization/OrganizationDetailCell/OrganizationDetailCell.mock'
 
 import OrganizationPage from './OrganizationPage'
 
@@ -10,7 +10,7 @@ export default {
 } as Meta
 
 export const Default: Story = (props) => {
-  mockUpdateOrganization()
+  mockOrganizationDetail()
 
   return <OrganizationPage {...props} />
 }
