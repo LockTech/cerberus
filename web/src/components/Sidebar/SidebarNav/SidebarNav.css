@@ -10,8 +10,7 @@
 .sidebar nav .nav-group .nav-group-title {
   /* Text */
   @apply text-xs tracking-widest uppercase;
-  /* @apply text-gray-500; */
-  @apply text-gray-300;
+  @apply text-gray-400;
   /* Misc */
   @apply px-3 py-1.5;
 }
