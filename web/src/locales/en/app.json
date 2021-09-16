@@ -306,12 +306,12 @@
   },
   "Permission": {
     "add": {
-      "loading": "Adding permission to role.",
-      "success": "Added permission to role."
+      "loading": "Adding the {{ permissionName }} permission to the {{ roleName }} role.",
+      "success": "Added the {{ permissionName }} permission to the {{ roleName }} role."
     },
     "del": {
-      "loading": "Removing permission from role.",
-      "success": "Removed permission from role."
+      "loading": "Removing the {{ permissionName }} permission from the {{ roleName }} role.",
+      "success": "Removed the {{ permissionName }} permission from the {{ roleName }} role."
     }
   },
   "Role": {
