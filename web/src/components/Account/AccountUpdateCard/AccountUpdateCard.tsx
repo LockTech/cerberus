@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useCallback } from 'react'
 import { useController, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useMutation } from '@apollo/client'
 import { Switch } from '@headlessui/react'
 import { FieldError, Form, Label, TextField, Submit } from '@redwoodjs/forms'
@@ -9,7 +10,6 @@ import { toast } from '@redwoodjs/web/toast'
 import { QUERY } from 'src/components/Account/AccountDetailCell'
 
 import { useAuth } from 'src/hooks/useAuth'
-import { useTranslation } from 'react-i18next'
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
 import type { AccountDetailQuery } from 'types/graphql'
@@ -158,7 +158,11 @@ const AccountUpdateCard = ({
         </div>
         {/* disabled */}
         <Switch.Group as="div" className="input-group">
-          <Switch.Label as={Label} className="input-label" name="disabled">
+          <Switch.Label
+            as={Label}
+            className="input-label w-max"
+            name="disabled"
+          >
             {t('Account.Update.Card.form.disabled.label')}
           </Switch.Label>
           <Switch
@@ -171,7 +175,7 @@ const AccountUpdateCard = ({
           >
             <span aria-disabled="true" className="switch-thumb" />
           </Switch>
-          <Switch.Label as={Label} className="input-hint" name="disabled">
+          <Switch.Label as={Label} className="input-hint w-max" name="disabled">
             {t('Account.Update.Card.form.disabled.hint')}
           </Switch.Label>
         </Switch.Group>
