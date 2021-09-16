@@ -41,6 +41,8 @@ const Permission = ({
   permission: { application, id: permissionId, namespace, object, relation },
   role: { id: roleId, name: roleName, permissions },
 }: PermissionProps) => {
+  const translationKey = `permissions:${application}.${namespace}#${object}#${relation}`
+
   const [active, setActive] = useState(false)
 
   const { t } = useTranslation()
@@ -57,29 +59,32 @@ const Permission = ({
 
   const onChange = useCallback(
     async (state: boolean) => {
+      const tOptions = {
+        permissionName: `$t(${t(`${translationKey}.title`)})`,
+        roleName,
+      }
+
       state &&
         toast.promise(add(), {
-          loading: t('Permission.add.loading'),
+          loading: t('Permission.add.loading', tOptions),
           success: () => {
             setActive(state)
-            return t('Permission.add.success')
+            return t('Permission.add.success', tOptions)
           },
           error: (err) => et(err),
         })
       !state &&
         toast.promise(del(), {
-          loading: t('Permission.del.loading'),
+          loading: t('Permission.del.loading', tOptions),
           success: () => {
             setActive(state)
-            return t('Permission.del.success')
+            return t('Permission.del.success', tOptions)
           },
-          error: (err) => et(err, { roleName }),
+          error: (err) => et(err, tOptions),
         })
     },
-    [add, del, et, roleName, t]
+    [add, del, et, roleName, t, translationKey]
   )
-
-  const translationKey = `permissions:${application}.${namespace}#${object}#${relation}`
 
   useEffect(() => {
     const match = permissions.find((perm) => perm.id === permissionId)
