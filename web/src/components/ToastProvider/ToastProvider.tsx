@@ -11,8 +11,6 @@ import type { Toast } from '@redwoodjs/web/toast'
 
 import LoadingSpinner from 'src/components/LoadingSpinner'
 
-import './ToastProvider.css'
-
 const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
   switch (type) {
     case 'blank':

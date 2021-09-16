@@ -44,10 +44,7 @@ const AppMenu = () => {
           leaveFrom="opacity-100 scale-y-100"
           leaveTo="opacity-0 scale-y-90 sm:scale-90"
         >
-          <Menu.Items
-            as="div"
-            className="menu-items menu-items-right fixed sm:absolute z-50 sm:z-auto"
-          >
+          <Menu.Items as="div" className="menu-items menu-items-right">
             <Menu.Item
               as="button"
               className={({ active }) =>

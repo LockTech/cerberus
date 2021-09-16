@@ -19,21 +19,36 @@ html, body, #redwood-app {
 }
 
 @layer components {
-  .btn {
-    @apply font-medium;
-  }
-  .card.body {
-    @apply p-4 sm:p-6 space-y-6;
-  }
+  /* Application */
   .card-interactive {
     @apply hover:bg-gray-50 active:bg-gray-100;
     @apply dark:hover:bg-gray-700 dark:active:bg-gray-600;
     @apply flex flex-col items-center;
     @apply font-normal normal-case tracking-normal;
   }
+  .list-layout {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+  .list-layout > * {
+    @apply h-[fit-content];
+  }
+  .list-layout .title {
+    @apply text-2xl;
+  }
+  .page-layout {
+    @apply space-y-8;
+  }
+  /* Atomic Overrides (push upstream) */
+  .btn {
+    @apply font-medium;
+  }
+  .card.body {
+    @apply p-4 sm:p-6 space-y-6;
+  }
   .form {
     @apply flex flex-col space-y-6;
   }
+  /* To be made into `button-group` */
   .form-button {
     @apply self-end;
   }
@@ -49,14 +64,8 @@ html, body, #redwood-app {
     @apply text-base;
     @apply text-red-600 dark:text-red-300;
   }
-  .list-layout {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
-  }
-  .list-layout > * {
-    @apply h-[fit-content];
-  }
-  .list-layout .title {
-    @apply text-2xl;
+  .menu-items {
+    @apply fixed sm:absolute z-50 sm:z-auto;
   }
   .modal {
     @apply overflow-y-auto;
@@ -68,8 +77,79 @@ html, body, #redwood-app {
   .modal-wrapper > * {
     @apply pointer-events-auto m-6;
   }
-  .page-layout {
-    @apply space-y-8;
+  .select-items {
+    @apply fixed sm:absolute z-50 sm:z-auto;
+  }
+  /* Toast Impl. */
+  .toast {
+    @apply card;
+    @apply flex flex-row items-start justify-between;
+    @apply px-3 py-2 space-x-3;
+    @apply w-full sm:w-auto sm:min-w-[32rem] sm:max-w-xl;
+    @apply shadow-md;
+  }
+  .toast.error {
+    @apply bg-red-700;
+    @apply border-red-800 dark:border-red-400;
+  }
+  .toast.loading {
+    @apply bg-primary-700;
+    @apply border-primary-800 dark:border-primary-400;
+  }
+  .toast.success {
+    @apply bg-green-700;
+    @apply border-green-800 dark:border-green-400;
+  }
+
+  .toast .toast-content {
+    @apply flex flex-row items-center;
+    @apply space-x-3;
+  }
+
+  .toast-text {
+    @apply text-gray-50;
+  }
+  .toast.error .toast-text {
+    @apply text-red-50;
+  }
+  .toast.loading .toast-text {
+    @apply text-primary-50;
+  }
+  .toast.success .toast-text {
+    @apply text-green-50;
+  }
+
+  .toast-icon {
+    @apply h-[20px] w-[20px];
+  }
+  .toast.error .toast-icon {
+    @apply text-red-400;
+  }
+  .toast.loading .toast-icon .inner {
+    @apply text-primary-200;
+  }
+  .toast.loading .toast-icon .outter {
+    @apply text-primary-600;
+  }
+  .toast.success .toast-icon {
+    @apply text-green-400;
+  }
+
+  .toast.error .toast-close-button {
+    @apply text-red-500;
+    @apply text-opacity-60 hover:text-opacity-75 active:text-opacity-100;
+  }
+  .toast.loading .toast-close-button {
+    @apply text-primary-500;
+    @apply text-opacity-60 hover:text-opacity-75 active:text-opacity-100;
+  }
+  .toast.success .toast-close-button {
+    @apply text-green-500;
+    @apply text-opacity-60 hover:text-opacity-75 active:text-opacity-100;
+  }
+  .toast .toast-close-button {
+    @apply duration-200 ease-in-out transition;
+    @apply h-7 sm:h-6 w-7 sm:w-6;
   }
 }
 

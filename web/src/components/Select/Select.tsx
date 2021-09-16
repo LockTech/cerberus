@@ -46,10 +46,7 @@ const Select = ({ defaultValue, name, values }: SelectProps) => {
         leaveFrom="scale-100 opacity-100"
         leaveTo="opacity-0 scale-y-90"
       >
-        <Listbox.Options
-          as="div"
-          className="select-items fixed sm:absolute z-50 sm:z-auto"
-        >
+        <Listbox.Options as="div" className="select-items">
           {values.map((val, index) => (
             <Listbox.Option
               as="button"
