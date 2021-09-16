@@ -37,14 +37,17 @@ const AppMenu = () => {
         </Menu.Button>
         <Transition
           as={React.Fragment}
-          enter="duration-150 ease-out origin-bottom transition transform-gpu"
-          enterFrom="opacity-0 scale-y-95 sm:scale-y-100"
+          enter="duration-400 sm:duration-300 ease-in-out origin-bottom sm:origin-top-right transition transform"
+          enterFrom="opacity-0 scale-y-90 sm:scale-90"
           enterTo="opacity-100 scale-y-100"
-          leave="duration-100 ease-in origin-bottom transition transform-gpu"
+          leave="duration-300 sm:duration-200 ease-in-out origin-bottom sm:origin-top-right transition transform"
           leaveFrom="opacity-100 scale-y-100"
-          leaveTo="opacity-0 scale-y-95 sm:scale-y-100"
+          leaveTo="opacity-0 scale-y-90 sm:scale-90"
         >
-          <Menu.Items as="div" className="menu-items menu-items-right">
+          <Menu.Items
+            as="div"
+            className="menu-items menu-items-right fixed sm:absolute z-50 sm:z-auto"
+          >
             <Menu.Item
               as="button"
               className={({ active }) =>
