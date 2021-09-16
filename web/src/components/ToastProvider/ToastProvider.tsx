@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/solid'
 import { Transition } from '@headlessui/react'
 import { resolveValue, Toaster } from '@redwoodjs/web/toast'
@@ -5,8 +6,9 @@ import type { Toast } from '@redwoodjs/web/toast'
 
 import LoadingSpinner from 'src/components/LoadingSpinner'
 
-import './ToastProvider.css'
 import { useScreenWidth } from 'src/hooks/useScreenWidth'
+
+import './ToastProvider.css'
 
 const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
   switch (type) {
@@ -17,13 +19,13 @@ const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
       return customIcon
 
     case 'error':
-      return <ExclamationCircleIcon className="toast-icon toast-error-icon" />
+      return <ExclamationCircleIcon />
 
     case 'loading':
-      return <LoadingSpinner className="toast-icon" />
+      return <LoadingSpinner />
 
     case 'success':
-      return <CheckCircleIcon className="toast-icon toast-success-icon" />
+      return <CheckCircleIcon />
   }
 }
 
@@ -44,7 +46,7 @@ const ToastProvider = () => {
         <Transition
           appear={true}
           as="div"
-          className="toast"
+          className={clsx('toast', t.type)}
           enter="duration-300 ease-in-out origin-bottom sm:origin-top transition transform"
           enterFrom="opacity-0 scale-90"
           enterTo="opacity-100 scale-100"
@@ -53,7 +55,7 @@ const ToastProvider = () => {
           leaveTo="opacity-0 scale-[.8]"
           show={t.visible}
         >
-          <div>{ToastIcon(t.type)}</div>
+          <div className="toast-icon">{ToastIcon(t.type)}</div>
           <p className="toast-text">{resolveValue(t.message, t)}</p>
         </Transition>
       )}

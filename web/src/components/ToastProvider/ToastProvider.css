@@ -2,21 +2,50 @@
   @apply card;
   @apply flex flex-row items-center;
   @apply px-3 py-2 space-x-3;
-  @apply w-full sm:max-w-lg;
+  @apply w-full sm:w-auto sm:min-w-[32rem] sm:max-w-xl;
   @apply shadow-md;
+}
+.toast.error {
+  @apply bg-red-100 dark:bg-red-800;
+  @apply border-red-400 dark:border-red-600;
+}
+.toast.loading {
+  @apply bg-primary-100 dark:bg-primary-800;
+  @apply border-primary-400 dark:border-primary-600;
+}
+.toast.success {
+  @apply bg-green-100 dark:bg-green-800;
+  @apply border-green-400 dark:border-green-600;
 }
 
 .toast-text {
   @apply text;
 }
+.toast.error > .toast-text {
+  @apply text-red-900 dark:text-red-50;
+}
+.toast.loading > .toast-text {
+  @apply text-primary-900 dark:text-primary-50;
+}
+.toast.success > .toast-text {
+  @apply text-green-900 dark:text-green-50;
+}
 
 .toast-icon {
   @apply h-[20px] w-[20px];
 }
-
-.toast-error-icon {
-  @apply text-red-700 dark:text-red-300;
+.toast.error > .toast-icon {
+  @apply text-red-900 dark:text-red-50;
 }
-.toast-success-icon {
-  @apply text-green-700 dark:text-green-300;
+.toast.loading > .toast-icon {
+  @apply text-primary-900 dark:text-primary-50;
+}
+.toast.loading > .toast-icon > .inner {
+  @apply text-primary-600 dark:text-primary-200;
+}
+.toast.loading > .toast-icon > .outter {
+  @apply text-primary-200 dark:text-primary-600;
+}
+.toast.success > .toast-icon {
+  @apply text-green-900 dark:text-green-50;
 }
