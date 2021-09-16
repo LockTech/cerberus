@@ -8,6 +8,16 @@ html, body, #redwood-app {
   width: 100%;
 }
 
+@layer base {
+  html * {
+    @apply font-inter;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+}
+
 @layer components {
   .btn {
     @apply font-medium;
