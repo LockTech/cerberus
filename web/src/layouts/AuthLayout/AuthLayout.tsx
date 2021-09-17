@@ -25,12 +25,17 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   }, [currentUser, redirectTo])
 
   return (
-    <div className="flex flex-col h-full max-w-md m-auto px-6 sm:px-0 py-6">
-      <div className="flex-grow space-y-6">
-        {children}
-        <div className="flex flex-col items-center space-y-3">
+    <div className="flex flex-col h-full max-w-md m-auto px-6 sm:px-0 pt-6 sm:pt-12 pb-6 space-y-6">
+      <div className="flex-grow">{children}</div>
+      <div className="flex flex-col items-center space-y-6">
+        <div className="w-[14rem]">
+          <a href={BrandURL} rel="noreferrer" target="_blank">
+            <BrandBanner className="bg-gray-900 m-auto p-4 rounded-lg text-gray-50" />
+          </a>
+        </div>
+        <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 space-x-0 sm:space-x-6">
           <a
-            className="link"
+            className="link text-xs"
             href={PrivacyURL}
             rel="noreferrer"
             target="_blank"
@@ -38,7 +43,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
             {t('Auth.Layout.privacy')}
           </a>
           <a
-            className="link"
+            className="link text-xs"
             href={SupportURL}
             rel="noreferrer"
             target="_blank"
@@ -47,9 +52,6 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
           </a>
         </div>
       </div>
-      <a className="dark" href={BrandURL} rel="noreferrer" target="_blank">
-        <BrandBanner className="bg-gray-900 max-w-[14rem] px-4 py-2 rounded-lg" />
-      </a>
     </div>
   )
 }
