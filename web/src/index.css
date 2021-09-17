@@ -65,7 +65,7 @@ html, body, #redwood-app {
     @apply text-red-600 dark:text-red-300;
   }
   .menu-items {
-    @apply fixed sm:absolute z-50 sm:z-auto;
+    @apply fixed sm:absolute z-50;
   }
   .modal {
     @apply overflow-y-auto;
@@ -78,7 +78,7 @@ html, body, #redwood-app {
     @apply pointer-events-auto m-6;
   }
   .select-items {
-    @apply fixed sm:absolute z-50 sm:z-auto;
+    @apply fixed sm:absolute z-50;
   }
   /* Toast Impl. */
   .toast {
