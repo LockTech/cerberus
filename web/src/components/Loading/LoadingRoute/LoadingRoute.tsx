@@ -8,7 +8,9 @@ const LoadingRoute = () => {
   return (
     <div className="flex flex-col items-center h-full w-full space-y-6">
       <LoadingSpinner className="h-20 w-20" />
-      <p className="text text-center">{t('Loading.Route.message')}</p>
+      <p aria-live="polite" className="text text-center">
+        {t('Loading.Route.message')}
+      </p>
     </div>
   )
 }

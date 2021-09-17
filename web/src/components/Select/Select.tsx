@@ -52,7 +52,7 @@ const Select = ({ defaultValue, name, values }: SelectProps) => {
     >
       <Listbox.Button className="select-trigger">
         <span>{fSelected?.name}</span>
-        <SelectorIcon className="icon" />
+        <SelectorIcon aria-hidden="true" className="icon" />
       </Listbox.Button>
       <Transition
         as={React.Fragment}

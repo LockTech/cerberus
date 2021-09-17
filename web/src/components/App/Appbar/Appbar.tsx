@@ -24,7 +24,7 @@ const Appbar = () => {
           className="sidebar-toggle"
           onClick={() => setSidebarOpen(!sidebarOpen)}
         >
-          <MenuIcon className="icon" />
+          <MenuIcon aria-hidden="true" className="icon" />
         </button>
         {title !== '' && typeof title === 'string' && <h1>{title}</h1>}
       </div>

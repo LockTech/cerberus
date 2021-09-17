@@ -55,6 +55,7 @@ const ToastProvider = () => {
             leave="duration-300 ease-in-out origin-bottom sm:origin-right transition transform"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-[.8]"
+            role="alert"
             show={t.visible}
           >
             <div className="toast-content">
@@ -66,7 +67,7 @@ const ToastProvider = () => {
               className="toast-close-button"
               onClick={() => toast.dismiss(t.id)}
             >
-              <XIcon />
+              <XIcon aria-hidden="true" />
             </button>
           </Transition>
         )

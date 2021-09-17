@@ -8,7 +8,7 @@ export interface LoadingCardProps {
 
 const LoadingCard = ({ children }: LoadingCardProps) => {
   return (
-    <div className="card body card-loading">
+    <div aria-live="polite" className="card body card-loading">
       <LoadingSpinner className="loader" />
       {children || null}
     </div>
