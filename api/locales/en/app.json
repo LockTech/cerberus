@@ -240,6 +240,11 @@
       }
     }
   },
+  "Loading": {
+    "Route": {
+      "message": "Loading page"
+    }
+  },
   "Login": {
     "Hook": {
       "loading": "Logging into your account.",

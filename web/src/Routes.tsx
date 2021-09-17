@@ -1,5 +1,7 @@
 import { Router, Route, Set } from '@redwoodjs/router'
 
+import LoadingRoute from 'src/components/Loading/LoadingRoute'
+
 import AuthLayout from 'src/layouts/AuthLayout'
 import ColorModeLayout from 'src/layouts/ColorModeLayout'
 import CurrentAccountLayout from 'src/layouts/CurrentAccountLayout'
@@ -8,7 +10,7 @@ import DashboardLayout from 'src/layouts/DashboardLayout'
 const Routes = () => {
   return (
     <Router>
-      <Set wrap={[ColorModeLayout]}>
+      <Set whileLoadingPage={LoadingRoute} wrap={[ColorModeLayout]}>
         <Route notfound page={NotFoundPage} />
         <Set private unauthenticated="login" wrap={[CurrentAccountLayout, DashboardLayout]}>
           {/* General */}
