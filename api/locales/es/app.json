@@ -1,0 +1,575 @@
+{
+  "en": "English",
+  "Account": {
+    "DangerCard": {
+      "delete": {
+        "title": "Delete {{ name, pluralPossessive }} Account",
+        "subtitle": "Permanently remove this member's account from your organization.",
+        "action": "Delete"
+      }
+    },
+    "Delete": {
+      "Modal": {
+        "action": "Delete",
+        "title": "Account Deletion",
+        "subtitle": "Are you sure you want to delete this member's account?",
+        "undone": "Once deleted, there is no way to recover an account.",
+        "form": {
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        },
+        "delete": {
+          "loading": "Deleting your member's account.",
+          "success": "Deleted {{ name, pluralPossessive }} account."
+        }
+      }
+    },
+    "Detail": {
+      "Cell": {
+        "Loading": "Loading your member's account details."
+      }
+    },
+    "Invite": {
+      "Modal": {
+        "action": "Invite a Member",
+        "title": "Member Invitation",
+        "subtitle": "Send an invitation email to a member of your organization.",
+        "info": "The invited member will be able to create their own account, setting the account's name and password.",
+        "form": {
+          "email": {
+            "label": "E-Mail Address",
+            "placeholder": "jane.doe@example.net",
+            "required": "An e-mail address is required to invite a member to your organization."
+          },
+          "submit": "Send",
+          "cancel": "Cancel"
+        },
+        "loading": "Sending invitation.",
+        "success": "Invitation has been sent."
+      }
+    },
+    "List": {
+      "Cell": {
+        "Loading": "Loading your member's accounts.",
+        "Success": {
+          "lastLogin": "Last seen on {{ date, friendlyDate }} at {{ time, friendlyTime }}",
+          "verified": "Verified on {{ date, friendlyDate }}"
+        }
+      },
+      "Page": {
+        "Helmet": {
+          "title": "Cerberus • Accounts"
+        },
+        "Appbar": {
+          "title": "Accounts"
+        }
+      }
+    },
+    "Page": {
+      "Helmet": {
+        "title": "Cerberus • Account Details"
+      },
+      "Appbar": {
+        "title": "Account Details"
+      }
+    },
+    "Role": {
+      "Cell": {
+        "Loading": "Loading the member's role details.",
+        "Success": {
+          "title": "Roles",
+          "subtitle": "Interact with a role to add or remove it from this account.",
+          "roles": {
+            "title": "Available Roles",
+            "subtitle": "All of your organization's roles which are not assigned to this account."
+          },
+          "account": {
+            "title": "{{ name, pluralPossessive }} Roles",
+            "subtitle": "The roles which have been assigned to this account."
+          },
+          "add": {
+            "loading": "Adding the {{ roleName }} role to {{ accountName }}.",
+            "success": "Added the {{ roleName }} role to {{ accountName }}."
+          },
+          "del": {
+            "loading": "Removing the {{ roleName }} role from {{ accountName }}.",
+            "success": "Removed the {{ roleName }} role from {{ accountName }}."
+          }
+        }
+      }
+    },
+    "Update": {
+      "Card": {
+        "title": "{{ name, pluralPossessive }} Details",
+        "subtitle": "Update {{ name, pluralPossessive }} email, name, and/or disable their account.",
+        "form": {
+          "disabled": {
+            "label": "Disable",
+            "hint": "Prevent this account from being able to login."
+          },
+          "email": {
+            "label": "E-Mail Address",
+            "required": "An email address is required to update an account."
+          },
+          "name": {
+            "label": "Full Name",
+            "required": "A name is required to update an account."
+          },
+          "submit": "Update"
+        },
+        "update": {
+          "loading": "Updating member's account details.",
+          "success": "Updated {{ name, pluralPossessive }} account."
+        }
+      }
+    }
+  },
+  "App": {
+    "Bar": {
+      "sidebarToggle": "Toggle Sidebar",
+      "actions": {
+        "manual": "User Manual",
+        "userProfile": "User Profile"
+      }
+    },
+    "Menu": {
+      "accountProfile": "Account Profile",
+      "items": {
+        "settings": "Settings",
+        "logout": "Logout"
+      }
+    },
+    "Settings": {
+      "Modal": {
+        "title": "Application Settings",
+        "subtitle": "These settings do not effect your organization or its members.",
+        "form": {
+          "theme": {
+            "label": "Color Scheme",
+            "options": {
+              "browser": "Detect",
+              "light": "Day",
+              "night": "Night"
+            },
+            "hint": "Update the application's design to match the current time-of-day, or use your personal preference."
+          },
+          "language": {
+            "label": "Language",
+            "options": {
+              "browser": "Detect",
+              "light": "Day",
+              "night": "Night"
+            }
+          },
+          "submit": "Save",
+          "cancel": "Cancel"
+        },
+        "saved": "Your application settings have been updated."
+      }
+    }
+  },
+  "Auth": {
+    "Layout": {
+      "privacy": "Our Privacy Policy",
+      "support": "Contact Support"
+    }
+  },
+  "Danger": {
+    "Card": {
+      "title": "Caution",
+      "subtitle": "Take care when making use of the following features."
+    }
+  },
+  "FailureCard": {
+    "reload": "Reload the Page"
+  },
+  "FatalError": {
+    "Page": {
+      "title": "Something's gone wrong!",
+      "subtitle": "An unexpected error has occured that the application could not recover from.",
+      "support": "",
+      "actions": {
+        "dashboard": "Goto the Dashboard",
+        "support": "Contact Support"
+      }
+    }
+  },
+  "Home": {
+    "Page": {
+      "Helmet": {
+        "title": "Cerberus • Dashboard"
+      },
+      "Appbar": {
+        "title": "Dashboard"
+      }
+    }
+  },
+  "Invite": {
+    "Confirmation": {
+      "Page": {
+        "Helmet": {
+          "title": "Cerberus • Invitation Confirmation"
+        },
+        "title": "Invite Confirmation",
+        "subtitle": "",
+        "form": {
+          "name": {
+            "placeholder": "Jane Doe",
+            "label": "Full Name",
+            "required": "Your name is required to create your account."
+          },
+          "email": {
+            "placeholder": "jane.doe@example.net",
+            "label": "E-Mail Address",
+            "required": "Your e-mail address is required to create your account."
+          },
+          "password": {
+            "placeholder": "Secure Secret",
+            "label": "Password",
+            "minLength": "Your password must be longer than 8 characters.",
+            "required": "A password is required to create your account."
+          },
+          "confirmPassword": {
+            "placeholder": "Secure Secret",
+            "label": "Confirm Password",
+            "match": "Your passwords do not match."
+          },
+          "submit": "Confirm"
+        }
+      }
+    }
+  },
+  "Login": {
+    "Hook": {
+      "loading": "Logging into your account.",
+      "success": "Logged into your account."
+    },
+    "Page": {
+      "Meta": {
+        "title": "Cerberus • Login"
+      },
+      "title": "Login",
+      "subtitle": "Welcome back! Enter your e-mail address and password to get access to your organization.",
+      "form": {
+        "email": {
+          "label": "E-Mail Address",
+          "placeholder": "jane.doe@example.net",
+          "required": "An e-mail address is required to login."
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Secure Secret",
+          "required": "Your password is required to login."
+        },
+        "submit": "Login"
+      },
+      "signup": "Need to create an account?"
+    }
+  },
+  "NotFound": {
+    "Page": {
+      "title": "That page doesn't exist"
+    }
+  },
+  "Organization": {
+    "Detail": {
+      "Cell": {
+        "Loading": "Loading your organization's details."
+      }
+    },
+    "Settings": {
+      "Danger": {
+        "Card": {
+          "delete": {
+            "title": "Delete your organization",
+            "subtitle": "Permanently delete your organization, removing all of its accounts and roles.",
+            "action": "Delete"
+          }
+        }
+      },
+      "Page": {
+        "Helmet": {
+          "title": "Cerberus • Organization Settings"
+        },
+        "Appbar": {
+          "title": "Organization Settings"
+        }
+      }
+    },
+    "Update": {
+      "Card": {
+        "title": "Details",
+        "subtitle": "Update your organization's general information.",
+        "form": {
+          "name": {
+            "label": "Organization Name",
+            "placeholder": "Example Inc.",
+            "required": "A name is required when updating your organization."
+          },
+          "submit": "Update"
+        },
+        "update": {
+          "loading": "Updating your organization.",
+          "success": "Updated your organization."
+        }
+      }
+    }
+  },
+  "Permission": {
+    "add": {
+      "loading": "Adding the {{ permissionName }} permission to the {{ roleName }} role.",
+      "success": "Added the {{ permissionName }} permission to the {{ roleName }} role."
+    },
+    "del": {
+      "loading": "Removing the {{ permissionName }} permission from the {{ roleName }} role.",
+      "success": "Removed the {{ permissionName }} permission from the {{ roleName }} role."
+    }
+  },
+  "Role": {
+    "Create": {
+      "Modal": {
+        "createRole": "Create a Role",
+        "title": "Create Role",
+        "subtitle": "Create a new role which you may use to assign permissions to your organization's members.",
+        "form": {
+          "name": {
+            "label": "Role Name",
+            "placeholder": "Administrator",
+            "required": "A name is required to create a role."
+          },
+          "submit": "Create",
+          "cancel": "Cancel"
+        },
+        "create": {
+          "loading": "Creating a role for your organization.",
+          "success": "Your role has been created, redirecting to its details page."
+        }
+      }
+    },
+    "DangerCard": {
+      "delete": {
+        "title": "Delete the {{ name }} role",
+        "subtitle": "Permanently remove this role from your organization."
+      }
+    },
+    "Delete": {
+      "Modal": {
+        "action": "Delete",
+        "title": "Role Deletion",
+        "subtitle": "Are you sure you want to delete this role from your organization?",
+        "accounts": "Deleting this role will remove it from any assigned accounts. The permissions assigned to this role will also be removed from those accounts.",
+        "undone": "Once deleted, there is no way to recover a role.",
+        "form": {
+          "delete": "Delete",
+          "cancel": "Cancel"
+        },
+        "delete": {
+          "loading": "Deleting role from your organization.",
+          "success": "Deleted the {{ name }} role from your organization."
+        }
+      }
+    },
+    "Detail": {
+      "Cell": {
+        "Loading": "Loading the role's details."
+      }
+    },
+    "List": {
+      "Cell": {
+        "Loading": "Loading your organization's roles.",
+        "Success": {
+          "createdAt": "Created on {{ createdAt, friendlyDate }}"
+        }
+      },
+      "Page": {
+        "Helmet": {
+          "title": "Cerberus • Roles"
+        },
+        "Appbar": {
+          "title": "Roles"
+        }
+      }
+    },
+    "Page": {
+      "Helmet": {
+        "title": "Cerberus • Role Details"
+      },
+      "Appbar": {
+        "title": "Role Details"
+      }
+    },
+    "Permission": {
+      "Cell": {
+        "Loading": "Loading your role's permissions.",
+        "Success": {
+          "title": "Permissions",
+          "subtitle": "Interact with an application to toggle its permissions' visibility. Permissions can then be assigned and removed from the {{ name }} role."
+        }
+      }
+    },
+    "Update": {
+      "Card": {
+        "title": "{{ name }} Details",
+        "subtitle": "Update the {{ name }} role's name and/or color.",
+        "form": {
+          "name": {
+            "label": "Role Name",
+            "placeholder": "Administrator",
+            "required": "A name is required to update your role."
+          },
+          "color": {
+            "label": "Color",
+            "hint": "Colors along the center of the Y-axis tend to show up better on both the light and dark color schemes."
+          },
+          "submit": "Update"
+        },
+        "update": {
+          "loading": "Updating your organization's role.",
+          "success": "Updated the {{ name }} role."
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "title": "Cerberus",
+    "subtitle": "Account and permission management.",
+    "copyright": "© 2021 LockTech Software",
+    "Nav": {
+      "general": {
+        "title": "General",
+        "dashboard": "Dashboard"
+      },
+      "members": {
+        "title": "Members",
+        "activity": "Activity",
+        "listAccounts": "Accounts",
+        "listRoles": "Roles"
+      },
+      "organization": {
+        "title": "Organization",
+        "settings": "Settings"
+      }
+    }
+  },
+  "Signup": {
+    "Confirmation": {
+      "Page": {
+        "Meta": {
+          "title": "Cerberus • Signup Confirmation"
+        },
+        "title": "Signup Confirmation",
+        "subtitle": "Confirm your account to start setting up your organization.",
+        "emailMissing": "Your e-mail address could not be decoded. Make sure you use the link sent in your confirmation e-mail.",
+        "emailSent": "We have sent you a confirmation email.",
+        "instructions": "In it, you will find a code that you may enter below to finish creating your account.",
+        "resend": {
+          "message": "Resend Confirmation E-Mail",
+          "loading": "Resending your account's confirmation e-mail.",
+          "success": "If your account is pending confirmation, we've resent its confirmation code."
+        },
+        "confirm": {
+          "loading": "Confirming your account.",
+          "success": "Your account has been confirmed."
+        },
+        "form": {
+          "code": {
+            "label": "Confirmation Code",
+            "placeholder": "XXXXXXX",
+            "required": "A confirmation code is required to confirm your account."
+          },
+          "submit": "Confirm"
+        }
+      }
+    },
+    "Hook": {
+      "loading": "Creating your account.",
+      "success": "Your account has been created."
+    },
+    "Login": {
+      "Page": {
+        "Meta": {
+          "title": "Cerberus • Signup Verification"
+        },
+        "title": "Signup Verification",
+        "subtitle": "You will need to login so we can verify who is creating the organization.",
+        "form": {
+          "email": {
+            "label": "E-Mail Address",
+            "placeholder": "jane.doe@example.net",
+            "required": "An e-mail address is required to login."
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "Secure Secret",
+            "required": "Your password is required to login."
+          },
+          "submit": "Login"
+        }
+      }
+    },
+    "Organization": {
+      "Page": {
+        "Meta": {
+          "title": "Cerberus • Create Organization"
+        },
+        "title": "Create Organization",
+        "subtitle": "You will need to provide some basic information about your organization.",
+        "create": {
+          "loading": "Creating your organization and its administrator role.",
+          "success": "Created your organization. Redirecting your browser."
+        },
+        "form": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Example Inc.",
+            "required": "Your organization's name is needed to create it."
+          },
+          "adminRoleName": {
+            "label": "Administrator Role's Name",
+            "placeholder": "Administrator",
+            "hint": "The name of the role which will have access to every member and their permissions.",
+            "required": "Your administrator role's name is required to create your organization."
+          },
+          "submit": "Create Organization"
+        }
+      }
+    },
+    "Page": {
+      "Meta": {
+        "title": "Cerberus • Signup"
+      },
+      "title": "Signup",
+      "subtitle": "Create your personal account using the form below.",
+      "welcome": "Welcome to Cerberus! This is a tool for managing your organization's members and their access to other applications.",
+      "form": {
+        "name": {
+          "label": "Full Name",
+          "placeholder": "Jane Doe",
+          "required": "Your name is required to create your account."
+        },
+        "email": {
+          "label": "E-Mail Address",
+          "placeholder": "jane.doe@example.net",
+          "required": "Your e-mail address is required to create your account."
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Secure Secret",
+          "hint": "Your password must be at least 8 characters long. Strong passwords mix letters, numbers, and symbols.",
+          "minLength": "Your password must be longer than 8 characters.",
+          "required": "A password is required to create your account."
+        },
+        "confirmPassword": {
+          "label": "Password Confirmation",
+          "placeholder": "Secure Secret",
+          "match": "Your passwords do not match."
+        },
+        "submit": "Signup"
+      },
+      "login": "Already have an account?"
+    }
+  },
+  "Toast": {
+    "close": "Close toast notification"
+  }
+}
