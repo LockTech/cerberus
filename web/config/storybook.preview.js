@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { RecoilRoot } from 'recoil'
 import { RedwoodProvider } from '@redwoodjs/web'
@@ -31,7 +32,7 @@ export const decorators = [
         <RecoilRoot>
           <ColorModeLayout>
             <ToastProvider />
-            <div className={padding === 'on' ? 'padding' : ''}>
+            <div className={clsx(padding === 'on' && 'p-6', 'h-full w-full')}>
               {storyFunc()}
             </div>
           </ColorModeLayout>
