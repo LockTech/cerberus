@@ -12,7 +12,6 @@
         "action": "Delete",
         "title": "Account Deletion",
         "subtitle": "Are you sure you want to delete this member's account?",
-        "undone": "Once deleted, there is no way to recover an account.",
         "roles": "Deleting this account will remove all its roles and any granted permissions.",
         "form": {
           "confirm": "Delete",
@@ -291,10 +290,9 @@
       "Modal": {
         "action": "Delete",
         "title": "Delete Organization",
-        "subtitle": "",
-        "undone": "Once deleted, there is no way to recover your organization.",
-        "consequences": "Deleting your organization will delete EVERY account and role your organization manages.",
-        "sideeffects": "This deletion may trigger the deletion of resources from other application.",
+        "subtitle": "Remove your organization and its accounts and roles from Cerberus and other of LockTech's platforms.",
+        "consequences": "This deletion will delete EVERY account and role your organization manages.",
+        "sideeffects": "Deleting your organization may trigger the deletion of resources from other application.",
         "delete": {
           "loading": "Deleting your organization, its accounts, and its roles.",
           "success": "Your organization has been deleted, logging you out of your account."
@@ -376,7 +374,6 @@
         "title": "Role Deletion",
         "subtitle": "Are you sure you want to delete this role from your organization?",
         "accounts": "Deleting this role will remove it from any assigned accounts. The permissions assigned to this role will also be removed from those accounts.",
-        "undone": "Once deleted, there is no way to recover a role.",
         "form": {
           "delete": "Delete",
           "cancel": "Cancel"
@@ -590,5 +587,6 @@
   },
   "Toast": {
     "close": "Close toast notification"
-  }
+  },
+  "UndoneNotice": "You are about to use an irreversible feature."
 }
