@@ -3,10 +3,12 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import Backend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
+import { ApiURL } from './constants/variables'
+
 i18n
+  .use(initReactI18next)
   .use(Backend)
   .use(LanguageDetector)
-  .use(initReactI18next)
   .init({
     interpolation: {
       escapeValue: false, // React already does escaping
@@ -38,9 +40,8 @@ i18n
     ns: ['app', 'errors', 'languages', 'permissions'],
     defaultNS: 'app',
     backend: {
-      loadPath: 'http://localhost:8911/locales/{{lng}}/{{ns}}.json',
+      loadPath: `${ApiURL}/locales/{{lng}}/{{ns}}.json`,
     },
-    initImmediate: true,
   })
 
 export default i18n
