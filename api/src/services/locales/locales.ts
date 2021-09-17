@@ -5,8 +5,10 @@ import { logger } from 'src/lib/logger'
 
 import { readDir } from 'src/util/readFile'
 
+import { validateAuth } from 'src/validators/auth'
+
 export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.skip({ only: ['locales'] })
+  rules.add(validateAuth)
 }
 
 export const locales = () => {
