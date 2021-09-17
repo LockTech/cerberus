@@ -1,16 +1,15 @@
 import { ExclamationIcon } from '@heroicons/react/solid'
+import { useTranslation } from 'react-i18next'
 
 import './UndoneNotice.css'
 
-export type UndoneNoticeProps = {
-  children: string
-}
+const UndoneNotice = () => {
+  const { t } = useTranslation()
 
-const UndoneNotice = ({ children }: UndoneNoticeProps) => {
   return (
     <div className="undoneNotice">
       <ExclamationIcon aria-hidden="true" className="icon" />
-      <p className="text font-semibold">{children}</p>
+      <p className="text font-semibold">{t('UndoneNotice')}</p>
       <ExclamationIcon aria-hidden="true" className="icon" />
     </div>
   )

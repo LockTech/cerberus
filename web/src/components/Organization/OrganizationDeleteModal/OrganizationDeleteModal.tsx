@@ -55,11 +55,13 @@ const OrganizationDeleteModal = () => {
             </Modal.Description>
           </DeleteModalTitle>
           <div className="space-y-4">
-            <UndoneNotice>{t('Organization.Delete.Modal.undone')}</UndoneNotice>
+            <UndoneNotice />
             <p className="text">
               {t('Organization.Delete.Modal.consequences')}
             </p>
-            <p className="text">{t('Organization.Delete.Modal.sideeffects')}</p>
+            <p className="bold text">
+              {t('Organization.Delete.Modal.sideeffects')}
+            </p>
           </div>
           <div className="form-button space-x-4">
             <button

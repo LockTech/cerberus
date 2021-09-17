@@ -68,7 +68,7 @@ const AccountDeleteModal = ({ id }: AccountDeleteModalProps) => {
             </Modal.Description>
           </DeleteModalTitle>
           <div className="space-y-4">
-            <UndoneNotice>{t('Account.Delete.Modal.undone')}</UndoneNotice>
+            <UndoneNotice />
             <p className="text">{t('Account.Delete.Modal.roles')}</p>
           </div>
           <div className="form-button space-x-4">
