@@ -9,8 +9,8 @@ const OrganizationPage = () => {
 
   return (
     <>
-      <MetaTags title={t('Organization.Settings.Page.Helmet.title')} />
-      <AppbarTitle>{t('Organization.Settings.Page.Appbar.title')}</AppbarTitle>
+      <MetaTags title={t('Organization.Page.Helmet.title')} />
+      <AppbarTitle>{t('Organization.Page.Appbar.title')}</AppbarTitle>
       <OrganizationDetailCell />
     </>
   )
