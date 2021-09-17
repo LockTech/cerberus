@@ -1,6 +1,6 @@
 import clsx from 'clsx'
+import { useCallback, useState } from 'react'
 import { useController } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
 import { Listbox, Transition } from '@headlessui/react'
 import { SelectorIcon } from '@heroicons/react/solid'
 
@@ -28,16 +28,30 @@ export interface SelectProps {
 }
 
 const Select = ({ defaultValue, name, values }: SelectProps) => {
-  const { t } = useTranslation()
+  const [hSelected, setHSelected] = useState<string>(defaultValue.value)
 
   const {
-    field: { ref: _r, ...rest },
+    field: { ref: _r, value: fSelected, onChange: setFSelected, ...rest },
   } = useController({ name, defaultValue })
 
+  const onChange = useCallback(
+    (changeVal: string) => {
+      setHSelected(changeVal)
+      setFSelected(values.find((v) => v.value === changeVal))
+    },
+    [setFSelected, setHSelected, values]
+  )
+
   return (
-    <Listbox as="div" className="select" {...rest}>
+    <Listbox
+      as="div"
+      className="select"
+      onChange={onChange}
+      value={hSelected}
+      {...rest}
+    >
       <Listbox.Button className="select-trigger">
-        <span>{t(rest.value?.name)}</span>
+        <span>{fSelected?.name}</span>
         <SelectorIcon className="icon" />
       </Listbox.Button>
       <Transition
@@ -47,23 +61,25 @@ const Select = ({ defaultValue, name, values }: SelectProps) => {
         leaveTo="opacity-0 scale-y-90"
       >
         <Listbox.Options as="div" className="select-items">
-          {values.map((val, index) => (
-            <Listbox.Option
-              as="button"
-              className={({ active, selected }) =>
-                clsx(
-                  'select-item',
-                  active && 'select-item-active',
-                  selected && 'select-item-selected'
-                )
-              }
-              key={index}
-              type="button"
-              value={val}
-            >
-              {t(val.name)}
-            </Listbox.Option>
-          ))}
+          {values.map(({ name, value }) => {
+            return (
+              <Listbox.Option
+                as="button"
+                className={({ active, selected }) =>
+                  clsx(
+                    'select-item',
+                    active && 'select-item-active',
+                    selected && 'select-item-selected'
+                  )
+                }
+                key={value}
+                type="button"
+                value={value}
+              >
+                {name}
+              </Listbox.Option>
+            )
+          })}
         </Listbox.Options>
       </Transition>
     </Listbox>
