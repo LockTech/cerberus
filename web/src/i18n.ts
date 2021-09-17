@@ -1,14 +1,12 @@
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
+import Backend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
-import en_app from './locales/en/app.json'
-import en_errors from './locales/en/errors.json'
-import en_permissions from './locales/en/permissions.json'
-
 i18n
-  .use(initReactI18next)
+  .use(Backend)
   .use(LanguageDetector)
+  .use(initReactI18next)
   .init({
     interpolation: {
       escapeValue: false, // React already does escaping
@@ -30,16 +28,19 @@ i18n
         return value
       },
     },
-    lng: 'en',
-    fallbackLng: 'en',
-    ns: ['app', 'errors', 'permissions'],
-    defaultNS: 'app',
-    resources: {
-      en: {
-        app: en_app,
-        errors: en_errors,
-        permissions: en_permissions,
-      },
+    detection: {
+      order: ['querystring', 'navigator'],
+      lookupQuerystring: 'lng',
     },
+    debug: true,
+    fallbackLng: 'en',
+    supportedLngs: ['en', 'es'],
+    ns: ['app', 'errors', 'languages', 'permissions'],
+    defaultNS: 'app',
+    backend: {
+      loadPath: 'http://localhost:8911/locales/{{lng}}/{{ns}}.json',
+    },
+    initImmediate: true,
   })
+
 export default i18n
