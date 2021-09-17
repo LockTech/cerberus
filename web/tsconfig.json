@@ -17,15 +17,22 @@
         "./src/*",
         "../.redwood/types/mirror/web/src/*"
       ],
-      "types/*": ["./types/*"]
+      "types/*": [
+        "./types/*",
+        "../types/*"
+      ]
     },
-    "typeRoots": ["../node_modules/@types", "./node_modules/@types"],
+    "typeRoots": [
+      "../node_modules/@types",
+      "./node_modules/@types",
+    ],
     "types": ["jest"],
     "jsx": "preserve",
   },
   "include": [
     "src",
     "./types/niceramps.d.ts",
+    "./types/redwoodjs.d.ts",
     "../.redwood/types/includes/all-*",
     "../.redwood/types/includes/web-*",
   ]

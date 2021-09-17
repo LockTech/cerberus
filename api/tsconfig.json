@@ -16,7 +16,10 @@
         "./src/*",
         "../.redwood/types/mirror/api/src/*"
       ],
-      "types/*": ["./types/*"]
+      "types/*": [
+        "./types/*",
+        "../types/*"
+      ]
     },
     "typeRoots": [
       "../node_modules/@types",
