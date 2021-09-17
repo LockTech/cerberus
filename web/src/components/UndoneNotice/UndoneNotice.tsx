@@ -9,7 +9,9 @@ const UndoneNotice = () => {
   return (
     <div className="undoneNotice">
       <ExclamationIcon aria-hidden="true" className="icon" />
-      <p className="text font-semibold">{t('UndoneNotice')}</p>
+      <p aria-live="polite" className="text font-semibold">
+        {t('UndoneNotice')}
+      </p>
       <ExclamationIcon aria-hidden="true" className="icon" />
     </div>
   )
