@@ -19,6 +19,7 @@ export interface SelectValue {
 
 export interface SelectProps {
   defaultValue?: SelectValue
+  disabled?: boolean
   /**
    * The `react-hook-form` 'name' used to identify this Select component
    * within the current `<Form>` context.
@@ -27,7 +28,7 @@ export interface SelectProps {
   values: SelectValue[]
 }
 
-const Select = ({ defaultValue, name, values }: SelectProps) => {
+const Select = ({ defaultValue, disabled, name, values }: SelectProps) => {
   const [hSelected, setHSelected] = useState<string>(defaultValue.value)
 
   const {
@@ -46,6 +47,7 @@ const Select = ({ defaultValue, name, values }: SelectProps) => {
     <Listbox
       as="div"
       className="select"
+      disabled={disabled}
       onChange={onChange}
       value={hSelected}
       {...rest}
