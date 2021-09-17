@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import DangerCard from 'src/components/Card/DangerCard'
+import OrganizationDeleteModal from 'src/components/Organization/OrganizationDeleteModal'
 
 const OrganizationDangerCard = () => {
   const { t } = useTranslation()
@@ -9,16 +10,12 @@ const OrganizationDangerCard = () => {
     <DangerCard>
       <div className="action">
         <div className="space-y-1">
-          <p className="text">
-            {t('Organization.Settings.Danger.Card.delete.title')}
-          </p>
+          <p className="text">{t('Organization.Danger.Card.delete.title')}</p>
           <p className="muted hint">
-            {t('Organization.Settings.Danger.Card.delete.subtitle')}
+            {t('Organization.Danger.Card.delete.subtitle')}
           </p>
         </div>
-        <button className="btn btn-red-ghost">
-          {t('Organization.Settings.Danger.Card.delete.action')}
-        </button>
+        <OrganizationDeleteModal />
       </div>
     </DangerCard>
   )
