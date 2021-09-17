@@ -3,12 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { useSetRecoilState } from 'recoil'
 import { Menu, Transition } from '@headlessui/react'
 import { CogIcon, LogoutIcon, UserCircleIcon } from '@heroicons/react/solid'
+import { useAuth } from '@redwoodjs/auth'
 
 import { AppSettingsModalAtom } from 'src/context/AppSettingsModal'
 
 import AppSettingsCell from 'src/components/App/AppSettingsCell'
-
-import { useAuth } from 'src/hooks/useAuth'
 
 import './AppMenu.css'
 

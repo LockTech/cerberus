@@ -1,13 +1,13 @@
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from '@apollo/client'
+import { useAuth } from '@redwoodjs/auth'
 import { toast } from '@redwoodjs/web/toast'
 
 import Modal from 'src/components/Modal'
 import DeleteModalTitle from 'src/components/DeleteModalTitle'
 import UndoneNotice from 'src/components/UndoneNotice'
 
-import { useAuth } from 'src/hooks/useAuth'
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
 export const MUTATION = gql`

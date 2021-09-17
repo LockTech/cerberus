@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '@redwoodjs/auth'
 import { useParams } from '@redwoodjs/router'
 
 import BrandBanner from 'src/components/BrandBanner'
 
 import { BrandURL, PrivacyURL, SupportURL } from 'src/constants/variables'
-
-import { useAuth } from 'src/hooks/useAuth'
 
 type AuthLayoutProps = {
   children: React.ReactNode

@@ -1,6 +1,5 @@
+import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
-
-import { useAuth } from 'src/hooks/useAuth'
 
 import Appbar from 'src/components/App/Appbar'
 import Sidebar from 'src/components/Sidebar'

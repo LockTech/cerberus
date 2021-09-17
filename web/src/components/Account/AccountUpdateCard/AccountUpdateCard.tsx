@@ -4,12 +4,12 @@ import { useController, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from '@apollo/client'
 import { Switch } from '@headlessui/react'
+import { useAuth } from '@redwoodjs/auth'
 import { FieldError, Form, Label, TextField, Submit } from '@redwoodjs/forms'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Account/AccountDetailCell'
 
-import { useAuth } from 'src/hooks/useAuth'
 import { useErrorTranslation } from 'src/hooks/useErrorTranslation'
 
 import type { AccountDetailQuery } from 'types/graphql'

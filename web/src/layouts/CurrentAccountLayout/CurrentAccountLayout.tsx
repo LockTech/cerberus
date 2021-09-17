@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '@redwoodjs/auth'
 
 import LoadingSpinner from 'src/components/Loading/LoadingSpinner'
-
-import { useAuth } from 'src/hooks/useAuth'
 
 import './CurrentAccountLayout.css'
 
