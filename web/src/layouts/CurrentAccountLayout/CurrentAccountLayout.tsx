@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import LoadingSpinner from 'src/components/LoadingSpinner'
+import LoadingSpinner from 'src/components/Loading/LoadingSpinner'
 
 import { useAuth } from 'src/hooks/useAuth'
 

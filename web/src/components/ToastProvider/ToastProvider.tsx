@@ -9,7 +9,7 @@ import { Transition } from '@headlessui/react'
 import { resolveValue, toast, Toaster } from '@redwoodjs/web/toast'
 import type { Toast } from '@redwoodjs/web/toast'
 
-import LoadingSpinner from 'src/components/LoadingSpinner'
+import LoadingSpinner from 'src/components/Loading/LoadingSpinner'
 
 const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
   switch (type) {

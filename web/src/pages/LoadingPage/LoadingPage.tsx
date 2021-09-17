@@ -1,6 +1,6 @@
 import { MetaTags } from '@redwoodjs/web'
 
-import LoadingSpinner from 'src/components/LoadingSpinner'
+import LoadingSpinner from 'src/components/Loading/LoadingSpinner'
 
 const LoadingPage = () => {
   return (

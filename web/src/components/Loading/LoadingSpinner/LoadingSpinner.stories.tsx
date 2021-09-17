@@ -5,7 +5,7 @@ import type { LoadingSpinnerProps } from './LoadingSpinner'
 
 export default {
   component: LoadingSpinner,
-  title: 'Components/LoadingSpinner',
+  title: 'Components/Loading/Spinner',
 } as Meta
 
 export const Default: Story<LoadingSpinnerProps> = (props) => (

@@ -1,4 +1,4 @@
-import LoadingSpinner from 'src/components/LoadingSpinner'
+import LoadingSpinner from 'src/components/Loading/LoadingSpinner'
 
 import './LoadingCard.css'
 
