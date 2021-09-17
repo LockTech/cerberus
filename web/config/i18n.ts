@@ -2,8 +2,8 @@ import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 
-import en_app from '../src/locales/en/app.json'
-import en_errors from '../src/locales/en/errors.json'
+import en_app from '../../api/locales/en/app.json'
+import en_errors from '../../api/locales/en/errors.json'
 import en_permissions from './locales/en/permissions.json'
 
 i18n
