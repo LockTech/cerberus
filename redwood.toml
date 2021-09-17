@@ -3,7 +3,7 @@
 [web]
   title = "Cerberus"
   host = "127.0.0.1"
-  includeEnvironmentVariables = ['BRAND_URL', 'PRIVACY_URL', 'SUPPORT_URL']
+  includeEnvironmentVariables = ['API_URL', 'BRAND_URL', 'PRIVACY_URL', 'SUPPORT_URL', 'WEB_URL']
   port = 8910
   apiProxyPath = "/.redwood/functions" # "/api"
 [api]
