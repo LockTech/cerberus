@@ -6,7 +6,7 @@ import { CogIcon, LogoutIcon, UserCircleIcon } from '@heroicons/react/solid'
 
 import { AppSettingsModalAtom } from 'src/context/AppSettingsModal'
 
-import AppSettingsModal from 'src/components/App/AppSettingsModal'
+import AppSettingsCell from 'src/components/App/AppSettingsCell'
 
 import { useAuth } from 'src/hooks/useAuth'
 
@@ -21,7 +21,7 @@ const AppMenu = () => {
 
   return (
     <>
-      <AppSettingsModal />
+      <AppSettingsCell />
       <Menu as="div" className="menu account-menu">
         <Menu.Button as="button" className="account-menu-button">
           <div className="title-group">

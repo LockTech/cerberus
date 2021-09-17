@@ -139,31 +139,33 @@
       }
     },
     "Settings": {
-      "Modal": {
-        "title": "Application Settings",
-        "subtitle": "These settings do not effect your organization or its members.",
-        "form": {
-          "theme": {
-            "label": "Color Scheme",
-            "options": {
-              "browser": "Detect",
-              "light": "Day",
-              "night": "Night"
+      "Cell": {
+        "Success": {
+          "title": "Application Settings",
+          "subtitle": "These settings do not effect your organization or its members.",
+          "form": {
+            "theme": {
+              "label": "Color Scheme",
+              "options": {
+                "browser": "Detect",
+                "light": "Day",
+                "night": "Night"
+              },
+              "hint": "Update the application's design to match the current time-of-day, or use your personal preference."
             },
-            "hint": "Update the application's design to match the current time-of-day, or use your personal preference."
+            "language": {
+              "label": "Language",
+              "options": {
+                "browser": "Detect",
+                "light": "Day",
+                "night": "Night"
+              }
+            },
+            "submit": "Save",
+            "cancel": "Cancel"
           },
-          "language": {
-            "label": "Language",
-            "options": {
-              "browser": "Detect",
-              "light": "Day",
-              "night": "Night"
-            }
-          },
-          "submit": "Save",
-          "cancel": "Cancel"
-        },
-        "saved": "Your application settings have been updated."
+          "saved": "Your application settings have been updated."
+        }
       }
     }
   },
