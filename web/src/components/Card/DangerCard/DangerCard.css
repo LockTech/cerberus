@@ -5,7 +5,7 @@
 .card-danger .icon {
   @apply text-yellow-600 dark:text-yellow-300;
   @apply h-10 w-10;
-  @apply hidden sm:block;
+  @apply flex-shrink-0 hidden sm:block;
 }
 
 .card-danger .action {

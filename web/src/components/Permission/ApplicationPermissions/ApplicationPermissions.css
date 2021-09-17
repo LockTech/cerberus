@@ -13,7 +13,7 @@
 .applicationPermission-button .icon {
   @apply text-gray-400 dark:text-gray-300;
   @apply duration-200 ease-in-out transform transition;
-  @apply h-[20px] w-[20px];
+  @apply flex-shrink-0 h-[20px] w-[20px];
 }
 .applicationPermission-button .icon.active {
   @apply text-gray-900 dark:text-gray-50;

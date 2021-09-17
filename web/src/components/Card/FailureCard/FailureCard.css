@@ -8,6 +8,7 @@
   @apply text-red-500;
   @apply dark:text-red-400;
   /* Misc */
+  @apply flex-shrink-0;
   @apply h-16 w-16;
   @apply m-auto;
 }

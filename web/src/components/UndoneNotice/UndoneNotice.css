@@ -3,5 +3,6 @@
 }
 
 .undoneNotice .icon {
-  @apply text-yellow-600 dark:text-yellow-300 h-6 w-6;
+  @apply text-yellow-600 dark:text-yellow-300;
+  @apply flex-shrink-0 h-6 w-6;
 }

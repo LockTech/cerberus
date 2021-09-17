@@ -9,7 +9,7 @@ const DeleteModalTitle = ({ children }: DeleteModalTitleProps) => {
     <div className="flex flex-row items-center space-x-4 sm:space-x-6">
       <div
         aria-hidden="true"
-        className="text-red-600 dark:text-red-400 h-10 w-10"
+        className="flex-shrink-0 text-red-600 dark:text-red-400 h-10 w-10"
       >
         <TrashIcon />
       </div>

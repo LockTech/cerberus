@@ -120,6 +120,7 @@ html, body, #redwood-app {
   }
 
   .toast-icon {
+    @apply flex-shrink-0;
     @apply h-[20px] w-[20px];
   }
   .toast.error .toast-icon {
