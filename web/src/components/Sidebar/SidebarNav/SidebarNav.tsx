@@ -7,7 +7,7 @@ import './SidebarNav.css'
 const SidebarNav = () => {
   const { t } = useTranslation()
 
-  const home = useMatch(routes.home()).match
+  // const home = useMatch(routes.home()).match
   //
   // const accountActivity = false
   const listAccountsMatch = useMatch(routes.listAccounts()).match
@@ -23,7 +23,7 @@ const SidebarNav = () => {
   return (
     <nav>
       {/* General */}
-      <div className="nav-group">
+      {/* <div className="nav-group">
         <p className="nav-group-title">{t('Sidebar.Nav.general.title')}</p>
         <button
           className={clsx(home && 'active')}
@@ -31,7 +31,7 @@ const SidebarNav = () => {
         >
           {t('Sidebar.Nav.general.dashboard')}
         </button>
-      </div>
+      </div> */}
       {/* Members */}
       <div className="nav-group">
         <p className="nav-group-title">{t('Sidebar.Nav.members.title')}</p>
