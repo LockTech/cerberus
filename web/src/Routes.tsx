@@ -24,7 +24,7 @@ const Routes = () => {
           {/* Organizations */}
           <Route path="/organization" page={OrganizationPage} name="organization" />
         </Set>
-        <Set prerender wrap={[AuthLayout]}>
+        <Set wrap={[AuthLayout]}>
           <Route path="/invite/confirmation" name="inviteConfirmation" page={AuthInviteConfirmationPage} />
           <Route path="/login" name="login" page={AuthLoginPage} />
           <Route path="/signup" name="signup" page={AuthSignupPage} />
