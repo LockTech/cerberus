@@ -88,7 +88,7 @@ const RoleCreateModal = () => {
               <Label className="input-label" name="name">
                 {t('Role.Create.Modal.form.name.label')}
               </Label>
-              <FieldError className="input-error" name="name" />
+              <FieldError className="input-error-label" name="name" />
             </div>
             <div className="form-button space-x-4">
               <Submit className="btn btn-primary" disabled={loading}>

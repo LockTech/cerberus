@@ -103,7 +103,7 @@ const RoleUpdateCard = ({ role: { color, id, name } }: RoleUpdateCardProps) => {
           <Label className="input-label" name="name">
             {t('Role.Update.Card.form.name.label')}
           </Label>
-          <FieldError className="input-error" name="name" />
+          <FieldError className="input-error-label" name="name" />
         </div>
         <div className="input-group">
           <Label className="input-label" name="color">
@@ -122,7 +122,7 @@ const RoleUpdateCard = ({ role: { color, id, name } }: RoleUpdateCardProps) => {
           <Label className="input-hint" errorClassName="hidden" name="color">
             {t('Role.Update.Card.form.color.hint')}
           </Label>
-          <FieldError className="input-error" name="color" />
+          <FieldError className="input-error-label" name="color" />
           <div className="flex flex-col md:flex-row items-center mt-6 self-center space-x-0 md:space-x-12 space-y-4 md:space-y-0">
             <div className="bg-white px-6 py-4 rounded-md">
               <RoleBadge color={currentColor} name={currentName} />

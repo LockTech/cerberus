@@ -136,7 +136,7 @@ const AccountUpdateCard = ({
           <Label className="input-label" name="email">
             {t('Account.Update.Card.form.email.label')}
           </Label>
-          <FieldError className="input-error" name="email" />
+          <FieldError className="input-error-label" name="email" />
         </div>
         {/* name */}
         <div className="input-group floating">
@@ -156,7 +156,7 @@ const AccountUpdateCard = ({
           <Label className="input-label" name="name">
             {t('Account.Update.Card.form.name.label')}
           </Label>
-          <FieldError className="input-error" name="name" />
+          <FieldError className="input-error-label" name="name" />
         </div>
         {/* disabled */}
         <Switch.Group as="div" className="input-group">

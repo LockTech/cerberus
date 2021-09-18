@@ -68,7 +68,7 @@ const SignupLoginPage = ({ email, redirectTo }: SignupLoginPageProps) => {
             >
               {t('Signup.Login.Page.form.email.label')}
             </Label>
-            <FieldError className="input-error" name="email" />
+            <FieldError className="input-error-label" name="email" />
           </div>
           <div className="input-group floating">
             <PasswordField
@@ -87,7 +87,7 @@ const SignupLoginPage = ({ email, redirectTo }: SignupLoginPageProps) => {
             <Label className="input-label" name="password">
               {t('Signup.Login.Page.form.password.label')}
             </Label>
-            <FieldError className="input-error" name="password" />
+            <FieldError className="input-error-label" name="password" />
           </div>
           <Submit className="btn btn-primary w-full">
             {t('Signup.Login.Page.form.submit')}

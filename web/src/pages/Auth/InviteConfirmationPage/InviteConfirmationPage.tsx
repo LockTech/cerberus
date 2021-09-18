@@ -76,7 +76,7 @@ const InviteConfirmationPage = ({
             <Label className="input-label" name="name">
               {t('Invite.Confirmation.Page.form.name.label')}
             </Label>
-            <FieldError className="input-error" name="name" />
+            <FieldError className="input-error-label" name="name" />
           </div>
           {/* Email */}
           <div className="input-group floating">
@@ -96,7 +96,7 @@ const InviteConfirmationPage = ({
             <Label className="input-label" name="email">
               {t('Invite.Confirmation.Page.form.email.label')}
             </Label>
-            <FieldError className="input-error" name="email" />
+            <FieldError className="input-error-label" name="email" />
           </div>
           {/* Password */}
           <div className="input-group floating">
@@ -123,7 +123,7 @@ const InviteConfirmationPage = ({
             <Label className="input-label" name="password">
               {t('Invite.Confirmation.Page.form.password.label')}
             </Label>
-            <FieldError className="input-error" name="password" />
+            <FieldError className="input-error-label" name="password" />
           </div>
           {/* Confirm Password */}
           <div className="input-group floating">
@@ -143,7 +143,7 @@ const InviteConfirmationPage = ({
             <Label className="input-label" name="confirmPassword">
               {t('Invite.Confirmation.Page.form.confirmPassword.label')}
             </Label>
-            <FieldError className="input-error" name="confirmPassword" />
+            <FieldError className="input-error-label" name="confirmPassword" />
           </div>
           <Submit className="btn btn-primary w-full">
             {t('Invite.Confirmation.Page.form.submit')}

@@ -74,7 +74,7 @@ const AccountInviteModal = () => {
               <Label className="input-label" name="email">
                 {t('Account.Invite.Modal.form.email.label')}
               </Label>
-              <FieldError className="input-error" name="email" />
+              <FieldError className="input-error-label" name="email" />
             </div>
             <div className="form-button space-x-4">
               <Submit className="btn btn-primary" disabled={loading}>

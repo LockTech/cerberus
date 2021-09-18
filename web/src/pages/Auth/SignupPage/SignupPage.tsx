@@ -75,7 +75,7 @@ const SignupPage = ({ redirectTo = '/' }: SignupPageProps) => {
             <Label className="input-label" name="name">
               {t('Signup.Page.form.name.label')}
             </Label>
-            <FieldError className="input-error" name="name" />
+            <FieldError className="input-error-label" name="name" />
           </div>
           <div className="input-group floating">
             <EmailField
@@ -98,7 +98,7 @@ const SignupPage = ({ redirectTo = '/' }: SignupPageProps) => {
             >
               {t('Signup.Page.form.email.label')}
             </Label>
-            <FieldError className="input-error" name="email" />
+            <FieldError className="input-error-label" name="email" />
           </div>
           <div className="input-group floating">
             <PasswordField
@@ -128,7 +128,7 @@ const SignupPage = ({ redirectTo = '/' }: SignupPageProps) => {
             >
               {t('Signup.Page.form.password.hint')}
             </Label>
-            <FieldError className="input-error" name="password" />
+            <FieldError className="input-error-label" name="password" />
           </div>
           <div className="input-group floating">
             <PasswordField
@@ -146,7 +146,7 @@ const SignupPage = ({ redirectTo = '/' }: SignupPageProps) => {
             <Label className="input-label" name="confirmPassword">
               {t('Signup.Page.form.confirmPassword.label')}
             </Label>
-            <FieldError className="input-error" name="confirmPassword" />
+            <FieldError className="input-error-label" name="confirmPassword" />
           </div>
           <Submit className="btn btn-primary w-full">
             {t('Signup.Page.form.submit')}

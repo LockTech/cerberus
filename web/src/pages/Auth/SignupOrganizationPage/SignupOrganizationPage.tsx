@@ -80,7 +80,7 @@ const SignupOrganizationPage = ({
             <Label className="input-label" name="name">
               {t('Signup.Organization.Page.form.name.label')}
             </Label>
-            <FieldError className="input-error" name="name" />
+            <FieldError className="input-error-label" name="name" />
           </div>
           <div className="input-group floating">
             <TextField
@@ -110,7 +110,7 @@ const SignupOrganizationPage = ({
             >
               {t('Signup.Organization.Page.form.adminRoleName.hint')}
             </Label>
-            <FieldError className="input-error" name="adminRoleName" />
+            <FieldError className="input-error-label" name="adminRoleName" />
           </div>
           <Submit className="btn btn-primary w-full" disabled={loading}>
             {t('Signup.Organization.Page.form.submit')}

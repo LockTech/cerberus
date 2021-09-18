@@ -89,7 +89,7 @@ const OrganizationUpdateCard = ({
           <Label className="input-label" name="name">
             {t('Organization.Update.Card.form.name.label')}
           </Label>
-          <FieldError className="input-error" name="name" />
+          <FieldError className="input-error-label" name="name" />
         </div>
         <Submit
           className="btn btn-primary form-button"
