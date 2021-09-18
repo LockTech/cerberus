@@ -52,7 +52,7 @@ const Select = ({ defaultValue, disabled, name, values }: SelectProps) => {
       value={hSelected}
       {...rest}
     >
-      <Listbox.Button className="select-trigger">
+      <Listbox.Button className="select-button">
         <span>{fSelected?.name}</span>
         <SelectorIcon aria-hidden="true" className="icon" />
       </Listbox.Button>

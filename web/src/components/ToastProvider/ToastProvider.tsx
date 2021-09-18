@@ -11,6 +11,19 @@ import type { Toast } from '@redwoodjs/web/toast'
 
 import LoadingSpinner from 'src/components/Loading/LoadingSpinner'
 
+const toastColor = (type: Toast['type']) => {
+  switch (type) {
+    case 'error':
+      return 'toast-red'
+    case 'loading':
+      return 'toast-primary'
+    case 'success':
+      return 'toast-green'
+    default:
+      return null
+  }
+}
+
 const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
   switch (type) {
     case 'blank':
@@ -20,13 +33,13 @@ const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
       return customIcon
 
     case 'error':
-      return <ExclamationCircleIcon aria-hidden="true" />
+      return <ExclamationCircleIcon aria-hidden="true" className="h-6 w-6" />
 
     case 'loading':
-      return <LoadingSpinner aria-hidden="true" />
+      return <LoadingSpinner aria-hidden="true" className="h-6 w-6" />
 
     case 'success':
-      return <CheckCircleIcon aria-hidden="true" />
+      return <CheckCircleIcon aria-hidden="true" className="h-6 w-6" />
   }
 }
 
@@ -48,7 +61,7 @@ const ToastProvider = () => {
           <Transition
             appear={true}
             as="div"
-            className={clsx('toast', t.type)}
+            className={clsx('toast', toastColor(t.type))}
             enter="duration-300 ease-in-out origin-bottom sm:origin-right transition transform"
             enterFrom="opacity-0 scale-90"
             enterTo="opacity-100 scale-100"
@@ -58,16 +71,14 @@ const ToastProvider = () => {
             role="alert"
             show={t.visible}
           >
-            <div className="toast-content">
-              <div className="toast-icon">{ToastIcon(t.type)}</div>
-              <p className="toast-text">{resolveValue(t.message, t)}</p>
-            </div>
+            <div className="toast-icon">{ToastIcon(t.type)}</div>
+            <p className="toast-text">{resolveValue(t.message, t)}</p>
             <button
               aria-label={translate('Toast.close')}
-              className="toast-close-button"
+              className="toast-close"
               onClick={() => toast.dismiss(t.id)}
             >
-              <XIcon aria-hidden="true" />
+              <XIcon aria-hidden="true" className="w-4 h-4" />
             </button>
           </Transition>
         )
