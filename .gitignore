@@ -1,3 +1,4 @@
+# Redwood's Defaults
 .idea
 .DS_Store
 .env
@@ -11,6 +12,7 @@ yarn-error.log
 web/public/mockServiceWorker.js
 web/types/graphql.d.ts
 api/types/graphql.d.ts
-coverage/*
+coverage
 
-config/*
+# Cerberus
+config
