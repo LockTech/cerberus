@@ -43,6 +43,12 @@ export const checkTuple = async (tuple: KetoRelationTuple) => {
     res = await fetch.POST<CheckTupleResult>(CheckURL, tuple)
   } catch (err) {
     const { response } = err as AxiosError<CheckTupleResult>
+
+    if (!response) {
+      logger.error({ err }, 'Error retrieving error from Keto service.')
+      throw new UserInputError('keto-tuple-check')
+    }
+
     const { status } = response
 
     if (status === 403) {
