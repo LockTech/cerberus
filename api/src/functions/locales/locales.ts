@@ -1,11 +1,16 @@
 import { ValidationError } from 'apollo-server-errors'
 import type { APIGatewayEvent, Context } from 'aws-lambda'
 
-import { LocaleDirectory, LocaleLookupRegEx } from 'src/constants/locales'
+import {
+  LocaleDirectory,
+  LocaleEndpoint,
+  LocaleLookupRegEx,
+} from 'src/constants/locales'
 
 import { logger } from 'src/lib/logger'
 import { returnFunctionError, returnFunctionSuccess } from 'src/util/function'
 
+import { dropPath } from 'src/util/path'
 import { readFile } from 'src/util/readFile'
 
 const errorHelper = (error: string) =>
@@ -14,7 +19,6 @@ const errorHelper = (error: string) =>
 /**
  * @throws
  *  * 'locales-method-invalid' - When using a method other than `GET`.
- *  * 'locales-endpoint-invalid' - When the request is issued against an invalid endpoint.
  *  * 'locales-path-invalid' - When validating the requested locale file is formatted correctly.
  *  * 'locales-path-exist' - When an error occurs reading the locale from disk.
  */
@@ -23,10 +27,9 @@ export const handler = async (event: APIGatewayEvent, context: Context) => {
 
   if (event.httpMethod !== 'GET') return errorHelper('locales-method-invalid')
 
-  let path = event.path
+  const path = dropPath(event.path, LocaleEndpoint)
 
-  if (path.search('/locales/')) return errorHelper('locales-endpoint-invalid')
-  path = event.path.replace('/locales/', '')
+  logger.debug({ path }, 'Searching for locale at given path.')
 
   if (path.length === 0) return errorHelper('locales-path-invalid')
 
