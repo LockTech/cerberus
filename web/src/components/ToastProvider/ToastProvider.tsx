@@ -11,6 +11,8 @@ import type { Toast } from '@redwoodjs/web/toast'
 
 import LoadingSpinner from 'src/components/Loading/LoadingSpinner'
 
+import './ToastProvider.css'
+
 const toastColor = (type: Toast['type']) => {
   switch (type) {
     case 'error':
@@ -36,7 +38,9 @@ const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
       return <ExclamationCircleIcon aria-hidden="true" className="h-6 w-6" />
 
     case 'loading':
-      return <LoadingSpinner aria-hidden="true" className="h-6 w-6" />
+      return (
+        <LoadingSpinner aria-hidden="true" className="h-6 w-6 toast-spinner" />
+      )
 
     case 'success':
       return <CheckCircleIcon aria-hidden="true" className="h-6 w-6" />

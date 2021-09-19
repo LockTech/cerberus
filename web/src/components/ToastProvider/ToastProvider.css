@@ -1,0 +1,7 @@
+.toast-spinner .outter {
+  @apply text-primary-400 dark:text-primary-700;
+}
+
+.toast-spinner .inner {
+  @apply text-primary-800 dark:text-primary-300;
+}
