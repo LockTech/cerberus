@@ -1,5 +1,9 @@
 {
   "private": true,
+  "scripts": {
+    "dev:build:api": "docker build -t cerberus_api:latest -f ./Dockerfile.api .",
+    "dev:build:web": "docker build -t cerberus_web:latest -f ./Dockerfile.web ."
+  },
   "workspaces": {
     "packages": [
       "api",
