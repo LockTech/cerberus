@@ -1,0 +1,39 @@
+# ==
+# Build
+FROM node:14-alpine as build
+
+WORKDIR /app
+
+COPY package.json package.json
+COPY yarn.lock yarn.lock
+
+COPY redwood.toml .
+COPY graphql.config.js .
+COPY babel.config.js .
+
+COPY api/package.json api/package.json
+COPY web/package.json web/package.json
+
+RUN yarn install --frozen-lockfile
+
+COPY web web
+
+COPY config/cerberus/.env .env
+
+RUN yarn rw build web
+
+#==
+# Serve
+FROM node:14-alpine
+
+WORKDIR /app
+
+COPY redwood.toml .
+
+COPY --from=build /app/web/dist web/dist
+
+RUN yarn add react react-dom @redwoodjs/cli
+
+EXPOSE 8910
+
+CMD [ "yarn", "rw", "serve", "web" ]
