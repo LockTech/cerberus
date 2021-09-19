@@ -3,8 +3,6 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import Backend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
-import { ApiURL } from './constants/variables'
-
 i18n
   .use(initReactI18next)
   .use(Backend)
@@ -34,13 +32,13 @@ i18n
       order: ['querystring', 'navigator'],
       lookupQuerystring: 'lng',
     },
-    debug: true,
+    debug: false,
     fallbackLng: 'en',
     supportedLngs: ['en', 'es'],
     ns: ['app', 'errors', 'languages', 'permissions'],
     defaultNS: 'app',
     backend: {
-      loadPath: `${ApiURL}/locales/{{lng}}/{{ns}}.json`,
+      loadPath: `${global.__REDWOOD__API_PROXY_PATH}/locales/{{lng}}/{{ns}}.json`,
     },
   })
 
