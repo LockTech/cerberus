@@ -10,7 +10,7 @@ const LoadingPage = () => {
         <LoadingSpinner className="h-24 w-24" />
         <p
           aria-live="polite"
-          className="text text-center text-sm tracking-widest uppercase"
+          className="capitalize text text-center text-sm tracking-widest"
         >
           Loading Cerberus
         </p>
