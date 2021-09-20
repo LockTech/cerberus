@@ -126,6 +126,7 @@ const AccountUpdateCard = ({
             defaultValue={email}
             errorClassName="input input-error"
             name="email"
+            placeholder={t('Account.Update.Card.form.name.placeholder')}
             validation={{
               required: {
                 value: true,
@@ -146,6 +147,7 @@ const AccountUpdateCard = ({
             defaultValue={name}
             errorClassName="input input-error"
             name="name"
+            placeholder={t('Account.Update.Card.form.name.placeholder')}
             validation={{
               required: {
                 value: true,

@@ -10,45 +10,32 @@ const SidebarNav = () => {
   // const home = useMatch(routes.home()).match
   //
   // const accountActivity = false
-  const listAccountsMatch = useMatch(routes.listAccounts()).match
+  const accountsMatch = useMatch(routes.listAccounts()).match
   const accountMatch = useMatch(routes.account()).match
-  const listAccounts = listAccountsMatch || accountMatch
+  const accounts = accountsMatch || accountMatch
   //
-  const listRolesMatch = useMatch(routes.listRoles()).match
+  const rolesMatch = useMatch(routes.listRoles()).match
   const roleMatch = useMatch(routes.role()).match
-  const listRoles = listRolesMatch || roleMatch
+  const roles = rolesMatch || roleMatch
   //
   const orgSettings = useMatch(routes.organization()).match
 
   return (
     <nav>
-      {/* General */}
-      {/* <div className="nav-group">
-        <p className="nav-group-title">{t('Sidebar.Nav.general.title')}</p>
-        <button
-          className={clsx(home && 'active')}
-          onClick={() => navigate(routes.home())}
-        >
-          {t('Sidebar.Nav.general.dashboard')}
-        </button>
-      </div> */}
       {/* Members */}
       <div className="nav-group">
         <p className="nav-group-title">{t('Sidebar.Nav.members.title')}</p>
-        {/* <button className={clsx(accountActivity && 'active')}>
-          {t('Sidebar.Nav.members.activity')}
-        </button> */}
         <button
-          className={clsx(listAccounts && 'active')}
+          className={clsx(accounts && 'active')}
           onClick={() => navigate(routes.listAccounts())}
         >
-          {t('Sidebar.Nav.members.listAccounts')}
+          {t('Sidebar.Nav.members.accounts')}
         </button>
         <button
-          className={clsx(listRoles && 'active')}
+          className={clsx(roles && 'active')}
           onClick={() => navigate(routes.listRoles())}
         >
-          {t('Sidebar.Nav.members.listRoles')}
+          {t('Sidebar.Nav.members.roles')}
         </button>
       </div>
       {/* Organization */}
@@ -58,7 +45,7 @@ const SidebarNav = () => {
           className={clsx(orgSettings && 'active')}
           onClick={() => navigate(routes.organization())}
         >
-          {t('Sidebar.Nav.organization.settings')}
+          {t('Sidebar.Nav.organization.details')}
         </button>
       </div>
     </nav>

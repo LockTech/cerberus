@@ -67,7 +67,7 @@ const Sidebar = () => {
             target="_blank"
             rel="noreferrer"
           >
-            {t('Sidebar.copyright')}
+            © 2021 LockTech Software
           </a>
         </footer>
       </Transition.Child>
