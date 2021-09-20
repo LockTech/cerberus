@@ -24,6 +24,7 @@ export const handler = async (
     loginExpires,
     loginHandler,
   })
+
   const res = await authHandler.invoke()
 
   logger.info('Successfully invoked auth handler')
