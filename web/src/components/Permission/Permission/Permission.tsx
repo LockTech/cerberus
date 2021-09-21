@@ -71,7 +71,7 @@ const Permission = ({
             setActive(state)
             return t('Permission.add.success', tOptions)
           },
-          error: (err) => et(err),
+          error: (err) => et(err, tOptions),
         })
       !state &&
         toast.promise(del(), {

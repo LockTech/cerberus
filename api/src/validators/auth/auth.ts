@@ -80,7 +80,7 @@ export const validateAuthDisabled = (s: string) => {
 /**
  * @throws
  *  * 'auth-organization-invalid' - When `context.currentUser.organizationId` is not a valid v4 UUID.
- *  * 'auth-organization-forbidden' - When `context.currentUser.organizationId` is not a valid organization.
+ *  * 'auth-organization-exist' - When `context.currentUser.organizationId` is not a valid organization.
  */
 export const validateAuthOrganization = async (s: string) => {
   validateCurrentUser(s)
@@ -91,7 +91,7 @@ export const validateAuthOrganization = async (s: string) => {
 
   const res = await db.organization.findUnique({ where: { id } })
 
-  if (res === null) throw new ValidationError('auth-organization-forbidden')
+  if (res === null) throw new ValidationError('auth-organization-exist')
 }
 
 /**

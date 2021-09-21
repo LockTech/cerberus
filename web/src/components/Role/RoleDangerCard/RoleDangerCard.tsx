@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next'
 import DangerCard from 'src/components/Card/DangerCard'
 import RoleDeleteModal from 'src/components/Role/RoleDeleteModal'
 
-import type { RoleUpdateQuery } from 'types/graphql'
+import type { RoleDetailQuery } from 'types/graphql'
 
 export interface RoleDangerCardProps {
-  role: RoleUpdateQuery['role']
+  role: RoleDetailQuery['role']
 }
 
 const RoleDangerCard = ({ role: { id, name } }: RoleDangerCardProps) => {
@@ -16,9 +16,7 @@ const RoleDangerCard = ({ role: { id, name } }: RoleDangerCardProps) => {
     <DangerCard>
       <div className="action">
         <div className="space-y-1">
-          <p className="text">
-            {t('Role.DangerCard.delete.title', { name })}
-          </p>
+          <p className="text">{t('Role.DangerCard.delete.title', { name })}</p>
           <p className="muted hint">{t('Role.DangerCard.delete.subtitle')}</p>
         </div>
         <RoleDeleteModal id={id} />
