@@ -74,7 +74,7 @@
     },
     "Role": {
       "Cell": {
-        "Loading": "Loading the member's role details.",
+        "Loading": "Loading the member's roles.",
         "Success": {
           "title": "Roles",
           "subtitle": "Click or tap a role to add or remove it from this account.",
