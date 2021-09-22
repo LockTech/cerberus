@@ -18,11 +18,20 @@ html, body, #redwood-app {
 }
 
 @layer components {
+  .card.body {
+    @apply p-4 sm:p-6 space-y-6;
+  }
   .card-interactive {
     @apply hover:bg-gray-50 active:bg-gray-100;
     @apply dark:hover:bg-gray-700 dark:active:bg-gray-600;
     @apply flex flex-col items-center;
     @apply font-normal normal-case tracking-normal;
+  }
+  .form {
+    @apply flex flex-col space-y-6;
+  }
+  .form-button {
+    @apply self-end;
   }
   .list-layout {
     @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
@@ -36,18 +45,27 @@ html, body, #redwood-app {
   .page-layout {
     @apply space-y-8;
   }
-  .card.body {
-    @apply p-4 sm:p-6 space-y-6;
+  .status-page {
+    @apply p-4 sm:p-8 sm:mx-auto sm:max-w-3xl;
   }
-  .form {
-    @apply flex flex-col space-y-6;
+  .status-page .card {
+    @apply space-y-4;
   }
-  .form-button {
-    @apply self-end;
+  .status-page .content {
+    @apply space-y-4;
+  }
+  .status-page .actions {
+    @apply flex flex-col items-center justify-center space-y-4;
+    @apply sm:flex-row sm:space-y-0 sm:space-x-6;
+    @apply pt-2;
   }
 }
 
 @layer utilities {
+  .btn-ghost {
+    @apply bg-transparent hover:bg-auto active:bg-auto;
+    @apply text-gray-900 dark:text-gray-50;
+  }
   .btn-primary-ghost {
     @apply bg-transparent hover:bg-primary-600 active:bg-primary-700;
     @apply focus:ring-primary-500;

@@ -1,36 +1,46 @@
-import { navigate, routes } from '@redwoodjs/router'
 import { useTranslation } from 'react-i18next'
+import { Link, routes, useLocation } from '@redwoodjs/router'
 
 import { SupportURL } from 'src/constants/variables'
 
-import './NotFoundPage.css'
+import ColorModeLayout from 'src/layouts/ColorModeLayout'
 
 export default () => {
   const { t } = useTranslation()
 
+  const { pathname } = useLocation()
+
   return (
-    <main className="notFound-page">
-      <section className="wrapper">
-        <div className="content">
-          <header className="space-y-1">
-            <h1 className="text title">{t('NotFound.Page.title')}</h1>
-          </header>
-          <div className="actions">
-            <button
-              className="btn btn-primary w-full"
-              onClick={() => navigate(routes.home())}
-            >
-              {t('FatalError.Page.actions.dashboard')}
-            </button>
-            <button
-              className="btn w-full"
-              onClick={() => (window.location.href = SupportURL)}
-            >
-              {t('FatalError.Page.actions.support')}
-            </button>
+    <ColorModeLayout>
+      <main>
+        <section className="status-page">
+          <div className="card body">
+            <header className="space-y-1">
+              <h1 className="text title">Page Not Found</h1>
+            </header>
+            <div className="content">
+              <p className="text">{t('NotFound.Page.path')}</p>
+              <p className="bg-gray-50 dark:bg-gray-900 p-2 font-mono text-red-600 dark:text-red-300">
+                {pathname}
+              </p>
+              <p className="text">{t('NotFound.Page.support')}</p>
+            </div>
+            <div className="actions">
+              <Link className="btn btn-primary-ghost" to={routes.home()}>
+                {t('NotFound.Page.actions.dashboard')}
+              </Link>
+              <a
+                className="btn btn-ghost"
+                href={SupportURL}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {t('NotFound.Page.actions.support')}
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </ColorModeLayout>
   )
 }

@@ -182,8 +182,8 @@
   "FatalError": {
     "Page": {
       "title": "Something's gone wrong!",
-      "subtitle": "An unexpected error has occured that the application could not recover from.",
-      "support": "",
+      "error": "An unexpected error has occured that the application could not recover from.",
+      "support": "If this error continues to happen, please consider contacting support using the button below.",
       "actions": {
         "dashboard": "Goto the Dashboard",
         "support": "Contact Support"
@@ -269,7 +269,13 @@
   },
   "NotFound": {
     "Page": {
-      "title": "That page does not exist"
+      "title": "Page Not Found",
+      "path": "A page could not be found at the path:",
+      "support": "If you believe this to be an error, consider contacting support using the button below.",
+      "actions": {
+        "dashboard": "Goto the Dashboard",
+        "support": "Contact Support"
+      }
     }
   },
   "Organization": {
