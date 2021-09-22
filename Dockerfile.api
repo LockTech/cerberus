@@ -10,6 +10,7 @@ COPY yarn.lock .
 COPY api/package.json api/package.json
 
 RUN yarn install --frozen-lockfile
+RUN yarn workspace api add react react-dom
 
 COPY redwood.toml .
 COPY graphql.config.js .
