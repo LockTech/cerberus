@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "build:dev:api": "docker build -t cerberus_api:latest -f ./Dockerfile.api .",
-    "build:dev:web": "docker build -t cerberus_web:latest -f ./Dockerfile.web ."
+    "build:dev:web": "docker build -t cerberus_web:latest -f ./Dockerfile.web .",
+    "build:dev": "cross-env yarn build:dev:api && yarn build:dev:web"
   },
   "workspaces": {
     "packages": [
