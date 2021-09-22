@@ -15,6 +15,7 @@
   "dependencies": {
     "@headlessui/react": "1.4.1",
     "@heroicons/react": "^1.0.2",
+    "@locktech/atomic": "2.3.6",
     "@redwoodjs/auth": "^0.36.4",
     "@redwoodjs/forms": "^0.36.4",
     "@redwoodjs/router": "^0.36.4",
