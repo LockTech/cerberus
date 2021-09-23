@@ -25,9 +25,12 @@ FROM node:14-alpine
 
 WORKDIR /app
 
+COPY package.json .
 COPY api/package.json api/package.json
 
-RUN yarn install && yarn add react react-dom @redwoodjs/cli
+RUN yarn install --prod
+RUN yarn workspace api add react react-dom @redwoodjs/api
+RUN yarn add -W @redwoodjs/api-server @redwoodjs/internal
 
 COPY graphql.config.js .
 COPY redwood.toml .
@@ -38,4 +41,4 @@ COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
 
 EXPOSE 8911
 
-CMD [ "yarn", "rw", "serve", "api", "--port", "8911" ]
+CMD [ "yarn", "rw-api-server" ]
