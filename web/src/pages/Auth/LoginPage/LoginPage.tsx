@@ -39,58 +39,60 @@ const LoginPage = ({ redirectTo = '/' }: LoginPageProps) => {
   return (
     <>
       <MetaTags title={t('Login.Page.Meta.title')} />
-      <div className="card body">
-        <div className="space-y-1">
-          <h1 className="text title">{t('Login.Page.title')}</h1>
-          <p className="muted hint">{t('Login.Page.subtitle')}</p>
+      <div className="flex flex-col items-center space-y-6">
+        <div className="card body">
+          <div className="space-y-1">
+            <h1 className="text title">{t('Login.Page.title')}</h1>
+            <p className="muted hint">{t('Login.Page.subtitle')}</p>
+          </div>
+          <Form className="space-y-6" onSubmit={onSubmit}>
+            <div className="input-group floating">
+              <EmailField
+                autoComplete="email"
+                className="input"
+                errorClassName="input input-error"
+                name="email"
+                placeholder={t('Login.Page.form.email.placeholder')}
+                validation={{
+                  required: {
+                    value: true,
+                    message: t('Login.Page.form.email.required'),
+                  },
+                }}
+              />
+              <Label
+                className="input-label"
+                errorClassName="input-label"
+                name="email"
+              >
+                {t('Login.Page.form.email.label')}
+              </Label>
+              <FieldError className="input-error-label" name="email" />
+            </div>
+            <div className="input-group floating">
+              <PasswordField
+                autoComplete="new-password"
+                className="input"
+                errorClassName="input input-error"
+                name="password"
+                placeholder={t('Login.Page.form.password.placeholder')}
+                validation={{
+                  required: {
+                    value: true,
+                    message: t('Login.Page.form.password.required'),
+                  },
+                }}
+              />
+              <Label className="input-label" name="password">
+                {t('Login.Page.form.password.label')}
+              </Label>
+              <FieldError className="input-error-label" name="password" />
+            </div>
+            <Submit className="btn btn-primary w-full">
+              {t('Login.Page.form.submit')}
+            </Submit>
+          </Form>
         </div>
-        <Form className="space-y-6" onSubmit={onSubmit}>
-          <div className="input-group floating">
-            <EmailField
-              autoComplete="email"
-              className="input"
-              errorClassName="input input-error"
-              name="email"
-              placeholder={t('Login.Page.form.email.placeholder')}
-              validation={{
-                required: {
-                  value: true,
-                  message: t('Login.Page.form.email.required'),
-                },
-              }}
-            />
-            <Label
-              className="input-label"
-              errorClassName="input-label"
-              name="email"
-            >
-              {t('Login.Page.form.email.label')}
-            </Label>
-            <FieldError className="input-error-label" name="email" />
-          </div>
-          <div className="input-group floating">
-            <PasswordField
-              autoComplete="new-password"
-              className="input"
-              errorClassName="input input-error"
-              name="password"
-              placeholder={t('Login.Page.form.password.placeholder')}
-              validation={{
-                required: {
-                  value: true,
-                  message: t('Login.Page.form.password.required'),
-                },
-              }}
-            />
-            <Label className="input-label" name="password">
-              {t('Login.Page.form.password.label')}
-            </Label>
-            <FieldError className="input-error-label" name="password" />
-          </div>
-          <Submit className="btn btn-primary w-full">
-            {t('Login.Page.form.submit')}
-          </Submit>
-        </Form>
         <Link className="link mx-auto" to={routes.signup()}>
           {t('Login.Page.signup')}
         </Link>
