@@ -1,20 +1,24 @@
 #==
-# Build
-FROM node:14-alpine as build
+# Base
+FROM node:14-alpine as base
 
 WORKDIR /app
 
-COPY package.json .
-COPY yarn.lock .
+COPY package.json package.json
+COPY yarn.lock yarn.lock
 
+COPY web/package.json web/package.json
 COPY api/package.json api/package.json
 
 RUN yarn install --frozen-lockfile
-RUN yarn workspace api add react react-dom
 
 COPY redwood.toml .
 COPY graphql.config.js .
 COPY babel.config.js .
+
+#==
+# Build API
+FROM base as api_build
 
 COPY api api
 RUN yarn rw build api
@@ -25,20 +29,17 @@ FROM node:14-alpine
 
 WORKDIR /app
 
-COPY package.json .
-COPY api/package.json api/package.json
+COPY api/package.json .
 
-RUN yarn install --prod
-RUN yarn workspace api add react react-dom @redwoodjs/api
-RUN yarn add -W @redwoodjs/api-server @redwoodjs/internal
+RUN yarn install && yarn add react react-dom @redwoodjs/cli
 
 COPY graphql.config.js .
 COPY redwood.toml .
 COPY api api
 
-COPY --from=build /app/api/dist /app/api/dist
-COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
+COPY --from=api_build /app/api/dist /app/api/dist
+COPY --from=api_build /app/node_modules/.prisma /app/node_modules/.prisma
 
 EXPOSE 8911
 
-CMD [ "yarn", "rw-api-server" ]
+CMD [ "yarn", "rw", "serve", "api", "--port", "8911" ]
