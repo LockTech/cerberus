@@ -157,7 +157,7 @@ const SignupPage = ({ redirectTo = '/' }: SignupPageProps) => {
             </Submit>
           </Form>
         </div>
-        <Link className="link mx-auto" to={routes.login()}>
+        <Link className="link mx-auto text-sm" to={routes.login()}>
           {t('Signup.Page.login')}
         </Link>
       </div>

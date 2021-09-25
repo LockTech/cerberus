@@ -31,7 +31,9 @@ const LoginPage = ({ redirectTo = '/' }: LoginPageProps) => {
     async (data: LoginFormData) => {
       const res = await logIn(data)
 
-      window.location.href = !res.errors ? redirectTo : ''
+      if (!res.error) {
+        window.location.href = redirectTo
+      }
     },
     [logIn, redirectTo]
   )
@@ -39,7 +41,7 @@ const LoginPage = ({ redirectTo = '/' }: LoginPageProps) => {
   return (
     <>
       <MetaTags title={t('Login.Page.Meta.title')} />
-      <div className="flex flex-col items-center space-y-6">
+      <div className="flex flex-col items-center space-y-4">
         <div className="card body">
           <div className="space-y-1">
             <h1 className="text title">{t('Login.Page.title')}</h1>
@@ -93,7 +95,7 @@ const LoginPage = ({ redirectTo = '/' }: LoginPageProps) => {
             </Submit>
           </Form>
         </div>
-        <Link className="link mx-auto" to={routes.signup()}>
+        <Link className="link mx-auto text-sm" to={routes.signup()}>
           {t('Login.Page.signup')}
         </Link>
       </div>
