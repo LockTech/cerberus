@@ -3,7 +3,7 @@
 }
 
 .account-menu-button {
-  @apply btn outline-none;
+  @apply btn;
   /* Background */
   @apply bg-transparent;
   @apply hover:bg-gray-100 active:bg-gray-200 active:bg-opacity-50;
