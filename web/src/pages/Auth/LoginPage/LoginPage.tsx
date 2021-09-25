@@ -73,7 +73,7 @@ const LoginPage = ({ redirectTo = '/' }: LoginPageProps) => {
             </div>
             <div className="input-group floating">
               <PasswordField
-                autoComplete="new-password"
+                autoComplete="current-password"
                 className="input"
                 errorClassName="input input-error"
                 name="password"
