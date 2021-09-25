@@ -4,12 +4,12 @@ FROM node:14-alpine as build
 
 WORKDIR /app
 
-COPY package.json .
-COPY yarn.lock .
+COPY package.json package.json
+COPY yarn.lock yarn.lock
 
-COPY redwood.toml .
-COPY graphql.config.js .
-COPY babel.config.js .
+COPY redwood.toml redwood.toml
+COPY graphql.config.js graphql.config.js
+COPY babel.config.js babel.config.js
 
 COPY web/package.json web/package.json
 
@@ -27,7 +27,7 @@ FROM node:14-alpine
 
 WORKDIR /app
 
-COPY redwood.toml .
+COPY redwood.toml redwood.toml
 
 COPY --from=build /app/web/dist web/dist
 
