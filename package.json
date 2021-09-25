@@ -3,7 +3,7 @@
   "scripts": {
     "docker:api": "docker build -t cerberus_api:latest -t ghcr.io/locktech/cerberus_api:v0.1.0 -f ./Dockerfile.api .",
     "docker:web": "docker build -t cerberus_web:latest -f ./Dockerfile.web .",
-    "docker": "cross-env yarn docker:build:api && yarn docker:build:web"
+    "docker": "cross-env yarn docker:api && yarn docker:web"
   },
   "workspaces": {
     "packages": [
