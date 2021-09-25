@@ -1,5 +1,5 @@
 import { validate as isUUID } from 'uuid'
-import { ValidationError } from '@redwoodjs/api'
+import { ValidationError } from '@redwoodjs/graphql-server'
 
 import {
   AccountEmailMaxLength,
@@ -26,10 +26,7 @@ import type {
  * @throws
  *  * 'account-disabled-invalid' - When `disabled` is not a boolean.
  */
-export const validateAccountDisabled = (
-  s: string,
-  { disabled }: DisabledInput
-) => {
+export const validateAccountDisabled = ({ disabled }: DisabledInput) => {
   if (!isBool(disabled)) throw new ValidationError('account-disabled-invalid')
 }
 
@@ -40,10 +37,7 @@ export const validateAccountDisabled = (
  *  * 'account-email-reserved' - When `email` contains a reserved character.
  *  * 'account-email-unique' - When `email` is in use by another account.
  */
-export const validateAccountEmail = async (
-  s: string,
-  { email }: EmailInput
-) => {
+export const validateAccountEmail = async ({ email }: EmailInput) => {
   if (!isStr(email)) throw new ValidationError('account-email-invalid')
 
   if (email.length <= 0 || email.length > AccountEmailMaxLength)
@@ -61,7 +55,7 @@ export const validateAccountEmail = async (
  *  * 'account-id-invalid' - When `id` is not a valid UUID.
  *  * 'account-id-forbidden' - When `id` is not accessibile by the invoking account.
  */
-export const validateAccountID = async (s: string, { id }: IDInput) => {
+export const validateAccountID = async ({ id }: IDInput) => {
   if (!isUUID(id)) throw new ValidationError('account-id-invalid')
 
   const organizationId = getContextUser().organizationId
@@ -78,7 +72,7 @@ export const validateAccountID = async (s: string, { id }: IDInput) => {
  *  * 'account-name-invalid' - When `name` is not a string.
  *  * 'account-name-length' - When `name` is less than 1 or greater than `AccountNameMaxLength` characters long.
  */
-export const validateAccountName = (s: string, { name }: NameInput) => {
+export const validateAccountName = ({ name }: NameInput) => {
   if (!isStr(name)) throw new ValidationError('account-name-invalid')
 
   if (name.length <= 0 || name.length > AccountNameMaxLength)

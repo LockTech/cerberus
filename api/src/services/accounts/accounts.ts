@@ -1,6 +1,5 @@
 import type { Account, Role } from '@prisma/client'
-import { UserInputError } from '@redwoodjs/api'
-import type { BeforeResolverSpecType } from '@redwoodjs/api'
+import { UserInputError } from '@redwoodjs/graphql-server'
 
 import { AccountRemoveAuthFields } from 'src/constants/account'
 import {
@@ -20,34 +19,20 @@ import { organization as getOrganization } from 'src/services/organizations'
 
 import { randomStr } from 'src/util/randomStr'
 
-import { validateAuth } from 'src/validators/auth'
 import {
   validateAccountDisabled,
   validateAccountEmail,
   validateAccountID,
   validateAccountName,
 } from 'src/validators/account'
-import { reject } from 'src/validators/reject'
-
-/* eslint-disable prettier/prettier */
-const valUpdateDisabled = (s: string, { disabled }) => disabled && validateAccountDisabled(s, { disabled })
-const valUpdateEmail = (s: string, { email }) => email && validateAccountEmail(s, { email })
-const valUpdateName = (s: string, { name }) => name && validateAccountName(s, { name })
-
-export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { only: ['deleteAllAccounts'] })
-  rules.add(validateAuth)
-  rules.add(validateAccountEmail, { only: ['inviteAccount'] })
-  rules.add(validateAccountID, { only: ['account', 'updateAccount', 'deleteAccount'] })
-  rules.add([valUpdateDisabled, valUpdateEmail, valUpdateName], { only: ['updateAccount'] })
-}
-/* eslint-enable prettier/prettier */
 
 /**
  * @throws
  *  * 'account-invite-email-send' - When an error occurs sending the invitation email.
  */
 export const inviteAccount = async ({ email }) => {
+  await validateAccountEmail({ email })
+
   const organization = await getOrganization()
   const organizationId = organization.id
   const organizationName = organization.name
@@ -79,6 +64,8 @@ export const inviteAccount = async ({ email }) => {
  *  * 'account-read' - When an error occurs retrieving an account from the DB.
  */
 export const account = async ({ id }: { id: string }) => {
+  await validateAccountID({ id })
+
   const organizationId = getContextUser().organizationId
 
   let res: Account
@@ -139,6 +126,12 @@ export interface UpdateAccountArgs {
 /* eslint-disable prettier/prettier */
 export const updateAccount = async ({ id, disabled, email, name }: UpdateAccountArgs) => {
   /* eslint-enable prettier/prettier */
+
+  await validateAccountID({ id })
+  disabled && validateAccountDisabled({ disabled })
+  email && (await validateAccountEmail({ email }))
+  name && validateAccountName({ name })
+
   let res: Account
 
   try {
@@ -165,6 +158,8 @@ export interface DeleteAccountArgs {
  *  * 'account-delete' - When an error occures deleting the Account from the DB.
  */
 export const deleteAccount = async ({ id }: DeleteAccountArgs) => {
+  await validateAccountID({ id })
+
   const currentUser = getContextUser()
   const currentId = currentUser.id
 

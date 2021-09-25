@@ -1,5 +1,5 @@
 import type { Account } from '@prisma/client'
-import { context } from '@redwoodjs/api'
+import { context } from '@redwoodjs/graphql-server'
 
 /**
  * Retrieve the current request's authenticated `Account`;

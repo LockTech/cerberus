@@ -1,5 +1,5 @@
 export const schema = gql`
   type Query {
-    locales: [String!]!
+    locales: [String!]! @requireAuth
   }
 `

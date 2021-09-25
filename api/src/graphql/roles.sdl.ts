@@ -11,19 +11,21 @@ export const schema = gql`
   }
 
   type Query {
-    role(id: ID!): Role!
-    roles(accountId: ID): [Role!]!
+    role(id: ID!): Role! @isAdmin @requireAuth
+    roles(accountId: ID): [Role!]! @isAdmin @requireAuth
     #
   }
 
   type Mutation {
-    createRole(name: String!): Role!
-    deleteRole(id: ID!): Role!
+    createRole(name: String!): Role! @isAdmin @requireAuth
+    deleteRole(id: ID!): Role! @isAdmin @requireAuth
     updateRole(id: ID!, color: String, name: String): Role!
+      @isAdmin
+      @requireAuth
     #
-    addPermToRole(permissionId: ID!, roleId: ID!): Role!
-    addRoleToAccount(accountId: ID!, roleId: ID!): Role!
-    delPermFromRole(permissionId: ID!, roleId: ID!): Role!
-    delRoleFromAccount(accountId: ID!, roleId: ID!): Role!
+    addPermToRole(permissionId: ID!, roleId: ID!): Role! @isAdmin @requireAuth
+    addRoleToAccount(accountId: ID!, roleId: ID!): Role! @isAdmin @requireAuth
+    delPermFromRole(permissionId: ID!, roleId: ID!): Role! @isAdmin @requireAuth
+    delRoleFromAccount(accountId: ID!, roleId: ID!): Role! @isAdmin @requireAuth
   }
 `

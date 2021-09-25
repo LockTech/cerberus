@@ -1,5 +1,5 @@
 import type { Account } from '@prisma/client'
-import { ValidationError, UserInputError } from '@redwoodjs/api'
+import { ValidationError, UserInputError } from '@redwoodjs/graphql-server'
 
 import { KetoBuildOrgMemberTuple } from 'src/constants/keto'
 
@@ -133,8 +133,8 @@ export const signupHandler = async ({
   userAttributes: { code, name },
   ...rest
 }: SignupHandlerOptions) => {
-  validateAccountEmail('signupHandler', { email })
-  validateAccountName('signupHandler', { name })
+  await validateAccountEmail({ email })
+  validateAccountName({ name })
 
   if (isStr(code)) return await handleInvitation({ code, email, name, ...rest })
   else if (isUndefined(code))

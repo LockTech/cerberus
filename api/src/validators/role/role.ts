@@ -1,5 +1,5 @@
 import { validate as isUUID } from 'uuid'
-import { ValidationError } from '@redwoodjs/api'
+import { ValidationError } from '@redwoodjs/graphql-server'
 
 import { KetoBuildOrgRoleTuple } from 'src/constants/keto'
 import { RoleColorRegEx, RoleMaxNameLength } from 'src/constants/role'
@@ -18,7 +18,7 @@ import type { ColorInput, IDInput, NameInput } from 'types/inputs'
  *  * 'role-id-invalid' - When `id` is not a valid UUID.
  *  * 'role-forbidden' - When `id` does not belong to the invoking account's organization.
  */
-export const validateRoleId = async (_s: string, { id }: IDInput) => {
+export const validateRoleId = async ({ id }: IDInput) => {
   if (!isUUID(id)) throw new ValidationError('role-id-invalid')
 
   const orgId = getContextUser().organizationId
@@ -32,7 +32,7 @@ export const validateRoleId = async (_s: string, { id }: IDInput) => {
  * @throws
  *  * 'role-color-invalid' - When `color` is not formatted correctly: #RRGGBB.
  */
-export const validateRoleColor = (_s: string, { color }: ColorInput) => {
+export const validateRoleColor = ({ color }: ColorInput) => {
   if (!isStr(color) || color.matchAll(RoleColorRegEx) === null)
     throw new ValidationError('role-color-invalid')
 }
@@ -43,7 +43,7 @@ export const validateRoleColor = (_s: string, { color }: ColorInput) => {
  *  * 'role-name-length' - When `name` is less than or 0 or greater than `RoleMaxNameLength` characters long
  *  * 'role-name-unique' - When `name` is in use by another role owned by the invoking account's organization.
  */
-export const validateRoleName = async (_s: string, { name }: NameInput) => {
+export const validateRoleName = async ({ name }: NameInput) => {
   if (!isStr(name)) throw new ValidationError('role-name-invalid')
 
   if (name.length <= 0 || name.length > RoleMaxNameLength)

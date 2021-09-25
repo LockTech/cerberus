@@ -1,5 +1,5 @@
 import { validate as isUUID } from 'uuid'
-import { ValidationError } from '@redwoodjs/api'
+import { ValidationError } from '@redwoodjs/graphql-server'
 
 import type { PermissionTuple } from 'src/constants/permission'
 
@@ -13,10 +13,7 @@ import { db } from 'src/lib/db'
  *  * 'permission-tuple-invalid' - When `tuple` is not a valid `PermissionTuple`.
  *  * 'permission-tuple-unique' - When `tuple` is not unique.
  */
-export const validatePermissionTuple = async (
-  _s: string,
-  tuple: PermissionTuple
-) => {
+export const validatePermissionTuple = async (tuple: PermissionTuple) => {
   if (!isPermissionTuple(tuple))
     throw new ValidationError('permission-tuple-invalid')
 
@@ -35,10 +32,9 @@ export interface AccessRelationInput {
  * @throws
  *  * 'permission-accessRelation-invalid' - When `access_relation` is defined and not a `string`.
  */
-export const validatePermissionAccessRel = (
-  _s: string,
-  { access_relation }: AccessRelationInput
-) => {
+export const validatePermissionAccessRel = ({
+  access_relation,
+}: AccessRelationInput) => {
   if (isDefined(access_relation) && !isStr(access_relation))
     throw new ValidationError('permission-accessRelation-invalid')
 }
@@ -48,7 +44,7 @@ export const validatePermissionAccessRel = (
  *  * 'permission-id-invalid' - When `id` is not a valid UUID.
  *  * 'permission-id-exists' - When a permission with `id` does not exist.
  */
-export const validatePermissionId = async (_s: string, { id }: IDInput) => {
+export const validatePermissionId = async ({ id }: IDInput) => {
   if (!isUUID(id)) throw new ValidationError('permission-id-invalid')
 
   const res = await db.permission.findUnique({ where: { id } })

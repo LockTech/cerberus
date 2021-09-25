@@ -1,6 +1,5 @@
 import type { Account_Confirmation } from '@prisma/client'
-import { UserInputError } from '@redwoodjs/api'
-import type { BeforeResolverSpecType } from '@redwoodjs/api'
+import { UserInputError } from '@redwoodjs/graphql-server'
 
 import { ConfirmationCodeLength } from 'src/constants/signup'
 
@@ -10,15 +9,6 @@ import { db } from 'src/lib/db'
 import { logger, prismaLogger } from 'src/lib/logger'
 
 import { randomStr } from 'src/util/randomStr'
-
-import { reject } from 'src/validators/reject'
-
-/* eslint-disable prettier/prettier */
-export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { except: ['confirmSignup', 'resendConfirmation'] })
-  rules.skip({ only: ['confirmSignup', 'resendConfirmation'] })
-}
-/* eslint-enable prettier/prettier */
 
 export interface CreateInviteConfirmArgs {
   code: string

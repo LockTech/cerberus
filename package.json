@@ -1,9 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "build:dev:api": "docker build -t cerberus_api:latest -f ./Dockerfile.api .",
-    "build:dev:web": "docker build -t cerberus_web:latest -f ./Dockerfile.web .",
-    "build:dev": "cross-env yarn build:dev:api && yarn build:dev:web"
+    "docker:api": "docker build -t cerberus_api:latest -t ghcr.io/locktech/cerberus_api:v0.1.0 -f ./Dockerfile.api .",
+    "docker:web": "docker build -t cerberus_web:latest -f ./Dockerfile.web .",
+    "docker": "cross-env yarn docker:build:api && yarn docker:build:web"
   },
   "workspaces": {
     "packages": [
@@ -13,8 +13,7 @@
     ]
   },
   "devDependencies": {
-    "@redwoodjs/core": "^0.36.4",
-    "eslint-plugin-prettier": "^4.0.0"
+    "@redwoodjs/core": "^0.37.0-rc.60"
   },
   "eslintConfig": {
     "extends": "@redwoodjs/eslint-config",

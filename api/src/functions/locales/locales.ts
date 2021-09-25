@@ -1,4 +1,4 @@
-import { ValidationError } from 'apollo-server-errors'
+import { ValidationError } from '@redwoodjs/graphql-server'
 import type { APIGatewayEvent, Context } from 'aws-lambda'
 
 import {

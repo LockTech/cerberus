@@ -7,12 +7,13 @@ export const schema = gql`
   }
 
   type Query {
-    organization: Organization!
+    organization: Organization! @isAdmin @requireAuth
   }
 
   type Mutation {
     createOrganization(name: String!, adminRoleName: String!): Organization!
-    updateOrganization(name: String): Organization!
-    deleteOrganization: Organization!
+      @requireAuth
+    updateOrganization(name: String): Organization! @isAdmin @requireAuth
+    deleteOrganization: Organization! @isAdmin @requireAuth
   }
 `

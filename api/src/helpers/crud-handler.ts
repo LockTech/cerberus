@@ -1,5 +1,4 @@
-import type { APIGatewayEvent, Context, ProxyResult } from 'aws-lambda'
-import type { Resolver, RuleValidator } from '@redwoodjs/api'
+import type { Resolver, RuleValidator } from '@redwoodjs/graphql-server'
 
 import { FunctionDefaultHeaders as headers } from 'src/constants/function'
 
@@ -98,7 +97,7 @@ export class CRUDHandler {
     }
   }
 
-  async invoke(event: APIGatewayEvent, _c: Context): Promise<ProxyResult> {
+  async invoke(event, _c): Promise<unknown> {
     // validateJSONBody
     try {
       validateJSONBody('CRUDHandler', event)

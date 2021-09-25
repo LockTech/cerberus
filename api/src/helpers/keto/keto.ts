@@ -1,5 +1,5 @@
 import type { AxiosError } from 'axios'
-import { UserInputError } from '@redwoodjs/api'
+import { UserInputError } from '@redwoodjs/graphql-server'
 
 import { CheckURL, DeleteURL, WriteURL } from 'src/constants/keto'
 import type { KetoRelationTuple } from 'src/constants/keto'

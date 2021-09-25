@@ -1,9 +1,5 @@
 import type { Account, Organization, Permission, Role } from '@prisma/client'
-import {
-  BeforeResolverSpecType,
-  setContext,
-  UserInputError,
-} from '@redwoodjs/api'
+import { setContext, UserInputError } from '@redwoodjs/graphql-server'
 
 import { KetoBuildOrgMemberTuple } from 'src/constants/keto'
 
@@ -25,22 +21,7 @@ import {
   deleteRole,
 } from 'src/services/roles'
 
-import {
-  validateAuth,
-  validateAuthId,
-  validateAuthVerified,
-} from 'src/validators/auth'
 import { validateOrganizationName } from 'src/validators/organization/organization'
-
-/* eslint-disable prettier/prettier */
-const valUpdateOrgName = (s: string, { name }) => name && validateOrganizationName(s, { name })
-
-export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(validateAuth, { except: ['createOrganization'] })
-  rules.add([validateAuthVerified, validateAuthId, validateOrganizationName], { only: ['createOrganization'] })
-  rules.add([valUpdateOrgName], { only: ['updateOrganization'] })
-}
-/* eslint-enable prettier/prettier */
 
 export interface CreateOrganizationArgs {
   name: string
@@ -195,6 +176,8 @@ export interface UpdateOrganizationArgs {
  *  * 'organization-update' - When an error occurs updating the organization in the DB.
  */
 export const updateOrganization = async ({ name }: UpdateOrganizationArgs) => {
+  name && (await validateOrganizationName({ name }))
+
   const id = getContextUser().organizationId
 
   let res: Organization

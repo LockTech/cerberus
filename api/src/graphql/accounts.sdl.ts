@@ -14,18 +14,18 @@ export const schema = gql`
   }
 
   type Query {
-    account(id: ID!): Account!
-    accounts: [Account!]!
+    account(id: ID!): Account! @isAdmin @requireAuth
+    accounts: [Account!]! @isAdmin @requireAuth
   }
 
   type Mutation {
-    deleteAccount(id: ID!): Account!
-    inviteAccount(email: String!): Boolean!
+    deleteAccount(id: ID!): Account! @isAdmin @requireAuth
+    inviteAccount(email: String!): Boolean! @isAdmin @requireAuth
     updateAccount(
       id: ID!
       disabled: Boolean
       email: String
       name: String
-    ): Account!
+    ): Account! @isAdmin @requireAuth
   }
 `

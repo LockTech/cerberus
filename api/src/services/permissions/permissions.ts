@@ -1,6 +1,5 @@
 import type { Permission, Role } from '@prisma/client'
-import { UserInputError } from '@redwoodjs/api'
-import type { BeforeResolverSpecType } from '@redwoodjs/api'
+import { UserInputError } from '@redwoodjs/graphql-server'
 
 import { PermissionUndefinedTuple } from 'src/constants/permission'
 import type { PermissionTuple } from 'src/constants/permission'
@@ -8,25 +7,8 @@ import type { PermissionTuple } from 'src/constants/permission'
 import { db } from 'src/lib/db'
 import { prismaLogger } from 'src/lib/logger'
 
-import { validateAuth } from 'src/validators/auth'
-import { reject } from 'src/validators/reject'
-import {
-  validatePermissionId,
-  validatePermissionTuple,
-} from 'src/validators/permission'
 import { KetoBuildPermissionTuple } from 'src/constants/keto'
 import { deleteTuple } from 'src/helpers/keto'
-
-/* eslint-disable prettier/prettier */
-// const valGetPermissionId = (s: string, { id }) => id && validatePermissionId(s, { id })
-// const valGetPermissionTuple = (s: string, { tuple }) => tuple && validatePermissionTuple(s, tuple)
-
-export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { only: ['createPermission', 'deletePermission', 'permission', 'permissions'] })
-  // rules.add(validateAuth)
-  rules.skip({ only: ['applicationPermissions'] })
-}
-/* eslint-enable prettier/prettier */
 
 export interface CreatePermissionArgs {
   application: string
@@ -129,7 +111,7 @@ export const applicationPermissions = async () => {
   Object.keys(appPermList).forEach((application) => {
     res.push({
       application,
-      permissions: appPermList[application]
+      permissions: appPermList[application],
     })
   })
 

@@ -15,6 +15,6 @@ export const schema = gql`
   }
 
   type Query {
-    applicationPermissions: [ApplicationPermissions!]!
+    applicationPermissions: [ApplicationPermissions!]! @isAdmin @requireAuth
   }
 `

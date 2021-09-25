@@ -1,5 +1,5 @@
 import type { Account } from '@prisma/client'
-import { ValidationError } from '@redwoodjs/api'
+import { ValidationError } from '@redwoodjs/graphql-server'
 
 export const loginHandler = async (user: Account) => {
   const { disabled, verified } = user

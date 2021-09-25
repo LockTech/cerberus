@@ -1,9 +1,5 @@
 import type { Role } from '@prisma/client'
-import {
-  BeforeResolverSpecType,
-  ValidationError,
-  UserInputError,
-} from '@redwoodjs/api'
+import { ValidationError, UserInputError } from '@redwoodjs/graphql-server'
 
 import {
   KetoBuildAccountRoleTuple,
@@ -21,33 +17,12 @@ import { logger, prismaLogger } from 'src/lib/logger'
 import { permission as getPermission } from 'src/services/permissions'
 
 import { validateAccountID } from 'src/validators/account'
-import { validateAuth } from 'src/validators/auth'
 import { validatePermissionId } from 'src/validators/permission'
-import { reject } from 'src/validators/reject'
-import { validateRoleId, validateRoleName } from 'src/validators/role'
-
-/* eslint-disable prettier/prettier */
-const valUpdateRoleName = (s: string, { name }) => name && validateRoleName(s, { name })
-
-const validateRoleAccountId = (s: string, { accountId }) => validateAccountID(s, { id: accountId })
-const validateRolePermissionId = (s: string, { permissionId }) => validatePermissionId(s, { id: permissionId })
-const validateRoleIdEx = (s: string, { roleId }) => validateRoleId(s, { id: roleId })
-
-const validateRoleAccountIdEx = (s: string, { accountId }) => accountId && validateAccountID(s, { id: accountId })
-
-export const beforeResolver = (rules: BeforeResolverSpecType) => {
-  rules.add(reject, { only: ['deleteAllRoles'] })
-  rules.add(validateAuth)
-  rules.add(validateRoleId, { only: ['role', 'updateRole', 'deleteRole'] })
-  rules.add(validateRoleName, { only: ['createRole'] })
-  rules.add(valUpdateRoleName, { only: ['updateRole'] })
-  rules.add(validateRoleAccountIdEx, { only: ['roles'] })
-  // --
-  rules.add(validateRoleAccountId, { only: ['addRoleToAccount', 'delRoleFromAccount'] })
-  rules.add(validateRolePermissionId, { only: ['addPermToRole', 'delPermFromRole'] })
-  rules.add(validateRoleIdEx, { only: ['addPermToRole', 'addRoleToAccount', 'delPermFromRole', 'delRoleFromAccount'] })
-}
-/* eslint-enable prettier/prettier */
+import {
+  validateRoleColor,
+  validateRoleId,
+  validateRoleName,
+} from 'src/validators/role'
 
 export interface CreateRoleArgs {
   name: string
@@ -57,6 +32,8 @@ export interface CreateRoleArgs {
  *  * 'role-create' - When an error occurs creating the role in the DB.
  */
 export const createRole = async ({ name }: CreateRoleArgs) => {
+  await validateRoleName({ name })
+
   const organizationId = getContextUser().organizationId
 
   let res: Role
@@ -87,6 +64,8 @@ export interface RoleArgs {
  *  * 'role-read' - When an error occurs reading a role from the DB.
  */
 export const role = async ({ id }: RoleArgs) => {
+  await validateRoleId({ id })
+
   const organizationId = getContextUser().organizationId
 
   let res: Role
@@ -113,6 +92,8 @@ export interface RolesArgs {
  *  * 'roles-read' - When an error occurs reading roles from the DB.
  */
 export const roles = async ({ accountId }: RolesArgs) => {
+  accountId && (await validateAccountID({ id: accountId }))
+
   const organizationId = getContextUser().organizationId
 
   let res: Role[]
@@ -145,6 +126,11 @@ export interface UpdateRoleArgs {
  *  * 'role-update' - When an error occurs updating the role in the DB.
  */
 export const updateRole = async ({ color, id, name }: UpdateRoleArgs) => {
+  await validateRoleId({ id })
+
+  name && (await validateRoleName({ name }))
+  color && validateRoleColor({ color })
+
   let res: Role
 
   try {
@@ -169,6 +155,8 @@ export interface DeleteRoleArgs {
  *  * 'role-delete-admin' - When attempting to delete a role with Cerberus' 'Administrator' permission.
  */
 export const deleteRole = async ({ id }: DeleteRoleArgs) => {
+  await validateRoleId({ id })
+
   logger.trace({ id }, 'Deleting role.')
 
   const adminPerm = await db.permission.findUnique({
@@ -342,6 +330,9 @@ export const addPermToRole = async ({
   permissionId,
   roleId,
 }: AddPermToRoleArgs) => {
+  await validatePermissionId({ id: permissionId })
+  await validateRoleId({ id: roleId })
+
   logger.trace({ permissionId, roleId }, 'Adding permission to role.')
 
   const role = await db.role.findFirst({
@@ -395,6 +386,9 @@ export const addRoleToAccount = async ({
   accountId,
   roleId,
 }: AddRoleToAccountArgs) => {
+  await validateAccountID({ id: accountId })
+  await validateRoleId({ id: roleId })
+
   logger.trace({ accountId, roleId }, 'Deleting role from account.')
 
   const role = await db.role.findFirst({
@@ -440,6 +434,9 @@ export const delPermFromRole = async ({
   permissionId,
   roleId,
 }: DelPermFromRoleArgs) => {
+  await validatePermissionId({ id: permissionId })
+  await validateRoleId({ id: roleId })
+
   logger.trace({ permissionId, roleId }, 'Deleting permission from role.')
 
   const permission = await getPermission({ id: permissionId })
@@ -488,6 +485,9 @@ export const delRoleFromAccount = async ({
   accountId,
   roleId,
 }: DelRoleFromAccountArgs) => {
+  await validateAccountID({ id: accountId })
+  await validateRoleId({ id: roleId })
+
   logger.trace({ accountId, roleId }, 'Deleting role from account.')
 
   const tuple = KetoBuildAccountRoleTuple(accountId, roleId)
