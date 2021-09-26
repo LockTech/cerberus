@@ -3,8 +3,7 @@
 [web]
   includeEnvironmentVariables = ['BRAND_URL', 'PRIVACY_URL', 'SUPPORT_URL']
   title = "Cerberus"
-  apiProxyPath = "/cerberus/api"
-  apiProxyPort = 8000
+  apiProxyPath = "/api"
 [api]
   port = 8911
 [browser]
