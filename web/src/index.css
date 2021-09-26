@@ -55,7 +55,7 @@ html, body, #redwood-app {
     @apply space-y-4;
   }
   .status-page .actions {
-    @apply flex flex-col items-center justify-center space-y-4;
+    @apply flex flex-col items-center justify-around space-y-4;
     @apply sm:flex-row sm:space-y-0 sm:space-x-6;
     @apply pt-2;
   }
