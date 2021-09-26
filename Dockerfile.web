@@ -34,9 +34,9 @@ WORKDIR /app
 
 COPY --from=web_build /app/web/dist web/dist
 
-RUN yarn global add serve
+RUN yarn global add local-web-server
 
 EXPOSE 8910
 
-ENTRYPOINT [ "serve", "web/dist" ]
-CMD [ "-s", "-p", "8910" ]
+ENTRYPOINT [ "ws", "-d", "web/dist", "-s", "index.html", "-p", "8910" ]
+CMD []
