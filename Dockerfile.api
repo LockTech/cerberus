@@ -7,20 +7,21 @@ WORKDIR /app
 COPY package.json package.json
 COPY yarn.lock yarn.lock
 
-COPY web/package.json web/package.json
+COPY redwood.toml redwood.toml
+COPY graphql.config.js graphql.config.js
+COPY babel.config.js babel.config.js
+
 COPY api/package.json api/package.json
+COPY web/package.json web/package.json
 
 RUN yarn install --frozen-lockfile
 
-COPY redwood.toml .
-COPY graphql.config.js .
-COPY babel.config.js .
-
 #==
-# Build API
+# Build
 FROM base as api_build
 
 COPY api api
+
 RUN yarn rw build api
 
 #==
@@ -31,7 +32,7 @@ WORKDIR /app
 
 COPY api/package.json .
 
-RUN yarn install && yarn add react react-dom @redwoodjs/api-server @redwoodjs/internal
+RUN yarn install && yarn add react react-dom && yarn global add @redwoodjs/api-server @redwoodjs/internal
 
 COPY graphql.config.js .
 COPY redwood.toml .
@@ -42,4 +43,5 @@ COPY --from=api_build /app/node_modules/.prisma /app/node_modules/.prisma
 
 EXPOSE 8911
 
-CMD [ "yarn", "rw-api-server", "--port", "8911" ]
+ENTRYPOINT [ "rw-api-server" ]
+CMD []
