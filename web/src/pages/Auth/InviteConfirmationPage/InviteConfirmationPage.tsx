@@ -50,7 +50,7 @@ const InviteConfirmationPage = ({
   return (
     <>
       <MetaTags title={t('Invite.Confirmation.Page.Helmet.title')} />
-      <div className="card body">
+      <div className="card body min-w-[26rem]">
         <div className="space-y-1">
           <h1 className="text title">{t('Invite.Confirmation.Page.title')}</h1>
           <h1 className="muted hint">

@@ -40,7 +40,7 @@ const SignupLoginPage = ({ email, redirectTo }: SignupLoginPageProps) => {
   return (
     <>
       <MetaTags title={t('Signup.Login.Page.Meta.title')} />
-      <div className="card body">
+      <div className="card body min-w-[26rem]">
         <div className="space-y-1">
           <h1 className="text title">{t('Signup.Login.Page.title')}</h1>
           <p className="muted hint">{t('Signup.Login.Page.subtitle')}</p>

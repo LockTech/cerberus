@@ -48,7 +48,7 @@ const SignupPage = ({ redirectTo = '/' }: SignupPageProps) => {
     <>
       <MetaTags title={t('Signup.Page.Meta.title')} />
       <div className="flex flex-col items-center space-y-4">
-        <div className="card body">
+        <div className="card body min-w-[26rem]">
           <div className="space-y-1">
             <h1 className="text title">{t('Signup.Page.title')}</h1>
             <p className="muted subtitle">{t('Signup.Page.subtitle')}</p>

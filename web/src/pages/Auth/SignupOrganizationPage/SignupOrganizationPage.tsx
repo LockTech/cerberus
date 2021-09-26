@@ -57,7 +57,7 @@ const SignupOrganizationPage = ({
   return (
     <>
       <MetaTags title={t('Signup.Organization.Page.Meta.title')} />
-      <div className="card body">
+      <div className="card body min-w-[26rem]">
         <div>
           <h1 className="text title">{t('Signup.Organization.Page.title')}</h1>
           <p className="muted hint">{t('Signup.Organization.Page.subtitle')}</p>
