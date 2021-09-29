@@ -17,6 +17,7 @@
   },
   "eslintConfig": {
     "extends": "@redwoodjs/eslint-config",
+    "ignorePatterns": ["web/src/index.html"],
     "root": true
   },
   "engines": {
