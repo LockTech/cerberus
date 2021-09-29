@@ -1,0 +1,37 @@
+project:
+  group: locktech
+  name: cerberus
+  region: ca-tor
+
+apps:
+  - name: api
+    image: ghcr.io/locktech/cerberus_api:v0.1.0
+    registrySecret: github-packages
+    cpu: '0.125'
+    memory: '0.5G'
+    storage: '1G'
+    min: '0'
+    max: '1'
+    port: '8911'
+    requestTimeout: '25'
+    secrets:
+      - api-env
+  - name: web
+    image: ghcr.io/locktech/cerberus_web:v0.1.0
+    registrySecret: github-packages
+    cpu: '0.125'
+    memory: '0.5G'
+    storage: '1G'
+    min: '0'
+    max: '1'
+    port: '8910'
+    requestTimeout: '25'
+    args:
+      - '-r'
+      - '/api/(.*) -> https://api.PROJ.REGION.codeengine.appdomain.cloud/$1'
+
+configMaps:
+  - name: api-env
+    secret: true
+    env:
+      - ./config/cerberus/.env
