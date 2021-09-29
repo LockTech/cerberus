@@ -41,6 +41,8 @@ COPY api api
 COPY --from=api_build /app/api/dist /app/api/dist
 COPY --from=api_build /app/node_modules/.prisma /app/node_modules/.prisma
 
+USER 1100:1100
+
 EXPOSE 8911
 
 ENTRYPOINT [ "rw-api-server" ]

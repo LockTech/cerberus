@@ -22,6 +22,7 @@ FROM base as web_build
 
 COPY web web
 
+# COPY .env .env
 COPY config/cerberus/.env .env
 
 RUN yarn rw build web
@@ -35,6 +36,8 @@ WORKDIR /app
 COPY --from=web_build /app/web/dist web/dist
 
 RUN yarn global add local-web-server
+
+USER 1100:1100
 
 EXPOSE 8910
 
