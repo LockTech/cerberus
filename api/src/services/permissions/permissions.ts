@@ -1,7 +1,6 @@
 import type { Permission, Role } from '@prisma/client'
 import { UserInputError } from '@redwoodjs/graphql-server'
 
-import { PermissionUndefinedTuple } from 'src/constants/permission'
 import type { PermissionTuple } from 'src/constants/permission'
 
 import { db } from 'src/lib/db'
@@ -9,6 +8,13 @@ import { prismaLogger } from 'src/lib/logger'
 
 import { KetoBuildPermissionTuple } from 'src/constants/keto'
 import { deleteTuple } from 'src/helpers/keto'
+
+export const PermissionUndefinedTuple: PermissionTuple = {
+  application: undefined,
+  namespace: undefined,
+  object: undefined,
+  relation: undefined,
+}
 
 export interface CreatePermissionArgs {
   application: string

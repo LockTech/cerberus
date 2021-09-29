@@ -2,7 +2,6 @@ import { validate as isUUID } from 'uuid'
 import { ValidationError } from '@redwoodjs/graphql-server'
 
 import { KetoBuildOrgRoleTuple } from 'src/constants/keto'
-import { RoleColorRegEx, RoleMaxNameLength } from 'src/constants/role'
 
 import { checkTuple } from 'src/helpers/keto'
 
@@ -12,6 +11,10 @@ import { db } from 'src/lib/db'
 import { isStr } from 'src/util/asserters'
 
 import type { ColorInput, IDInput, NameInput } from 'types/inputs'
+
+export const RoleColorRegEx = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/
+
+export const RoleMaxNameLength = 100
 
 /**
  * @throws

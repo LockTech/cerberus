@@ -11,10 +11,3 @@ export const CerberusAdminTuple: PermissionTuple = {
   object: '',
   relation: 'is',
 }
-
-export const PermissionUndefinedTuple: PermissionTuple = {
-  application: undefined,
-  namespace: undefined,
-  object: undefined,
-  relation: undefined,
-}

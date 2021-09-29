@@ -1,12 +1,17 @@
 import type { AxiosError } from 'axios'
 import { UserInputError } from '@redwoodjs/graphql-server'
 
-import { CheckURL, DeleteURL, WriteURL } from 'src/constants/keto'
 import type { KetoRelationTuple } from 'src/constants/keto'
 
 import { logger } from 'src/lib/logger'
 
 import { fetch } from 'src/util/fetch'
+
+export const KetoURL = process.env.KETO_URL
+
+export const CheckURL = `${KetoURL}/check`
+export const DeleteURL = `${KetoURL}/relation-tuples`
+export const WriteURL = `${KetoURL}/relation-tuples`
 
 /**
  * @throws

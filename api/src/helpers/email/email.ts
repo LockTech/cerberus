@@ -1,16 +1,20 @@
-import {
-  EmailFrom as from,
-  EmailInviteFilePath,
-  EmailInviteSubject,
-  EmailSignupFilePath,
-  EmailSignupSubject,
-} from 'src/constants/email'
+import { resolve } from 'path'
 
 import { transporter } from 'src/lib/smtp'
 import { template } from 'src/lib/template'
 import type { TemplateData } from 'src/lib/template'
 
 import { readFile } from 'src/util/readFile'
+
+export const from = process.env.EMAIL_FROM
+
+export const EmailDirectory = resolve(__dirname, '../../../templates')
+
+export const EmailInviteFilePath = `${EmailDirectory}/invite.html`
+export const EmailInviteSubject = process.env.EMAIL_INVITE_SUBJECT
+
+export const EmailSignupFilePath = `${EmailDirectory}/signup.html`
+export const EmailSignupSubject = process.env.EMAIL_SIGNUP_SUBJECT
 
 // ==
 export interface SendMailOptions {

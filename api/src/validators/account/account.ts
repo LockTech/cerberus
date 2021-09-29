@@ -1,11 +1,6 @@
 import { validate as isUUID } from 'uuid'
 import { ValidationError } from '@redwoodjs/graphql-server'
 
-import {
-  AccountEmailMaxLength,
-  AccountNameMaxLength,
-  AccountEmailValidRegEx,
-} from 'src/constants/account'
 import { KetoBuildOrgMemberTuple } from 'src/constants/keto'
 
 import { checkTuple } from 'src/helpers/keto'
@@ -21,6 +16,13 @@ import type {
   IDInput,
   NameInput,
 } from 'types/inputs'
+
+export const AccountNameMaxLength = 70
+
+export const AccountEmailMaxLength = 254
+
+export const AccountEmailValidRegEx =
+  /^[\w-]+(?:\.[\w-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*$/g
 
 /**
  * @throws

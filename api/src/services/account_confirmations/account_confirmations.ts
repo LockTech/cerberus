@@ -1,14 +1,14 @@
 import type { Account_Confirmation } from '@prisma/client'
 import { UserInputError } from '@redwoodjs/graphql-server'
 
-import { ConfirmationCodeLength } from 'src/constants/signup'
-
 import { sendSignupEmail } from 'src/helpers/email'
 
 import { db } from 'src/lib/db'
 import { logger, prismaLogger } from 'src/lib/logger'
 
 import { randomStr } from 'src/util/randomStr'
+
+export const ConfirmationCodeLength = 8
 
 export interface CreateInviteConfirmArgs {
   code: string

@@ -1,17 +1,18 @@
+import { resolve } from 'path'
 import { ValidationError } from '@redwoodjs/graphql-server'
-import type { APIGatewayEvent, Context } from 'aws-lambda'
-
-import {
-  LocaleDirectory,
-  LocaleEndpoint,
-  LocaleLookupRegEx,
-} from 'src/constants/locales'
 
 import { logger } from 'src/lib/logger'
 import { returnFunctionError, returnFunctionSuccess } from 'src/util/function'
 
 import { dropPath } from 'src/util/path'
 import { readFile } from 'src/util/readFile'
+
+export const LocaleDirectory = resolve(__dirname, `../../../locales`)
+
+export const LocaleLookupRegEx =
+  /^([A-Za-z]*-?[A-Za-z]+\/[A-Za-z]*-?[A-Za-z]+).json$/
+
+export const LocaleEndpoint = '/locales/'
 
 const errorHelper = (error: string) =>
   returnFunctionError(new ValidationError(error))
@@ -22,7 +23,7 @@ const errorHelper = (error: string) =>
  *  * 'locales-path-invalid' - When validating the requested locale file is formatted correctly.
  *  * 'locales-path-exist' - When an error occurs reading the locale from disk.
  */
-export const handler = async (event: APIGatewayEvent, context: Context) => {
+export const handler = async (event, context) => {
   logger.trace({ event, context }, 'Invoked locale function')
 
   if (event.httpMethod !== 'GET') return errorHelper('locales-method-invalid')

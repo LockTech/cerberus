@@ -1,12 +1,12 @@
 import { ValidationError } from '@redwoodjs/graphql-server'
 
-import { OrganizationMaxNameLength } from 'src/constants/organization'
-
 import { isStr } from 'src/util/asserters'
 
 import type { NameInput } from 'types/inputs'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
+
+export const OrganizationMaxNameLength = 60
 
 /**
  * @throws

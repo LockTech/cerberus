@@ -3,8 +3,6 @@ import { ValidationError, UserInputError } from '@redwoodjs/graphql-server'
 
 import { KetoBuildOrgMemberTuple } from 'src/constants/keto'
 
-import { SignupRes, SignupInviteRes } from 'src/constants/signup'
-
 import { db } from 'src/lib/db'
 import { prismaLogger } from 'src/lib/logger'
 
@@ -20,6 +18,9 @@ import {
   validateAccountName,
 } from 'src/validators/account'
 import { writeTuple } from '../keto'
+
+export const SignupRes = true
+export const SignupInviteRes = true
 
 // ==
 interface HandleInvitationOptions {

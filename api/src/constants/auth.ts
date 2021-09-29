@@ -11,6 +11,9 @@ export const loginErrors = {
   usernameNotFound: 'login-username',
   usernameOrPasswordMissing: 'login-missing',
 }
+/**
+ * Amount of time a user will remain logged in, given in `seconds`.
+ */
 export const loginExpires = 60 * 60 * 24 // * 365 * 10,
 
 export const signupErrors = {
