@@ -2025,10 +2025,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@locktech/atomic@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@locktech/atomic/-/atomic-3.0.0.tgz#865bfe95fee55e875ce5208791262d18d1edc73c"
-  integrity sha512-dI8WEiUYN84dRqCtxKvU6kHqDcgtQvqEQ3uAgHwF/JjMsiL0IIqxjKfYQ4g3AwlXDCuEUu2egYLQoluiDDjzrA==
+"@locktech/atomic@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@locktech/atomic/-/atomic-3.0.1.tgz#8ad85e754a0e276536d15a4793911f144c4b362e"
+  integrity sha512-BeiJ/AdtroLW9VPvzL59I8Bm0TANHUbJKCoP3fUhmi6qt6PCVXB3ihZNxOzL5zLRx+uCjWTXNs92GaEXtlSYcw==
 
 "@mdx-js/loader@^1.6.22":
   version "1.6.22"
