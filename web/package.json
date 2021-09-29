@@ -15,7 +15,6 @@
   "dependencies": {
     "@headlessui/react": "1.4.1",
     "@heroicons/react": "^1.0.2",
-    "@locktech/atomic": "2.3.6",
     "@redwoodjs/auth": "^0.37.0-rc.60",
     "@redwoodjs/forms": "^0.37.0-rc.60",
     "@redwoodjs/router": "^0.37.0-rc.60",
@@ -33,7 +32,7 @@
     "recoil": "^0.3.1"
   },
   "devDependencies": {
-    "@locktech/atomic": "2.3.4",
+    "@locktech/atomic": "3.0.0",
     "@storybook/addon-essentials": "^6.3.7",
     "autoprefixer": "^10.3.1",
     "postcss": "^8.3.6",

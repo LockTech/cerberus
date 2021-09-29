@@ -66,7 +66,7 @@ export const Success = ({ accounts }: CellSuccessProps<AccountListQuery>) => {
 
           return (
             <Link
-              className="btn card card-interactive outline-none space-y-3 text-center"
+              className="card card-interactive outline-none space-y-3 text-center"
               key={id}
               to={routes.account({ id })}
             >

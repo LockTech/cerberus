@@ -59,7 +59,7 @@ const RoleCreateModal = () => {
 
   return (
     <>
-      <button className="btn btn-primary w-full" onClick={() => setOpen(true)}>
+      <button className="btn-fill-primary w-full" onClick={() => setOpen(true)}>
         {t('Role.Create.Modal.createRole')}
       </button>
       <Modal onClose={setOpen} open={open}>
@@ -91,11 +91,11 @@ const RoleCreateModal = () => {
               <FieldError className="input-error-label" name="name" />
             </div>
             <div className="form-button space-x-4">
-              <Submit className="btn btn-primary" disabled={loading}>
+              <Submit className="btn-fill-primary" disabled={loading}>
                 {t('Role.Create.Modal.form.submit')}
               </Submit>
               <button
-                className="btn btn-red-ghost"
+                className="btn-outline-red"
                 onClick={() => setOpen(false)}
                 type="button"
               >

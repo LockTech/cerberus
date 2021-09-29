@@ -105,7 +105,7 @@ const SignupConfirmationPage = ({
             </Label>
             <FieldError className="input-error-label" name="code" />
           </div>
-          <Submit className="btn btn-primary w-full">
+          <Submit className="btn-fill-primary w-full">
             {t('Signup.Confirmation.Page.form.submit')}
           </Submit>
         </Form>

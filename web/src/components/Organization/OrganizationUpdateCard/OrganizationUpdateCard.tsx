@@ -92,7 +92,7 @@ const OrganizationUpdateCard = ({
           <FieldError className="input-error-label" name="name" />
         </div>
         <Submit
-          className="btn btn-primary form-button"
+          className="btn-fill-primary form-button"
           disabled={!isDirty || loading}
         >
           {t('Organization.Update.Card.form.submit')}

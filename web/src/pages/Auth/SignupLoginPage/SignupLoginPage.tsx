@@ -89,7 +89,7 @@ const SignupLoginPage = ({ email, redirectTo }: SignupLoginPageProps) => {
             </Label>
             <FieldError className="input-error-label" name="password" />
           </div>
-          <Submit className="btn btn-primary w-full">
+          <Submit className="btn-fill-primary w-full">
             {t('Signup.Login.Page.form.submit')}
           </Submit>
         </Form>

@@ -112,7 +112,7 @@ const SignupOrganizationPage = ({
             </Label>
             <FieldError className="input-error-label" name="adminRoleName" />
           </div>
-          <Submit className="btn btn-primary w-full" disabled={loading}>
+          <Submit className="btn-fill-primary w-full" disabled={loading}>
             {t('Signup.Organization.Page.form.submit')}
           </Submit>
         </Form>

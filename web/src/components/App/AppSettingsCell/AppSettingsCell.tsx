@@ -98,11 +98,11 @@ export const Success = ({ locales }: CellSuccessProps<LocalesQuery>) => {
             />
           </div>
           <div className="form-button space-x-4">
-            <Submit className="btn btn-primary">
+            <Submit className="btn-fill-primary">
               {t('App.Settings.Cell.Success.form.submit')}
             </Submit>
             <button
-              className="btn btn-red-ghost"
+              className="btn-outline-red"
               onClick={() => setOpen(false)}
               type="button"
             >

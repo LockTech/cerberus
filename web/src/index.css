@@ -22,6 +22,7 @@ html, body, #redwood-app {
     @apply p-4 sm:p-6 space-y-6;
   }
   .card-interactive {
+    @apply focus;
     @apply hover:bg-gray-50 active:bg-gray-100;
     @apply dark:hover:bg-gray-700 dark:active:bg-gray-600;
     @apply flex flex-col items-center;
@@ -61,26 +62,4 @@ html, body, #redwood-app {
   }
 }
 
-@layer utilities {
-  .btn-ghost {
-    @apply bg-transparent hover:bg-auto active:bg-auto;
-    @apply text-gray-900 dark:text-gray-50;
-  }
-  .btn-primary-ghost {
-    @apply bg-transparent hover:bg-primary-600 active:bg-primary-700;
-    @apply focus:ring-primary-500;
-    @apply text-primary-600 dark:text-primary-400;
-    @apply hover:text-gray-50 active:text-gray-50;
-  }
-  .btn-red {
-    @apply bg-red-500 hover:bg-red-600 active:bg-red-700;
-    @apply focus:ring-red-500;
-    @apply text-gray-50;
-  }
-  .btn-red-ghost {
-    @apply bg-transparent hover:bg-red-600 active:bg-red-700;
-    @apply focus:ring-red-500;
-    @apply text-red-700 dark:text-red-400;
-    @apply hover:text-gray-50 active:text-gray-50;
-  }
-}
+@layer utilities {}

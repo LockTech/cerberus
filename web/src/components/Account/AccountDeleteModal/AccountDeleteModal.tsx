@@ -56,7 +56,7 @@ const AccountDeleteModal = ({ id }: AccountDeleteModalProps) => {
 
   return (
     <>
-      <button className="btn btn-red-ghost" onClick={() => setOpen(true)}>
+      <button className="btn-outline-red" onClick={() => setOpen(true)}>
         {t('Account.Delete.Modal.action')}
       </button>
       <Modal initialFocus={cancelBtnRef} onClose={setOpen} open={open}>
@@ -73,14 +73,14 @@ const AccountDeleteModal = ({ id }: AccountDeleteModalProps) => {
           </div>
           <div className="form-button space-x-4">
             <button
-              className="btn btn-red"
+              className="btn-fill-red"
               disabled={loading}
               onClick={onDelete}
             >
               {t('Account.Delete.Modal.form.confirm')}
             </button>
             <button
-              className="btn btn-primary-ghost"
+              className="btn-outline-gray"
               onClick={() => setOpen(false)}
               ref={cancelBtnRef}
             >

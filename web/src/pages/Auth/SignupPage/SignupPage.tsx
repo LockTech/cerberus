@@ -152,7 +152,7 @@ const SignupPage = ({ redirectTo = '/' }: SignupPageProps) => {
                 name="confirmPassword"
               />
             </div>
-            <Submit className="btn btn-primary w-full">
+            <Submit className="btn-fill-primary w-full">
               {t('Signup.Page.form.submit')}
             </Submit>
           </Form>

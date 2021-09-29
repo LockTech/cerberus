@@ -56,7 +56,7 @@ const RoleDeleteModal = ({ id }: RoleDeleteModalProps) => {
 
   return (
     <>
-      <button className="btn btn-red-ghost" onClick={() => setOpen(true)}>
+      <button className="btn-outline-red" onClick={() => setOpen(true)}>
         {t('Role.Delete.Modal.action')}
       </button>
       <Modal initialFocus={cancelRef} onClose={setOpen} open={open}>
@@ -73,14 +73,14 @@ const RoleDeleteModal = ({ id }: RoleDeleteModalProps) => {
           </div>
           <div className="form-button space-x-4">
             <button
-              className="btn btn-red"
+              className="btn-fill-red"
               disabled={loading}
               onClick={onSubmit}
             >
               {t('Role.Delete.Modal.form.delete')}
             </button>
             <button
-              className="btn btn-primary-ghost"
+              className="btn-outline-gray"
               disabled={loading}
               onClick={() => setOpen(false)}
               ref={cancelRef}

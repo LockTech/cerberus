@@ -184,7 +184,7 @@ const AccountUpdateCard = ({
           </Switch.Label>
         </Switch.Group>
         <Submit
-          className="btn btn-primary form-button"
+          className="btn-fill-primary form-button"
           disabled={!isDirty || loading}
         >
           {t('Account.Update.Card.form.submit')}

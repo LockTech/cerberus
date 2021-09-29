@@ -58,7 +58,7 @@ export const Success = ({ roles }: CellSuccessProps<RoleListQuery>) => {
 
           return (
             <Link
-              className="btn card card-interactive border-t-8 outline-none space-y-3 text-center"
+              className="card card-interactive border-t-8 outline-none space-y-3 text-center"
               style={{ borderTopColor: color }}
               key={id}
               to={routes.role({ id })}

@@ -133,7 +133,7 @@ const RoleUpdateCard = ({ role: { color, id, name } }: RoleUpdateCardProps) => {
           </div>
         </div>
         <Submit
-          className="btn btn-primary form-button"
+          className="btn-fill-primary form-button"
           disabled={loading || !isDirty}
         >
           {t('Role.Update.Card.form.submit')}

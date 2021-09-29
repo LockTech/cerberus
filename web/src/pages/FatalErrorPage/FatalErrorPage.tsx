@@ -19,13 +19,13 @@ export default () => {
           </div>
           <div className="actions">
             <button
-              className="btn btn-primary-ghost"
+              className="btn-outline-primary"
               onClick={() => navigate(routes.home())}
             >
               {t('FatalError.Page.actions.dashboard')}
             </button>
             <a
-              className="btn btn-ghost"
+              className="btn-outline-gray"
               href={SupportURL}
               rel="noreferrer"
               target="_blank"

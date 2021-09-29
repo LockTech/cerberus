@@ -26,11 +26,11 @@ export default () => {
               <p className="text">{t('NotFound.Page.support')}</p>
             </div>
             <div className="actions">
-              <Link className="btn btn-primary-ghost" to={routes.home()}>
+              <Link className="btn-outline-primary" to={routes.home()}>
                 {t('NotFound.Page.actions.dashboard')}
               </Link>
               <a
-                className="btn btn-ghost"
+                className="btn-outline-gray"
                 href={SupportURL}
                 rel="noreferrer"
                 target="_blank"

@@ -44,7 +44,7 @@ const AccountInviteModal = () => {
 
   return (
     <>
-      <button className="btn btn-primary w-full" onClick={() => setOpen(true)}>
+      <button className="btn-fill-primary w-full" onClick={() => setOpen(true)}>
         {t('Account.Invite.Modal.action')}
       </button>
       <Modal open={open} onClose={() => setOpen(false)}>
@@ -77,11 +77,11 @@ const AccountInviteModal = () => {
               <FieldError className="input-error-label" name="email" />
             </div>
             <div className="form-button space-x-4">
-              <Submit className="btn btn-primary" disabled={loading}>
+              <Submit className="btn-fill-primary" disabled={loading}>
                 {t('Account.Invite.Modal.form.submit')}
               </Submit>
               <button
-                className="btn btn-red-ghost"
+                className="btn-outline-red"
                 onClick={() => setOpen(false)}
                 type="button"
               >
