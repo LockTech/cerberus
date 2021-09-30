@@ -22,24 +22,16 @@ FROM base as web_build
 
 COPY web web
 
-# COPY .env .env
-COPY config/cerberus/.env .env
+COPY .env .env
 
 RUN yarn rw build web
 
 #==
 # Serve
-FROM node:14-alpine
+FROM nginx:1.21.3-alpine
 
-WORKDIR /app
+COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=web_build /app/web/dist web/dist
-
-RUN yarn global add local-web-server
-
-USER 1100:1100
+COPY --from=web_build /app/web/dist /usr/share/nginx/html
 
 EXPOSE 8910
-
-ENTRYPOINT [ "ws", "-d", "web/dist", "-s", "index.html", "-p", "8910" ]
-CMD []
