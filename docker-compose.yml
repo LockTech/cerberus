@@ -21,12 +21,10 @@ services:
       - poseidon_network
 
   keto:
-    image: oryd/keto:latest
+    image: oryd/keto:v0.6.0-alpha.3
     networks:
       - portunus_network
       - poseidon_network
     volumes:
-      - type: bind
-        source: ./config/keto
-        target: /home/ory
+      - ./config/keto:/home/ory
 
