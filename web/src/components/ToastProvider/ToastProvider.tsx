@@ -35,15 +35,13 @@ const ToastIcon = (type: Toast['type'], customIcon?: unknown) => {
       return customIcon
 
     case 'error':
-      return <ExclamationCircleIcon aria-hidden="true" className="h-6 w-6" />
+      return <ExclamationCircleIcon aria-hidden="true" />
 
     case 'loading':
-      return (
-        <LoadingSpinner aria-hidden="true" className="h-6 w-6 toast-spinner" />
-      )
+      return <LoadingSpinner aria-hidden="true" className="toast-spinner" />
 
     case 'success':
-      return <CheckCircleIcon aria-hidden="true" className="h-6 w-6" />
+      return <CheckCircleIcon aria-hidden="true" />
   }
 }
 
