@@ -9,7 +9,7 @@ networks:
 services:
   cerberus_api:
     env_file:
-      - ./config/cerberus/.env
+      - .env
     image: cerberus_api:latest
     networks:
       - portunus_network
