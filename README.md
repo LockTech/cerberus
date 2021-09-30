@@ -41,15 +41,21 @@ All variables are available to the API-side of the application. Only variables s
 
 #### Keto
 
-If you use the provided [`docker-compose.yml`](docker-compose.yml), [Keto can be configured](https://www.ory.sh/keto/docs/next/reference/configuration) by creating a `./config/keto` directory and adding the configuration to a `keto.yml` file. Here is an example which adds Cerberus' roles namespace (which is required) and an example application's.
+If you use the provided [`docker-compose.yml`](docker-compose.yml), [Keto can be configured](https://www.ory.sh/keto/docs/next/reference/configuration) by creating a `./config/keto` directory and adding the configuration to a `keto.yml` file. Here is an example which adds Cerberus' required namespaces and an example application's.
 
 > By default, the entire `./config/` directory, and its children, are specified in this repository's accompanying [`.gitignore`](.gitignore).
 
 ```YAML
+version: v0.6.0-alpha.1
+
 namespaces:
   - id: 0
-    name: cerberus_roles
+    name: cerberus_admins
   - id: 1
+    name: cerberus_organizations
+  - id: 2
+    name: cerberus_roles
+  - id: 3
     name: foo_books
 
 dsn: postgres://keto:secret@database:5432/keto
