@@ -1,8 +1,9 @@
 import { validate as isUUID } from 'uuid'
 import { AuthenticationError as AuthError } from '@redwoodjs/graphql-server'
 
-import { logger } from 'src/lib/logger'
-import { get } from 'src/lib/redis'
+import { AccountRemoveAuthFields } from 'src/constants/account'
+
+import { db } from 'src/lib/db'
 
 import type { IDInput } from 'types/inputs'
 
@@ -14,35 +15,23 @@ import type { IDInput } from 'types/inputs'
  * @param session
  * @returns The `Account` belonging to the given `id`, with its `Organization` and `Roles` included.
  */
-export const getCurrentUser = async (session: IDInput) => {
-  const { id } = session
-
+export const getCurrentUser = async ({ id }: IDInput) => {
   if (!isUUID(id)) throw new AuthError('auth-id')
 
-  const clientSession = await get(`cerberus:${id}`)
+  let res = await db.account.findFirst({
+    include: { organization: true, roles: true },
+    where: {
+      disabled: false,
+      id,
+      organizationId: { not: null },
+      verified: true,
+      verifiedAt: { not: null },
+    },
+  })
 
-  if (!clientSession) throw new AuthError('auth-undefined')
+  if (res === null) throw new AuthError('auth-undefined')
 
-  const res = JSON.parse(clientSession)
-
-  logger.debug({ res }, 'Parsed session from Redis.')
+  res = AccountRemoveAuthFields(res)
 
   return res
-
-  // let res = await db.account.findFirst({
-  //   include: { organization: true, roles: true },
-  //   where: {
-  //     disabled: false,
-  //     id: session.id,
-  //     organizationId: { not: null },
-  //     verified: true,
-  //     verifiedAt: { not: null },
-  //   },
-  // })
-
-  // if (res === null) throw new AuthError('auth-undefined')
-
-  // res = AccountRemoveAuthFields(res) as CurrentUser
-
-  // return res
 }
