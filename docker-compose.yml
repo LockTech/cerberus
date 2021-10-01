@@ -19,6 +19,9 @@ services:
     image: cerberus_web:latest
     networks:
       - poseidon_network
+    volumes:
+      - web_config:/data
+      - web_data:/config
 
   keto:
     image: oryd/keto:v0.6.0-alpha.3
@@ -28,3 +31,6 @@ services:
     volumes:
       - ./config/keto:/home/ory
 
+volumes:
+  web_config:
+  web_data:
