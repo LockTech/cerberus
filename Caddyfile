@@ -1,0 +1,22 @@
+:8910 {
+  root * /srv
+
+  # Support HTTP/1.0
+  # header Pragma public
+
+  @js-css {
+    file
+    path *.css *.js
+  }
+  header @js-css Cache-Control max-age=3600
+
+  @images {
+    file
+    path *.ico *.gif *.jpeg *.jpg *.png
+  }
+  header @images Cache-Control max-age=604800
+
+  try_files {path} {file} /index.html
+
+  file_server
+}
