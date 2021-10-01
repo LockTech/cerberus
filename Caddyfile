@@ -16,7 +16,7 @@
   }
   header @images Cache-Control max-age=604800
 
-  try_files {path} {file} /index.html
+  try_files {path} /index.html
 
   file_server
 }
