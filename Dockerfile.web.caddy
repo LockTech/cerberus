@@ -1,0 +1,37 @@
+# ==
+# Base
+FROM node:14-alpine as base
+
+WORKDIR /app
+
+COPY package.json package.json
+COPY yarn.lock yarn.lock
+
+COPY redwood.toml redwood.toml
+COPY graphql.config.js graphql.config.js
+COPY babel.config.js babel.config.js
+
+COPY api/package.json api/package.json
+COPY web/package.json web/package.json
+
+RUN yarn install --frozen-lockfile
+
+#==
+# Build
+FROM base as web_build
+
+COPY web web
+
+COPY .env .env
+
+RUN yarn rw build web
+
+#==
+# Serve
+FROM caddy:2.4.5-alpine
+
+COPY Caddyfile /etc/caddy/Caddyfile
+
+COPY --from=web_build /app/web/dist /srv
+
+EXPOSE 8910
