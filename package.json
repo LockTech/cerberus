@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "docker:api": "docker build -t cerberus_api:latest -t ghcr.io/locktech/cerberus_api:v0.1.0 -f ./Dockerfile.api .",
-    "docker:web": "docker build -t cerberus_web:latest -t ghcr.io/locktech/cerberus_web:v0.1.0 -f ./Dockerfile.web .",
+    "docker:web": "docker build -t cerberus_web:latest -t ghcr.io/locktech/cerberus_web:v0.1.0 -f ./Dockerfile.web.caddy .",
     "docker:all": "cross-env yarn docker:api && yarn docker:web"
   },
   "workspaces": {
