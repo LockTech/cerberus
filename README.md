@@ -2,6 +2,8 @@
 
 > This is a WIP project which is not suitable for production use.
 
+> *Update (10/15/21):* Functionally, this application lives up to the requirements imposed by this readme. The application is still **not** production read, but most functionality has been implemented; [see open issues](https://github.com/LockTech/cerberus/issues?q=is%3Aopen+is%3Aissue+label%3Av1.0) and the [v1 issue](https://github.com/LockTech/cerberus/issues/9) for a complete list of v1-blocking features.
+
 A control panel and platform for self-managed, multi-tenant account and permission management.
 
 Built using the [RedwoodJS framework](https://redwoodjs.com) and [Ory Keto](https://www.ory.sh/keto/docs/next/). This platform is intended for web applications, and has been designed specifically to work well with other RedwoodJS applications.
